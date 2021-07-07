@@ -11,7 +11,7 @@ const LabelForm = () => (
       <input type="text" id="descrição" name="descrição" />
     </label>
     <label htmlFor="moeda">
-      moeda
+      Moeda
       <select id="moeda">
         <option> oi</option>
       </select>
