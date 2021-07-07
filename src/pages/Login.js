@@ -72,4 +72,8 @@ class Login extends Component {
   }
 }
 
-export default connect()(Login);
+const mapDispatchToProps = (dispatch) => ({
+  email: (email) => dispatch(minhaAction(email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
