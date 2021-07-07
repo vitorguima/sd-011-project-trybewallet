@@ -1,43 +1,63 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
+import { fetchAPI } from '../actions';
 
 class Wallet extends React.Component {
-  render() {
+  componentDidMount() {
+    const { dispatchCurrencies } = this.props;
+    dispatchCurrencies();
+  }
+
+  header() {
     const { getEmail } = this.props;
     return (
+      <header>
+        <h5 data-testid="email-field">{getEmail}</h5>
+        <p data-testid="total-field">0</p>
+        <select data-testid="header-currency-field">
+          <option>BRL</option>
+        </select>
+      </header>
+    );
+  }
+
+  render() {
+    const { stateCurrencies, stateIsLoading } = this.props;
+
+    if (stateIsLoading) {
+      return <p>Loading...</p>;
+    }
+
+    return (
       <div>
-        <header>
-          <h5 data-testid="email-field">{getEmail}</h5>
-          <p data-testid="total-field">0</p>
-          <select data-testid="header-currency-field">
-            <option>BRL</option>
-          </select>
-        </header>
+        {this.header()}
         <form>
-          <label>
+          <label htmlFor="value">
             Valor
-            <input type="text" />
+            <input type="text" name="value" id="value" />
           </label>
-          <label>
+          <label htmlFor="description">
             Descrição
-            <textarea />
+            <textarea name="description" id="description" />
           </label>
-          <label>
+          <label htmlFor="currency">
             Moeda
-            <select />
+            <select name="currency" id="currency">
+              {stateCurrencies.map((e, i) => <option key={ i }>{e.code}</option>)}
+            </select>
           </label>
-          <label>
+          <label htmlFor="payMethod">
             Método de pagamento
-            <select>
+            <select id="payMethod">
               <option>Dinheiro</option>
               <option>Cartão de crédito</option>
               <option>Cartão de débito</option>
             </select>
           </label>
-          <label>
+          <label htmlFor="tag">
             Tag
-            <select>
+            <select id="tag">
               <option>Alimentação</option>
               <option>Lazer</option>
               <option>Trabalho</option>
@@ -53,10 +73,19 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   getEmail: state.user.email,
+  stateCurrencies: state.wallet.currencies,
+  stateIsLoading: state.wallet.isLoading,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatchCurrencies: () => dispatch(fetchAPI()),
 });
 
 Wallet.propTypes = {
   getEmail: PropTypes.string.isRequired,
+  stateCurrencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  stateIsLoading: PropTypes.bool.isRequired,
+  dispatchCurrencies: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(Wallet);
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
