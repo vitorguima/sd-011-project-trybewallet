@@ -12,6 +12,22 @@ export default class Login extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  verifyInputs() {
+    const { email, password, disabled } = this.state;
+    const minCaractersPassword = 6;
+    const verifyEmail = email.split('').includes('@') && email.split('.').includes('com');
+    const verifyPassword = password.length >= minCaractersPassword;
+    if (verifyEmail && verifyPassword && disabled) {
+      this.setState({
+        disabled: false,
+      });
+    } else if ((!verifyEmail || !verifyPassword) && !disabled) {
+      this.setState({
+        disabled: true,
+      });
+    }
+  }
+
   handleChange({ target }) {
     const { name, value } = target;
     this.setState({
