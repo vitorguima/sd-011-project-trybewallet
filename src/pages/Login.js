@@ -1,15 +1,18 @@
 import React from 'react';
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { sendInfo } from '../actions';
 
 export default function Login() {
   const [login, setLogin] = useState({ email: '', password: '' });
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleSubmit = (e) => {
-    const { target } = e;
     e.preventDefault();
-    const data = new FormData(target);
-    const userInformation = { email: data.get('email'), password: data.get('password') };
-    setLogin(userInformation);
+    dispatch(sendInfo(login));
+    history.push('/carteira');
   };
 
   const handleChange = (e) => {
