@@ -1,11 +1,13 @@
 import React from 'react';
 import { Route, Switch } from 'react-router';
 import LoginPage from './pages/Login';
+import WalletPage from './pages/Wallet';
 
 function App() {
   return (
     <Switch>
-      <Route exact patch="/" component={ LoginPage } />
+      <Route path="/carteira" component={ WalletPage } />
+      <Route exact path="/" component={ LoginPage } />
     </Switch>
   );
 }
