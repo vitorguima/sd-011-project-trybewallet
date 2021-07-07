@@ -17,6 +17,7 @@ function wallet(state = initialState, action) {
       ...state,
       expenses: [...state.expenses, action.payload.expenses],
     };
+
   default:
     return state;
   }
