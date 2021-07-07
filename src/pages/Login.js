@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux'
+import { getUserEmail } from '../actions/userActions'
 
 class Login extends React.Component {
   constructor(props) {
@@ -9,6 +11,7 @@ class Login extends React.Component {
       password: '',
     };
     this.handleChanges = this.handleChanges.bind(this);
+    this.ableButton = this.ableButton.bind(this);
   }
 
   handleChanges({ target }) {
@@ -18,8 +21,22 @@ class Login extends React.Component {
     });
   }
 
+ // Para esta etapa eu utilizei como base as informações abaixo:
+ // https://stackoverflow.com/questions/59625783/regular-expression-validation-in-react-js-for-input
+ // https://stackoverflow.com/questions/39356826/how-to-check-if-it-a-text-input-has-a-valid-email-format-in-reactjs/39425165
+  
+ ableButton() {
+    const { email, password } = this.state;
+    const regexEmail = /^[ ]*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[ ]*$/i;
+    const minPassword = 6;
+    if (password.length >= minPassword && regexEmail.test(email)) {
+      return false;
+    } return true;
+  }
+
   render() {
     const { email, password } = this.state;
+    const { userAction} = this.props;
     return (
       <div>
         <h2>Login</h2>
@@ -45,7 +62,7 @@ class Login extends React.Component {
             />
           </label>
           <Link to="/carteira">
-            <button type="button">Entrar</button>
+            <button type="submit" disabled={ this.ableButton() }  onClick={() => userAction(email)}>Entrar</button>
           </Link>
         </form>
 
@@ -53,6 +70,9 @@ class Login extends React.Component {
     );
   }
 }
+const mapDispatchToProps = (dispatch) => ({
+  userAction: (payload) => dispatch(getUserEmail(payload))
+});
 
-export default Login;
+export default connect (null, mapDispatchToProps)(Login);
 // requisito 1

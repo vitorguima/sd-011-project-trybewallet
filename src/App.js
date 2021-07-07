@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
-// import Carteira from './pages/Carteira';
+import Carteira from './pages/Carteira';
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={ Login } />
-          {/* <Route path="/carteira" component={ Carteira } /> */}
+          <Route path="/carteira" component={ Carteira } />
         </Switch>
       </BrowserRouter>
     </div>
