@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as userAction from '../actions';
-
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import userAction from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -11,28 +12,33 @@ class Login extends React.Component {
       password: '',
     };
     this.handleChange = this.handleChange.bind(this);
-    this.submitLogin = this.submitLogin.bind(this);
   }
 
   handleChange({ target }) {
     this.setState({ [target.name]: target.value });
   }
 
-  submitLogin = (event) => {
-    event.preventDefault();
-    const { fazerLogin } = this.props;
-    fazerLogin(this.state);
-  };
+  validEmail() {
+    const { email, password } = this.state;
+    const validEmail = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+    const pass = 6;
+    if (validEmail.test(email) && password.length === pass) {
+      return false;
+    }
+    return true;
+  }
 
   render() {
     const { email, password } = this.state;
+    const { fazerLogin } = this.props;
     return (
       <form className="form-login">
         <label htmlFor="email">
           Email:
           <input
             data-testid="email-input"
-            className="mail-input"
+            className="email-input"
+            placeholder="Email"
             type="text"
             name="email"
             value={ email }
@@ -44,20 +50,38 @@ class Login extends React.Component {
           <input
             data-testid="password-input"
             className="password-input"
+            placeholder="Password"
             type="text"
             name="password"
             value={ password }
             onChange={ this.handleChange }
           />
         </label>
-        <button type="button" onClick={ this.submitLogin }>Entrar</button>
+
+        <Link to={ { pathname: 'carteira' } }>
+          <button
+            type="button"
+            disabled={ this.validEmail() }
+            onClick={ () => fazerLogin({ email }) }
+          >
+            Entrar
+          </button>
+        </Link>
       </form>
     );
   }
 }
 
+Login.propTypes = {
+  fazerLogin: PropTypes.func,
+};
+
+Login.defaultProps = {
+  fazerLogin: '',
+};
+
 const mapDispatchToProps = (dispatch) => ({
-  fazerLogin: (credentials) => dispatch(userAction.email(credentials)),
+  fazerLogin: (credentials) => dispatch(userAction(credentials)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
