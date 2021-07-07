@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import userAction from '../actions/index';
+import { userAction } from '../actions/index';
 
 class Button extends React.Component {
   handleSubmit(email, actionUser) {
