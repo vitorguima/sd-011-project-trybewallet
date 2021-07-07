@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { fetchCurrencies } from '../actions';
+import WalletCurrencies from './WalletCurrencies';
 
 class WalletForm extends Component {
+  componentDidMount() {
+    const { fetchCurr } = this.props;
+    fetchCurr();
+  }
+
   render() {
     return (
       <form className="walletForm">
@@ -23,7 +32,7 @@ class WalletForm extends Component {
         <label htmlFor="currency">
           Moeda:
           <select id="currency">
-            {/* <option>BRL</option> */}
+            <WalletCurrencies />
           </select>
         </label>
         <label htmlFor="payment">
@@ -49,4 +58,12 @@ class WalletForm extends Component {
   }
 }
 
-export default WalletForm;
+const mapDispatchToProps = (dispatch) => ({
+  fetchCurr: () => dispatch(fetchCurrencies()),
+});
+
+export default connect(null, mapDispatchToProps)(WalletForm);
+
+WalletForm.propTypes = {
+  fetchCurr: PropTypes.func.isRequired,
+};
