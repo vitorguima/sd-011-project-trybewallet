@@ -1,12 +1,11 @@
 const INITIAL_STATE = {
+  total: null,
   currencies: [],
   expenses: [],
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case 'TESTE':
-    return state;
   default:
     return state;
   }

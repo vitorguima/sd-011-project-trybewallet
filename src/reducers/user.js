@@ -1,5 +1,5 @@
 const INITIAL_STATE = {
-  email: '',
+  email: 'email@email.com',
 };
 
 const user = (state = INITIAL_STATE, action) => {
