@@ -9,6 +9,11 @@ export const loginInputs = ({ target }) => {
   };
 };
 
+export const mountExpenses = (payload) => ({
+  type: 'MOUNT_EXPENSES',
+  payload,
+});
+
 export const requestMoedas = (payload) => ({
   type: 'FETCH_MOEDAS',
   payload,
