@@ -12,7 +12,7 @@ export default class FormAddValue extends Component {
         <label htmlFor="description">
           Descrição:
           {' '}
-          <input type="number" id="description" />
+          <input type="text" id="description" />
         </label>
         <label htmlFor="coin">
           Moeda:
