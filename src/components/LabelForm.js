@@ -19,6 +19,7 @@ const LabelForm = () => (
     <label htmlFor="pay">
       Método de pagamento
       <select id="pay">
+        <option> Metodo de pagamento! </option>
         <option>Dinheiro </option>
         <option>Cartão de crédito </option>
         <option>Cartão de débito </option>
