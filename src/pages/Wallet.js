@@ -2,77 +2,110 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { fetchAPI } from '../actions';
+import Header from '../components/Header';
 
 class Wallet extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      value: '',
+      description: '',
+      currency: '',
+      payMethod: '',
+      tag: '',
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
   componentDidMount() {
     const { dispatchCurrencies } = this.props;
     dispatchCurrencies();
   }
 
-  header() {
-    const { getEmail } = this.props;
+  handleChange() {
+    const { name, value } = this.state;
+    this.setState({
+      [name]: value,
+    });
+  }
+
+  labelValueDescription() {
     return (
-      <header>
-        <h5 data-testid="email-field">{getEmail}</h5>
-        <p data-testid="total-field">0</p>
-        <select data-testid="header-currency-field">
-          <option>BRL</option>
-        </select>
-      </header>
+      <>
+        <label htmlFor="value">
+          Valor
+          <input type="text" name="value" id="value" />
+        </label>
+        <label htmlFor="description">
+          Descrição
+          <textarea name="description" id="description" />
+        </label>
+      </>
+    );
+  }
+
+  labelPayMethodTag() {
+    return (
+      <>
+        <label htmlFor="payMethod">
+          Método de pagamento
+          <select id="payMethod">
+            <option>Dinheiro</option>
+            <option>Cartão de crédito</option>
+            <option>Cartão de débito</option>
+          </select>
+        </label>
+        <label htmlFor="tag">
+          Tag
+          <select id="tag">
+            <option>Alimentação</option>
+            <option>Lazer</option>
+            <option>Trabalho</option>
+            <option>Transporte</option>
+            <option>Saúde</option>
+          </select>
+        </label>
+      </>
     );
   }
 
   render() {
-    const { stateCurrencies, stateIsLoading } = this.props;
-
+    const { stateCurrencies, stateIsLoading, dispatchExpenses } = this.props;
     if (stateIsLoading) {
-      return <p>Loading...</p>;
+      return (
+        <>
+          <Header />
+          <p>Loading...</p>
+        </>
+      );
     }
-
     return (
-      <div>
-        {this.header()}
+      <>
+        <Header />
         <form>
-          <label htmlFor="value">
-            Valor
-            <input type="text" name="value" id="value" />
-          </label>
-          <label htmlFor="description">
-            Descrição
-            <textarea name="description" id="description" />
-          </label>
+          {this.labelValueDescription()}
           <label htmlFor="currency">
             Moeda
             <select name="currency" id="currency">
               {stateCurrencies.map((e, i) => <option key={ i }>{e.code}</option>)}
             </select>
           </label>
-          <label htmlFor="payMethod">
-            Método de pagamento
-            <select id="payMethod">
-              <option>Dinheiro</option>
-              <option>Cartão de crédito</option>
-              <option>Cartão de débito</option>
-            </select>
-          </label>
-          <label htmlFor="tag">
-            Tag
-            <select id="tag">
-              <option>Alimentação</option>
-              <option>Lazer</option>
-              <option>Trabalho</option>
-              <option>Transporte</option>
-              <option>Saúde</option>
-            </select>
-          </label>
+          {this.labelPayMethodTag()}
         </form>
-      </div>
+        <button
+          type="button"
+          onClick={ () => {
+            dispatchExpenses(this.state);
+          } }
+        >
+          Adicionar despesa
+        </button>
+      </>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  getEmail: state.user.email,
   stateCurrencies: state.wallet.currencies,
   stateIsLoading: state.wallet.isLoading,
 });
@@ -82,10 +115,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Wallet.propTypes = {
-  getEmail: PropTypes.string.isRequired,
   stateCurrencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   stateIsLoading: PropTypes.bool.isRequired,
   dispatchCurrencies: PropTypes.func.isRequired,
+  dispatchExpenses: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
