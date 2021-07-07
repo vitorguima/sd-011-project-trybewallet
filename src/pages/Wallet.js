@@ -3,14 +3,40 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class Wallet extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      currencies: {},
+    };
+
+    this.fetchUnities = this.fetchUnities.bind(this);
+  }
+
+  async componentDidMount() {
+    this.fetchUnities();
+  }
+
+  async fetchUnities() {
+    const url = 'https://economia.awesomeapi.com.br/json/all';
+    const currencies = await fetch(url)
+      .then((result) => result.json());
+    delete currencies.USDT;
+    this.setState(() => ({
+      currencies,
+    }));
+  }
+
   createMethods(array) {
     return array.map((term) => <option key={ term }>{ term }</option>);
   }
 
   render() {
     const { email } = this.props;
+    const { currencies } = this.state;
     const methods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
+    const currenciesIds = Object.keys(currencies);
 
     return (
       <div>
@@ -30,7 +56,9 @@ class Wallet extends React.Component {
           </label>
           <label htmlFor="slct-unt">
             Moeda:
-            <select name="unity" id="slct-unt" aria-label="Moeda:" />
+            <select name="unity" id="slct-unt" aria-label="Moeda:">
+              {this.createMethods(currenciesIds)}
+            </select>
           </label>
           <label htmlFor="slct-mthd">
             Método de pagamento:
