@@ -2,16 +2,15 @@ const INITIAL_STATE = {
   user: {
     email: '',
   },
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
 };
 
 function userReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case 'NEW_ACTION':
-    return { state: action.state };
+  case 'LOGIN_ACTION':
+    return {
+      ...state,
+      user: { email: action.email },
+    };
   default:
     return state;
   }
