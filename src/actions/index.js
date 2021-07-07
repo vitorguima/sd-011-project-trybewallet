@@ -1,7 +1,6 @@
-export default function userAction(email, senha) {
+export default function userAction(email) {
   return ({
     type: 'INPUT_USER',
     email,
-    senha,
   });
 }
