@@ -1,6 +1,7 @@
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
+  total: null,
 };
 
 const wallet = (state = INITIAL_STATE, { type }) => {
