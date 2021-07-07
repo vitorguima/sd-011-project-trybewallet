@@ -13,15 +13,19 @@ class Login extends React.Component {
     this.validateInputs = this.validateInputs.bind(this);
   }
 
+  componentDidUpdate() {
+    const { email } = this.props;
+    this.validateInputs(email);
+  }
+
   validateInputs(email) {
     const { password } = this.props;
+    const { disable } = this.state;
     const requiredLenght = 6;
-    const regex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
-    if (regex.test(email) && password.length >= requiredLenght) {
-      return this.setState({ disable: true });
+    const regex = /^\w+(\w+)@\w+([-.]\w+).\w+([-.]\w+)*$/;
+    if (regex.test(email) && password.length >= requiredLenght && disable) {
+      return this.setState({ disable: false });
     }
-    this.setState({ disable: true });
-    alert('Preencha seu email e senha corretamente');
   }
 
   render() {
@@ -57,8 +61,7 @@ class Login extends React.Component {
         <Link to="/carteira">
           <button
             type="button"
-            disabled={ !disable }
-            onMouseEnter={ () => this.validateInputs(email) }
+            disabled={ disable }
           >
             Entrar
           </button>
