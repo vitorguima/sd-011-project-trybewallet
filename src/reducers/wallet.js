@@ -6,7 +6,7 @@ const INITIAL_STATE = {
   },
 };
 
-export default function walletReducer(state = INITIAL_STATE, action) {
+export default function wallet(state = INITIAL_STATE, action) {
   if (action.type === 'ADD_WALLET') {
     return {
       wallet: {

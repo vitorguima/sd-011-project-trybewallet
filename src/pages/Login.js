@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { setEmailStore } from '../actions';
 
 // regex gerado em https://regex-generator.olafneumann.org/
 
 const regexToEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
 const regexToPassword = /[\w]{6}/;
 
-function Login() {
+function Login({ handleLogOn }) {
   const [isDisabled, setIsDisabled] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [validEmail, setValidEmail] = useState(false);
   const [validPassword, setValidPassword] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     if (validEmail && validPassword) {
@@ -33,9 +38,10 @@ function Login() {
 
   function handleLogin() {
     if (email === '' && password === '') {
-      return 'precisa ser digitado login e senha';
+      throw new Error('Email e senha precisam ser digitados');
     }
-    return 'implementar rota para /carteira';
+    handleLogOn(email);
+    history.push('/carteira');
   }
 
   return (
@@ -53,4 +59,12 @@ function Login() {
   );
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  handleLogOn: (email) => dispatch(setEmailStore(email)),
+});
+
+Login.propTypes = {
+  handleLogOn: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
