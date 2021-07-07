@@ -1,18 +1,14 @@
-// export const TESTE_EMAIL = 'TESTE_EMAIL';
-// export const TESTE_CURRENCIES = 'TESTE_CURRENCIES';
-// export const TESTE_EXPENCIES = 'TESTE_EXPENCIES';
+export const adicionaEmail = (payload) => ({
+  type: 'ADICIONA_EMAIL',
+  payload,
+});
 
-// const testeEmail = (payload) => ({
-//   type: TESTE_EMAIL,
-//   payload,
-// });
+export const testeCurrencies = (payload) => ({
+  type: 'TESTE_CURRENCIES',
+  payload,
+});
 
-// const testeCurrencies = (payload) => ({
-//   type: TESTE_CURRENCIES,
-//   payload,
-// });
-
-// const testeExpencies = (payload) => ({
-//   type: TESTE_EXPENCIES,
-//   payload,
-// });
+export const testeExpencies = (payload) => ({
+  type: 'TESTE_EXPENCIES',
+  payload,
+});

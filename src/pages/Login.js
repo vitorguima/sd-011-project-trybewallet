@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { adicionaEmail } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -24,6 +27,8 @@ class Login extends React.Component {
   }
 
   render() {
+    const { atualizaEmail } = this.props;
+    const { email } = this.state;
     return (
       <form>
         <input
@@ -36,10 +41,22 @@ class Login extends React.Component {
           placeholder="Insira sua senha"
           onChange={ (e) => this.setState({ senha: e.target.value }) }
         />
-        <button type="submit" disabled={ this.verifyEmailAndPassword() }>Entrar</button>
+        <Link to="/carteira">
+          <button
+            type="button"
+            disabled={ this.verifyEmailAndPassword() }
+            onClick={ () => atualizaEmail(email) }
+          >
+            Entrar
+          </button>
+        </Link>
       </form>
     );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  atualizaEmail: (email) => dispatch(adicionaEmail(email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
