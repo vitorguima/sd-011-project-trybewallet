@@ -24,7 +24,7 @@ class Wallet extends React.Component {
             <input type="text" name="descrição" id="description" />
           </label>
           <label htmlFor="coinType">
-            coinType
+            Moeda
             <select id="coinType">
               <option>BRL</option>
               <option>USD</option>
