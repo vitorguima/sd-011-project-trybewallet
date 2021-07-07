@@ -88,6 +88,7 @@ describe('2 - Realize as seguintes verificações nos campos de email, senha e b
 
     userEvent.type(email, VALID_EMAIL);
     userEvent.type(senha, VALID_PASSWORD);
+    console.log(button)
     expect(button).toBeEnabled();
   });
 });
