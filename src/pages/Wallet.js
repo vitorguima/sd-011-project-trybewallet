@@ -8,6 +8,8 @@ class Wallet extends React.Component {
     return (
       <header>
         <strong data-testid="email-field">{userEmail}</strong>
+        <p data-testid="total-field">0</p>
+        <p data-testid="header-currency-field">BRL</p>
       </header>
     );
   }
