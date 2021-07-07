@@ -1,4 +1,4 @@
-// import * as actions from '../actions';
+import * as actions from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -7,8 +7,8 @@ const INITIAL_STATE = {
 
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-  // case actions.SEND_SUBMIT:
-  //   return { ...state, email: action.payload };
+  case actions.REQUEST_API_SUCCESS:
+    return { ...state, currencies: action.payload };
   default:
     return state;
   }
