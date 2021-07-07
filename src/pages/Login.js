@@ -42,12 +42,12 @@ class Login extends React.Component {
         <section className="App-input">
           <input
             type="email"
-            data-testing="email-input"
+            data-testid="email-input"
             onChange={ this.handleOnChange }
           />
           <input
             type="password"
-            data-testing="password-input"
+            data-testid="password-input"
             onChange={ this.handleOnChange }
           />
           <Link
