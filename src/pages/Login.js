@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux'
-import { getUserEmail } from '../actions/userActions'
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { getUserEmail } from '../actions/userActions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -21,11 +22,10 @@ class Login extends React.Component {
     });
   }
 
- // Para esta etapa eu utilizei como base as informações abaixo:
- // https://stackoverflow.com/questions/59625783/regular-expression-validation-in-react-js-for-input
- // https://stackoverflow.com/questions/39356826/how-to-check-if-it-a-text-input-has-a-valid-email-format-in-reactjs/39425165
-  
- ableButton() {
+  // Para esta etapa eu utilizei como base as informações abaixo:
+  // Fonte: https://stackoverflow.com/questions/59625783/regular-expression-validation-in-react-js-for-input
+  // Fonte: https://stackoverflow.com/questions/39356826/how-to-check-if-it-a-text-input-has-a-valid-email-format-in-reactjs/39425165
+  ableButton() {
     const { email, password } = this.state;
     const regexEmail = /^[ ]*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[ ]*$/i;
     const minPassword = 6;
@@ -36,33 +36,39 @@ class Login extends React.Component {
 
   render() {
     const { email, password } = this.state;
-    const { userAction} = this.props;
+    const { userAction } = this.props;
     return (
       <div>
         <h2>Login</h2>
         <form>
           <label htmlFor="email-input">
             <input
+              data-testid="email-input"
               onChange={ this.handleChanges }
               placeholder="Insira o seu email"
               type="text"
-              data-testid="email-input"
               name="email"
               value={ email }
             />
           </label>
           <label htmlFor="password-input">
             <input
+              data-testid="password-input"
               onChange={ this.handleChanges }
               placeholder="Insira a sua senha"
               type="password"
-              data-testid="password-input"
               name="password"
               value={ password }
             />
           </label>
           <Link to="/carteira">
-            <button type="submit" disabled={ this.ableButton() }  onClick={() => userAction(email)}>Entrar</button>
+            <button
+              type="button"
+              disabled={ this.ableButton() }
+              onClick={ () => userAction(email) }
+            >
+              Entrar
+            </button>
           </Link>
         </form>
 
@@ -71,8 +77,11 @@ class Login extends React.Component {
   }
 }
 const mapDispatchToProps = (dispatch) => ({
-  userAction: (payload) => dispatch(getUserEmail(payload))
+  userAction: (payload) => dispatch(getUserEmail(payload)),
 });
 
-export default connect (null, mapDispatchToProps)(Login);
-// requisito 1
+export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  userAction: PropTypes.func.isRequired,
+};
