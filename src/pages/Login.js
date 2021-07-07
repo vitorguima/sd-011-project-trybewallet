@@ -6,7 +6,7 @@ class Login extends React.Component {
       <div>
         <input type="text" data-testid="email-input" placeholder="Email" />
         <input type="text" data-testid="password-input" placeholder="Password" />
-        <button>Entrar</button>
+        <button type="button">Entrar</button>
       </div>
     );
   }
