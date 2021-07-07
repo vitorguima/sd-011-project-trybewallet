@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 export default class Login extends Component {
   constructor() {
@@ -60,9 +61,11 @@ export default class Login extends Component {
           value={ password }
           placeholder="Digite sua senha"
         />
-        <button disabled={ disabled } type="button">
-          Entrar
-        </button>
+        <Link to="/carteira">
+          <button disabled={ disabled } type="button">
+            Entrar
+          </button>
+        </Link>
       </div>
     );
   }
