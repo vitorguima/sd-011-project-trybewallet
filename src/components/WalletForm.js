@@ -23,12 +23,12 @@ class WalletForm extends Component {
         <label htmlFor="moeda">
           Moeda:
           <select id="moeda">
-            <option value="test">Teste</option>
+            <option value="dinheiro">Dinheiro</option>
           </select>
         </label>
         <label htmlFor="metodo-de-pagamento">
           Método de pagamento:
-          <select>
+          <select id="metodo-de-pagamento">
             <option value="dinheiro">Dinheiro</option>
             <option value="cartao-de-credito">Cartão de crédito</option>
             <option value="cartao-de-debito">Cartão de débito</option>
@@ -36,7 +36,7 @@ class WalletForm extends Component {
         </label>
         <label htmlFor="categoria">
           Tag:
-          <select>
+          <select id="categoria">
             <option value="alimentacao">Alimentação</option>
             <option value="lazer">Lazer</option>
             <option value="trabalho">Trabalho</option>
