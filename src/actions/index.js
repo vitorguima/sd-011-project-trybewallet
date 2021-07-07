@@ -1,7 +1,7 @@
 // Coloque aqui suas actions
-export const CREATE_EMAIL = 'CORRECT_EMAIL';
+export const CREATE_USER = 'CREATE_USER';
 
-export const userEmail = (email) => ({
-  type: CREATE_EMAIL,
+export const setUserEmail = (email) => ({
+  type: CREATE_USER,
   email,
 });
