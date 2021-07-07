@@ -11,22 +11,26 @@ class Login extends React.Component {
     this.state = {
       email: '',
     };
+
+    this.btnState = this.btnState.bind(this);
+  }
+
+  btnState() {
+    const form = document.getElementById('login-form');
+    const btnSubmit = document.getElementById('submit-btn');
+    btnSubmit.disabled = !form.checkValidity();
   }
 
   render() {
-    function btnState() {
-      const form = document.getElementById('login-form');
-      const btnSubmit = document.getElementById('submit-btn');
-      btnSubmit.disabled = !form.checkValidity();
-    }
     const { dispatchEmail } = this.props;
     const { email } = this.state;
     return (
       <div>
-        <form id="login-form" onChange={ btnState }>
+        <form id="login-form" onChange={ this.btnState }>
           <label htmlFor="login-email">
             Login
             <input
+              name="email"
               type="email"
               data-testid="email-input"
               className="login-email"
@@ -40,15 +44,15 @@ class Login extends React.Component {
               type="password"
               data-testid="password-input"
               className="login-pass"
-              minLength="6"
+              pattern=".{6,}"
               required
             />
           </label>
           <Link to="/carteira">
             <button
-              type="submit"
+              type="button"
               id="submit-btn"
-              onClick={ dispatchEmail(email) }
+              onClick={ dispatchEmail(email) } // se mudar para arrow para o erro mas quebra o teste
               disabled
             >
               Entrar
