@@ -1,19 +1,3 @@
-#### 1. Crie uma página inicial de login com os seguintes campos e características:
-
-- A rota para esta página deve ser ‘/’.
-
-- Você deve criar um local para que a pessoa usuária insira seu email e senha. Utilize o atributo `data-testid="email-input"` para o email e `data-testid="password-input"` para a senha.
-
-- Crie um botão com o texto ‘Entrar’.
-
-O que será testado:
-
-```
-- A rota para esta página deve ser "/"
-- Existe um local para que o usuário insira seu email e senha
-- Existe um botão com o texto "Entrar"
-```
-
 #### 2. Realize as seguintes verificações nos campos de email, senha e botão:
 
 - O email está no formato válido, como 'alguem@alguem.com'.
