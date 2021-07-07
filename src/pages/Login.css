@@ -1,14 +1,14 @@
 .loginContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
   align-items: center;
   background-color: #f2f2f2;
-  width: 20vw;
-  height: 20vh;
-  padding: 20px;
   border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 20vh;
+  justify-content: space-evenly;
   margin: auto;
+  padding: 20px;
+  width: 20vw;
 }
 
 .loginForm {
@@ -21,10 +21,10 @@
 }
 
 .formLabel > input {
+  background-color: rgba(255, 255, 255, 0);
   border: none;
   border-bottom: 1px solid gray;
   font-size: 18px;
-  background-color: rgba(255, 255, 255, 0);
 }
 
 .formLabel > input:focus {
