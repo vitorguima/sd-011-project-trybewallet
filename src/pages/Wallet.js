@@ -18,7 +18,8 @@ class Wallet extends React.Component {
 
   render() {
     const { userEmail, allCurrencies } = this.props;
-    const currencies = Object.keys(allCurrencies).filter((e) => e !== 'USDT');
+    const currencies = Object.keys(allCurrencies).filter((currency) => currency !== 'USDT'
+     && currency !== 'DOGE');
     return (
       <div>
         <header>
@@ -40,7 +41,6 @@ class Wallet extends React.Component {
             <select id="currency" name="currency" value="BRL">
               { currencies.map((currency,
                 index) => <option key={ index } value={ currency }>{currency}</option>)}
-              <option value="BRL">BRL</option>
             </select>
           </label>
           <label htmlFor="payment">
