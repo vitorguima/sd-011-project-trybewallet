@@ -26,7 +26,7 @@ class Login extends React.Component {
   render() {
     const { email, password } = this.state;
     const { userEmail } = this.props;
-    const passwordLength = 8;
+    const passwordLength = 6;
 
     const validationEmail = () => {
       const regexEmail = /\S+@\S+\.\S+/;
