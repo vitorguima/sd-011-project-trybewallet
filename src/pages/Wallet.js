@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import WalletForm from '../components/walletForm';
 
 class Wallet extends React.Component {
   render() {
     const { userEmail } = this.props;
     return (
-      <div>
+      <>
         <header>
           <div>
             <div data-testid="email-field">
@@ -20,7 +21,10 @@ class Wallet extends React.Component {
             </div>
           </div>
         </header>
-      </div>
+        <main>
+          <WalletForm />
+        </main>
+      </>
     );
   }
 }
