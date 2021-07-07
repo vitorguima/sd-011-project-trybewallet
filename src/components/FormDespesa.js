@@ -1,50 +1,111 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class FormDespesa extends Component {
+  constructor() {
+    super();
+    this.state = {
+      valor: '',
+      descricao: '',
+      moeda: '',
+      metod: '',
+      tag: '',
+    };
+    this.handleInput = this.handleInput.bind(this);
+  }
+
+  handleInput({ target }) {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    });
+  }
+
+  renderForm1() {
+    const { valor, descricao, moeda } = this.state;
+    const { currencies } = this.props;
+    const moedas = Object.keys(currencies).filter((code) => code !== 'USDT');
+    return (
+      <form>
+        <label htmlFor="valor">
+          Valor
+          <input
+            type="number"
+            id="valor"
+            name="valor"
+            value={ valor }
+            onChange={ this.handleInput }
+          />
+        </label>
+        <br />
+        <label htmlFor="descricao">
+          Descrição
+          <br />
+          <textarea
+            name="descricao"
+            id="descricao"
+            value={ descricao }
+            onChange={ this.handleInput }
+          />
+        </label>
+        <br />
+        <label htmlFor="moeda">
+          Moeda
+          <select name="moeda" id="moeda" onChange={ this.handleInput } value={ moeda }>
+            {moedas.map((res, i) => <option key={ i } value={ res }>{res}</option>)}
+          </select>
+        </label>
+      </form>
+    );
+  }
+
+  renderForm2() {
+    const { metod, tag } = this.state;
+    return (
+      <form>
+        <br />
+        <label htmlFor="metod">
+          Método de pagamento
+          <select name="metod" id="metod" value={ metod } onChange={ this.handleInput }>
+            <option>Dinheiro</option>
+            <option>Cartão de crédito</option>
+            <option>Cartão de débito</option>
+          </select>
+        </label>
+        <br />
+        <label htmlFor="tag">
+          Tag
+          <select name="tag" id="tag" value={ tag } onChange={ this.handleInput }>
+            <option>Alimentação</option>
+            <option>Lazer</option>
+            <option>Trabalho</option>
+            <option>Transporte</option>
+            <option>Saúde</option>
+          </select>
+        </label>
+      </form>
+    );
+  }
+
   render() {
     return (
       <div>
-        <form>
-          <label htmlFor="valor">
-            Valor
-            <input type="number" name="valor" />
-          </label>
-          <br />
-          <label htmlFor="descricao">
-            Descrição
-            <input type="text" name="descricao" />
-          </label>
-          <br />
-          <label htmlFor="moeda">
-            Moeda
-            <select name="moeda">
-              <option>BRL</option>
-            </select>
-          </label>
-          <br />
-          <label htmlFor="method">
-            Método de pagamento
-            <select name="method">
-              <option>Dinheiro</option>
-              <option>Cartão de crédito</option>
-              <option>Cartão de débito</option>
-            </select>
-          </label>
-          <br />
-          <label htmlFor="tag">
-            Tag
-            <select name="tag">
-              <option>Alimentação</option>
-              <option>Lazer</option>
-              <option>Trabalho</option>
-              <option>Transporte</option>
-              <option>Saúde</option>
-            </select>
-          </label>
-        </form>
+        {this.renderForm1()}
+        {this.renderForm2()}
+        <br />
+        <button type="button">Adicionar despesa</button>
       </div>
     );
   }
 }
 
-export default FormDespesa;
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+export default connect(mapStateToProps)(FormDespesa);
+
+FormDespesa.propTypes = {
+  currencies: PropTypes.arrayOf(Object).isRequired,
+};

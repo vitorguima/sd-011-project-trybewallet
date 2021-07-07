@@ -9,7 +9,25 @@ export const loginInputs = ({ target }) => {
   };
 };
 
-export const wallet = (payload) => ({
-  type: 'WALLET',
+export const requestMoedas = (payload) => ({
+  type: 'FETCH_MOEDAS',
   payload,
 });
+
+export const requestMoedasSucess = (payload) => ({
+  type: 'FETCH_SUCESS',
+  payload,
+});
+
+export const requestMoedasError = (payload) => ({
+  type: 'FETCH_ERROR',
+  payload,
+});
+
+export const fetchMoedas = () => (dispatch) => {
+  dispatch(requestMoedas());
+  return fetch('https://economia.awesomeapi.com.br/json/all')
+    .then((result) => result.json())
+    .then((data) => dispatch(requestMoedasSucess(data)))
+    .catch((error) => dispatch(requestMoedasError(error.message)));
+};
