@@ -1,16 +1,31 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { Redirect } from 'react-router';
+import { addEmail } from '../actions';
 import '../CSS/Login.css';
 
 class Login extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
+      redirect: false,
       invalidAcess: true,
       email: '',
       password: '',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.checkAcess = this.checkAcess.bind(this);
+  }
+
+  handleClick() {
+    const { email } = this.state;
+    const { save } = this.props;
+    save(email);
+    this.setState({
+      redirect: true,
+    });
   }
 
   handleChange(event) {
@@ -41,7 +56,10 @@ class Login extends React.Component {
   }
 
   render() {
-    const { invalidAcess } = this.state;
+    const { invalidAcess, redirect } = this.state;
+    if (redirect) {
+      return <Redirect to="/carteira" />;
+    }
     return (
       <div className="Login-Page">
         <h1>The Wallet - Login</h1>
@@ -70,6 +88,7 @@ class Login extends React.Component {
             type="button"
             className="Login-Button"
             disabled={ invalidAcess }
+            onClick={ this.handleClick }
           >
             Entrar
           </button>
@@ -78,4 +97,12 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  save: (email) => dispatch(addEmail(email)),
+});
+
+Login.propTypes = {
+  save: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);

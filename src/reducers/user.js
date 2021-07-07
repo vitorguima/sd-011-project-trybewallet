@@ -1,6 +1,18 @@
 // Esse reducer será responsável por tratar as informações da pessoa usuária
 const INITIAL_STATE = {
-  user: {
-    email: '',
-  },
+  email: '',
 };
+
+function saveEmail(state = INITIAL_STATE, { type, payload }) {
+  switch (type) {
+  case 'ADD_EMAIL':
+    return {
+      ...state,
+      email: payload,
+    };
+  default:
+    return state;
+  }
+}
+
+export default saveEmail;
