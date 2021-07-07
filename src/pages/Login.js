@@ -1,4 +1,5 @@
 import React from 'react';
+import '../css/login.css';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { requestLogin } from '../actions';
@@ -33,7 +34,6 @@ class Login extends React.Component {
   }
 
   submitEmail(email) {
-    // const { submit } = this.props;
     const { history, submit } = this.props;
     submit(email);
     history.push('/carteira');
@@ -42,10 +42,12 @@ class Login extends React.Component {
   render() {
     const { buttonDisabled, email, password } = this.state;
     return (
-      <div>
+      <div className="login-container">
+        <h1>Login</h1>
         <label htmlFor="email-input">
-          Email
           <input
+            placeholder="Email"
+            id="email-input"
             data-testid="email-input"
             type="email"
             name="email"
@@ -54,8 +56,9 @@ class Login extends React.Component {
           />
         </label>
         <label htmlFor="password-input">
-          Senha
           <input
+            placeholder="Password"
+            id="password-input"
             data-testid="password-input"
             type="password"
             name="password"
@@ -64,6 +67,7 @@ class Login extends React.Component {
           />
         </label>
         <button
+          id="button-container"
           type="button"
           disabled={ buttonDisabled }
           onClick={ () => this.submitEmail(email) }
