@@ -7,7 +7,7 @@ class HeaderList extends Component {
         <tr className="line">
           <th className="column"> Descrição</th>
           <th className="column"> Tag</th>
-          <th className="column"> Método de Pagamento</th>
+          <th className="column"> Método de pagamento</th>
           <th className="column">Valor</th>
           <th className="column"> Moeda</th>
           <th className="column"> Câmbio utilizado</th>

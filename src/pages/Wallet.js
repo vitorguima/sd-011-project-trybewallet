@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchAPIAction, setExpenseAction, delExpenseAction } from '../actions';
+import { fetchAPIAction, setExpenseAction } from '../actions';
 import Header from '../components/Header';
 import HeaderList from '../components/HeaderList';
 import InValue from '../components/formsComp/InValue';
@@ -9,6 +9,7 @@ import InDescript from '../components/formsComp/InDescript';
 import SeCurrency from '../components/formsComp/SeCurrency';
 import SeMethod from '../components/formsComp/SeMethod';
 import SeTag from '../components/formsComp/SeTag';
+import BtDelet from '../components/BtDelet';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -77,7 +78,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, total, del } = this.props;
+    const { email, total } = this.props;
     const { value, description, currency, method, tag } = this.state;
     return (
       <div>
@@ -100,7 +101,6 @@ class Wallet extends React.Component {
           <tbody>
             {total.map((expense, index) => (
               <tr key={ index } className="line">
-                {console.log(expense)}
                 <td className="column">{expense.description}</td>
                 <td className="column">{expense.tag}</td>
                 <td className="column">{expense.method}</td>
@@ -110,13 +110,7 @@ class Wallet extends React.Component {
                 <td className="column">{this.totalExchange(expense)}</td>
                 <td className="column">Real</td>
                 <td className="column">
-                  <button
-                    data-testid="delete-btn"
-                    type="button"
-                    onClick={ () => del(expense.id) }
-                  >
-                    Excluir
-                  </button>
+                  <BtDelet id={ expense.id } />
                 </td>
               </tr>))}
           </tbody>
@@ -135,7 +129,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   requestAPI: () => dispatch(fetchAPIAction()),
   add: (expense) => dispatch(setExpenseAction(expense)),
-  del: (id) => dispatch(delExpenseAction(id)),
 });
 
 Wallet.propTypes = {
