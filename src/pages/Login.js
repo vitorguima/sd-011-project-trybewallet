@@ -27,7 +27,7 @@ class Login extends React.Component {
 
   checkCredentials() {
     const { email, password } = this.state;
-    const regExp = /\w+@\w+.com?/;
+    const regExp = /\w+@\w+.[a-z][a-z][a-z]?/;
     const emailValidation = regExp.test(email);
     const minPasswordLength = 5;
     const passwordValidation = password.length >= minPasswordLength;
