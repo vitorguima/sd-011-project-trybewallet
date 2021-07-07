@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import sendEmail from '../actions/index';
 
 class Login extends Component {
   constructor() {
@@ -73,7 +74,7 @@ class Login extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  email: (email) => dispatch(minhaAction(email)),
+  email: (email) => dispatch(sendEmail(email)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
