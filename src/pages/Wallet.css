@@ -1,3 +1,23 @@
 .walletHeader {
-  color: #f2f2f2;
+  color: #f6fafb;
+}
+
+.stringDetail {
+  color: #d49c6b;
+}
+
+.walletBody {
+  align-items: center;
+  background-color: #5e6668;
+  display: flex;
+  height: 4vh;
+  justify-content: center;
+}
+
+.walletForm {
+  align-items: flex-start;
+  color: #f6fafb;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
 }

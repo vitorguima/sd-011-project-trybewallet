@@ -2,6 +2,7 @@ import React from 'react';
 import './Wallet.css';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import WalletForm from '../components/WalletForm';
 
 class Wallet extends React.Component {
   render() {
@@ -9,7 +10,10 @@ class Wallet extends React.Component {
     return (
       <div>
         <header className="walletHeader">
-          <h1>TrybeWallet</h1>
+          <h1>
+            Trybe
+            <span className="stringDetail">Wallet</span>
+          </h1>
           <h3>
             Seja bem vindo:&nbsp;
             <span data-testid="email-field">{email}</span>
@@ -19,6 +23,10 @@ class Wallet extends React.Component {
             <span data-testid="header-currency-field">BRL</span>
           </h5>
         </header>
+
+        <section className="walletBody">
+          <WalletForm />
+        </section>
       </div>
     );
   }
