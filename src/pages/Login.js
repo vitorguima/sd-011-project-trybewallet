@@ -15,8 +15,7 @@ class Login extends React.Component {
     const { target: { value, name } } = event;
     this.setState({
       [name]: value,
-    });
-    this.controlButton();
+    }, () => this.controlButton());
   }
 
   verifyValidEmail(email) {
