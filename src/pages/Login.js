@@ -18,6 +18,7 @@ class Login extends React.Component {
 
   handleChange({ target: { value, name } }) {
     const regexEmail = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+    // crédito regex https://pt.stackoverflow.com/questions/1386/express%C3%A3o-regular-para-valida%C3%A7%C3%A3o-de-e-mail
     this.setState({
       [name]: value,
     }, () => {
