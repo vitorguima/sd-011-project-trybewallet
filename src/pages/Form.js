@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 export default class Form extends Component {
   render() {
+    const { coins } = this.props;
+    console.log(coins);
     return (
       <form>
         <label htmlFor="value">
@@ -15,7 +17,8 @@ export default class Form extends Component {
         <label htmlFor="coin">
           Moeda
           <select id="coin" name="coin">
-            <option>0</option>
+            {/* { console.log(coins)} */}
+            {/* <option>0</option> */}
           </select>
         </label>
         <label htmlFor="payment-method">

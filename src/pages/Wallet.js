@@ -2,10 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Form from './Form';
+import getCoins from '../services/CoinApi';
 
 class Wallet extends React.Component {
+  componentDidMount() {
+    getCoins();
+  }
+
   render() {
-    const { email } = this.props;
+    const { email, coins } = this.props;
+    console.log(coins);
     return (
       <main>
         <header>
@@ -15,7 +21,7 @@ class Wallet extends React.Component {
           <h4 data-testid="header-currency-field">BRL</h4>
         </header>
         <section className="form">
-          <Form />
+          <Form coins={ coins } />
         </section>
       </main>
     );
@@ -28,6 +34,7 @@ Wallet.propTypes = {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  coins: state.wallet.currencies,
 });
 
 export default connect(mapStateToProps)(Wallet);
