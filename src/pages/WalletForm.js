@@ -5,27 +5,27 @@ export default class WalletForm extends Component {
     return (
       <form>
         <label htmlFor="valor">
-          Valor
+          Valor:
           <input
             name="valor"
             type="number"
           />
         </label>
         <label htmlFor="descricao">
-          Descrição
+          Descrição:
           <input
             name="descricao"
             type="string"
           />
         </label>
         <label htmlFor="moeda">
-          Moeda
+          Moeda:
           <select>
             <option value="test">Teste</option>
           </select>
         </label>
         <label htmlFor="metodo-de-pagamento">
-          Método de pagamento
+          Método de pagamento:
           <select>
             <option value="dinheiro">Dinheiro</option>
             <option value="cartao-de-credito">Cartão de crédito</option>
@@ -33,7 +33,7 @@ export default class WalletForm extends Component {
           </select>
         </label>
         <label htmlFor="categoria">
-          Tag
+          Tag:
           <select>
             <option value="alimentacao">Alimentação</option>
             <option value="lazer">Lazer</option>
