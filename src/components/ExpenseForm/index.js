@@ -16,6 +16,13 @@ const tagOptions = [
   { label: 'Saúde', value: 'health' },
 ];
 
+const baseURL = 'https://economia.awesomeapi.com.br/json/all';
+
+const currencyCodes = [
+  'USD', 'CAD', 'EUR', 'GBP', 'ARS', 'BTC', 'LTC',
+  'JPY', 'CHF', 'AUD', 'CNY', 'ILS', 'ETH', 'XRP',
+];
+
 export default class ExpenseForm extends React.Component {
   constructor() {
     super();
@@ -26,9 +33,14 @@ export default class ExpenseForm extends React.Component {
       currency: '',
       payment: paymentOptions[0].value,
       tag: tagOptions[0].value,
+      currencyOptions: [],
     };
 
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    this.fetchCurrencies();
   }
 
   handleChange({ name, value }) {
@@ -38,8 +50,33 @@ export default class ExpenseForm extends React.Component {
     });
   }
 
+  async fetchCurrencies() {
+    const response = await fetch(baseURL);
+    const data = await response.json();
+    const currencies = Object.entries(data);
+
+    const filteredCurrencies = currencies.reduce(
+      (filtered, [key, value]) => {
+        if (currencyCodes.includes(key)) {
+          filtered.push({
+            label: value.code,
+            value: value.code,
+          });
+        }
+
+        return filtered;
+      },
+      [],
+    );
+
+    this.setState({
+      currency: filteredCurrencies[0].value,
+      currencyOptions: filteredCurrencies,
+    });
+  }
+
   render() {
-    const { value, description, currency, payment, tag } = this.state;
+    const { value, description, currency, payment, tag, currencyOptions } = this.state;
 
     return (
       <form>
@@ -62,7 +99,7 @@ export default class ExpenseForm extends React.Component {
           id="currency"
           label="Moeda"
           name="currency"
-          options={ [{ label: '-', value: '-' }] }
+          options={ currencyOptions }
           value={ currency }
           onChange={ this.handleChange }
         />
