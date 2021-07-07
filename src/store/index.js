@@ -1,6 +1,7 @@
 const wallet = {
   user: {
     email: '',
+    password: '',
   },
   wallet: {
     currencies: [],
