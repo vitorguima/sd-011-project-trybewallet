@@ -124,7 +124,7 @@ class Login extends React.Component {
         >
           Entrar
         </button>
-        { buttonClicked && <Redirect to="/wallet" />}
+        { buttonClicked && <Redirect to="/carteira" />}
       </form>
     );
   }
