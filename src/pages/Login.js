@@ -10,6 +10,11 @@ export default class Login extends Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.verifyInputs = this.verifyInputs.bind(this);
+  }
+
+  componentDidUpdate() {
+    this.verifyInputs();
   }
 
   verifyInputs() {
