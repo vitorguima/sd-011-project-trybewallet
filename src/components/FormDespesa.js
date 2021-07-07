@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { mountExpenses } from '../actions';
+import { mountExpenses, fetchMoedas } from '../actions';
 
 class FormDespesa extends Component {
   constructor() {
@@ -15,6 +15,11 @@ class FormDespesa extends Component {
       id: 0,
     };
     this.handleInput = this.handleInput.bind(this);
+  }
+
+  componentDidMount() {
+    const { dispatchFetchMoedas } = this.props;
+    dispatchFetchMoedas();
   }
 
   handleInput({ target }) {
@@ -55,7 +60,7 @@ class FormDespesa extends Component {
         <label htmlFor="moeda">
           Moeda
           <select name="moeda" id="moeda" onChange={ this.handleInput } value={ moeda }>
-            {moedas.map((res, i) => <option key={ i } value={ res }>{res}</option>)}
+            {moedas.map((res, i) => <option id={ i } key={ res } value={ res }>{res}</option>)}
           </select>
         </label>
       </form>
@@ -124,10 +129,12 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   MountExpenses: (state) => dispatch(mountExpenses(state)),
+  dispatchFetchMoedas: (state) => dispatch(fetchMoedas(state)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormDespesa);
 
 FormDespesa.propTypes = {
   currencies: PropTypes.arrayOf(String).isRequired,
+  dispatchFetchMoedas: PropTypes.func.isRequired,
 };

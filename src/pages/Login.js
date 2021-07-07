@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { loginInputs, fetchMoedas } from '../actions';
+import { loginInputs } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -29,7 +29,7 @@ class Login extends React.Component {
   }
 
   render() {
-    const { dispatchHandleInput, email, password, dispatchFetchMoedas } = this.props;
+    const { dispatchHandleInput, email, password } = this.props;
     const { disable } = this.state;
     return (
       <div>
@@ -62,7 +62,6 @@ class Login extends React.Component {
           <button
             type="button"
             disabled={ disable }
-            onClick={ dispatchFetchMoedas }
           >
             Entrar
           </button>
@@ -74,7 +73,6 @@ class Login extends React.Component {
 
 Login.propTypes = {
   dispatchHandleInput: PropTypes.func.isRequired,
-  dispatchFetchMoedas: PropTypes.func.isRequired,
   email: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
 };
@@ -86,7 +84,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchHandleInput: (state) => dispatch(loginInputs(state)),
-  dispatchFetchMoedas: (state) => dispatch(fetchMoedas(state)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
