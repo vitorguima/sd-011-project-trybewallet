@@ -9,7 +9,7 @@ function App() {
         <Route to path="/" component={ Login } />
       </Switch>
     </div>
-  )
+  );
 }
 
 export default App;
