@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { setUserEmail } from '../actions';
 
@@ -41,32 +42,40 @@ class Login extends React.Component {
 
     return (
       <div>
-        <input
-          type="email"
-          name="email"
-          value={ email }
-          onChange={ this.handleInputChange }
-          data-testid="email-input"
-          placeholder="Login"
-        />
-
-        <input
-          type="password"
-          name="password"
-          value={ password }
-          onChange={ this.handleInputChange }
-          data-testid="password-input"
-          placeholder="Senha"
-          required
-        />
-
-        <button
-          type="submit"
-          onClick={ this.clickSubmit }
-          disabled={ disabled }
-        >
-          Entrar
-        </button>
+        <label htmlFor="email">
+          Email
+          <input
+            type="email"
+            name="email"
+            value={ email }
+            onChange={ this.handleInputChange }
+            data-testid="email-input"
+            id="email"
+            placeholder="Login"
+          />
+        </label>
+        <label htmlFor="password">
+          Senha
+          <input
+            type="password"
+            name="password"
+            value={ password }
+            onChange={ this.handleInputChange }
+            data-testid="password-input"
+            id="password"
+            placeholder="Senha"
+            required
+          />
+        </label>
+        <Link to="/carteira">
+          <button
+            type="submit"
+            onClick={ this.clickSubmit }
+            disabled={ disabled }
+          >
+            Entrar
+          </button>
+        </Link>
       </div>
     );
   }
