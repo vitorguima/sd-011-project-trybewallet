@@ -6,6 +6,7 @@ export default class Login extends Component {
     this.state = {
       email: '',
       password: '',
+      disabled: true,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -19,7 +20,7 @@ export default class Login extends Component {
   }
 
   render() {
-    const { email, password } = this.state;
+    const { email, password, disabled } = this.state;
     return (
       <div>
         <input
@@ -38,7 +39,7 @@ export default class Login extends Component {
           value={ password }
           placeholder="Digite sua senha"
         />
-        <button type="button">
+        <button disabled={ disabled } type="button">
           Entrar
         </button>
       </div>
