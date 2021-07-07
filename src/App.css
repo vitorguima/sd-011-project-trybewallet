@@ -39,3 +39,21 @@
     transform: rotate(360deg);
   }
 }
+
+.table {
+  display: table;
+  margin: auto;
+  width: 197vh;
+}
+
+.line {
+  display: table-row;
+}
+
+.column {
+  text-align: center;
+  border: solid black 1px;
+  height: 40px;
+  width: 12%;
+  display: table-cell;
+}
