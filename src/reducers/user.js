@@ -1,5 +1,5 @@
 import { USER_INFO } from '../actions';
-const initialState = { email: '' };
+const initialState = { email: 'vrau' };
 
 const userReducer = (state = initialState, action) => {
   const { type, payload } = action;

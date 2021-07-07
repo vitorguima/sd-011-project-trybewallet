@@ -9,7 +9,7 @@ function App() {
     <main>
       <Switch>
         <Route exact path="/" render={(props) => <Login {...props} />} />
-        <Route exact path="/clients" render={(props) => <Wallet {...props} />} />
+        <Route exact path="/carteira" render={(props) => <Wallet {...props} />} />
         <Route component={NotFound} />
       </Switch>
     </main>

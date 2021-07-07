@@ -14,10 +14,11 @@ main {
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  margin-top: 10rem;
+  width: 100%;
 }
 
 .login-form {
+  margin-top: 10rem;
   border: 2px solid grey;
   padding: 2rem;
   border-radius: 8px;
@@ -25,4 +26,34 @@ main {
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
+}
+
+.wallet {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+}
+
+nav {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  background-color: black;
+  color: white;
+}
+
+.navInfo {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.navInfo div {
+  padding-left: 2rem;
+}
+
+nav img {
+  margin: 5px;
+  width: 50px;
+  border-radius: 8px;
 }
