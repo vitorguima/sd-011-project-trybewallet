@@ -51,6 +51,7 @@ class Wallet extends React.Component {
 
             </select>
           </label>
+          
         </form>
 
       </>
