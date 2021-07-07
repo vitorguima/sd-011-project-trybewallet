@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export default class WalletForm extends Component {
+class WalletForm extends Component {
   render() {
     return (
       <form>
@@ -9,18 +9,20 @@ export default class WalletForm extends Component {
           <input
             name="valor"
             type="number"
+            id="valor"
           />
         </label>
         <label htmlFor="descricao">
           Descrição:
           <input
             name="descricao"
-            type="string"
+            type="text"
+            id="descricao"
           />
         </label>
         <label htmlFor="moeda">
           Moeda:
-          <select>
+          <select id="moeda">
             <option value="test">Teste</option>
           </select>
         </label>
@@ -46,3 +48,5 @@ export default class WalletForm extends Component {
     );
   }
 }
+
+export default WalletForm;
