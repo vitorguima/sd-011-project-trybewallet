@@ -3,7 +3,7 @@ import React from 'react';
 const LabelForm = () => (
   <form>
     <label htmlFor="valor">
-      valor
+      Valor
       <input type="text" id="valor" name="valor" />
     </label>
     <label htmlFor="descrição">
