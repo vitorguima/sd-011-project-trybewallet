@@ -23,7 +23,7 @@ class WalletForm extends Component {
         <label htmlFor="moeda">
           Moeda:
           <select id="moeda">
-            <option value="dinheiro">Dinheiro</option>
+            <option value="teste">Teste</option>
           </select>
         </label>
         <label htmlFor="metodo-de-pagamento">
