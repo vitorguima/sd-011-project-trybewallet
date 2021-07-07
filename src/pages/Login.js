@@ -7,6 +7,15 @@ export default class Login extends Component {
       email: '',
       password: '',
     };
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange({ target }) {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    });
   }
 
   render() {
