@@ -6,28 +6,39 @@ class FormDespesa extends Component {
       <div>
         <form>
           <label htmlFor="valor">
-            Valor:
+            Valor
             <input type="number" name="valor" />
           </label>
           <br />
           <label htmlFor="descricao">
-            Descrição:
+            Descrição
             <input type="text" name="descricao" />
           </label>
           <br />
           <label htmlFor="moeda">
-            Moeda:
+            Moeda
             <select name="moeda">
               <option>BRL</option>
             </select>
           </label>
           <br />
           <label htmlFor="method">
-            Método de pagamento:
+            Método de pagamento
             <select name="method">
               <option>Dinheiro</option>
               <option>Cartão de crédito</option>
               <option>Cartão de débito</option>
+            </select>
+          </label>
+          <br />
+          <label htmlFor="tag">
+            Tag
+            <select name="tag">
+              <option>Alimentação</option>
+              <option>Lazer</option>
+              <option>Trabalho</option>
+              <option>Transporte</option>
+              <option>Saúde</option>
             </select>
           </label>
         </form>
