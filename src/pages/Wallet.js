@@ -6,6 +6,7 @@ class Wallet extends React.Component {
       <header>
         <h1>TrybeWallet</h1>
         <h4 data-testid="email-field">{`Bem vindo: ${ email }`}</h4>
+        <h4 data-testid="total-field">0</h4>
       </header>
     );
   }
