@@ -4,10 +4,7 @@ import Header from './Header';
 class Wallet extends React.Component {
   render() {
     return (
-      <section>
-        alo
-        <Header />
-      </section>
+      <Header />
     );
   }
 }
