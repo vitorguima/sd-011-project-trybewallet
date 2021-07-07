@@ -12,8 +12,7 @@
   flex-direction: column;
 }
 
-.email-input,
-.password-input {
+.input {
   height: 30px;
   text-align: center;
   width: 400px;
@@ -24,5 +23,10 @@
   color: white;
   font-size: large;
   height: 30px;
+  margin-top: 10px;
   width: 200px;
+}
+
+.Login-Button:disabled {
+  background-color: thistle;
 }
