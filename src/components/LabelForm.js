@@ -7,7 +7,7 @@ const LabelForm = () => (
       <input type="text" id="valor" name="valor" />
     </label>
     <label htmlFor="descrição">
-      descrição
+      Descrição
       <input type="text" id="descrição" name="descrição" />
     </label>
     <label htmlFor="moeda">
