@@ -1,6 +1,6 @@
 const SEND_EMAIL = 'SEND_EMAIL';
 
-const sendEmail = (payload) => ({
+export const sendEmail = (payload) => ({
   type: SEND_EMAIL,
   payload,
 });
