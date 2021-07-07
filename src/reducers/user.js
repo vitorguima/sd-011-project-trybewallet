@@ -5,7 +5,7 @@ const INITIAL_STATE = {
   email: '',
 };
 
-function registerReducer(state = INITIAL_STATE, action) {
+function userReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
   case EMAIL:
     return {
@@ -17,4 +17,4 @@ function registerReducer(state = INITIAL_STATE, action) {
   }
 }
 
-export default registerReducer;
+export default userReducer;
