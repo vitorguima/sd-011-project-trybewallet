@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Redirect } from 'react-router-dom';
+
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -7,9 +9,11 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
+      isLoggedIn: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.validateEmail = this.validateEmail.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
   }
 
   handleChange({ target }) {
@@ -53,14 +57,21 @@ class Login extends React.Component {
     return (
       <button
         type="button"
+        onClick={ this.handleLogin }
       >
         Entrar
       </button>
     );
   }
 
+  handleLogin() {
+    this.setState(() => ({
+      isLoggedIn: true,
+    }));
+  }
+
   render() {
-    const { email, password } = this.state;
+    const { email, password, isLoggedIn } = this.state;
 
     return (
       <div className="login-wrapper">
@@ -83,6 +94,7 @@ class Login extends React.Component {
           />
         </form>
         {this.buttonValidation()}
+        {isLoggedIn ? <Redirect to="/carteira" /> : <p>Faça seu login</p>}
       </div>
     );
   }
