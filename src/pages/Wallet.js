@@ -2,16 +2,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Form from './Form';
-import getCoins from '../services/CoinApi';
+import { getCoins } from '../actions';
 
 class Wallet extends React.Component {
   componentDidMount() {
-    getCoins();
+    const { fetchApiCoins } = this.props;
+    fetchApiCoins();
   }
 
   render() {
-    const { email, coins } = this.props;
-    console.log(coins);
+    const { email, loading, coins } = this.props;
+    if (loading) {
+      return <div>Loading</div>;
+    }
     return (
       <main>
         <header>
@@ -34,7 +37,12 @@ Wallet.propTypes = {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  loading: state.wallet.isLoading,
   coins: state.wallet.currencies,
 });
 
-export default connect(mapStateToProps)(Wallet);
+const mapDispatchToProps = (dispatch) => ({
+  fetchApiCoins: () => dispatch(getCoins()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

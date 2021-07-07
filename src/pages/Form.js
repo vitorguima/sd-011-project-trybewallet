@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 export default class Form extends Component {
   render() {
     const { coins } = this.props;
-    console.log(coins);
     return (
       <form>
         <label htmlFor="value">
@@ -17,8 +16,9 @@ export default class Form extends Component {
         <label htmlFor="coin">
           Moeda
           <select id="coin" name="coin">
-            {/* { console.log(coins)} */}
-            {/* <option>0</option> */}
+            {coins.map((coin, index) => (
+              <option value={ coin } key={ index }>{coin}</option>
+            ))}
           </select>
         </label>
         <label htmlFor="payment-method">

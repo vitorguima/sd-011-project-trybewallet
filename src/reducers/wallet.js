@@ -14,7 +14,8 @@ function walletReducer(state = INITIAL_STATE, action) {
   case 'REQUEST_SUCESS':
     return {
       ...state,
-      currencies: [...state.currencies, action.payload],
+      isLoading: false,
+      currencies: Object.keys(action.payload).filter((coin) => coin !== 'USDT'),
     };
   case 'REQUEST_ERROR':
     return {

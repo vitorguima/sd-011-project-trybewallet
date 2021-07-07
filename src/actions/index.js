@@ -1,5 +1,3 @@
-import getCoins from '../services/CoinApi';
-
 const sendEmail = (payload) => ({
   type: 'SEND_EMAIL',
   payload,
@@ -7,9 +5,8 @@ const sendEmail = (payload) => ({
 
 export default sendEmail;
 
-export const requestCoin = (payload) => ({
+export const requestCoin = () => ({
   type: 'REQUEST_COIN',
-  payload,
 });
 
 export const requestCoinsSucess = (payload) => ({
@@ -22,10 +19,10 @@ export const requestCoinsError = (payload) => ({
   payload,
 });
 
-export const fetchCoins = () => (dispatch) => {
-  getCoins()
-    .then(
-      (coins) => dispatch(requestCoinsSucess(coins)),
-      (error) => dispatch(requestCoinsError(error.message)),
-    );
+export const getCoins = () => (dispatch) => {
+  dispatch(requestCoin());
+  return fetch('https://economia.awesomeapi.com.br/json/all')
+    .then((response) => response.json())
+    .then((data) => dispatch(requestCoinsSucess(data)))
+    .catch((error) => dispatch(requestCoinsError(error)));
 };
