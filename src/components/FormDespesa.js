@@ -60,7 +60,7 @@ class FormDespesa extends Component {
         <label htmlFor="moeda">
           Moeda
           <select name="moeda" id="moeda" onChange={ this.handleInput } value={ moeda }>
-            {moedas.map((res, i) => <option id={ i } key={ res } value={ res }>{res}</option>)}
+            {moedas.map((res, i) => <option key={ i } value={ res }>{res}</option>)}
           </select>
         </label>
       </form>
@@ -137,4 +137,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(FormDespesa);
 FormDespesa.propTypes = {
   currencies: PropTypes.arrayOf(String).isRequired,
   dispatchFetchMoedas: PropTypes.func.isRequired,
+  MountExpenses: PropTypes.func.isRequired,
 };
