@@ -23,7 +23,7 @@ export const receiveCurrencies = (currencie, expense) => ({
   expense,
 });
 
-export function fetchProducts() {
+export function fetchCurrencies() {
   return async (dispatch) => {
     dispatch(requestQuoteApi());
     const response = await fetch('https://economia.awesomeapi.com.br/json/all');
