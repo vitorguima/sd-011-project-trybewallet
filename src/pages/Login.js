@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '../components/Button';
 
 class Login extends React.Component {
   constructor(props) {
@@ -12,7 +13,8 @@ class Login extends React.Component {
 
   handleLoginBtn() {
     const { email, password } = this.state;
-    if (email === 'alguem@email.com' && password === '123456') {
+    const emailRegexp = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+    if (emailRegexp.test(email) && password === '123456') {
       return false;
     }
     return true;
@@ -45,7 +47,11 @@ class Login extends React.Component {
           required
           onChange={ (e) => this.handleInputText(e) }
         />
-        <button type="button">Entrar</button>
+        <Button
+          disabled={ this.handleLoginBtn() }
+          email={ email }
+          password={ password }
+        />
       </div>
     );
   }

@@ -11,8 +11,7 @@ function user(state = INITIAL_STATE, action) {
   switch (action.type) {
   case VALIDATE_LOGIN:
     return {
-      ...state,
-      user: { email: action.email },
+      email: action.email,
     };
   default:
     return state;
