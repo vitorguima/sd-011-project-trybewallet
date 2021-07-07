@@ -1,4 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { saveEmail } from '../../actions';
 
 // Email Regex Source: http://jsfiddle.net/ghvj4gy9/
 // eslint-disable-next-line max-len
@@ -8,7 +12,7 @@ const domain = '\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$';
 const EMAIL_REGEX = new RegExp([username, domainName, domain].join(''));
 const passwordLength = 6;
 
-export default class Loginform extends React.Component {
+class LoginForm extends React.Component {
   constructor() {
     super();
 
@@ -16,9 +20,11 @@ export default class Loginform extends React.Component {
       email: '',
       password: '',
       isFormValid: false,
+      redirect: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange({ name, value }) {
@@ -35,8 +41,19 @@ export default class Loginform extends React.Component {
     return EMAIL_REGEX.test(email) && password.length >= passwordLength;
   }
 
+  handleSubmit() {
+    const { storeEmail } = this.props;
+    const { email } = this.state;
+    storeEmail(email);
+    this.setState({
+      redirect: true,
+    });
+  }
+
   render() {
-    const { email, password, isFormValid } = this.state;
+    const { email, password, isFormValid, redirect } = this.state;
+
+    if (redirect) return <Redirect to="/carteira" />;
 
     return (
       <form>
@@ -57,10 +74,20 @@ export default class Loginform extends React.Component {
           minLength="6"
           required
         />
-        <button type="button" disabled={ !isFormValid }>
+        <button type="button" onClick={ this.handleSubmit } disabled={ !isFormValid }>
           Entrar
         </button>
       </form>
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  storeEmail: (email) => dispatch(saveEmail(email)),
+});
+
+export default connect(null, mapDispatchToProps)(LoginForm);
+
+LoginForm.propTypes = {
+  storeEmail: PropTypes.func,
+}.isRequired;
