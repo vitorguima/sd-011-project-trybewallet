@@ -48,11 +48,13 @@ class Login extends React.Component {
             title="A senha deve ter no mínimo 6 caracteres"
             required
           />
-          <Link to="/carteira">
+          <Link
+            to="/carteira"
+            onClick={ () => emailDispatch(email) }
+          >
             <button
               className="submit-button"
               type="submit"
-              onClick={ () => emailDispatch(email) }
               disabled
             >
               Entrar

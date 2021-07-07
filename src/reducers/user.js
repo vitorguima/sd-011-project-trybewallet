@@ -2,6 +2,10 @@ const INITIAL_STATE = {
   user: {
     email: '',
   },
+  wallet: {
+    currencies: [],
+    expenses: [],
+  },
 };
 
 function userReducer(state = INITIAL_STATE, action) {
