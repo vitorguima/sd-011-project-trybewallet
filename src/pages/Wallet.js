@@ -4,7 +4,8 @@ class Wallet extends React.Component {
   render() {
     return (
       <header>
-        <div>TrybeWallet</div>
+        <h1>TrybeWallet</h1>
+        <h4 data-testid="email-field">{`Bem vindo: ${ email }`}</h4>
       </header>
     );
   }
