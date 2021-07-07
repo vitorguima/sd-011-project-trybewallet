@@ -1,5 +1,7 @@
 const INITIAL_STATE = {
-  name: '',
+  user: {
+    email: '',
+  },
 };
 
 const user = (state = INITIAL_STATE, action) => {
