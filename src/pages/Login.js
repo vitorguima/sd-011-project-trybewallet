@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { sendEmail } from '../actions';
+import { userLogin } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -11,7 +11,7 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
-      disabled: true,
+      isDisabled: true,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -23,14 +23,14 @@ class Login extends React.Component {
   }
 
   validate() {
-    const { email, password, disabled } = this.state;
+    const { email, password, isDisabled } = this.state;
     const number = 6;
     const verifyEmail = email.split('').includes('@') && email.split('.').includes('com');
     const verifyPassword = password.length >= number;
-    if (verifyEmail && verifyPassword && disabled) {
-      this.setState({ disabled: false });
-    } else if ((!verifyEmail || !verifyPassword) && !disabled) {
-      this.setState({ disabled: true });
+    if (verifyEmail && verifyPassword && isDisabled) {
+      this.setState({ isDisabled: false });
+    } else if ((!verifyEmail || !verifyPassword) && !isDisabled) {
+      this.setState({ isDisabled: true });
     }
   }
 
@@ -40,8 +40,8 @@ class Login extends React.Component {
   }
 
   render() {
-    const { email, password, disabled } = this.state;
-    const { dispatchSendEmail } = this.props;
+    const { email, password, isDisabled } = this.state;
+    const { dispatchUserLogin } = this.props;
 
     return (
       <div>
@@ -64,8 +64,8 @@ class Login extends React.Component {
         <Link to="/carteira">
           <button
             type="button"
-            disabled={ disabled }
-            onClick={ () => dispatchSendEmail(email) }
+            disabled={ isDisabled }
+            onClick={ () => dispatchUserLogin(email) }
           >
             Entrar
           </button>
@@ -76,11 +76,11 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchSendEmail: (email) => dispatch(sendEmail(email)),
+  dispatchUserLogin: (email) => dispatch(userLogin(email)),
 });
 
 Login.propTypes = {
-  dispatchSendEmail: PropTypes.func,
+  dispatchUserLogin: PropTypes.func,
 }.isRequired;
 
 export default connect(null, mapDispatchToProps)(Login);

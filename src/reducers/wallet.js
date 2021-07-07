@@ -3,10 +3,8 @@ const INITIAL_STATE = {
   expenses: [],
 };
 
-const wallet = (state = INITIAL_STATE, action) => {
-  switch (action.type) {
-  case 'TESTE':
-    return state;
+const wallet = (state = INITIAL_STATE, { type }) => {
+  switch (type) {
   default:
     return state;
   }

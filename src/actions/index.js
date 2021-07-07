@@ -1,6 +1,6 @@
-export const sendEmail = (email) => ({
-  type: 'SEND_EMAIL',
+export const userLogin = (email) => ({
+  type: 'USER_LOGIN',
   email,
 });
 
-export default { sendEmail };
+export default { userLogin };
