@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bulma/css/bulma.min.css';
-import './Login.css';
+// import './Login.css';
 
 class Login extends React.Component {
   render() {
