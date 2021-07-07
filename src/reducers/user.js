@@ -5,17 +5,17 @@ const INITIAL_STATE = {
   },
   wallet: {
     currencies: [],
-    expenses: []
-  }
+    expenses: [],
+  },
 };
 
 function user(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case 'ACTION':
-      return state;
+  case 'ACTION':
+    return state;
 
-    default:
-      return state;
+  default:
+    return state;
   }
 }
 

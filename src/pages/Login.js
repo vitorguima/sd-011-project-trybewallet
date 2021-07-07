@@ -2,17 +2,17 @@ import React from 'react';
 
 class Login extends React.Component {
   constructor() {
-    super()
+    super();
     this.state = {
       email: '',
       password: '',
-    }
+    };
   }
 
   handleChangeInput({ target }) {
-this.setState({
-  [target.name]: target.value,
-})
+    this.setState({
+      [target.name]: target.value,
+    });
   }
 
   render() {
@@ -24,16 +24,16 @@ this.setState({
           type="email"
           placeholder="Informe seu email"
           name="email"
-          value={email}
-          onChange={this.handleChangeInput}
+          value={ email }
+          onChange={ this.handleChangeInput }
         />
         <input
           data-testid="password-input"
           type="password"
           placeholder="Informe sua senha"
           name="password"
-          value={password}
-          onChange={this.handleChangeInput}
+          value={ password }
+          onChange={ this.handleChangeInput }
         />
         <button type="button">
           Entrar
