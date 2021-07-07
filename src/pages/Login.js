@@ -18,9 +18,8 @@ function Login(props) {
     const emailValid = email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
     const six = 6;
     const passwordValid = password.length >= six;
-    // const path = '/carteira';
     if (emailValid && passwordValid) setDisabled(false);
-    // return history.push(path) &&
+    else setDisabled(true);
   };
 
   const redirectPath = () => {
@@ -44,7 +43,7 @@ function Login(props) {
       />
       <input
         data-testid="password-input"
-        type="text"
+        type="password"
         value={ password }
         placeholder="Digite sua senha"
         onChange={ ({ target }) => setPassword(target.value) }
