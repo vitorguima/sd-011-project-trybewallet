@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchAPIAction, setExpenseAction, delExpenseAction } from '../actions';
 import Header from '../components/Header';
+import HeaderList from '../components/HeaderList';
 import InValue from '../components/formsComp/InValue';
 import InDescript from '../components/formsComp/InDescript';
 import SeCurrency from '../components/formsComp/SeCurrency';
@@ -51,9 +52,13 @@ class Wallet extends React.Component {
   }
 
   // Função criada para retornar a segunda moeda
-  ndCur(expense) {
-    return (expense.exchangeRates[expense.currency].name).split('/')[1];
-  }
+  // ndCur(expense) {
+  //   const retorno = ((expense.exchangeRates[expense.currency].name)
+  //     .split('/')[1]).split(' ')[0];
+  //   console.log(retorno);
+  //   // QUE LINTER FEIO... BASTA APENAS COLOCAR REAL DIRETO EM UMA DAS COLUNAS
+  //   return retorno;
+  // }
 
   // Função criada para retornar o valor com duas casas decimais
   valueTwoCases(expense) {
@@ -90,34 +95,32 @@ class Wallet extends React.Component {
             Adicionar despesa
           </button>
         </form>
-        <div className="table">
-          <div className="line">
-            <div className="column"> Descrição</div>
-            <div className="column"> Tag</div>
-            <div className="column"> Método de Pagamento</div>
-            <div className="column">Valor</div>
-            <div className="column"> Moeda</div>
-            <div className="column"> Câmbio utilizado</div>
-            <div className="column"> Valor convertido</div>
-            <div className="column"> Moeda de conversão</div>
-            <div className="column"> Editar/Excluir</div>
-          </div>
-          {total.map((expense, index) => (
-            <div key={ index } className="line">
-              {console.log(expense)}
-              <div className="column">{expense.description}</div>
-              <div className="column">{expense.tag}</div>
-              <div className="column">{expense.method}</div>
-              <div className="column">{this.valueTwoCases(expense)}</div>
-              <div className="column">{this.stCur(expense)}</div>
-              <div className="column">{this.exchangeTwoCases(expense)}</div>
-              <div className="column">{this.totalExchange(expense)}</div>
-              <div className="column">{this.ndCur(expense)}</div>
-              <div className="column">
-                <button type="button" onClick={ () => del(expense.id) }>Excluir</button>
-              </div>
-            </div>))}
-        </div>
+        <table className="table">
+          <HeaderList />
+          <tbody>
+            {total.map((expense, index) => (
+              <tr key={ index } className="line">
+                {console.log(expense)}
+                <td className="column">{expense.description}</td>
+                <td className="column">{expense.tag}</td>
+                <td className="column">{expense.method}</td>
+                <td className="column">{expense.value}</td>
+                <td className="column">{this.stCur(expense)}</td>
+                <td className="column">{this.exchangeTwoCases(expense)}</td>
+                <td className="column">{this.totalExchange(expense)}</td>
+                <td className="column">Real</td>
+                <td className="column">
+                  <button
+                    data-testid="delete-btn"
+                    type="button"
+                    onClick={ () => del(expense.id) }
+                  >
+                    Excluir
+                  </button>
+                </td>
+              </tr>))}
+          </tbody>
+        </table>
       </div>);
   }
 }

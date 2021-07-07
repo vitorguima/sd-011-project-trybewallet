@@ -51,9 +51,9 @@
 }
 
 .column {
-  border: solid black 1px;
+  /* border: solid black 1px; */
   display: table-cell;
   height: 40px;
   text-align: center;
-  width: 12%;
+  width: 40px;
 }
