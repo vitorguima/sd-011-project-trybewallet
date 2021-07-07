@@ -1,4 +1,8 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import loginAction from '../actions/loginAction';
 
 class Login extends React.Component {
   constructor(props) {
@@ -7,18 +11,20 @@ class Login extends React.Component {
       email: '',
       password: '',
       isDisabled: true,
+      shouldRedirect: false,
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange({ target: { value, name } }) {
-    const regexEmail = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
+    const regexEmail = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
     this.setState({
       [name]: value,
     }, () => {
       const { email, password } = this.state;
       const validEmail = regexEmail.test(email);
-      const validPassword = password.length >= 6;
+      const minLengthPassword = 6;
+      const validPassword = password.length >= minLengthPassword;
       if (validEmail && validPassword) {
         this.setState({
           isDisabled: false,
@@ -27,8 +33,14 @@ class Login extends React.Component {
     });
   }
 
+  signIn(email, password) {
+    const { login } = this.props;
+    login(email, password);
+    this.setState({ shouldRedirect: true });
+  }
+
   render() {
-    const { email, password, isDisabled } = this.state;
+    const { email, password, isDisabled, shouldRedirect } = this.state;
     return (
       <div>
         <input
@@ -50,12 +62,22 @@ class Login extends React.Component {
         <button
           disabled={ isDisabled }
           type="button"
+          onClick={ () => this.signIn(email, password) }
         >
           Entrar
         </button>
+        {shouldRedirect && <Redirect to="/carteira" />}
       </div>
     );
   }
 }
 
-export default Login;
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  login: (email, password) => dispatch(loginAction(email, password)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);

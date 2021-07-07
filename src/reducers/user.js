@@ -12,7 +12,7 @@ const user = (state = INITIAL, action) => {
     return {
       email: action.email,
       password: action.password,
-    }
+    };
   default:
     return state;
   }
