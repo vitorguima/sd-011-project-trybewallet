@@ -10,17 +10,17 @@ import history from './history';
 
 function App() {
   return (
-  <Router history={history}>
-    <div>
-      TrybeWallet
-    </div>
+    <Router history={ history }>
+      <div>
+        TrybeWallet
+      </div>
 
-    <Switch>
-      <Route exact path="/" component={Login}/>
-      <Route exact path="/carteira" component={Wallet}/>
-    </Switch>
-  </Router>
-  )
+      <Switch>
+        <Route exact path="/" component={ Login } />
+        <Route exact path="/carteira" component={ Wallet } />
+      </Switch>
+    </Router>
+  );
 }
 
 export default App;

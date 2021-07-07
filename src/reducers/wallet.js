@@ -1,15 +1,15 @@
-import * as actions from '../actions';
+// import * as actions from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
-  expenses: []
-}
+  expenses: [],
+};
 
 export default function reducer(state = INITIAL_STATE, action) {
-  switch(action.type) {
-    // case actions.SEND_SUBMIT:
-    //   return { ...state, email: action.payload };
-    default:
-      return state;
+  switch (action.type) {
+  // case actions.SEND_SUBMIT:
+  //   return { ...state, email: action.payload };
+  default:
+    return state;
   }
 }
