@@ -9,6 +9,7 @@ class Login extends React.Component {
       password: '',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.validateEmail = this.validateEmail.bind(this);
   }
 
   handleChange({ target }) {
@@ -18,6 +19,46 @@ class Login extends React.Component {
     }));
   }
 
+  validateEmail(email) {
+    const pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+    return pattern.test(String(email).toLowerCase());
+  }
+
+  buttonValidation() {
+    const { email, password } = this.state;
+    const minEmailLength = 6;
+
+    if (email.length === 0 || password.length === 0) {
+      return (
+        <button
+          type="button"
+          disabled
+        >
+          Entrar
+        </button>
+      );
+    }
+
+    if (!this.validateEmail(email) || password.length < minEmailLength) {
+      return (
+        <button
+          type="button"
+          disabled
+        >
+          Entrar
+        </button>
+      );
+    }
+
+    return (
+      <button
+        type="button"
+      >
+        Entrar
+      </button>
+    );
+  }
+
   render() {
     const { email, password } = this.state;
 
@@ -25,6 +66,7 @@ class Login extends React.Component {
       <div className="login-wrapper">
         <form>
           <input
+            name="email"
             type="email"
             placeholder="Email"
             data-testid="email-input"
@@ -32,6 +74,7 @@ class Login extends React.Component {
             onChange={ this.handleChange }
           />
           <input
+            name="password"
             type="password"
             placeholder="Senha"
             data-testid="password-input"
@@ -39,11 +82,7 @@ class Login extends React.Component {
             onChange={ this.handleChange }
           />
         </form>
-        <button
-          type="button"
-        >
-          Entrar
-        </button>
+        {this.buttonValidation()}
       </div>
     );
   }
