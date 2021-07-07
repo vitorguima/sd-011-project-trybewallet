@@ -18,8 +18,9 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email } = this.props;
+    const { email, currencies } = this.props;
     const { initialCurrencies, initialExpenses } = this.state;
+    const getCurrenciesKeys = Object.keys(currencies);
     return (
       <div>
         <header>
@@ -39,7 +40,9 @@ class Wallet extends React.Component {
           <label htmlFor="coin">
             Moeda:
             <select id="coin">
-              <option>teste</option>
+              { getCurrenciesKeys
+                .filter((filter) => filter !== 'USDT')
+                .map((currency, index) => <option key={ index }>{ currency }</option>) }
             </select>
           </label>
           <label htmlFor="payment-type">
@@ -80,13 +83,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 
 Wallet.defaultProps = {
   email: '',
-  // currencies: '',
+  currencies: {},
   // expenses: 0,
 };
 
 Wallet.propTypes = {
   email: PropTypes.string,
   getCurrencies: PropTypes.func.isRequired,
-  // currencies: PropTypes.string,
+  currencies: PropTypes.objectOf(Object),
   // expenses: PropTypes.number,
 };
