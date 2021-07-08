@@ -23,7 +23,7 @@ class Wallet extends React.Component {
     const { itemsTable, totalValue } = this.props;
     const total = itemsTable.reduce((acumulador, valorAtual) => {
       const { value, currency, exchangeRates } = valorAtual;
-      const conversao = (parseFloat(value) * exchangeRates[currency].high);
+      const conversao = (parseFloat(value) * exchangeRates[currency].ask);
       return (acumulador + Math.round(conversao * 100) / 100);
     }, 0);
     totalValue(total);
