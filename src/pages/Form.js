@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as actions from '../actions';
+import Inputs from './components/Inputs';
 
 class Form extends Component {
   constructor() {
@@ -16,41 +17,31 @@ class Form extends Component {
       tag: 'Alimentação',
       exchangeRates: {},
     };
+    this.handleInput = this.handleInput.bind(this);
   }
 
-  // eslint-disable-next-line max-lines-per-function
+  handleInput({ target }) {
+    const { value, name } = target;
+    this.setState({ [name]: value });
+    console.log('test');
+  }
+
   render() {
     const { currencies, expensesValidation } = this.props;
-    const handleInput = ({ target }) => {
-      const { value, name } = target;
-      this.setState({ [name]: value });
-    };
-    const Moedas = (currencies.map((coins) => Object.values(coins)
+
+    const moedas = (currencies.map((coins) => Object.values(coins)
       .map((siglas) => siglas).filter((item) => item.codein !== 'BRLT')
       .map((element) => <option key={ element.code }>{element.code}</option>)));
     return (
       <form>
-        <label htmlFor="Valor">
-          Valor:
-          <input id="Valor" type="text" name="value" onChange={ handleInput } />
-        </label>
-        <label htmlFor="Descrição">
-          Descrição:
-          <input id="Descrição" type="text" name="description" onChange={ handleInput } />
-        </label>
-        <label htmlFor="Moeda">
-          Moeda:
-          <select id="Moeda" name="currency" onChange={ handleInput }>
-            {Moedas}
-          </select>
-        </label>
+        <Inputs moedas={ moedas } handleInput={ this.handleInput } />
         <label htmlFor="Método de pagamento">
           Método de pagamento:
           <select
             id="Método de pagamento"
             type="text"
             name="method"
-            onChange={ handleInput }
+            onChange={ this.handleInput }
           >
             <option>Dinheiro</option>
             <option>Cartão de crédito</option>
@@ -59,7 +50,7 @@ class Form extends Component {
         </label>
         <label htmlFor="Tag">
           Tag:
-          <select id="Tag" type="text" name="tag" onChange={ handleInput }>
+          <select id="Tag" type="text" name="tag" onChange={ this.handleInput }>
             <option>Alimentação</option>
             <option>Lazer</option>
             <option>Trabalho</option>
