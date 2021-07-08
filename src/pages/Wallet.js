@@ -2,10 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import WalletForm from '../components/WalletForm';
+import { fetchCurrencies } from '../actions/wallet';
 
 class Wallet extends React.Component {
+  componentDidMount() {
+    const { fetchCurrenciesAPI } = this.props;
+    fetchCurrenciesAPI();
+  }
+
   render() {
-    const { userEmail } = this.props;
+    const { userEmail, loading } = this.props;
     return (
       <div>
         TrybeWallet
@@ -14,7 +20,7 @@ class Wallet extends React.Component {
           <p data-testid="total-field">0</p>
           <p data-testid="header-currency-field">BRL</p>
         </header>
-        <WalletForm />
+        { (loading) ? <p>Carregando...</p> : <WalletForm />}
       </div>
     );
   }
@@ -22,10 +28,17 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   userEmail: state.user.email,
+  loading: state.wallet.isLoading,
 });
 
-export default connect(mapStateToProps)(Wallet);
+const mapDispatchToProps = (dispatch) => ({
+  fetchCurrenciesAPI: () => dispatch(fetchCurrencies()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 
 Wallet.propTypes = {
   userEmail: PropTypes.string.isRequired,
+  fetchCurrenciesAPI: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
 };

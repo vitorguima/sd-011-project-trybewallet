@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import WalletFetchedCurrencies from './WalletFetchedCurrencies';
 
 class WalletForm extends Component {
   render() {
@@ -23,7 +24,7 @@ class WalletForm extends Component {
         <label htmlFor="moeda">
           Moeda:
           <select id="moeda">
-            <option value="teste">Teste</option>
+            <WalletFetchedCurrencies />
           </select>
         </label>
         <label htmlFor="metodo-de-pagamento">
