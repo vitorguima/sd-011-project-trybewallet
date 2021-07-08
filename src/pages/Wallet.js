@@ -3,9 +3,31 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 class Wallet extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      currencys: [],
+    };
+  }
+
+  componentDidMount() {
+    this.fetchCurrencys();
+  }
+
+  fetchCurrencys() {
+    fetch('https://economia.awesomeapi.com.br/json/all')
+      .then((response) => response.json())
+      .then((resolve) => {
+        this.setState((oldState) => ({
+          ...oldState,
+          currencys: Object.keys(resolve),
+        }));
+      });
+  }
+
   render() {
     const { email } = this.props;
-
+    const { currencys } = this.state;
     return (
       <>
         <header>
@@ -31,9 +53,10 @@ class Wallet extends React.Component {
           <label htmlFor="paymentMethod">
             Método de pagamento
             <select id="paymentMethod">
-              <option>Dinheiro</option>
-              <option>Cartão de crédito</option>
-              <option>Cartão de débito</option>
+              { currencys.map((currency, key) => {
+                if (currency === 'USDT') return null;
+                return (<option key={ key }>{ currency }</option>);
+              })}
             </select>
           </label>
           <label htmlFor="tag">
