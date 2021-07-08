@@ -2,57 +2,76 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import HeaderWallet from './HeaderWallet';
+import InputText from './InputText';
+import Select from './Select';
 import { fetchApi } from '../actions';
 
+const paymentMethod = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
+const tagTypes = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
 class Wallet extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      value: '',
+      description: '',
+      currency: '',
+      method: '',
+      tag: '',
+    };
+    this.handleEvent = this.handleEvent.bind(this);
+  }
+
   componentDidMount() {
     const { requestCurrencies } = this.props;
     requestCurrencies();
   }
 
+  handleEvent({ target: { name, value } }) {
+    this.setState({
+      [name]: value,
+    });
+  }
+
   render() {
     const { email, currencies } = this.props;
+    const { value, description, currency, method, tag } = this.state;
     return (
       <div>
         <HeaderWallet email={ email } />
         <form>
-          <label htmlFor="valor">
-            Valor
-            <input id="valor" name="valor" type="text" />
-          </label>
-          <label htmlFor="descricao">
-            Descrição
-            <input id="descricao" type="text" />
-          </label>
-          <label htmlFor="moeda">
-            Moeda
-            <select id="moeda">
-              { currencies.map((currency, index) => (
-                <option
-                  key={ index }
-                >
-                  { currency }
-                </option>)) }
-            </select>
-          </label>
-          <label htmlFor="pagamento">
-            Método de pagamento
-            <select id="pagamento">
-              <option>Dinheiro</option>
-              <option>Cartão de crédito</option>
-              <option>Cartão de débito</option>
-            </select>
-          </label>
-          <label htmlFor="tag">
-            Tag
-            <select id="tag">
-              <option>Alimentação</option>
-              <option>Lazer</option>
-              <option>Trabalho</option>
-              <option>Transporte</option>
-              <option>Saúde</option>
-            </select>
-          </label>
+          <InputText
+            id="value"
+            label="Valor"
+            onChange={ this.handleEvent }
+            valor={ value }
+          />
+          <InputText
+            id="description"
+            label="Descrição"
+            onChange={ this.handleEvent }
+            valor={ description }
+          />
+          <Select
+            id="currency"
+            label="Moeda"
+            arrayBd={ currencies }
+            onChange={ this.handleEvent }
+            valor={ currency }
+          />
+          <Select
+            id="method"
+            label="Método de pagamento"
+            arrayBd={ paymentMethod }
+            onChange={ this.handleEvent }
+            valor={ method }
+          />
+          <Select
+            id="tag"
+            label="Tag"
+            arrayBd={ tagTypes }
+            onChange={ this.handleEvent }
+            valor={ tag }
+          />
         </form>
       </div>
     );
