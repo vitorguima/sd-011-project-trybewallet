@@ -27,8 +27,8 @@ const ExpenseTable = (props) => {
               <td>{ method }</td>
               <td>{ value }</td>
               <td>{ exchangeRates[currency].name.split('/')[0].toString() }</td>
-              <td>{ roundedValue(exchangeRates[currency].ask) }</td>
-              <td>{ roundedValue(exchangeRates[currency].ask * value) }</td>
+              <td>{ roundedValue(exchangeRates[currency].ask).toFixed(2) }</td>
+              <td>{ roundedValue(exchangeRates[currency].ask * value).toFixed(2) }</td>
               <td>Real</td>
               <td>
                 <button
