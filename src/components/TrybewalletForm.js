@@ -97,7 +97,10 @@ const mapDispatchToProps = (dispatch) => ({
 TrybewalletForm.propTypes = {
   dispatch: PropTypes.func.isRequired,
   fetchCoinsAction: PropTypes.func.isRequired,
-  exchangeRates: PropTypes.objectOf(PropTypes.any),
+  exchangeRates: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.any),
+    PropTypes.objectOf(PropTypes.any),
+  ]),
   addExpenseAction: PropTypes.func.isRequired,
 };
 
