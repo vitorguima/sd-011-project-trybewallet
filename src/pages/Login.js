@@ -19,9 +19,9 @@ class Login extends React.Component {
   }
 
   handleChange({ target }) {
-    const { id, value } = target;
+    const { name, value } = target;
     this.setState({
-      [id]: value,
+      [name]: value,
     });
     this.validateLogin();
   }
@@ -51,7 +51,7 @@ class Login extends React.Component {
   }
 
   render() {
-    const { disabled, logged } = this.state;
+    const { disabled, logged, email, password } = this.state;
     if (logged) {
       return <Redirect to="/carteira" />;
     }
@@ -63,6 +63,8 @@ class Login extends React.Component {
             data-testid="email-input"
             type="text"
             id="email"
+            name="email"
+            value={ email }
             onChange={ this.handleChange }
           />
 
@@ -73,6 +75,8 @@ class Login extends React.Component {
             data-testid="password-input"
             type="password"
             id="password"
+            name="password"
+            value={ password }
             onChange={ this.handleChange }
           />
         </label>
