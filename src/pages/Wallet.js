@@ -15,7 +15,7 @@ class Wallet extends React.Component {
       total = total.reduce(
         (accumulator, value) => accumulator + value,
         0,
-      );
+      ).toFixed(2);
     }
     return (
       <div className="trybewallet-page">
