@@ -58,9 +58,9 @@ export default class LabelForm extends Component {
             value={ tag }
             onChange={ this.handleChange }
           >
-            <option value="food"> Alimentação </option>
-            <option> Lazer </option>
-            <option> Trabalho </option>
+            <option value="Alimentação"> Alimentação </option>
+            <option value="Lazer"> Lazer </option>
+            <option value="Trabalho"> Trabalho </option>
             <option> Transporte </option>
             <option> Saúde </option>
           </select>
