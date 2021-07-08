@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class SpendForm extends React.Component {
   constructor(props) {
@@ -8,10 +9,11 @@ class SpendForm extends React.Component {
       spendsValue: 0,
       spendsDescribe: '',
       spendCategory: '',
-      currency: '',
+      // currency: '',
       paymentMethod: '',
     };
     this.inputsTexts = this.inputsTexts.bind(this);
+    this.selectInputs = this.selectInputs.bind(this);
   }
 
   handleChange({ target: { id, value } }) {
@@ -46,20 +48,20 @@ class SpendForm extends React.Component {
     );
   }
 
-  render() {
+  selectInputs() {
     const {
-      currency,
       paymentMethod,
       spendCategory,
     } = this.state;
-
+    const { acronyms } = this.props;
     return (
-      <form>
-        {this.inputsTexts()}
+      <fieldset>
         <label htmlFor="currency">
           Moeda
-          <select id="currency">
-            <option value={ currency }>{ currency }</option>
+          <select id="currency" onChange={ this.handleChange }>
+            {acronyms.map((option, index) => (
+              <option value={ option } key={ `${option}${index}` }>{ option }</option>
+            ))}
           </select>
         </label>
         <label htmlFor="paymentMethod">
@@ -88,9 +90,22 @@ class SpendForm extends React.Component {
             <option value="health">Saúde</option>
           </select>
         </label>
+      </fieldset>
+    );
+  }
+
+  render() {
+    return (
+      <form>
+        {this.inputsTexts()}
+        {this.selectInputs()}
       </form>
     );
   }
 }
 
 export default SpendForm;
+
+SpendForm.propTypes = {
+  acronyms: PropTypes.arrayOf(PropTypes.string).isRequired,
+};

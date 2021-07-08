@@ -12,13 +12,16 @@ class Wallet extends React.Component {
       email: '',
       spends: 0,
       exchange: 'BRL',
+      acronymsCurrency: [],
     };
     this.setEmail = this.setEmail.bind(this);
+    this.setAcronymsCurrency = this.setAcronymsCurrency.bind(this);
   }
 
   componentDidMount() {
     const { email } = this.props;
     this.setEmail(email);
+    this.getAcronymsCurrency();
   }
 
   setEmail(email) {
@@ -27,16 +30,36 @@ class Wallet extends React.Component {
     });
   }
 
+  setAcronymsCurrency(dataExchange) {
+    const acronyms = Object.keys(dataExchange);
+    const acronymsCurrency = acronyms.filter((acron) => acron !== 'USDT');
+    this.setState({
+      acronymsCurrency,
+    });
+  }
+
+  async getAcronymsCurrency() {
+    const url = 'https://economia.awesomeapi.com.br/json/all';
+    try {
+      const request = await fetch(url);
+      const response = await request.json();
+      this.setAcronymsCurrency(response);
+    } catch (error) {
+      console.log('Error:', error);
+    }
+  }
+
   render() {
     const {
       email,
       spends,
       exchange,
+      acronymsCurrency,
     } = this.state;
     return (
       <div>
         <Header email={ email } spends={ spends } exchange={ exchange } />
-        <SpendForm />
+        <SpendForm acronyms={ acronymsCurrency } />
       </div>
     );
   }
