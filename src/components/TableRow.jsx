@@ -6,57 +6,25 @@ import { deleteExpense } from '../actions';
 class TableRow extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      description: '',
-      tag: '',
-      method: '',
-      value: '',
-      currency: '',
-      cambio: '',
-      convertedValue: '',
-      id: 0,
-    };
-    this.getExpense = this.getExpense.bind(this);
     this.removeGasto = this.removeGasto.bind(this);
   }
 
-  componentDidMount() {
-    this.getExpense();
-    console.log('table row');
-  }
-
-  getExpense() {
-    const { expense } = this.props;
-    const { description, tag, method, value, currency, id, exchangeRates } = expense;
-    this.setState({
-      description,
-      tag,
-      method,
-      value,
-      id,
-      currency: exchangeRates[currency].name.split('/')[0],
-      cambio: parseFloat(exchangeRates[currency].ask).toFixed(2),
-      convertedValue: parseFloat(value * exchangeRates[currency].ask).toFixed(2),
-    });
-  }
-
   removeGasto() {
-    const { removeExpense } = this.props;
-    const { id } = this.state;
+    const { removeExpense, expense: { id } } = this.props;
+    // const { id } = this.state;
     console.log(id);
     removeExpense(id);
   }
 
   render() {
-    const {
+    const { expense: {
       description,
       tag,
       method,
       value,
       currency,
-      cambio,
-      convertedValue,
-    } = this.state;
+      exchangeRates,
+    } } = this.props;
     return (
       <tr>
         <td>{description}</td>
@@ -64,8 +32,8 @@ class TableRow extends Component {
         <td>{method}</td>
         <td>{value}</td>
         <td>{currency}</td>
-        <td>{cambio}</td>
-        <td>{convertedValue}</td>
+        <td>{parseFloat(exchangeRates[currency].ask).toFixed(2)}</td>
+        <td>{parseFloat(value * exchangeRates[currency].ask).toFixed(2)}</td>
         <td>Real</td>
         <button
           type="button"
