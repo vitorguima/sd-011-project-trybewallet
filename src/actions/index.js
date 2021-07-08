@@ -1,9 +1,8 @@
-const sendEmail = (payload) => ({
+export const sendEmail = (payload) => ({
   type: 'SEND_EMAIL',
   payload,
 });
 
-export default sendEmail;
 
 export const requestCoin = () => ({
   type: 'REQUEST_COIN',
