@@ -69,9 +69,9 @@ class Login extends React.Component {
         <button
           type="button"
           onClick={ () => {
-            setUserAction(email) 
-            history.push('/carteira')
-          }}
+            setUserAction(email);
+            history.push('/carteira');
+          } }
           disabled={ disableEmail || disablePassword }
         >
           Entrar
@@ -89,4 +89,7 @@ export default connect(null, mapDispatchToProps)(Login);
 
 Login.propTypes = ({
   setUserAction: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.string,
+  }).isRequired,
 });

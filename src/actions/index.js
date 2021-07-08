@@ -1,8 +1,25 @@
 export const SET_USER = 'SET_USER';
+export const REQUEST_API = 'REQUEST_API';
+export const REQUEST_API_SUCCESS = 'REQUEST_API_SUCCESS';
+export const REQUEST_API_ERROR = 'REQUEST_API_ERROR';
 
-const user = (payload) => ({
-  type: SET_USER,
-  payload,
-});
+const user = (payload) => ({ type: SET_USER, payload });
+
+const requestApi = (payload) => ({ type: REQUEST_API, payload });
+
+const requestApiSuccess = (payload) => ({ type: REQUEST_API_SUCCESS, payload });
+
+const requestApiError = (payload) => ({ type: REQUEST_API_ERROR, payload });
+
+export const fetchApi = () => async (dispatch) => {
+  dispatch(requestApi());
+  try {
+    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const { results } = await response.json();
+    dispatch(requestApiSuccess(results));
+  } catch (error) {
+    dispatch(requestApiError(error));
+  }
+};
 
 export default user;
