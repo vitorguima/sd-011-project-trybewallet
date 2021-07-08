@@ -31,7 +31,7 @@ export default class LabelForm extends Component {
           Método de pagamento
           <select id="pay">
             <option> Metodo de pagamento! </option>
-            <option>Dinheiro </option>
+            <option valor="money">Dinheiro </option>
             <option>Cartão de crédito </option>
             <option>Cartão de débito </option>
           </select>
