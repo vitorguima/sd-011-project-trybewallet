@@ -28,6 +28,11 @@ export const deleteItem = (payload) => ({
   payload,
 });
 
+export const editItem = (payload) => ({
+  type: 'EDIT_ITEM',
+  payload,
+});
+
 export const getCoins = (state = null) => (dispatch) => {
   dispatch(requestCoin());
   return fetch('https://economia.awesomeapi.com.br/json/all')
