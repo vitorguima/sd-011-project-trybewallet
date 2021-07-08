@@ -5,7 +5,7 @@ import FormOne from '../components/FormOne';
 import FormTwo from '../components/FormTwo';
 import FormThree from '../components/FormThree';
 import ExpensesTable from '../components/ExpensesTable';
-import { expenseAction } from '../actions';
+import { deletData, expenseAction } from '../actions';
 import { fetchDataTwo } from '../actions/fetchTwo';
 
 class Wallet extends React.Component {
@@ -21,6 +21,7 @@ class Wallet extends React.Component {
     this.handleState = this.handleState.bind(this);
     this.handleExpenses = this.handleExpenses.bind(this);
     this.handleTotalExpensesValue = this.handleTotalExpensesValue.bind(this);
+    this.handleDelet = this.handleDelet.bind(this);
   }
 
   handleState({ target }) {
@@ -48,6 +49,11 @@ class Wallet extends React.Component {
     return totalValue;
   }
 
+  handleDelet(id) {
+    const { deletDataFunc } = this.props;
+    deletDataFunc(id);
+  }
+
   render() {
     const { email } = this.props;
     return (
@@ -68,7 +74,7 @@ class Wallet extends React.Component {
             Adicionar despesa
           </button>
         </form>
-        <ExpensesTable />
+        <ExpensesTable handleDelet={ this.handleDelet } />
       </div>);
   }
 }
@@ -82,6 +88,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   sendExpense: (expense) => dispatch(expenseAction(expense)),
   sendFetchTwo: (dataForm) => dispatch(fetchDataTwo(dataForm)),
+  deletDataFunc: (id) => dispatch(deletData(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
@@ -90,4 +97,5 @@ Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   sendFetchTwo: PropTypes.func.isRequired,
   expenses: PropTypes.objectOf(PropTypes.object).isRequired,
+  deletDataFunc: PropTypes.func.isRequired,
 };

@@ -2,6 +2,7 @@ export const LOGIN = 'LOGIN';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const REQUEST_DATA = 'REQUEST_DATA';
 export const REQUEST_DATA_SUCCESS = 'REQUEST_DATA_SUCCESS';
+export const DELET_DATA = 'DELET_DATA';
 
 export const loginAction = (payload) => ({
   type: LOGIN,
@@ -20,6 +21,11 @@ const requestData = (payload) => ({
 
 const requestDataSuccess = (payload) => ({
   type: REQUEST_DATA_SUCCESS,
+  payload,
+});
+
+export const deletData = (payload) => ({
+  type: DELET_DATA,
   payload,
 });
 

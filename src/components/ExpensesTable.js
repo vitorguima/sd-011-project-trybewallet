@@ -1,25 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import HeaderTable from './Header Table';
 
 class ExpensesTable extends Component {
   render() {
-    const { expenses } = this.props;
+    const { expenses, handleDelet } = this.props;
     return (
       <table>
-        <tr>
-          <th>Descrição</th>
-          <th>Tag</th>
-          <th>Método de pagamento</th>
-          <th>Valor</th>
-          <th>Moeda</th>
-          <th>Câmbio utilizado</th>
-          <th>Valor convertido</th>
-          <th>Moeda de conversão</th>
-          <th>Editar/Excluir</th>
-        </tr>
+        <HeaderTable />
         { expenses.map((celula, index) => (
-          <tr key={ index }>
+          <tr key={ index } id={ celula.id }>
             <td>
               { celula.description }
             </td>
@@ -46,7 +37,13 @@ class ExpensesTable extends Component {
               Real
             </td>
             <td>
-              algo aqui
+              <button
+                type="button"
+                data-testid="delete-btn"
+                onClick={ () => handleDelet(celula.id) }
+              >
+                Delete
+              </button>
             </td>
           </tr>))}
       </table>
@@ -62,4 +59,5 @@ export default connect(mapStateToProps)(ExpensesTable);
 
 ExpensesTable.propTypes = {
   expenses: PropTypes.objectOf(PropTypes.object).isRequired,
+  handleDelet: PropTypes.func.isRequired,
 };
