@@ -20,7 +20,7 @@ function wallet(state = INITIAL_STATE, action) {
   case REQUEST_COIN_SUCCESS:
     return {
       ...state,
-      currencies: Object.keys(action.currencies).filter((key) => key !== 'USDT'),
+      currencies: Object.keys(action.payload).filter((key) => key !== 'USDT'),
     };
   case REQUEST_COIN_FAIL:
     return {

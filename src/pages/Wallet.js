@@ -45,7 +45,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getApi: dispatch(fetchApi()),
+  getApi: () => dispatch(fetchApi()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
