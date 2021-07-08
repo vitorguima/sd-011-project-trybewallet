@@ -30,15 +30,15 @@ export default class LabelForm extends Component {
       <form>
         <label htmlFor="valor">
           Valor
-          <input type="text" id="valor" name="value" value={ value } />
+          <input type="text" id="valor" name="value" value={ value } onChange={ this.handleChange } />
         </label>
         <label htmlFor="descrição">
           Descrição
-          <input type="text" id="descrição" name="description" value={ description } />
+          <input type="text" id="descrição" name="description" value={ description } onChange={ this.handleChange } />
         </label>
         <label htmlFor="moeda">
           Moeda
-          <select id="moeda" name="currency" value={ currency }>
+          <select id="moeda" name="currency" value={ currency } onChange={ this.handleChange }>
             {coins.map((coin, key) => (
               <option
                 key={ key }
@@ -50,7 +50,7 @@ export default class LabelForm extends Component {
         </label>
         <label htmlFor="method">
           Método de pagamento
-          <select id="method" name="method" value={ method }>
+          <select id="method" name="method" value={ method } onChange={ this.handleChange }>
             <option> Metodo de pagamento! </option>
             <option value="money">Dinheiro </option>
             <option value="creditCard">Cartão de crédito </option>
@@ -59,7 +59,7 @@ export default class LabelForm extends Component {
         </label>
         <label htmlFor="Tag">
           Tag
-          <select id="Tag" value={ tag }>
+          <select id="Tag" value={ tag } >
             <option value="food"> Alimentação </option>
             <option> Lazer </option>
             <option> Trabalho </option>
