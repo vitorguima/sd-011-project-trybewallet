@@ -4,15 +4,15 @@ const INITIAL_STATE = {
   email: '',
 };
 
-function wasLogged(state = INITIAL_STATE, action) {
+const wasLogged = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case LOGIN:
     return {
-      email: '',
+      email: action.payload,
     };
   default:
     return state;
   }
-}
+};
 
 export default wasLogged;
