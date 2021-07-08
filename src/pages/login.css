@@ -32,14 +32,14 @@ input {
 button {
   align-items: center;
   background: #835afd;
-  border-radius: 8px;
   border: 0;
-  justify-content: center;
+  border-radius: 8px;
   color: rgb(248, 248, 248);
   cursor: pointer;
   display: flex;
   font-weight: 500;
   height: 50px;
+  justify-content: center;
   margin-top: 64px;
   padding: 0 32px;
   transition: filter 0.2s;
