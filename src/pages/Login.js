@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import userActions from '../actions';
+import setLogin from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -83,7 +83,7 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  loginOn: (email) => dispatch(userActions.setLogin(email)),
+  loginOn: (email) => dispatch(setLogin(email)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);

@@ -2,7 +2,7 @@ const LOGIN = 'LOGIN';
 
 const setLogin = (email) => ({
   type: LOGIN,
-  payload: email,
+  email,
 });
 
 export default setLogin;
