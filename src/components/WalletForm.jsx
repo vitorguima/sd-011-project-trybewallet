@@ -104,4 +104,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(WalletForm);
 
 WalletForm.propTypes = {
   fetchCurr: PropTypes.func.isRequired,
+  rates: PropTypes.objectOf(Object).isRequired,
+  sendInfo: PropTypes.func.isRequired,
 };
