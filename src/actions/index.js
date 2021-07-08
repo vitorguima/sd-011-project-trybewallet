@@ -1,9 +1,7 @@
 // Coloque aqui suas actions
-function userEmail(email) {
-  return ({
-    type: 'INPUT_USER',
-    email,
-  });
-}
+const inputUser = (email) => ({
+  type: 'INPUT_USER',
+  email,
+});
 
-export default userEmail;
+export default inputUser;

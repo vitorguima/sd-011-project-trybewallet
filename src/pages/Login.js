@@ -1,4 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import inputUser from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -19,11 +23,17 @@ class Login extends React.Component {
   loginValidation() {
     const { email, password, disable } = this.state;
     const characters = 6;
-    if (email.split('').includes('@')
-      && email.split('.').includes('com')
-      && password.length >= characters
-      && disable) {
-      this.setState({ disable: false });
+    const validationEmail = email.split('').includes('@')
+      && email.split('.').includes('com');
+    const validationPassword = password.length >= characters;
+    if (validationEmail && validationPassword && disable) {
+      this.setState({
+        disable: false,
+      });
+    } else if ((!validationEmail || !validationPassword) && !disable) {
+      this.setState({
+        disable: true,
+      });
     }
   }
 
@@ -36,6 +46,7 @@ class Login extends React.Component {
 
   render() {
     const { email, password, disable } = this.state;
+    const { dispatchInputUser } = this.props;
     return (
       <section>
 
@@ -69,11 +80,27 @@ class Login extends React.Component {
           </label>
         </div>
 
-        <button type="button" disabled={ disable }>Entrar</button>
+        <Link to="/carteira">
+          <button
+            type="button"
+            disabled={ disable }
+            onClick={ () => dispatchInputUser(email) }
+          >
+            Entrar
+          </button>
+        </Link>
 
       </section>
     );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  dispatchInputUser: (email) => dispatch(inputUser(email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  dispatchInputUser: PropTypes.func,
+}.isRequired;
