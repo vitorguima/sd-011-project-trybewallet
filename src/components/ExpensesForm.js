@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { addExpense } from '../actions/index';
 
 class ExpensesForm extends Component {
   constructor() {
@@ -9,10 +10,11 @@ class ExpensesForm extends Component {
       value: 0,
       description: '',
       currency: 'USD',
-      payment: 'Dinheiro',
+      method: 'Dinheiro',
       tag: 'Alimentação',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.saveExpense = this.saveExpense.bind(this);
   }
 
   handleChange({ target }) {
@@ -20,6 +22,12 @@ class ExpensesForm extends Component {
     this.setState({
       [name]: value,
     });
+  }
+
+  saveExpense() {
+    const { saveExpense } = this.props;
+    saveExpense(this.state);
+    return false;
   }
 
   renderValueIput() {
@@ -73,16 +81,16 @@ class ExpensesForm extends Component {
     );
   }
 
-  renderPaymentInput() {
-    const { payment } = this.state;
+  rendermethodInput() {
+    const { method } = this.state;
     return (
-      <label htmlFor="payment">
+      <label htmlFor="method">
         Método de pagamento:
         <select
           type="text"
-          name="payment"
-          id="payment"
-          value={ payment }
+          name="method"
+          id="method"
+          value={ method }
           onChange={ this.handleChange }
         >
           <option>Dinheiro</option>
@@ -117,13 +125,14 @@ class ExpensesForm extends Component {
 
   render() {
     return (
-      <form>
+      <form type="submit">
         <h1>Adicone nova despesa</h1>
         {this.renderValueIput()}
         {this.renderDescriptionInput()}
         {this.renderCurencyInput()}
-        {this.renderPaymentInput()}
+        {this.rendermethodInput()}
         {this.renderTagInput()}
+        <button type="button" onClick={ this.saveExpense }>Adicionar despesa</button>
       </form>
     );
   }
@@ -133,8 +142,13 @@ const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  saveExpense: (data) => dispatch(addExpense(data)),
+});
+
 ExpensesForm.propTypes = {
   currencies: PropTypes.array,
+  saveExpense: PropTypes.func,
 }.isRequired;
 
-export default connect(mapStateToProps, null)(ExpensesForm);
+export default connect(mapStateToProps, mapDispatchToProps)(ExpensesForm);
