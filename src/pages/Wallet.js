@@ -5,7 +5,15 @@ import PropTypes from 'prop-types';
 class Wallet extends React.Component {
   render() {
     const { emailState } = this.props;
-    return <div>{emailState}</div>;
+    return (
+      <header>
+        <h3 data-testid="email-field">
+          {emailState}
+        </h3>
+        <p data-testid="header-currency-field">BRL</p>
+        <p data-testid="total-field">0</p>
+      </header>
+    );
   }
 }
 
