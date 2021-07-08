@@ -31,14 +31,14 @@ input {
 
 button {
   align-items: center;
-  justify-content: center;
   background: #835afd;
+  justify-content: center;
   border-radius: 8px;
   color: rgb(248, 248, 248);
-  display: flex;
   border: 0;
-  height: 50px;
+  display: flex;
   cursor: pointer;
+  height: 50px;
   font-weight: 500;
   margin-top: 64px;
   padding: 0 32px;
