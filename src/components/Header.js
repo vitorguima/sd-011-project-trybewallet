@@ -6,7 +6,7 @@ class Header extends React.Component {
   render() {
     const { email, expenses } = this.props;
     const exchangeRate = expenses
-      .map((value) => Number(value.exchangeRates[value.currency].ask) * Number(value.value));
+      .map((v) => Number(v.exchangeRates[v.currency].ask) * Number(v.value));
     console.log(exchangeRate);
     return (
       <div>

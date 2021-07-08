@@ -59,7 +59,12 @@ class FormDespesa extends Component {
         <br />
         <label htmlFor="currency">
           Moeda
-          <select name="currency" id="currency" onChange={ this.handleInput } value={ moeda }>
+          <select
+            name="currency"
+            id="currency"
+            onChange={ this.handleInput }
+            value={ moeda }
+          >
             {moedas.map((res, i) => <option key={ i } value={ res }>{res}</option>)}
           </select>
         </label>
