@@ -38,7 +38,7 @@ function Login({ handleLogOn }) {
     history.push('/carteira');
   }
   return (
-    <div id="page-login">
+    <div className="page-login">
       <div className="main-content">
         <input
           type="email"
