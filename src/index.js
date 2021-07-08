@@ -6,11 +6,13 @@ import { Provider } from 'react-redux';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import store from './store';
+import Wallet from './pages/Wallet';
 
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={ store }>
       <Route patch="/" exact component={ App } />
+      <Route path="/carteira/" exact component={ Wallet } />
     </Provider>
   </BrowserRouter>,
   document.getElementById('root'),
