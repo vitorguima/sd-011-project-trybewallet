@@ -1,5 +1,8 @@
 import React from 'react';
-// import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import getEmail from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -34,14 +37,11 @@ class Login extends React.Component {
     }
   }
 
-  emailSubmit() {
-    // Lógica para enviar o email.
-  }
-
   render() {
+    const { emailInput } = this.props;
     const { email, password, disabledButton } = this.state;
     return (
-      <div>
+      <form>
         <label
           htmlFor="input-email"
         >
@@ -68,22 +68,30 @@ class Login extends React.Component {
           />
         </label>
 
-        <button
-          type="submit"
-          disabled={ disabledButton }
-          onClick={ () => this.emailSubmit() }
+        <Link
+          to="/carteira"
         >
-          Entrar
-        </button>
-      </div>
+          <button
+            type="submit"
+            disabled={ disabledButton }
+            onClick={ () => emailInput(email) }
+          >
+            Entrar
+          </button>
+        </Link>
+      </form>
+      // Esse botão está disparando o mapDispatchToProps e enviando o valor para a store.
     );
   }
 }
 
-// const mapStateToProps = (state) => ({
-//   username: state.userReducer.username,
-// });
+// Esta função é responsável por capturar o state do email digitado e colocar na prop emailInput, que será levada para a store.
+const mapDispatchToProps = (dispatch) => ({
+  emailInput: (state) => dispatch(getEmail(state)),
+});
 
-// export default connect(null, mapStateToProps)(Login);
+Login.propTypes = {
+  emailInput: PropTypes.func.isRequired,
+};
 
-export default Login;
+export default connect(null, mapDispatchToProps)(Login);
