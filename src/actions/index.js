@@ -28,8 +28,8 @@ const requestCoinFail = (payload) => ({
 
 const addExpenses = (state, payload) => ({
   type: ADD_EXPENSES,
-  payload,
   state,
+  payload,
 });
 
 export const fetchApi = (state = null) => (dispatch) => {
