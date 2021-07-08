@@ -1,48 +1,42 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-export default function Header() {
-  return (
-    <main>
-      <form>
-        <label htmlFor="value">
-          Valor:
-          <input type="text" name="value" id="value" data-testid="value-input" />
-        </label>
-        <label htmlFor="description">
-          Descrição:
-          <input
-            type="text"
-            name="description"
-            id="description"
-            data-testid="description-input"
-          />
-        </label>
-        <label htmlFor="currency">
-          Moeda:
-          <select name="currency" id="currency" data-testid="currency-input">
-            <option value="Dinheiro">Vazio</option>
-          </select>
-        </label>
-        <label htmlFor="method">
-          Método de pagamento:
-          <select name="method" id="method" data-testid="method-input">
-            <option value="Dinheiro">Dinheiro</option>
-            <option value="Cartão de crédito">Cartão de crédito</option>
-            <option value="Cartão de débito">Cartão de débito</option>
-          </select>
-        </label>
-        <label htmlFor="tag">
-          Tag:
-          <select data-testid="tag-input" id="tag" name="tag">
-            <option value="Alimentação">Alimentação</option>
-            <option value="Lazer">Lazer</option>
-            <option value="Trabalho">Trabalho</option>
-            <option value="Transporte ">Transporte</option>
-            <option value="Saúde">Saúde</option>
-          </select>
-          <button type="submit">Adicionar despesa</button>
-        </label>
-      </form>
-    </main>
-  );
+class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.handleExpenses = this.handleExpenses.bind(this);
+  }
+
+  handleExpenses() {
+    const { expenses } = this.props;
+    let counter = 0;
+    expenses.forEach(({ value, exchangeRates, currency }) => {
+      counter += (value * exchangeRates[currency].ask);
+    });
+    return parseFloat(counter).toFixed(2);
+  }
+
+  render() {
+    const { email } = this.props;
+    return (
+      <header>
+        <p data-testid="email-field">{ email }</p>
+        <p data-testid="total-field">{ this.handleExpenses() }</p>
+        <p data-testid="header-currency-field">BRL</p>
+      </header>
+    );
+  }
 }
+
+const mapStateToProps = (state) => ({
+  email: state.user.email,
+  expenses: state.wallet.expenses,
+});
+
+Header.propTypes = {
+  email: PropTypes.string.isRequired,
+  expenses: PropTypes.arrayOf().isRequired,
+};
+
+export default connect(mapStateToProps)(Header);
