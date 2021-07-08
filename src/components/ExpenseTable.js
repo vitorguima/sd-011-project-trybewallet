@@ -1,8 +1,47 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { removeExpense } from '../actions';
 
 export default function () {
+  const dispatch = useDispatch();
+  const userExpenses = useSelector((state) => state.wallet.expenses);
+
+  const handleDelete = (id) => {
+    console.log(id);
+    const updatedExpenses = userExpenses.filter((el) => el.id !== id);
+    dispatch(removeExpense(updatedExpenses));
+  };
+
+  const getExpenses = () => {
+    if (userExpenses.length > 0) {
+      return userExpenses.map((el) => {
+        const { description, method, tag, value, name, convertedPrice, ask, id } = el;
+        return (
+          <tr>
+            <th>{description}</th>
+            <td>{tag}</td>
+            <td>{method} </td>
+            <td>{value}</td>
+            <td>{name}</td>
+            <td>{ask}</td>
+            <td>{convertedPrice}</td>
+            <td>Real</td>
+            <td>
+              <button data-testid="edit-btn" className="btn fas fa-edit btn-info m-1" />
+              <button
+                onClick={() => handleDelete(id)}
+                data-testid="delete-btn"
+                className="btn fas fa-trash-alt btn-danger m-1"
+              />
+            </td>
+          </tr>
+        );
+      });
+    }
+  };
+
   return (
-    <table class="table">
+    <table className="table">
       <thead>
         <tr>
           <th scope="col">Descrição</th>
@@ -16,22 +55,7 @@ export default function () {
           <th scope="col">Editar/Excluir</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <th>Tomar café</th>
-          <td>Alimentação</td>
-          <td>Cartão de Crédito </td>
-          <td>25</td>
-          <td>Peso Argentino</td>
-          <td>0.07</td>
-          <td>0.73</td>
-          <td>Real Brasileiro</td>
-          <td>
-            <button className="btn btn-info m-1">Editar</button>
-            <button className="btn btn-danger m-1">Excluir</button>
-          </td>
-        </tr>
-      </tbody>
+      <tbody>{getExpenses()}</tbody>
     </table>
   );
 }

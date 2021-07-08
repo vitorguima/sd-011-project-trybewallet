@@ -1,13 +1,13 @@
 // Coloque aqui suas actions
 export const USER_INFO = 'USER_INFO';
-export const REQUEST_DATA = 'REQUEST_DATA';
+export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 export const DATA_FAILURE = 'DATA_FAILURE';
 export const GET_DATA = 'GET_DATA';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 
 export const sendInfo = (payload) => ({ type: USER_INFO, payload });
 
-export const requestData = () => ({ type: REQUEST_DATA });
+export const removeExpense = (payload) => ({ type: REMOVE_EXPENSE, payload });
 
 export const getData = (payload) => ({ type: GET_DATA, payload });
 

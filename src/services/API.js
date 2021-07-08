@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import { requestData, getData, dataFailure } from '../actions';
+import { addExpense, dataFailure } from '../actions';
 
 const URL = 'https://economia.awesomeapi.com.br/json/all';
 
@@ -15,8 +15,9 @@ export const fetchAPI = async () => {
   }
 };
 
-export const getExchangeRate = async () => {
+export const sendExpense = (expense) => async (dispatch) => {
   try {
+    const { currency, value } = expense;
     const r = await fetch(URL);
     const rjson = await r.json();
     const currencies = Object.values(rjson);
@@ -26,21 +27,21 @@ export const getExchangeRate = async () => {
       prev[code] = { code, name, ask };
       return prev;
     };
-    const results = filteredCoin.reduce(redx, {});
+    const ExchangeRates = filteredCoin.reduce(redx, {});
+    const { name, ask } = ExchangeRates[currency];
+    const newName = name.replace('/Real Brasileiro', '');
+    const convertedPrice = parseFloat(ask * value).toFixed(2);
+    const newExpense = {
+      ...expense,
+      name: newName,
+      ask,
+      convertedPrice,
+      ExchangeRates,
+      value: parseFloat(value).toFixed(2),
+    };
 
-    return results;
+    await dispatch(addExpense(newExpense));
   } catch (error) {
-    return error;
-  }
-};
-
-export const sendExpense = async (coin) => async (dispatch) => {
-  try {
-    const r = await fetch(URL);
-    const rjson = await r.json();
-    const currencies = Object.values(rjson);
-    await dispatch(getData(currencies));
-  } catch (error) {
-    return error;
+    return dispatch(dataFailure(`${error}`));
   }
 };
