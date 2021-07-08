@@ -8,10 +8,16 @@ import {
   paymentMethod,
   category,
 } from '../walletComponents/walletElements';
+import { fetchCurrencies } from '../actions';
 
 class Wallet extends React.Component {
+  componentDidMount() {
+    const { request } = this.props;
+    request();
+  }
+
   render() {
-    const { email } = this.props;
+    const { email, currencies } = this.props;
     return (
       <div
         className="main-page"
@@ -25,7 +31,7 @@ class Wallet extends React.Component {
         <form>
           {expenses()}
           {description()}
-          {currency()}
+          {currency(currencies)}
           {paymentMethod()}
           {category()}
         </form>
@@ -36,10 +42,17 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  currencies: state.wallet.currencies,
 });
 
-export default connect(mapStateToProps, null)(Wallet);
+const mapDispatchToProps = (dispatch) => ({
+  request: () => dispatch(fetchCurrencies()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
+  request: PropTypes.func.isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
 };

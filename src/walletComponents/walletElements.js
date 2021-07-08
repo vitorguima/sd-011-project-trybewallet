@@ -16,12 +16,12 @@ export function description() {
     </label>);
 }
 
-export function currency() {
+export function currency(currencies) {
   return (
     <label htmlFor="currency">
       Moeda
       <select id="currency">
-        <option>a</option>
+        {currencies.map((anyCurr) => (<option key={ anyCurr }>{anyCurr}</option>))}
       </select>
     </label>);
 }
