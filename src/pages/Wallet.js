@@ -2,6 +2,7 @@ import React from 'react';
 import '../css/wallet.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Form from '../components/Form';
 
 class Wallet extends React.Component {
   render() {
@@ -9,10 +10,11 @@ class Wallet extends React.Component {
     return (
       <div className="wallet-page">
         <header className="header-container">
-          <p data-testid="email-field">{email}</p>
-          <p data-testid="total-field">{`Despesa total: ${0}`}</p>
-          <p data-testid="header-currency-field">BRL</p>
+          <p className="email" data-testid="email-field">{email}</p>
+          <p className="expenses" data-testid="total-field">{`Despesa total: ${0}`}</p>
+          <p className="currency" data-testid="header-currency-field">BRL</p>
         </header>
+        <Form />
       </div>
     );
   }

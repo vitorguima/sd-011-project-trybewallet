@@ -1,8 +1,23 @@
-.wallet-page {
-
-}
-
 .header-container {
   border: 1px solid black;
   display: flex;
+  justify-content: flex-end;
+  padding: 5px;
+}
+
+.email {
+  margin: 0 5px;
+}
+
+.expenses {
+  margin: 0 5px;
+}
+
+.currency {
+  margin: 1px;
+}
+
+.fieldset-container {
+  display: flex;
+  flex-direction: column;
 }

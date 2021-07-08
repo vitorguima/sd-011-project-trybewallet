@@ -1,8 +1,9 @@
 import React from 'react';
 import '../css/login.css';
 import { connect } from 'react-redux';
+// import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { requestLogin } from '../actions';
+import { requestLogin } from '../actions/userLogin';
 
 class Login extends React.Component {
   constructor() {
@@ -74,6 +75,18 @@ class Login extends React.Component {
         >
           Entrar
         </button>
+
+        {/* <Link
+          to="/carteira"
+          onClick={ () => alert('xablau') }
+        >
+          <button
+            type="button"
+            disabled={ buttonDisabled }
+          >
+            Login
+          </button>
+        </Link> */}
       </div>
     );
   }

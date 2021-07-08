@@ -1,4 +1,4 @@
-import { REQUEST_LOGIN } from '../actions';
+import { REQUEST_LOGIN } from '../actions/userLogin';
 
 // Esse reducer será responsável por tratar as informações da pessoa usuária
 const INITIAL_STATE = {
