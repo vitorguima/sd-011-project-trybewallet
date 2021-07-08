@@ -1,0 +1,54 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.login-form {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+}
+
+form {
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  padding: 100px 50px;
+}
+
+form h1 {
+  margin-bottom: 50px;
+}
+
+form fieldset {
+  border: none;
+  display: flex;
+  flex-direction: column;
+}
+
+fieldset input {
+  margin: 5px;
+  padding: 5px;
+  width: 200px;
+}
+
+fieldset button {
+  align-self: center;
+  background-color: rgb(53, 190, 53);
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  font-weight: 700;
+  padding: 5px;
+  width: 200px;
+}
+
+fieldset button:disabled {
+  cursor: not-allowed;
+  opacity: 40%;
+}
