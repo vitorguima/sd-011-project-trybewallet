@@ -12,7 +12,7 @@ import EditingExpensesBtn from './formComponents/editingExpensesBtn';
 const WalletForm = (props) => {
   const { editor } = props;
   return (
-    <form>
+    <form className="expense-form">
       <ValueInput />
       <DescriptionInput />
       <CurrencySelect />

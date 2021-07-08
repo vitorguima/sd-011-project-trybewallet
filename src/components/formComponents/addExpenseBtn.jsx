@@ -8,6 +8,7 @@ const AddExpenseBtn = (props) => {
   return (
     <button
       type="button"
+      className="add-expense-btn"
       onClick={ () => requestExpenseInfo(form) }
     >
       Adicionar despesa

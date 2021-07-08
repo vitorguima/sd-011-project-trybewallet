@@ -1,4 +1,5 @@
 import React from 'react';
+import './wallet.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import WalletForm from '../components/walletForm';
@@ -26,18 +27,19 @@ class Wallet extends React.Component {
     const { userEmail, currencyToExchange } = this.props;
     return (
       <>
-        <header>
-          <div>
-            <div data-testid="email-field">
+        <header className="wallet-header">
+          <img src="/Trybe_logo-baixa.png" alt="logo-trybe" />
+          <section>
+            <div className="email-field" data-testid="email-field">
               {`Email: ${userEmail}`}
             </div>
-            <div data-testid="total-field">
-              { this.totalExpense() }
+            <div className="total-field" data-testid="total-field">
+              { `Despesa Total: R$: ${this.totalExpense().toFixed(2)}` }
             </div>
             <div data-testid="header-currency-field">
               { currencyToExchange }
             </div>
-          </div>
+          </section>
         </header>
         <main>
           <WalletForm />

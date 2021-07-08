@@ -11,7 +11,7 @@
   justify-content: center;
 }
 
-form {
+.login-form form {
   align-items: center;
   border: 1px solid black;
   border-radius: 8px;
@@ -20,23 +20,23 @@ form {
   padding: 100px 50px;
 }
 
-form h1 {
+.login-form form h1 {
   margin-bottom: 50px;
 }
 
-form fieldset {
+.login-form form fieldset {
   border: none;
   display: flex;
   flex-direction: column;
 }
 
-fieldset input {
+.login-form fieldset input {
   margin: 5px;
   padding: 5px;
   width: 200px;
 }
 
-fieldset button {
+.login-form fieldset button {
   align-self: center;
   background-color: rgb(53, 190, 53);
   border: none;
@@ -48,7 +48,7 @@ fieldset button {
   width: 200px;
 }
 
-fieldset button:disabled {
+.login-form fieldset button:disabled {
   cursor: not-allowed;
   opacity: 40%;
 }
