@@ -6,12 +6,22 @@ import { fetchApi } from '../actions';
 import '../CSS/Wallet.css';
 
 class Wallet extends React.Component {
+  constructor(props) {
+    super(props);
+    this.totalSpent = this.totalSpent.bind(this);
+  }
+
   componentDidMount() {
     fetchApi();
   }
 
   totalSpent() {
-    return 0;
+    const { expenses } = this.props;
+    let total = 0;
+    expenses.forEach((expense) => {
+      total += expense.value * expense.exchangeRates[expense.currency].ask;
+    });
+    return total.toFixed(2);
   }
 
   render() {
@@ -30,6 +40,7 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  expenses: state.wallet.expenses,
 });
 
 Wallet.propTypes = {
