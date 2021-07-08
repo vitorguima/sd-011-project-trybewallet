@@ -5,16 +5,12 @@ const GLOBAL_STATE = {
   user: {
     email: '',
   },
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
 };
 
 const user = (state = GLOBAL_STATE, action) => {
   switch (action.type) {
   case SET_EMAIL:
-    return { ...state, user: { email: action.email } };
+    return { email: action.email };
   default:
     return state;
   }

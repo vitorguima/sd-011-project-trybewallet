@@ -21,12 +21,16 @@ class Login extends React.Component {
     this.validation();
   }
 
-  async changeValue({ target }) {
+  changeValue({ target }) {
+    const { sendEmail } = this.props;
     const { name, value } = target;
-    await this.setState({
+    this.setState({
       [name]: value,
+    }, () => {
+      const { email } = this.state;
+      this.validation();
+      sendEmail(email);
     });
-    await this.validation();
   }
 
   isValidEmail() {
@@ -49,12 +53,9 @@ class Login extends React.Component {
 
   validation() {
     const submitBtn = document.querySelector('.sbmtBtn');
-    const { sendEmail } = this.props;
-    const { email } = this.state;
     const emailValid = this.isValidEmail();
     const passwordValid = this.isValidPassword();
     if (emailValid && passwordValid) {
-      sendEmail(email);
       submitBtn.disabled = false;
       submitBtn.enabled = true;
     } else {
@@ -63,9 +64,9 @@ class Login extends React.Component {
   }
 
   submit() {
-    const { history, stateEmail } = this.props;
-    console.log(stateEmail);
-    console.log(stateEmail.email);
+    const { history, sendEmail } = this.props;
+    const { email } = this.state;
+    sendEmail(email);
     history.push('/carteira');
   }
 
@@ -95,10 +96,6 @@ class Login extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  stateEmail: state.user.user,
-});
-
 const mapDispatchToProps = (dispatch) => ({
   sendEmail: (state) => dispatch(emailAction(state)),
 });
@@ -106,7 +103,6 @@ const mapDispatchToProps = (dispatch) => ({
 Login.propTypes = {
   sendEmail: PropTypes.func.isRequired,
   history: PropTypes.objectOf(Object).isRequired,
-  stateEmail: PropTypes.objectOf(String).isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(Login);
