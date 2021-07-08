@@ -4,9 +4,44 @@ import PropTypes from 'prop-types';
 import * as actions from '../actions';
 
 class Wallet extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      value: 0,
+      description: '',
+      currency: null,
+      method: '',
+      tag: '',
+
+    };
+    this.handleClick = this.handleClick.bind(this);
+    this.handleOnChange = this.handleOnChange.bind(this);
+  }
+
   componentDidMount() {
     const { fetchAPI } = this.props;
     fetchAPI();
+  }
+
+  calcTotal() {
+    const { expenses } = this.props;
+    const total = expenses.reduce((acc, current) => {
+      const { value, currency, exchangeRates } = current;
+      const convertedValue = parseFloat(exchangeRates[currency].ask);
+      return acc + parseFloat(value) * convertedValue;
+    }, 0);
+    return total;
+  }
+
+  handleOnChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
+  }
+
+  handleClick() {
+    const { addExpense } = this.props;
+    addExpense(this.state);
   }
 
   renderForm() {
@@ -15,44 +50,72 @@ class Wallet extends React.Component {
       <form>
         <label htmlFor="value">
           Valor:
-          <input type="number" id="value" />
+          <input
+            type="number"
+            name="value"
+            id="value"
+            onChange={ this.handleOnChange }
+          />
         </label>
         <label htmlFor="description">
           Descrição:
-          <textarea id="description" />
+          <textarea
+            id="description"
+            name="description"
+            onChange={ this.handleOnChange }
+          />
         </label>
         <label htmlFor="currency">
           Moeda:
-          <select id="currency">
+          <select
+            id="currency"
+            name="currency"
+            onChange={ this.handleOnChange }
+          >
             {Object.keys(currencies)
               .filter((item) => item !== 'USDT')
               .map((item, index) => <option key={ index }>{item}</option>)}
           </select>
         </label>
-        <label htmlFor="payment">
+        <label htmlFor="method">
           Método de pagamento:
-          <select id="payment">
+          <select
+            id="method"
+            name="method"
+            onChange={ this.handleOnChange }
+          >
             <option>Dinheiro</option>
             <option>Cartão de crédito</option>
             <option>Cartão de débito</option>
           </select>
         </label>
-        <label htmlFor="tag">
-          Tag:
-          <select id="tag">
-            <option>Alimentação</option>
-            <option>Lazer</option>
-            <option>Trabalho</option>
-            <option>Transporte</option>
-            <option>Saúde</option>
-          </select>
-        </label>
+        {this.renderTag()}
+        <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
       </form>);
   }
 
+  renderTag() {
+    return (
+      <label htmlFor="tag">
+        Tag:
+        <select
+          id="tag"
+          name="tag"
+          onChange={ this.handleOnChange }
+        >
+          <option>Alimentação</option>
+          <option>Lazer</option>
+          <option>Trabalho</option>
+          <option>Transporte</option>
+          <option>Saúde</option>
+        </select>
+      </label>
+    );
+  }
+
   renderHeader() {
-    const { expenses, email } = this.props;
-    const total = expenses.reduce((acc, current) => acc + current, 0);
+    const { email } = this.props;
+    const total = this.calcTotal();
     return (
       <header>
         <p data-testid="email-field">{email}</p>
@@ -80,6 +143,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   fetchAPI: () => dispatch(actions.fetchAPI()),
+  addExpense: (data) => dispatch(actions.addExpense(data)),
 });
 
 Wallet.propTypes = {
@@ -87,6 +151,7 @@ Wallet.propTypes = {
   currencies: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   fetchAPI: PropTypes.func.isRequired,
+  addExpense: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
