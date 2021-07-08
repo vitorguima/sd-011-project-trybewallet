@@ -20,6 +20,11 @@ export const sendWalletInfo = (state) => ({
   state,
 });
 
+export const deleteExpense = (payload) => ({
+  type: 'DELETE_EXPENSE',
+  payload,
+});
+
 export function fetchCurrencies() {
   return (dispatch) => fetch('https://economia.awesomeapi.com.br/json/all')
     .then((response) => response.json())
