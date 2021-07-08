@@ -36,3 +36,8 @@ export function fetchPosts(payload = false) {
       .catch((error) => dispatch(rejectFetch(error)));
   };
 }
+
+export const deleteExpense = (id) => ({
+  type: 'DELETE_EXPENSE',
+  id,
+});
