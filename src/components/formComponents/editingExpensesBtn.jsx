@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { requestExpense } from '../actions';
+import { expenseUpdate } from '../../actions';
 
-const AddExpenseBtn = (props) => {
-  const { form, requestExpenseInfo } = props;
+const EditingExpensesBtn = (props) => {
+  const { form, updateExpenseInfo } = props;
   return (
     <button
       type="button"
-      onClick={ () => requestExpenseInfo(form) }
+      onClick={ () => updateExpenseInfo(form) }
     >
-      Adicionar despesa
+      Editar despesa
     </button>
   );
 };
@@ -20,11 +20,11 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  requestExpenseInfo: (expenseEntries) => dispatch(requestExpense(expenseEntries)),
+  updateExpenseInfo: (update) => dispatch(expenseUpdate(update)),
 });
 
-AddExpenseBtn.propTypes = {
-  requestExpenseInfo: PropTypes.func.isRequired,
+EditingExpensesBtn.propTypes = {
+  updateExpenseInfo: PropTypes.func.isRequired,
   form: PropTypes.shape({
     id: PropTypes.number,
     value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -35,4 +35,4 @@ AddExpenseBtn.propTypes = {
   }).isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddExpenseBtn);
+export default connect(mapStateToProps, mapDispatchToProps)(EditingExpensesBtn);

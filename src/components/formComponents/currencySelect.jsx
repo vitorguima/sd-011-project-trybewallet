@@ -12,6 +12,7 @@ const CurrencySelect = (props) => {
         name="currency"
         id="currency"
         value={ currency }
+        data-testid="currency-input"
         onChange={ handleExpenseFormInputs }
       >
         { coins && coins.map((coin) => (
@@ -22,7 +23,7 @@ const CurrencySelect = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  coins: state.wallet.coins,
+  coins: state.wallet.currencies,
   currency: state.form.currency,
 });
 

@@ -23,7 +23,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { userEmail } = this.props;
+    const { userEmail, currencyToExchange } = this.props;
     return (
       <>
         <header>
@@ -35,7 +35,7 @@ class Wallet extends React.Component {
               { this.totalExpense() }
             </div>
             <div data-testid="header-currency-field">
-              BRL
+              { currencyToExchange }
             </div>
           </div>
         </header>
@@ -51,6 +51,7 @@ class Wallet extends React.Component {
 const mapStateToProps = (state) => ({
   userEmail: state.user.email,
   expenses: state.wallet.expenses,
+  currencyToExchange: state.wallet.currencyToExchange,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -13,6 +13,7 @@ const ValueInput = (props) => {
         id="value"
         name="value"
         value={ value }
+        data-testid="value-input"
         onChange={ handleExpenseFormInputs }
       />
     </label>

@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { removeExpense } from '../actions';
+import { removeExpense, editExpense } from '../actions';
 import expenseTableHead from '../data/expenseTableHead';
 
 const ExpenseTable = (props) => {
-  const { expenses, removeExpenseValue } = props;
+  const { expenses, removeExpenseValue, editExpenseValue } = props;
 
   return (
     <table>
       <thead>
         <tr>
           { expenseTableHead.map((curr) => (
-            <th key={ curr }>{ curr }</th>
+            <th key={ curr } name={ curr }>{ curr }</th>
           ))}
         </tr>
       </thead>
@@ -26,7 +26,7 @@ const ExpenseTable = (props) => {
               <td>{ tag }</td>
               <td>{ method }</td>
               <td>{ value }</td>
-              <td>{ exchangeRates[currency].name }</td>
+              <td>{ exchangeRates[currency].name.split('/')[0].toString() }</td>
               <td>{ roundedValue(exchangeRates[currency].ask) }</td>
               <td>{ roundedValue(exchangeRates[currency].ask * value) }</td>
               <td>Real</td>
@@ -34,7 +34,7 @@ const ExpenseTable = (props) => {
                 <button
                   type="button"
                   data-testid="edit-btn"
-                  onClick={ () => removeExpenseValue(id) }
+                  onClick={ () => editExpenseValue(curr) }
                 >
                   Editar
                 </button>
@@ -60,11 +60,13 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   removeExpenseValue: (id) => dispatch(removeExpense(id)),
+  editExpenseValue: (payload) => dispatch(editExpense(payload)),
 });
 
 ExpenseTable.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object),
   removeExpenseValue: PropTypes.func.isRequired,
+  editExpenseValue: PropTypes.func.isRequired,
 };
 
 ExpenseTable.defaultProps = {

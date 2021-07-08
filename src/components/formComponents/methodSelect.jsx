@@ -12,6 +12,7 @@ const MathodSelect = (props) => {
         name="method"
         id="method"
         value={ method }
+        data-testid="method-input"
         onChange={ handleExpenseFormInputs }
       >
         <option>Dinheiro</option>

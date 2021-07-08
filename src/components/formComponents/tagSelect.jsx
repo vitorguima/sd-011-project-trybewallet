@@ -12,6 +12,7 @@ const TagSelect = (props) => {
         name="tag"
         id="tag"
         value={ tag }
+        data-testid="tag-input"
         onChange={ handleExpenseFormInputs }
       >
         <option>Alimentação</option>
