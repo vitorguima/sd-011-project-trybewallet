@@ -1,4 +1,7 @@
 import React from "react";
+import { connect } from "react-redux";
+import { userLogin } from "../actions";
+import { Redirect } from "react-router-dom";
 
 class Login extends React.Component {
   constructor(props) {
@@ -11,6 +14,7 @@ class Login extends React.Component {
     };
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
   }
 
   handleEmailChange({ target }) {
@@ -38,8 +42,20 @@ class Login extends React.Component {
     return string.trim().length >= 6;
   }
 
+  handleLogin() {
+    const { userLogin } = this.props;
+    const { email } = this.state;
+    userLogin(email);
+  }
+
   render() {
     const { isEmailValid, isPasswordValid } = this.state;
+    const { loggedEmail } = this.props;
+
+    if (loggedEmail) {
+      return <Redirect to="/carteira" />;
+    }
+
     return (
       <form>
         <input
@@ -61,7 +77,7 @@ class Login extends React.Component {
         <button
           type="button"
           disabled={!isEmailValid || !isPasswordValid}
-          onClick={() => {}}
+          onClick={this.handleLogin}
         >
           Entrar
         </button>
@@ -70,4 +86,12 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => ({
+  loggedEmail: state.user.email,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  userLogin: (email) => dispatch(userLogin(email)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
