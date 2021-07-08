@@ -40,7 +40,7 @@ button {
   padding: 8px 16px;
 }
 
-header {
+.header-login {
   align-content: center;
   background-color: #036b52;
   color: white;

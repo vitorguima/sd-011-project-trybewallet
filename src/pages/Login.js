@@ -37,7 +37,7 @@ class Login extends React.Component {
     const { reducerLogin } = this.props;
     return (
       <div>
-        <header>Trybe Wallet</header>
+        <header className="header-login">Trybe Wallet</header>
         <div className="div">
           <form>
             <label htmlFor="email-imput">
