@@ -17,6 +17,7 @@ export default class LabelForm extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.selectMethod = this.selectMethod.bind(this);
     this.select = this.select.bind(this);
+    this.handlerClick = this.handlerClick.bind(this);
   }
 
   handleChange({ target }) {
@@ -24,6 +25,10 @@ export default class LabelForm extends Component {
     this.setState({
       [name]: value,
     });
+  }
+
+  handlerClick() {
+
   }
 
   selectMethod() {
