@@ -47,16 +47,18 @@ class Wallet extends React.Component {
           <label htmlFor="currency">
             Moeda
             <select id="currency">
-              <option>Moeda</option>
+              { currencys.map((currency, key) => {
+                if (currency === 'USDT') return null;
+                return (<option key={ key }>{ currency }</option>);
+              })}
             </select>
           </label>
           <label htmlFor="paymentMethod">
             Método de pagamento
             <select id="paymentMethod">
-              { currencys.map((currency, key) => {
-                if (currency === 'USDT') return null;
-                return (<option key={ key }>{ currency }</option>);
-              })}
+              <option>Dinheiro</option>
+              <option>Cartão de crédito</option>
+              <option>Cartão de débito</option>
             </select>
           </label>
           <label htmlFor="tag">
