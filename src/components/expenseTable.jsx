@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { removeExpense } from '../actions';
+import expenseTableHead from '../data/expenseTableHead';
 
 const ExpenseTable = (props) => {
   const { expenses, removeExpenseValue } = props;
@@ -10,15 +11,9 @@ const ExpenseTable = (props) => {
     <table>
       <thead>
         <tr>
-          <th>Descrição</th>
-          <th>Tag</th>
-          <th>Método de pagamento</th>
-          <th>Valor</th>
-          <th>Moeda</th>
-          <th>Câmbio utilizado</th>
-          <th>Valor convertido</th>
-          <th>Moeda de conversão</th>
-          <th>Editar/Excluir</th>
+          { expenseTableHead.map((curr) => (
+            <th key={ curr }>{ curr }</th>
+          ))}
         </tr>
       </thead>
       <tbody>
@@ -42,6 +37,13 @@ const ExpenseTable = (props) => {
                   onClick={ () => removeExpenseValue(id) }
                 >
                   Remove
+                </button>
+                <button
+                  type="button"
+                  data-testid="edit-btn"
+                  onClick={ () => removeExpenseValue(id) }
+                >
+                  Editar
                 </button>
               </td>
             </tr>
