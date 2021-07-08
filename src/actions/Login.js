@@ -1,8 +1,6 @@
-export const LOGIN_SUCESS = 'LOGIN_SUCESS';
+export const SET_USER_EMAIL = 'SET_USER_EMAIL';
 
-const login = (payload) => ({
-  type: LOGIN_SUCESS,
+export const setUserEmail = (payload) => ({
+  type: SET_USER_EMAIL,
   payload,
 });
-
-export default login;

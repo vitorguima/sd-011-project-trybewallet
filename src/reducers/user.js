@@ -1,21 +1,21 @@
 // Esse reducer será responsável por tratar as informações da pessoa usuária
 
-import { LOGIN_SUCESS } from '../actions/Login';
+import { SET_USER_EMAIL } from '../actions/Login';
 
 const INITIAL_STATE = {
-  user: {
-    email: '',
-  },
+  email: '',
 };
 
 function user(state = INITIAL_STATE, action = {}) {
-  if (LOGIN_SUCESS) {
+  switch (action.type) {
+  case SET_USER_EMAIL:
     return {
       ...state,
-      user: { email: action.payload },
+      email: action.payload,
     };
+  default:
+    return state;
   }
-  return state;
 }
 
 export default user;

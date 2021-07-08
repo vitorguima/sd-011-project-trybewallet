@@ -14,8 +14,8 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Route exact path="/" component={ Login } />
-        <Route exact path="/carteira" component={ Wallet } />
+        <Route exact path="/" render={ () => <Login /> } />
+        <Route exact path="/carteira" render={ () => <Wallet /> } />
       </div>
     );
   }
