@@ -15,11 +15,10 @@ class SeCurrency extends Component {
           value={ value }
           onChange={ handle }
         >
-          {Object
-            .values(currencies)
-            .filter((item) => item.codein !== 'BRLT')
+          {currencies
+            .filter((item) => item !== 'USDT')
             .map((item, index) => (
-              <option value={ item.code } key={ index }>{item.code}</option>))}
+              <option value={ item } key={ index }>{item}</option>))}
         </select>
       </label>
     );
