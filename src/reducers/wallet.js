@@ -5,6 +5,8 @@ import {
   REQUEST_COIN_ERROR,
   RESPONSE_PARAM_SUCCESS,
   REMOVE_DESCRIPTION,
+  FUNC_EDIT_EXPENSES,
+  UPDATE_EDIT_EXPENSES,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -29,7 +31,6 @@ function wallet(state = INITIAL_STATE, action) {
   case REQUEST_COIN_ERROR:
     return {
       ...state,
-      isLoading: false,
     };
   case RESPONSE_PARAM_SUCCESS:
     action.state.exchangeRates = action.payload;
@@ -42,7 +43,24 @@ function wallet(state = INITIAL_STATE, action) {
       ...state,
       expenses: state.expenses.filter(({ id }) => id !== action.payload),
     };
-
+  case FUNC_EDIT_EXPENSES:
+    return {
+      ...state,
+      keepFuncEdit: action.payload,
+    };
+  case UPDATE_EDIT_EXPENSES:
+    return {
+      ...state,
+      expenses: state.expenses.map((value) => {
+        if (value.id === action.payload.id) {
+          return {
+            id: value.id,
+            ...action.payload,
+            exchangeRates: value.exchangeRates,
+          };
+        } return value;
+      }),
+    };
   default:
     return state;
   }

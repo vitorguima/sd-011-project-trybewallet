@@ -1,9 +1,38 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-export default class Table extends Component {
+class Table extends Component {
+  constructor() {
+    super();
+
+    this.renderButton = this.renderButton.bind(this);
+  }
+
+  renderButton(value) {
+    const { removeFuncDescription, addEditFunction } = this.props;
+    return (
+      <>
+        <button
+          data-testid="delete-btn"
+          type="button"
+          onClick={ () => removeFuncDescription(value.id) }
+        >
+          Excluir
+        </button>
+        <button
+          data-testid="edit-btn"
+          type="button"
+          onClick={ () => addEditFunction(value) }
+        >
+          Editar
+        </button>
+      </>
+    );
+  }
+
   render() {
-    const { expenses, removeFuncDescription } = this.props;
+    const { expenses } = this.props;
     return (
       <div>
         <table>
@@ -35,13 +64,7 @@ export default class Table extends Component {
                 </td>
                 <td>Real</td>
                 <td>
-                  <button
-                    data-testid="delete-btn"
-                    type="button"
-                    onClick={ () => removeFuncDescription(value.id) }
-                  >
-                    Excluir
-                  </button>
+                  {this.renderButton(value)}
                 </td>
               </tr>
             ))}
@@ -51,6 +74,12 @@ export default class Table extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  addEditFunction: state.wallet.keepFuncEdit,
+});
+
+export default connect(mapStateToProps)(Table);
 
 Table.propTypes = {
   expenses: PropTypes.array,

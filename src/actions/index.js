@@ -4,6 +4,8 @@ export const REQUEST_COIN_SUCCESS = 'REQUEST_COIN_SUCCESS';
 export const REQUEST_COIN_ERROR = 'REQUEST_COIN_ERROR';
 export const RESPONSE_PARAM_SUCCESS = 'RESPONSE_PARAM_SUCCESS';
 export const REMOVE_DESCRIPTION = 'REMOVE_DESCRIPTION';
+export const FUNC_EDIT_EXPENSES = 'FUNC_EDIT_EXPENSES';
+export const UPDATE_EDIT_EXPENSES = 'UPDATE_EDIT_EXPENSES,';
 
 function SendEmail(state) {
   return {
@@ -36,6 +38,16 @@ const responseParamSuccess = (state, payload) => ({
 
 export const removeDescription = (payload) => ({
   type: REMOVE_DESCRIPTION,
+  payload,
+});
+
+export const funcEditExpenses = (payload) => ({
+  type: FUNC_EDIT_EXPENSES,
+  payload,
+});
+
+export const updateEditExpenses = (payload) => ({
+  type: UPDATE_EDIT_EXPENSES,
   payload,
 });
 
