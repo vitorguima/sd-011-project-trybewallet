@@ -25,6 +25,11 @@ export const addDetails = (payload, state) => ({
   state,
 });
 
+export const deleteItem = (payload) => ({
+  type: 'DELETE_ITEM',
+  payload,
+});
+
 export const getCoins = (state = null) => (dispatch) => {
   dispatch(requestCoin());
   return fetch('https://economia.awesomeapi.com.br/json/all')
