@@ -3,7 +3,6 @@ export const sendEmail = (payload) => ({
   payload,
 });
 
-
 export const requestCoin = () => ({
   type: 'REQUEST_COIN',
 });
