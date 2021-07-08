@@ -1,6 +1,7 @@
-import { REQUEST_VALUES, RECEIVE_VALUES } from '../actions/index';
+import { REQUEST_VALUES, RECEIVE_VALUES, ADD_EXPENSES } from '../actions/index';
 
 const INITIAL_STATE = {
+  id: 0,
   currencies: [],
   expenses: [],
   isFetching: false,
@@ -18,6 +19,16 @@ export default function reducerUser(state = INITIAL_STATE, action) {
       ...state,
       isFetching: false,
       currencies: action.values,
+    });
+  case ADD_EXPENSES:
+    return ({
+      ...state,
+      id: state.id + 1,
+      expenses: [...state.expenses,
+        { id: action.id,
+          ...action.payload,
+          exchangeRates: state.currencies,
+        }],
     });
   default:
     return state;
