@@ -14,19 +14,32 @@ class Login extends React.Component {
       isDisabled: true,
     };
 
-    this.isDisabled = this.handleChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleEmailInput = this.handleEmailInput.bind(this);
   }
 
   handleChange({ target: { name, value } }) {
-    const { email, password } = this.state;
-    const pattern = /^w+[+.w-]*@([w-]+.)*w+[w-]*.([a-z]{2,4}|d+)$/i;
-    const minPasswordLength = 6;
-    this.setState = ({
+    this.setState({
       [name]: value,
-      isDisabled: !pattern.test(email) || password.length <= minPasswordLength,
-    });
+    },
+    () => this.handleEmailInput());
   }
 
+  handleEmailInput() {
+    const { email, password } = this.state;
+    const pattern = /^\w+(\w+)@\w+([-.]\w+).\w+([-.]\w+)*$/;
+    const minPasswordLength = 6;
+    const bool = pattern.test(email) && password.length >= minPasswordLength;
+    if (bool) {
+      this.setState({
+        isDisabled: false,
+      });
+    } else {
+      this.setState({
+        isDisabled: true,
+      });
+    }
+  }
 
   render() {
     const { email, password, isDisabled } = this.state;
