@@ -19,10 +19,16 @@ export const requestCoinsError = (payload) => ({
   payload,
 });
 
-export const getCoins = () => (dispatch) => {
+export const addDetails = (payload, state) => ({
+  type: 'ADD_DETAILS',
+  payload,
+  state,
+});
+
+export const getCoins = (state = null) => (dispatch) => {
   dispatch(requestCoin());
   return fetch('https://economia.awesomeapi.com.br/json/all')
     .then((response) => response.json())
-    .then((data) => dispatch(requestCoinsSucess(data)))
+    .then((data) => dispatch(state ? addDetails(data, state) : requestCoinsSucess(data)))
     .catch((error) => dispatch(requestCoinsError(error)));
 };
