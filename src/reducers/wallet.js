@@ -4,6 +4,7 @@ import {
   REQUEST_COIN_FAIL,
   ADD_EXPENSES,
   DELETE_EXPENSES,
+  EDIT_EXPENSES,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -40,6 +41,11 @@ function wallet(state = INITIAL_STATE, action) {
       ...state,
       expenses: state.expenses.filter(({ id }) => action.payload !== id),
     };
+    case EDIT_EXPENSES:
+      return {
+        ...state,
+        expenses: state.expenses.filter(({ id }) => action.payload !== id),
+      };
   default:
     return state;
   }
