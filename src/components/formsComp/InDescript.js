@@ -6,7 +6,7 @@ class InDescript extends Component {
     const { value, handle } = this.props;
     return (
       <label htmlFor="description-input">
-        Descrição
+        Descrição:
         <input
           type="text"
           name="description"

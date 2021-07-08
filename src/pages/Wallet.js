@@ -62,15 +62,6 @@ class Wallet extends React.Component {
     return (expense.exchangeRates[expense.currency].name).split('/')[0];
   }
 
-  // Função criada para retornar a segunda moeda
-  // ndCur(expense) {
-  //   const retorno = ((expense.exchangeRates[expense.currency].name)
-  //     .split('/')[1]).split(' ')[0];
-  //   console.log(retorno);
-  //   // QUE LINTER FEIO... BASTA APENAS COLOCAR REAL DIRETO EM UMA DAS COLUNAS
-  //   return retorno;
-  // }
-
   // Função criada para retornar o valor com duas casas decimais
   valueTwoCases(expense) {
     return `${expense.currency} ${(Number(expense.value)).toFixed(2)}`;
@@ -120,7 +111,7 @@ class Wallet extends React.Component {
     return (
       <div>
         <Header email={ email } total={ total } />
-        <form>
+        <form className="form-expenses">
           <InValue handle={ this.handleChange } value={ value } />
           <InDescript handle={ this.handleChange } value={ description } />
           <SeCurrency handle={ this.handleChange } value={ currency } />
@@ -134,11 +125,11 @@ class Wallet extends React.Component {
           <HeaderList />
           <tbody>
             {[...total.sort((a, b) => a.id - b.id)].map((expense, index) => (
-              <tr key={ index } className="line">
+              <tr key={ index } className="line-expense">
                 <td className="column">{expense.description}</td>
                 <td className="column">{expense.tag}</td>
                 <td className="column">{expense.method}</td>
-                <td className="column">{expense.value}</td>
+                <td className="column">{this.valueTwoCases(expense)}</td>
                 <td className="column">{this.stCur(expense)}</td>
                 <td className="column">{this.exchangeTwoCases(expense)}</td>
                 <td className="column">{this.totalExchange(expense)}</td>
@@ -147,10 +138,11 @@ class Wallet extends React.Component {
                   <BtDelet id={ expense.id } />
                   <button
                     type="button"
+                    className="bt-del-edit"
                     data-testid="edit-btn"
                     onClick={ () => this.editMode(expense) }
                   >
-                    Edt
+                    <img alt="edit" src="https://img.icons8.com/material-rounded/24/ffffff/edit--v1.png" />
                   </button>
                 </td>
               </tr>))}

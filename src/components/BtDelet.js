@@ -8,11 +8,12 @@ class BtDelet extends Component {
     const { del, id } = this.props;
     return (
       <button
+        className="bt-del-edit"
         data-testid="delete-btn"
         type="button"
         onClick={ () => del(id) }
       >
-        Excluir
+        <img src="https://img.icons8.com/material-rounded/24/fa314a/filled-trash.png" alt="trash" />
       </button>
     );
   }

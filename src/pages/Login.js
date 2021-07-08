@@ -30,41 +30,36 @@ class Login extends React.Component {
   render() {
     const { email, password } = this.state;
     return (
-      <div>
-        <h1>LOGO TRYBE</h1>
-        <form>
-          <label htmlFor="email">
-            <input
-              data-testid="email-input"
-              name="email"
-              value={ email }
-              onChange={ (e) => this.handleChange(e) }
-            />
-          </label>
-          <br />
-          <label htmlFor="password">
-            <input
-              data-testid="password-input"
-              name="password"
-              type="password"
-              value={ password }
-              onChange={ (e) => this.handleChange(e) }
-            />
-          </label>
-          <br />
-          {/*
-            SOLUÇÃO DESENVOLVIDA INICIALMENTE, MAS NÃO APROVADA NOS TESTES...
-          {this.validation() && (
-            <button type="button">Entrar</button>
-          )}
-          {!this.validation() && (
-            <button type="button" disabled>Entrar</button>
-          )} */}
+      <div className="bg-login">
+        <div className="form-login">
+          <h1 className="title-login">My Wallet</h1>
+          <img src="https://img.icons8.com/ios-filled/120/ffffff/wallet-app.png" alt="wallet" />
+          <form>
+            <label htmlFor="email">
+              <input
+                data-testid="email-input"
+                name="email"
+                value={ email }
+                onChange={ (e) => this.handleChange(e) }
+                placeholder="E-mail"
+              />
+            </label>
+            <br />
+            <label htmlFor="password">
+              <input
+                data-testid="password-input"
+                name="password"
+                type="password"
+                value={ password }
+                onChange={ (e) => this.handleChange(e) }
+                placeholder="Password"
+              />
+            </label>
+          </form>
           {this.validation()
             ? <BtEntrar isDisabled={ false } email={ email } />
             : <BtEntrar isDisabled email={ email } />}
-          {/* MESMO NO BUTTON DESABILITADO É NECESSÁRIO O EMAIL DEVIDO AO PROPTYPES */}
-        </form>
+        </div>
       </div>
     );
   }

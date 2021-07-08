@@ -12,6 +12,7 @@ class BtEntrar extends Component {
         to="/carteira"
       >
         <button
+          className="bt-entrar"
           type="button"
           disabled={ isDisabled }
           onClick={ () => enter(email) }

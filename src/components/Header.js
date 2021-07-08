@@ -13,10 +13,12 @@ class Header extends Component {
     const { email } = this.props;
     return (
       <header>
-        <div>IMAGEM TRYBE</div>
+        <img src="https://img.icons8.com/ios-filled/50/ffffff/wallet.png" alt="wallet" />
         <div data-testid="email-field">{ email }</div>
-        <div data-testid="total-field">{this.generateTotal()}</div>
-        <div data-testid="header-currency-field">BRL</div>
+        <div className="total-header">
+          <div data-testid="total-field">{`Total: ${this.generateTotal()}`}</div>
+          <div data-testid="header-currency-field" className="currency-header">BRL</div>
+        </div>
       </header>
     );
   }

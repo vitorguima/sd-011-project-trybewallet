@@ -7,6 +7,7 @@ class BtAdd extends Component {
     return (
       <button
         type="button"
+        className="bt-exp"
         onClick={ addOnClick }
       >
         Adicionar despesa

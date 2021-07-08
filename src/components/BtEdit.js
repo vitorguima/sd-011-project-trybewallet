@@ -7,6 +7,7 @@ class BtEdit extends Component {
     return (
       <button
         type="button"
+        className="bt-exp"
         onClick={ editOnClick }
       >
         Editar despesa
