@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchPosts } from '../actions';
 
-export class Wallet extends Component {
+class Wallet extends Component {
   constructor(props) {
     super(props);
 
