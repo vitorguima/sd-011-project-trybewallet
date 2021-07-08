@@ -1,9 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { login } from '../actions';
 
 class Login extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       email: '',
@@ -47,6 +50,7 @@ class Login extends React.Component {
   }
 
   render() {
+    const { userLogin } = this.props;
     const { email, senha, habilitar } = this.state;
     return (
       <div>
@@ -76,10 +80,11 @@ class Login extends React.Component {
             required
           />
         </label>
-        <Link to="/wallet">
+        <Link to="/carteira">
           <button
             type="button"
             disabled={ !habilitar }
+            onClick={ () => userLogin(email) }
           >
             Entrar
           </button>
@@ -89,4 +94,11 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  userLogin: (email) => dispatch(login(email)) });
+
+export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  userLogin: PropTypes.func.isRequired,
+};
