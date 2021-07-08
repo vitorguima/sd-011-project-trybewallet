@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import getCurrency from '../services/Index';
 
 import { dispatchExpense } from '../actions/index';
+import ExpensesTable from '../components/ExpensesTable';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -191,6 +192,7 @@ class Wallet extends React.Component {
             Adicionar despesa
           </button>
         </form>
+        <ExpensesTable />
       </div>
     );
   }
