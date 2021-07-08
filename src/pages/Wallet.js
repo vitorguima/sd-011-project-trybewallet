@@ -1,19 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Header from '../components/Header';
 
 class Wallet extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      currencys: [],
+    };
+  }
+
+  componentDidMount() {
+    this.fetchCurrencys();
+  }
+
+  fetchCurrencys() {
+    fetch('https://economia.awesomeapi.com.br/json/all')
+      .then((response) => response.json())
+      .then((resolve) => {
+        this.setState((oldState) => ({
+          ...oldState,
+          currencys: Object.keys(resolve),
+        }));
+      });
+  }
+
   render() {
-    const { getUserMail } = this.props;
+    const { getUserEmail } = this.props;
+    const { currencys } = this.state;
     return (
       <div>
-        TrybeWallet
-        <header>
-          <p data-testid="email-field">{ getUserMail }</p>
-          <p data-testid="total-field">{ 0 }</p>
-          <p data-testid="header-currency-field">BRL</p>
-        </header>
-
+        <Header props={ getUserEmail } />
         <form>
           <label htmlFor="valor">
             Valor
@@ -23,12 +41,13 @@ class Wallet extends React.Component {
             Descrição
             <input type="text" name="descrição" id="description" />
           </label>
-          <label htmlFor="coinType">
+          <label htmlFor="currency">
             Moeda
-            <select id="coinType">
-              <option>BRL</option>
-              <option>USD</option>
-              <option>EUR</option>
+            <select id="currency">
+              { currencys.map((currency, key) => {
+                if (currency === 'USDT') return null;
+                return (<option key={ key }>{ currency }</option>);
+              })}
             </select>
           </label>
           <label htmlFor="paymentMethod">
@@ -56,11 +75,11 @@ class Wallet extends React.Component {
 }
 
 const mapStateToProps = ({ user }) => ({
-  getUserMail: user.email,
+  getUserEmail: user.email,
 });
 
 Wallet.propTypes = {
-  getUserMail: PropTypes.string.isRequired,
+  getUserEmail: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps)(Wallet);
