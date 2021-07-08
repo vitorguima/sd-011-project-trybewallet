@@ -7,6 +7,8 @@ export const getCurrenciesAction = (data) => ({ type: 'GET_CURRENCIES', data });
 
 export const addExpenseAction = (expense) => ({ type: 'ADD_EXPENSE', expense });
 
+export const saveEditAction = (expense) => ({ type: 'SAVE_EDIT', expense });
+
 export const delExpenseAction = (id) => ({ type: 'DEL_EXPENSE', id });
 
 export const activeEditModeAction = () => ({ type: 'EDIT_ON' });

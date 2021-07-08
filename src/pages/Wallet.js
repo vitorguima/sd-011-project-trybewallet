@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchAPIAction, setExpenseAction, activeEditModeAction,
-  desactiveEditModeAction, delExpenseAction } from '../actions';
+  desactiveEditModeAction, delExpenseAction, saveEditAction } from '../actions';
 import Header from '../components/Header';
 import HeaderList from '../components/HeaderList';
 import InValue from '../components/formsComp/InValue';
@@ -97,10 +97,10 @@ class Wallet extends React.Component {
   }
 
   editOnClick() {
-    const { del, add, desactiveEditMode } = this.props;
+    const { del, save, desactiveEditMode } = this.props;
     const { value, description, currency, method, tag, id, exchangeRates } = this.state;
     del(id);
-    add({ value, description, currency, method, tag, id, exchangeRates });
+    save({ value, description, currency, method, tag, id, exchangeRates });
     desactiveEditMode();
     this.setState({
       value: 0,
@@ -172,6 +172,7 @@ const mapDispatchToProps = (dispatch) => ({
   activeEditMode: () => dispatch(activeEditModeAction()),
   desactiveEditMode: () => dispatch(desactiveEditModeAction()),
   del: (id) => dispatch(delExpenseAction(id)),
+  save: (expense) => dispatch(saveEditAction(expense)),
 });
 
 Wallet.propTypes = {

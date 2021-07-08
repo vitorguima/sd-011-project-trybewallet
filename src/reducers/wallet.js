@@ -219,6 +219,7 @@ const ADD_EXPENSE = 'ADD_EXPENSE';
 const DEL_EXPENSE = 'DEL_EXPENSE';
 const EDIT_ON = 'EDIT_ON';
 const EDIT_OFF = 'EDIT_OFF';
+const SAVE_EDIT = 'SAVE_EDIT';
 
 const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -236,6 +237,8 @@ const wallet = (state = INITIAL_STATE, action) => {
     return { ...state, editMode: true };
   case EDIT_OFF:
     return { ...state, editMode: false };
+  case SAVE_EDIT:
+    return { ...state, expenses: [...state.expenses, action.expense] };
   default:
     return state;
   }
