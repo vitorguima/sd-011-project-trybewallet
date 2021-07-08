@@ -12,9 +12,9 @@ class ExpenseForm extends React.Component {
         id: 0,
         value: 0,
         description: '',
-        currency: '',
-        method: '',
-        tag: '',
+        currency: 'USD',
+        method: 'Dinheiro',
+        tag: 'Alimentação',
         exchangeRates: {},
       },
     };
