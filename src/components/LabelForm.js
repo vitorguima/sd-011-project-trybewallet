@@ -14,6 +14,8 @@ export default class LabelForm extends Component {
       exchangeRates: {},
     };
     this.handleChange = this.handleChange.bind(this);
+    this.selectMethod = this.selectMethod.bind(this);
+    this.select = this.select.bind(this);
   }
 
   handleChange({ target }) {
@@ -23,26 +25,32 @@ export default class LabelForm extends Component {
     });
   }
 
+  selectMethod() {
+    const { method } = this.state;
+    return (
+      <label htmlFor="method">
+        Método de pagamento
+        <select
+          id="method"
+          name="method"
+          value={ method }
+          onChange={ this.handleChange }
+        >
+          <option> Metodo de pagamento! </option>
+          <option value="money">Dinheiro </option>
+          <option value="creditCard">Cartão de crédito </option>
+          <option value="debitCard">Cartão de débito </option>
+        </select>
+      </label>
+    );
+  }
+
   select() {
     const { coins } = this.props;
-    const { currency, method, tag } = this.state;
+    const { currency, tag } = this.state;
 
     return (
       <>
-        <label htmlFor="method">
-          Método de pagamento
-          <select
-            id="method"
-            name="method"
-            value={ method }
-            onChange={ this.handleChange }
-          >
-            <option> Metodo de pagamento! </option>
-            <option value="money">Dinheiro </option>
-            <option value="creditCard">Cartão de crédito </option>
-            <option value="debitCard">Cartão de débito </option>
-          </select>
-        </label>
         <label htmlFor="Tag">
           Tag
           <select
@@ -59,7 +67,12 @@ export default class LabelForm extends Component {
         </label>
         <label htmlFor="moeda">
           Moeda
-          <select id="moeda" name="currency" value={ currency } onChange={ this.handleChange }>
+          <select
+            id="moeda"
+            name="currency"
+            value={ currency }
+            onChange={ this.handleChange }
+          >
             {coins.map((coin, key) => (
               <option
                 key={ key }
@@ -74,8 +87,8 @@ export default class LabelForm extends Component {
   }
 
   render() {
-    const { coins, getApi } = this.props;
-    const { value, description, currency, method, tag } = this.state;
+    const { getApi } = this.props;
+    const { value, description } = this.state;
     return (
       <form>
         <label htmlFor="valor">
@@ -90,9 +103,16 @@ export default class LabelForm extends Component {
         </label>
         <label htmlFor="descrição">
           Descrição
-          <input type="text" id="descrição" name="description" value={ description } onChange={ this.handleChange } />
+          <input
+            type="text"
+            id="descrição"
+            name="description"
+            value={ description }
+            onChange={ this.handleChange }
+          />
         </label>
-
+        {this.select()}
+        {this.selectMethod()}
         <button type="button" onClick={ () => getApi(true) }>Adicionar despesa</button>
       </form>
     );
