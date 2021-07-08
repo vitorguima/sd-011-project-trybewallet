@@ -37,7 +37,7 @@ class Login extends React.Component {
             data-testid="email-input"
             placeholder="Email"
             required
-            onClick={ this.saveEmail }
+            onChange={ this.saveEmail }
           />
           <input
             type="password"
