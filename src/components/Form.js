@@ -1,7 +1,18 @@
 import React from 'react';
+import propTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { fetchCurrency } from '../actions';
 
 class Form extends React.Component {
+  componentDidMount() {
+    const { currencySave } = this.props;
+    currencySave();
+  }
+
   render() {
+    const { currencies } = this.props;
+    // console.log(currencies)
+    const keysApi = Object.keys(currencies).filter((currency) => currency !== 'USDT');
     return (
       <form>
         <label htmlFor="value">
@@ -17,9 +28,7 @@ class Form extends React.Component {
         <label htmlFor="currency">
           Moeda:
           <select type="text" name="currency" id="currency">
-            <option>
-              {}
-            </option>
+            {keysApi.map((key) => <option key={ key }>{ key }</option>)}
           </select>
         </label>
 
@@ -47,4 +56,17 @@ class Form extends React.Component {
   }
 }
 
-export default Form;
+const mapDispatchToProps = (dispatch) => ({
+  currencySave: () => dispatch(fetchCurrency()),
+});
+
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+Form.propTypes = {
+  currencySave: propTypes.func.isRequired,
+  currencies: propTypes.arrayOf(propTypes.object).isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
