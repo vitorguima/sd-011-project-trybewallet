@@ -28,6 +28,11 @@ function walletReducer(state = INITIAL_STATE, action) {
       ...state,
       expenses: [...state.expenses, action.state],
     };
+  case 'DELETE_ITEM':
+    return {
+      ...state,
+      expenses: state.expenses.filter((expense) => expense.id !== action.payloadd),
+    };
   default:
     return {
       ...state,
