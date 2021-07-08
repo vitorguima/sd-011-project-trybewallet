@@ -8,22 +8,31 @@ export const loadingFetch = () => ({
   type: 'LOADING_FETCH',
 });
 
-export const acceptFetch = (json) => ({
+export const acceptFetch = (payload) => ({
   type: 'ACCEPT_FETCH',
-  payload: json,
+  payload,
 });
 
-export const rejectFetch = (erro) => ({
+export const rejectFetch = (payload) => ({
   type: 'REJECT_FETCH',
-  payload: erro,
+  payload,
 });
 
-export function fetchPosts() {
+export const sendExpenses = (payload, responseJson) => ({
+  type: 'SEND_EXPENSES',
+  payload,
+  responseJson,
+});
+
+export function fetchPosts(payload = false) {
   return (dispatch) => {
     dispatch(loadingFetch());
     return fetch('https://economia.awesomeapi.com.br/json/all')
       .then((response) => response.json())
-      .then((responseJson) => dispatch(acceptFetch(responseJson)))
+      .then((responseJson) => (
+        payload
+          ? dispatch(sendExpenses(payload, responseJson))
+          : dispatch(acceptFetch(responseJson))))
       .catch((error) => dispatch(rejectFetch(error)));
   };
 }

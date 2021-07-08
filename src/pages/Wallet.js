@@ -4,21 +4,69 @@ import PropTypes from 'prop-types';
 import { fetchPosts } from '../actions';
 
 export class Wallet extends Component {
+  constructor(props) {
+    super(props);
+
+    const { expenses } = this.props;
+    this.state = {
+      id: expenses.length,
+      value: '',
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      exchangeRates: {},
+    };
+    this.form = this.form.bind(this);
+    this.change = this.change.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  componentDidMount() {
+    const { dispatchFetchPosts } = this.props;
+    dispatchFetchPosts();
+  }
+
+  change({ target }) {
+    const { id, value } = target;
+    this.setState({ [id]: value });
+  }
+
+  handleClick() {
+    const { expenses, dispatchFetchPosts } = this.props;
+    dispatchFetchPosts(this.state);
+    this.setState({
+      id: expenses.length + 1,
+      value: '',
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      exchangeRates: {},
+    });
+  }
+
   form() {
     const { currencies } = this.props;
+    const { value, description, currency, method, tag } = this.state;
     return (
       <form>
         <label htmlFor="value">
           Valor
-          <input type="text" name="value" id="value" />
+          <input type="text" value={ value } id="value" onChange={ this.change } />
         </label>
         <label htmlFor="description">
           Descrição
-          <input type="text" name="description" id="description" />
+          <input
+            type="text"
+            value={ description }
+            id="description"
+            onChange={ this.change }
+          />
         </label>
-        <label htmlFor="coin">
-          Moeda:
-          <select name="coin" id="coin">
+        <label htmlFor="currency">
+          Moeda
+          <select value={ currency } id="currency" onChange={ this.change }>
             {currencies.map((coin, index) => (
               <option key={ index } value={ coin }>
                 { coin }
@@ -26,22 +74,22 @@ export class Wallet extends Component {
             ))}
           </select>
         </label>
-        <label htmlFor="payment">
+        <label htmlFor="method">
           Método de pagamento
-          <select name="payment" id="payment">
-            <option value="dinheiro">Dinheiro</option>
-            <option value="credito">Cartão de crédito</option>
-            <option value="debito">Cartão de débito</option>
+          <select value={ method } id="method" onChange={ this.change }>
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
           </select>
         </label>
-        <label htmlFor="category">
+        <label htmlFor="tag">
           Tag
-          <select name="category" id="category">
+          <select value={ tag } id="tag" onChange={ this.change }>
             <option value="Alimentacao">Alimentação</option>
-            <option value="lazer">Lazer</option>
-            <option value="trabalho">Trabalho</option>
-            <option value="transporte">Transporte</option>
-            <option value="saude">Saúde</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Saude">Saúde</option>
           </select>
         </label>
       </form>
@@ -49,7 +97,10 @@ export class Wallet extends Component {
   }
 
   render() {
-    const { email, total } = this.props;
+    const { email, expenses } = this.props;
+    const total = expenses.reduce((acc, { exchangeRates, currency, value }) => (
+      acc + (Number(exchangeRates[currency].ask) * Number(value))
+    ), 0);
     return (
       <div>
         <header>
@@ -64,6 +115,7 @@ export class Wallet extends Component {
           </p>
         </header>
         { this.form() }
+        <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
       </div>
     );
   }
@@ -71,18 +123,18 @@ export class Wallet extends Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
-  total: state.wallet.total,
   loading: state.wallet.loading,
+  expenses: state.wallet.expenses,
   currencies: state.wallet.currencies,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchFetchPosts: dispatch(fetchPosts()),
+  dispatchFetchPosts: (state) => dispatch(fetchPosts(state)),
 });
 
 Wallet.propTypes = {
   email: PropTypes.string,
-  total: PropTypes.number,
+  expenses: PropTypes.expenses,
   loading: PropTypes.bool,
   dispatchFetchPosts: PropTypes.func,
 }.isRequired;
