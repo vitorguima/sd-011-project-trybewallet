@@ -17,5 +17,7 @@ export const fetchDataTwo = (dataForm) => (dispatch) => {
   dispatch(requestDataTwo());
   return fetch('https://economia.awesomeapi.com.br/json/all')
     .then((result) => result.json())
-    .then((data) => dispatch(requestDataSuccessTwo({ ...dataForm, exchangeRates: data })));
+    .then((data) => dispatch(requestDataSuccessTwo(
+      { ...dataForm, exchangeRates: data },
+    )));
 };

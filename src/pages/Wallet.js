@@ -32,7 +32,7 @@ class Wallet extends React.Component {
   handleExpenses() {
     const { sendFetchTwo, expenses } = this.props;
     let id = 0;
-    if(expenses.length !== 0) {
+    if (expenses.length !== 0) {
       id = expenses[expenses.length - 1].id + 1;
     }
     sendFetchTwo({ ...this.state, id });
@@ -86,4 +86,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
+  sendFetchTwo: PropTypes.func.isRequired,
+  expenses: PropTypes.objectOf(PropTypes.object).isRequired,
 };

@@ -2,13 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class FormThree extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      tag: '',
-    };
-  }
-
   render() {
     const { handleState } = this.props;
     return (
