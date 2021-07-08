@@ -30,6 +30,7 @@ class Table extends Component {
                 <button
                   type="button"
                   data-testid="edit-btn"
+                  className="editButton itemBttnC"
                   onClick={ () => editAction(item.id) }
                 >
                   Editar
@@ -37,6 +38,7 @@ class Table extends Component {
                 <button
                   type="button"
                   data-testid="delete-btn"
+                  className="deleteButton itemBttnC"
                   onClick={ () => deleteAction(index) }
                 >
                   Deletar

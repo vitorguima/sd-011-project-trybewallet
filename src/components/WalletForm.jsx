@@ -57,6 +57,7 @@ class WalletForm extends Component {
         <button
           type="button"
           onClick={ this.handleButton }
+          className="expenseControlButton"
         >
           Adicionar despesa
         </button>
@@ -66,6 +67,7 @@ class WalletForm extends Component {
         <button
           type="button"
           onClick={ () => editingDispatch(newObj) }
+          className="expenseControlButton"
         >
           Editar despesa
         </button>
@@ -76,7 +78,7 @@ class WalletForm extends Component {
 
   selectsFunction() {
     return (
-      <div>
+      <>
         <label htmlFor="currency">
           Moeda:
           <select
@@ -84,6 +86,7 @@ class WalletForm extends Component {
             onChange={ this.inputHandle }
             name="currency"
             data-testid="currency-input"
+            className="formInputs"
           >
             <WalletCurrencies />
           </select>
@@ -95,6 +98,7 @@ class WalletForm extends Component {
             onChange={ this.inputHandle }
             name="method"
             data-testid="method-input"
+            className="formInputs"
           >
             <PaymentOptions />
           </select>
@@ -106,11 +110,12 @@ class WalletForm extends Component {
             onChange={ this.inputHandle }
             name="tag"
             data-testid="tag-input"
+            className="formInputs"
           >
             <TagOptions />
           </select>
         </label>
-      </div>);
+      </>);
   }
 
   render() {
@@ -124,6 +129,7 @@ class WalletForm extends Component {
             type="number"
             name="value"
             id="value"
+            className="formInputs"
           />
         </label>
         <label htmlFor="description">
@@ -134,6 +140,7 @@ class WalletForm extends Component {
             name="description"
             id="description"
             data-testid="description-input"
+            className="formInputs"
           />
         </label>
         {this.selectsFunction()}

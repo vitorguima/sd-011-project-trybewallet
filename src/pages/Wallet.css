@@ -14,12 +14,12 @@
   align-items: center;
   background-color: #5e6668;
   display: flex;
-  height: 4vh;
+  height: 5vh;
   justify-content: center;
 }
 
 .walletForm {
-  align-items: flex-start;
+  align-items: center;
   color: #f6fafb;
   display: flex;
   justify-content: space-around;
@@ -27,10 +27,13 @@
 }
 
 .walletTable {
+  align-items: flex-start;
   background-color: #f6fafb;
   border: 1px solid #d49c6b;
   color: #5e6668;
+  display: flex;
   height: 70vh;
+  justify-content: center;
   overflow: auto;
 }
 
@@ -42,5 +45,52 @@ table , th , td {
 
 .walletBodyContainer {
   margin: auto;
-  width: 50vw;
+  width: 70vw;
+}
+
+.expenseControlButton {
+  background-color: #83f143;
+  border: none;
+  font-size: 15px;
+  padding: 10px;
+}
+
+.expenseControlButton:hover {
+  background-color: #83f143d7;
+}
+
+.expenseControlButton:active {
+  background-color: #83f1439c;
+}
+
+.formInputs {
+  border: none;
+  border-radius: 3px;
+  margin-left: 5px;
+  padding: 5px;
+}
+
+.deleteButton {
+  background-color: rgb(255, 50, 50);
+  border: none;
+  color: #f6fafb;
+  font-weight: bold;
+  margin: 5px;
+  padding: 10px;
+  width: 80px;
+}
+
+.editButton {
+  background-color: rgb(255, 241, 50);
+  border: none;
+  color: black;
+  font-weight: bold;
+  margin: 5px;
+  padding: 10px;
+  width: 80px;
+}
+
+.itemBttnC:hover {
+  border: 1px solid black;
+  margin: 4.7px;
 }
