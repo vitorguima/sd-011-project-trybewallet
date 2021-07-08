@@ -123,4 +123,5 @@ export default class LabelForm extends Component {
 LabelForm.propTypes = {
   coins: PropTypes.array,
   getApi: PropTypes.func,
+  expenses: PropTypes.array,
 }.isRequired;
