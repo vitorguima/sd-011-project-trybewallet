@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { loginAction } from '../actions';
 
 function Login(props) {
@@ -10,8 +11,9 @@ function Login(props) {
   const [password, setPassword] = useState('');
   const [disabled, setDisabled] = useState(true);
 
-  // O use State olhei aqui: https://reactjs.org/docs/hooks-state.html
-  // o UseEffect https://reactjs.org/docs/hooks-effect.html
+  // O use State consultei sua sintaxe aqui: https://reactjs.org/docs/hooks-state.html
+  // O useEffect consultei sua sintaxe aqui: https://reactjs.org/docs/hooks-effect.html
+  // O useHistory para redirecionar a pagina pelo botão eu consultei a sintaxe aqui: https://stackoverflow.com/questions/50644976/react-button-onclick-redirect-page
   // Ja o Regex para a validação do email eu usei este link: https://learnetto.com/blog/react-form-validation
 
   const routeChange = () => {
@@ -57,3 +59,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  setLogin: PropTypes.string.isRequired,
+};

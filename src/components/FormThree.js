@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-class FormTwo extends Component {
+class FormThree extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -9,11 +10,16 @@ class FormTwo extends Component {
   }
 
   render() {
+    const { handleState } = this.props;
     return (
       <fieldset>
         <label htmlFor="despesa-input">
           Tag
-          <select id="despesa-input" name="despesa">
+          <select
+            id="despesa-input"
+            name="tag"
+            onChange={ (estado) => handleState(estado) }
+          >
             <option>Alimentação</option>
             <option>Lazer</option>
             <option>Trabalho</option>
@@ -26,4 +32,8 @@ class FormTwo extends Component {
   }
 }
 
-export default FormTwo;
+export default FormThree;
+
+FormThree.propTypes = {
+  handleState: PropTypes.func.isRequired,
+};
