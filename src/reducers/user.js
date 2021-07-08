@@ -8,7 +8,7 @@ const INITIAL_STATE = {
   },
 };
 
-function user(state = INITIAL_STATE, action) {
+function user(state = INITIAL_STATE, action = {}) {
   if (LOGIN_SUCESS) {
     return {
       ...state,
