@@ -1,12 +1,17 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { setUser } from '../actions';
 
 class Login extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.handleInput = this.handleInput.bind(this);
     this.validateEmail = this.validateEmail.bind(this);
     this.validatePassword = this.validatePassword.bind(this);
+    this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePw = this.onChangePw.bind(this);
+    this.onClickSubmit = this.onClickSubmit.bind(this);
 
     this.state = {
       email: '',
@@ -14,6 +19,13 @@ class Login extends React.Component {
       isEmailValid: false,
       isPasswordValid: false,
     };
+  }
+
+  onClickSubmit(e) {
+    e.preventDefault();
+    const { email } = this.state;
+    const { user } = this.props;
+    user(email);
   }
 
   onChangePw(e) {
@@ -78,7 +90,7 @@ class Login extends React.Component {
         <button
           type="submit"
           disabled={ !(isEmailValid && isPasswordValid) }
-          onClick={ () => this.validateEmail() }
+          onClick={ (e) => this.onClickSubmit(e) }
         >
           Entrar
         </button>
@@ -87,4 +99,16 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  user: (email) => dispatch(setUser(email)),
+});
+
+const mapStateToProps = (state) => ({
+  isLogged: state.user.isLogged,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  user: PropTypes.func,
+}.isRequired;
