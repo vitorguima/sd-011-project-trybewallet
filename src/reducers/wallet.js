@@ -12,8 +12,7 @@ function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
   case RECEIVE_QUOTE_API:
     return {
-      ...state,
-      currencies: action.quote,
+      currencies: action.data,
     };
   default:
     return state;

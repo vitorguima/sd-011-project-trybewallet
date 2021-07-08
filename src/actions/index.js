@@ -7,9 +7,9 @@ const requestQuoteApi = () => ({
   type: REQUEST_QUOTE_API,
 });
 
-const receiveQuoteApi = (quote) => ({
+const receiveQuoteApi = (data) => ({
   type: RECEIVE_QUOTE_API,
-  quote,
+  data,
 });
 
 export const validateLogin = (email) => ({
@@ -27,7 +27,7 @@ export function fetchCurrencies() {
   return async (dispatch) => {
     dispatch(requestQuoteApi());
     const response = await fetch('https://economia.awesomeapi.com.br/json/all');
-    const quote = await response.json();
-    return dispatch(receiveQuoteApi(quote));
+    const data = await response.json();
+    return dispatch(receiveQuoteApi(data));
   };
 }
