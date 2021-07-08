@@ -5,6 +5,7 @@ export const LOGIN_USER = 'LOGIN-USER';
 export const REQUESTING_COINS = 'REQUESTING_COINS';
 export const RECEIVE_COINS = 'RECEIVE_COINS';
 export const RECEIVE_EXPENSE_DATA = 'RECEIVE_EXPENSE_DATA';
+export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 
 export const loginUser = (email) => ({
   type: LOGIN_USER,
@@ -48,3 +49,8 @@ export const requestExpense = (expenseEntries) => (dispatch) => {
       })
   );
 };
+
+export const removeExpense = (id) => ({
+  type: REMOVE_EXPENSE,
+  id,
+});
