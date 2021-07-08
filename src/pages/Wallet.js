@@ -1,18 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { fetchAPI } from '../actions';
+import { fetchAPI, getExpenses, fetchNewCurr } from '../actions';
 import Header from '../components/Header';
 
 class Wallet extends React.Component {
   constructor() {
     super();
     this.state = {
+      id: 0,
       value: '',
       description: '',
-      currency: '',
-      payMethod: '',
-      tag: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -22,47 +23,65 @@ class Wallet extends React.Component {
     dispatchCurrencies();
   }
 
-  handleChange() {
-    const { name, value } = this.state;
+  handleChange({ target }) {
+    const { name, value } = target;
     this.setState({
       [name]: value,
     });
   }
 
   labelValueDescription() {
+    const { value, description } = this.state;
     return (
       <>
         <label htmlFor="value">
           Valor
-          <input type="text" name="value" id="value" />
+          <input
+            type="text"
+            name="value"
+            id="value"
+            onChange={ this.handleChange }
+            value={ value }
+          />
         </label>
         <label htmlFor="description">
           Descrição
-          <textarea name="description" id="description" />
+          <textarea
+            name="description"
+            id="description"
+            onChange={ this.handleChange }
+            value={ description }
+          />
         </label>
       </>
     );
   }
 
-  labelPayMethodTag() {
+  labelmethodTag() {
+    const { method, tag } = this.state;
     return (
       <>
-        <label htmlFor="payMethod">
+        <label htmlFor="method">
           Método de pagamento
-          <select id="payMethod">
-            <option>Dinheiro</option>
-            <option>Cartão de crédito</option>
-            <option>Cartão de débito</option>
+          <select
+            id="method"
+            name="method"
+            onChange={ this.handleChange }
+            value={ method }
+          >
+            <option onChange={ this.handleChange }>Dinheiro</option>
+            <option onChange={ this.handleChange }>Cartão de crédito</option>
+            <option onChange={ this.handleChange }>Cartão de débito</option>
           </select>
         </label>
         <label htmlFor="tag">
           Tag
-          <select id="tag">
-            <option>Alimentação</option>
-            <option>Lazer</option>
-            <option>Trabalho</option>
-            <option>Transporte</option>
-            <option>Saúde</option>
+          <select id="tag" name="tag" onChange={ this.handleChange } value={ tag }>
+            <option onChange={ this.handleChange }>Alimentação</option>
+            <option onChange={ this.handleChange }>Lazer</option>
+            <option onChange={ this.handleChange }>Trabalho</option>
+            <option onChange={ this.handleChange }>Transporte</option>
+            <option onChange={ this.handleChange }>Saúde</option>
           </select>
         </label>
       </>
@@ -70,7 +89,9 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { stateCurrencies, stateIsLoading, dispatchExpenses } = this.props;
+    const {
+      stateCurrencies, stateIsLoading, dispatchExpenses, fetchNew } = this.props;
+    const { currency } = this.state;
     if (stateIsLoading) {
       return (
         <>
@@ -86,16 +107,30 @@ class Wallet extends React.Component {
           {this.labelValueDescription()}
           <label htmlFor="currency">
             Moeda
-            <select name="currency" id="currency">
-              {stateCurrencies.map((e, i) => <option key={ i }>{e.code}</option>)}
+            <select
+              name="currency"
+              id="currency"
+              onChange={ this.handleChange }
+              value={ currency }
+            >
+              {Object.keys(stateCurrencies)
+                .filter((e) => e !== 'USDT')
+                .map((e) => stateCurrencies[e])
+                .map((e, i) => (
+                  <option key={ i } onChange={ this.handleChange }>
+                    {e.code}
+                  </option>
+                ))}
             </select>
           </label>
-          {this.labelPayMethodTag()}
+          {this.labelmethodTag()}
         </form>
         <button
           type="button"
           onClick={ () => {
+            fetchNew();
             dispatchExpenses(this.state);
+            this.setState((prev) => ({ id: prev.id + 1 }));
           } }
         >
           Adicionar despesa
@@ -112,13 +147,18 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchCurrencies: () => dispatch(fetchAPI()),
+  dispatchExpenses: (state) => {
+    dispatch(getExpenses(state));
+  },
+  fetchNew: () => dispatch(fetchNewCurr()),
 });
 
 Wallet.propTypes = {
-  stateCurrencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  stateCurrencies: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
   stateIsLoading: PropTypes.bool.isRequired,
   dispatchCurrencies: PropTypes.func.isRequired,
   dispatchExpenses: PropTypes.func.isRequired,
+  fetchNew: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
