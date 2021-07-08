@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class LabelForm extends Component {
   render() {
@@ -17,7 +18,13 @@ export default class LabelForm extends Component {
         <label htmlFor="moeda">
           Moeda
           <select id="moeda">
-            {coins.map((coin, key) => (<option key={ key } value={ coin }>{ coin }</option>))}
+            {coins.map((coin, key) => (
+              <option
+                key={ key }
+                value={ coin }
+              >
+                { coin }
+              </option>))}
           </select>
         </label>
         <label htmlFor="pay">
@@ -43,3 +50,7 @@ export default class LabelForm extends Component {
     );
   }
 }
+
+LabelForm.propTypes = {
+  coins: PropTypes.array,
+}.isRequired;
