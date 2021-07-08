@@ -71,6 +71,7 @@ export default class LabelForm extends Component {
           Tag
           <select
             id="Tag"
+            name='tag'
             value={ tag }
             onChange={ this.handleChange }
           >
