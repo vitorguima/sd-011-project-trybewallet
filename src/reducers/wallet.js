@@ -3,6 +3,7 @@ import {
   FAILED_REQUEST,
   REQUEST_API,
   SAVE_EXPENSE,
+  DELETE_EXPENSE,
 } from '../actions/index';
 
 const INITIAL_STATE = {
@@ -23,6 +24,13 @@ const wallet = (state = INITIAL_STATE, action) => {
       ...state,
       expenses: [...state.expenses, action.expense],
       loading: false,
+    };
+  case DELETE_EXPENSE:
+    return {
+      ...state,
+      expenses: state.expenses.filter(
+        (expense) => action.expense !== expense.id,
+      ),
     };
   default:
     return state;

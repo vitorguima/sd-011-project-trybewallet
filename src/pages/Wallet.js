@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Header from './Header';
 import Input from '../components/Input';
 import Select from '../components/Select';
+import Table from './Table';
 import { fetchApi, saveExpense } from '../actions/index';
 
 const paymentMethods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
@@ -43,7 +44,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { currencies } = this.props;
+    const { currencies, expenses } = this.props;
     const coins = Object.keys(currencies).filter((coin) => coin !== 'USDT');
 
     return (
@@ -56,46 +57,43 @@ class Wallet extends React.Component {
             value="value"
             label="Valor"
           />
-
           <Input
             onChange={ this.changeState }
             type="text"
             value="description"
             label="Descrição"
           />
-
           <Select
             onChange={ this.changeState }
             label="Moeda"
             value="currency"
             options={ coins }
           />
-
           <Select
             onChange={ this.changeState }
             options={ paymentMethods }
             label="Método de pagamento"
             value="method"
           />
-
           <Select
             onChange={ this.changeState }
             label="Tag"
             value="tag"
             options={ avaibleTags }
           />
-
           <button onClick={ this.saveExpense } type="button">
             Adicionar despesa
           </button>
+          <Table expenses={ expenses } />
         </form>
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ wallet: { currencies } }) => ({
+const mapStateToProps = ({ wallet: { currencies, expenses } }) => ({
   currencies,
+  expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({

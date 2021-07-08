@@ -12,6 +12,13 @@ export const saveExpense = (expense) => ({
   expense,
 });
 
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
+
+export const deleteExpense = (expense) => ({
+  type: DELETE_EXPENSE,
+  expense,
+});
+
 export const REQUEST_API = 'REQUEST_API';
 export const FAILED_REQUEST = 'FAILED_REQUEST';
 export const GET_API = 'GET_API';
