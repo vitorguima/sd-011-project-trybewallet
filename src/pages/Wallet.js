@@ -17,34 +17,32 @@ class Wallet extends React.Component {
           <span data-testid="header-currency-field"> BRL </span>
         </div>
         <form>
-          <label htmlFor='value'>
+          <label htmlFor="value">
             Valor
-            <input type="number" id='value'/>
+            <input type="number" id="value" />
           </label>
-          <label>
+          <label htmlFor="description">
             Descrição
-            <input type="text" id='description'/>
+            <input type="text" id="description" />
           </label>
-          <label>
+          <label htmlFor="currency">
             Moeda
-            <select>
-
-            </select>
+            <select id="currency" />
           </label>
-          <label>
+          <label htmlFor="method">
             Método de pagamento
-            <select>
-              <option value='money'>Dinheiro</option>
-              <option value='credit'>Cartão de crédito</option>
-              <option value='debit'>Cartão de débito</option>
+            <select id="method">
+              <option value="money">Dinheiro</option>
+              <option value="credit">Cartão de crédito</option>
+              <option value="debit">Cartão de débito</option>
             </select>
           </label>
-          <label>
+          <label htmlFor="tag">
             Tag
-            <select>
-              <option value='food'>Alimentação</option>
-              <option value='freeTime'>Lazer</option>
-              <option value='health'>Saúde</option>
+            <select id="tag">
+              <option value="food">Alimentação</option>
+              <option value="freeTime">Lazer</option>
+              <option value="health">Saúde</option>
             </select>
           </label>
         </form>
