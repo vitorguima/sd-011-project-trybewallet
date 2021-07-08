@@ -1,5 +1,5 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import { REQUESTING_COINS, RECEIVE_COINS } from '../actions';
+import { REQUESTING_COINS, RECEIVE_COINS, RECEIVE_EXPENSE_DATA } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -14,6 +14,16 @@ const wallet = (state = INITIAL_STATE, action) => {
     return { ...state, requestingData: true };
   case RECEIVE_COINS:
     return { ...state, coins: [...action.coins], requestingData: false };
+  case RECEIVE_EXPENSE_DATA:
+    return {
+      ...state,
+      expenses: [
+        ...state.expenses,
+        { ...action.payload.expenseEntries,
+          exchangeRates: { ...action.payload.data },
+        },
+      ],
+    };
   default:
     return state;
   }
