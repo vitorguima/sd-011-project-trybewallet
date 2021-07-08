@@ -1,18 +1,18 @@
 const INITIAL_STATE = {
   currencies: [],
-  expenses: []
-}
+  expenses: [],
+};
 
 function user(state = INITIAL_STATE, action) {
-  const { type, payload } = action
+  const { type, payload } = action;
   switch (type) {
-    case 'PLACEHOLDER':
-      return {
-        ...state,
-        email: payload
-      }
-    default:
-      return state
+  case 'PLACEHOLDER':
+    return {
+      ...state,
+      email: payload,
+    };
+  default:
+    return state;
   }
 }
 

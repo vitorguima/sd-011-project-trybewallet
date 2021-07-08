@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { saveEmailAction } from '../actions'
+import  actionFunctions from '../actions'
 
 const Login = () => {
   const [login, setLogin] = useState({email:'',password:''});
@@ -30,10 +30,9 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    dispatch(saveEmailAction(login.email))
+    dispatch(actionFunctions.saveEmailAction(login.email))
     history.push('/carteira')
   }
-
 
   return (
     <form action="">

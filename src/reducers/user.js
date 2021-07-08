@@ -1,17 +1,17 @@
 const INITIAL_STATE = {
-  email: ''
-}
+  email: '',
+};
 
 function user(state = INITIAL_STATE, action) {
-  const { type, payload } = action
+  const { type, payload } = action;
   switch (type) {
-    case 'SAVE_EMAIL':
-      return {
-        ...state,
-        email: payload
-      }
-    default:
-      return state
+  case 'SAVE_EMAIL':
+    return {
+      ...state,
+      email: payload,
+    };
+  default:
+    return state;
   }
 }
 
