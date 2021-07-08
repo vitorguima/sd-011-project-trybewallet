@@ -1,15 +1,16 @@
-import React from "react";
-import { connect } from "react-redux";
-import { userLogin } from "../actions";
-import { Redirect } from "react-router-dom";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import { userLoginAction } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
+      email: '',
       isEmailValid: false,
-      password: "",
+      password: '',
       isPasswordValid: false,
     };
     this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -24,9 +25,8 @@ class Login extends React.Component {
   }
 
   validateEmail(string) {
-    const validEmailRegex =
-      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    if (string.match(validEmailRegex)) {
+    const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if (string.match(regex)) {
       return true;
     }
     return false;
@@ -39,7 +39,8 @@ class Login extends React.Component {
   }
 
   validatePassword(string) {
-    return string.trim().length >= 6;
+    const minLength = 6;
+    return string.trim().length >= minLength;
   }
 
   handleLogin() {
@@ -49,7 +50,7 @@ class Login extends React.Component {
   }
 
   render() {
-    const { isEmailValid, isPasswordValid } = this.state;
+    const { isEmailValid, isPasswordValid, email, password } = this.state;
     const { loggedEmail } = this.props;
 
     if (loggedEmail) {
@@ -64,20 +65,22 @@ class Login extends React.Component {
           placeholder="E-mail"
           data-testid="email-input"
           required
-          onChange={this.handleEmailChange}
+          onChange={ this.handleEmailChange }
+          value={ email }
         />
         <input
           type="password"
           name="password"
           placeholder="Senha"
           data-testid="password-input"
-          onChange={this.handlePasswordChange}
+          onChange={ this.handlePasswordChange }
+          value={ password }
           required
         />
         <button
           type="button"
-          disabled={!isEmailValid || !isPasswordValid}
-          onClick={this.handleLogin}
+          disabled={ !isEmailValid || !isPasswordValid }
+          onClick={ this.handleLogin }
         >
           Entrar
         </button>
@@ -91,7 +94,12 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  userLogin: (email) => dispatch(userLogin(email)),
+  userLogin: (email) => dispatch(userLoginAction(email)),
 });
+
+Login.propTypes = {
+  userLogin: PropTypes.func.isRequired,
+  loggedEmail: PropTypes.string.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
