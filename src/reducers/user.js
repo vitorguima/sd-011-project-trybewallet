@@ -11,9 +11,7 @@ function userReducer(state = INITIAL_STATE, action) {
   case SAVE_EMAIL_USER:
     return {
       ...state,
-      user: {
-        email: action.payload,
-      },
+      email: action.payload,
     };
   default:
     return state;
