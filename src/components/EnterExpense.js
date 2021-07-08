@@ -1,6 +1,39 @@
 import React, { Component } from 'react';
+import getCurrency from '../services/serviceAPI';
 
 export default class EnterExpense extends Component {
+  constructor() {
+    super();
+    this.state = {
+      arrayCurrency: [],
+    };
+    this.getCurrencys = this.getCurrencys.bind(this);
+    this.optionsCurrency = this.optionsCurrency.bind(this);
+  }
+
+  componentDidMount() {
+    getCurrency().then((result) => this.getCurrencys(result));
+  }
+
+  getCurrencys(currents) {
+    const listCurrents = Object.keys(currents).filter((current) => current !== 'USDT');
+    this.setState({
+      arrayCurrency: [...listCurrents],
+    });
+  }
+
+  optionsCurrency() {
+    const { arrayCurrency } = this.state;
+    return arrayCurrency.map((currency, i) => (
+      <option
+        key={ i }
+        value={ currency }
+      >
+        { currency }
+      </option>
+    ));
+  }
+
   render() {
     return (
       <form>
@@ -15,7 +48,7 @@ export default class EnterExpense extends Component {
         <label htmlFor="moeda">
           Moeda:
           <select id="moeda" name="currency">
-            <option>-</option>
+            { this.optionsCurrency() }
           </select>
         </label>
         <label htmlFor="método de pagamento">
