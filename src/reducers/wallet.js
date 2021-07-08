@@ -2,6 +2,7 @@ import {
   REQUEST_COIN,
   REQUEST_COIN_SUCCESS,
   REQUEST_COIN_FAIL,
+  ADD_EXPENSES,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -26,6 +27,12 @@ function wallet(state = INITIAL_STATE, action) {
     return {
       ...state,
       isLoading: false,
+    };
+  case ADD_EXPENSES:
+    action.state.exchangeRates = action.payload;
+    return {
+      ...state,
+      expenses: [...state.expenses, action.state],
     };
   default:
     return state;
