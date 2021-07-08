@@ -22,6 +22,7 @@ const wallet = (state = INITIAL_STATE, action) => {
   case RECEIVE_EXPENSE_DATA:
     return {
       ...state,
+      requestingData: false,
       expenses: [
         ...state.expenses,
         { ...action.payload.expenseEntries,
