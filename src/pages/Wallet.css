@@ -1,0 +1,24 @@
+* {
+  text-align: center;
+}
+
+header {
+  align-items: right;
+  background-color: #282c34;
+  color: white;
+  display: flex;
+  flex-direction: line;
+  font-size: calc(10px + 2vmin);
+  justify-content: space-around;
+  min-height: 10vh;
+}
+
+form {
+  align-items: right;
+  background-color: #282c34;
+  color: white;
+  display: flex;
+  flex-direction: line;
+  justify-content: space-around;
+  min-height: 100vh;
+}

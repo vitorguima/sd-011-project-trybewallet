@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import { UserLogin } from '../actions';
+import '../App.css';
 
 class Login extends React.Component {
   constructor(props) {
@@ -44,7 +45,7 @@ class Login extends React.Component {
     const enabled = re.test(email)
     && password.length >= passwordLength;
     return (
-      <div>
+      <div className="App-header">
         <input
           type="email"
           name="email"
@@ -64,6 +65,7 @@ class Login extends React.Component {
         <Link to="/carteira">
           <button
             type="button"
+            className="App-link"
             disabled={ !enabled }
             onClick={ () => {
               myLogin(email);
