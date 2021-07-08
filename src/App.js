@@ -7,7 +7,6 @@ function App() {
     <div>
       Hello, TrybeWallet!
       <Switch>
-        {/* <Route path="/carteira" component={ Wallet } /> */}
         <Route path="/" component={ Login } />
       </Switch>
     </div>
