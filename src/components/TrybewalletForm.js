@@ -55,8 +55,8 @@ class TrybewalletForm extends React.Component {
         <label htmlFor="currency">
           Moeda
           <select name="currency" id="currency" onChange={ this.handleChange }>
-            { Object.values(exchangeRates).map(({ code }) => (
-              <option key={ code } value={ code }>{ code }</option>
+            { Object.values(exchangeRates).map(({ code }, index) => (
+              <option key={ index } value={ code }>{ code }</option>
             )) }
           </select>
         </label>
