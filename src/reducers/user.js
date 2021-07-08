@@ -6,11 +6,11 @@ const INITIAL_STATE = {
 
 const user = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case CREATE_USER:
-      return { email: action.payload };
+  case CREATE_USER:
+    return { email: action.payload };
 
-    default:
-      return state;
+  default:
+    return state;
   }
 };
 

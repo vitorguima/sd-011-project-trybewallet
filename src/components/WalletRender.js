@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { saveCurrencies, saveExpense } from '../actions';
 import api from '../constants';
 
-class WalletRender extends React.Component {
+class WalletRender extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,7 +15,7 @@ class WalletRender extends React.Component {
       method: 'Dinheiro',
       tag: 'Alimentação',
     };
-    this.handleFetch = this.handleFetch.bind(this);
+    this.handleFetchApi = this.handleFetchApi.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.createDropdown = this.createDropdown.bind(this);
     this.createInput = this.createInput.bind(this);
@@ -23,10 +23,10 @@ class WalletRender extends React.Component {
   }
 
   componentDidMount() {
-    this.handleFetch();
+    this.handleFetchApi();
   }
 
-  async handleFetch() {
+  async handleFetchApi() {
     const { setCurrencies } = this.props;
     const object = await api();
     setCurrencies(object);
@@ -41,7 +41,7 @@ class WalletRender extends React.Component {
 
   handleClick() {
     const { setExpense, currencies } = this.props;
-    this.handleFetch();
+    this.handleFetchApi();
     setExpense({ ...this.state, exchangeRates: currencies });
     this.setState((previousValue) => ({
       id: previousValue.id + 1,
@@ -108,6 +108,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   setCurrencies: (currencies) => dispatch(saveCurrencies(currencies)),
   setExpense: (expense) => dispatch(saveExpense(expense)),
+
 });
 
 WalletRender.propTypes = {
