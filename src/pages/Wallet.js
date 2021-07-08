@@ -3,6 +3,7 @@ import './Wallet.css';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import WalletForm from '../components/WalletForm';
+import Table from '../components/Table';
 
 class Wallet extends React.Component {
   render() {
@@ -33,6 +34,10 @@ class Wallet extends React.Component {
 
         <section className="walletBody">
           <WalletForm />
+        </section>
+
+        <section className="walletTable">
+          <Table />
         </section>
       </div>
     );
