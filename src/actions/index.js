@@ -25,6 +25,16 @@ export const deleteExpense = (payload) => ({
   payload,
 });
 
+export const editExpense = (payload) => ({
+  type: 'EDIT_EXPENSE',
+  payload,
+});
+
+export const editingExpense = (payload) => ({
+  type: 'EDITING_EXPENSE',
+  payload,
+});
+
 export function fetchCurrencies() {
   return (dispatch) => fetch('https://economia.awesomeapi.com.br/json/all')
     .then((response) => response.json())

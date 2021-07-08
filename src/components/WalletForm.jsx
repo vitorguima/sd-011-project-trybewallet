@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchCurrencies, sendWalletInfo } from '../actions';
+import { editingExpense, fetchCurrencies, sendWalletInfo } from '../actions';
 import WalletCurrencies from './WalletCurrencies';
+import PaymentOptions from './PaymentOptions';
+import TagOptions from './TagOptions';
 
 class WalletForm extends Component {
   constructor(props) {
@@ -40,12 +42,84 @@ class WalletForm extends Component {
     }));
   }
 
+  buttonFunction() {
+    const { editingBool, editingDispatch } = this.props;
+    const { value, description, currency, method, tag } = this.state;
+    const newObj = {
+      value,
+      description,
+      currency,
+      method,
+      tag,
+    };
+    if (!editingBool) {
+      return (
+        <button
+          type="button"
+          onClick={ this.handleButton }
+        >
+          Adicionar despesa
+        </button>
+      );
+    } if (editingBool) {
+      return (
+        <button
+          type="button"
+          onClick={ () => editingDispatch(newObj) }
+        >
+          Editar despesa
+        </button>
+      );
+    }
+    // Na bônus o meu amigo Jean Esteves me ajudou no esclarecimento da lógica e do funcionamento do requisito.
+  }
+
+  selectsFunction() {
+    return (
+      <div>
+        <label htmlFor="currency">
+          Moeda:
+          <select
+            id="currency"
+            onChange={ this.inputHandle }
+            name="currency"
+            data-testid="currency-input"
+          >
+            <WalletCurrencies />
+          </select>
+        </label>
+        <label htmlFor="payment">
+          Método de pagamento:
+          <select
+            id="payment"
+            onChange={ this.inputHandle }
+            name="method"
+            data-testid="method-input"
+          >
+            <PaymentOptions />
+          </select>
+        </label>
+        <label htmlFor="tag">
+          Tag:
+          <select
+            id="tag"
+            onChange={ this.inputHandle }
+            name="tag"
+            data-testid="tag-input"
+          >
+            <TagOptions />
+          </select>
+        </label>
+      </div>);
+  }
+
   render() {
     return (
       <form className="walletForm">
         <label htmlFor="value">
           Valor:
           <input
+            data-testid="value-input"
             onChange={ this.inputHandle }
             type="number"
             name="value"
@@ -59,33 +133,11 @@ class WalletForm extends Component {
             type="text"
             name="description"
             id="description"
+            data-testid="description-input"
           />
         </label>
-        <label htmlFor="currency">
-          Moeda:
-          <select id="currency" onChange={ this.inputHandle } name="currency">
-            <WalletCurrencies />
-          </select>
-        </label>
-        <label htmlFor="payment">
-          Método de pagamento:
-          <select id="payment" onChange={ this.inputHandle } name="method">
-            <option value="Dinheiro">Dinheiro</option>
-            <option value="Cartão de crédito">Cartão de crédito</option>
-            <option value="Cartão de débito">Cartão de débito</option>
-          </select>
-        </label>
-        <label htmlFor="tag">
-          Tag:
-          <select id="tag" onChange={ this.inputHandle } name="tag">
-            <option value="Alimentação">Alimentação</option>
-            <option value="Lazer">Lazer</option>
-            <option value="Trabalho">Trabalho</option>
-            <option value="Transporte">Transporte</option>
-            <option value="Saúde">Saúde</option>
-          </select>
-        </label>
-        <button type="button" onClick={ this.handleButton }>Adicionar despesa</button>
+        {this.selectsFunction()}
+        {this.buttonFunction()}
       </form>
     );
   }
@@ -93,17 +145,21 @@ class WalletForm extends Component {
 
 const mapStateToProps = (state) => ({
   rates: state.wallet.rates,
+  editingBool: state.wallet.editing,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   fetchCurr: () => dispatch(fetchCurrencies()),
   sendInfo: (state) => dispatch(sendWalletInfo(state)),
+  editingDispatch: (state) => dispatch(editingExpense(state)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletForm);
 
 WalletForm.propTypes = {
+  editingBool: PropTypes.bool.isRequired,
+  editingDispatch: PropTypes.func.isRequired,
   fetchCurr: PropTypes.func.isRequired,
-  rates: PropTypes.objectOf(Object).isRequired,
+  rates: PropTypes.objectOf().isRequired,
   sendInfo: PropTypes.func.isRequired,
 };

@@ -1,3 +1,7 @@
+.walletContainer {
+  height: 100vh;
+}
+
 .walletHeader {
   color: #f6fafb;
 }
@@ -26,11 +30,17 @@
   background-color: #f6fafb;
   border: 1px solid #d49c6b;
   color: #5e6668;
-
+  height: 70vh;
+  overflow: auto;
 }
 
 table , th , td {
   margin: 10px;
   padding: 10px;
   text-align: center;
+}
+
+.walletBodyContainer {
+  margin: auto;
+  width: 50vw;
 }

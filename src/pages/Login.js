@@ -71,6 +71,7 @@ class Login extends React.Component {
           </label>
           <Link to="/carteira">
             <button
+              className="submitButton"
               type="button"
               disabled={ !valid }
               onClick={ () => sendLogin(email) }
