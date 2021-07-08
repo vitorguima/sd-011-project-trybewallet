@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { setEmailStore } from '../actions';
+import './login.css';
 
 // regex gerado em https://regex-generator.olafneumann.org/
 
@@ -16,13 +17,9 @@ function Login({ handleLogOn }) {
   const [validEmail, setValidEmail] = useState(false);
   const [validPassword, setValidPassword] = useState(false);
   const history = useHistory();
-
   useEffect(() => {
-    if (validEmail && validPassword) {
-      setIsDisabled(false);
-    }
+    if (validEmail && validPassword) return setIsDisabled(false);
   });
-
   function validInput({ target: { type, value } }) {
     if (type === 'email') {
       const validated = regexToEmail.test(value);
@@ -35,27 +32,31 @@ function Login({ handleLogOn }) {
       setPassword(value);
     }
   }
-
   function handleLogin() {
-    if (email === '' && password === '') {
-      throw new Error('Email e senha precisam ser digitados');
-    }
+    if (email === '' && password === '') return Error('campo vazio');
     handleLogOn(email);
     history.push('/carteira');
   }
-
   return (
-    <>
-      <input type="email" data-testid="email-input" onChange={ validInput } />
-      <input type="password" data-testid="password-input" onChange={ validInput } />
-      <button
-        type="button"
-        disabled={ isDisabled }
-        onClick={ handleLogin }
-      >
-        Entrar
-      </button>
-    </>
+    <div id="page-login">
+      <div className="main-content">
+        <input
+          type="email"
+          data-testid="email-input"
+          onChange={ validInput }
+          placeholder="email"
+        />
+        <input
+          type="password"
+          data-testid="password-input"
+          onChange={ validInput }
+          placeholder="senha"
+        />
+        <button type="button" disabled={ isDisabled } onClick={ handleLogin }>
+          Entrar
+        </button>
+      </div>
+    </div>
   );
 }
 
