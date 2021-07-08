@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
   constructor(props) {
@@ -59,7 +60,9 @@ class Login extends React.Component {
           />
         </label>
         <button type="button" disabled={ verified }>
-          Entrar
+          <Link to="/carteira">
+            Entrar
+          </Link>
         </button>
       </div>
     );
