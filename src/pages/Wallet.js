@@ -114,6 +114,7 @@ class Wallet extends React.Component {
         <>
           <Header />
           <p>Loading...</p>
+          <TableExpenses />
         </>
       );
     }
