@@ -2,8 +2,42 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 export default class Table extends Component {
+  constructor() {
+    super();
+
+    this.buttonDelete = this.buttonDelete.bind(this);
+  }
+
+  buttonDelete(value) {
+    const { deleteExpenses } = this.props;
+
+    return (
+      <button
+        type="button"
+        onClick={ () => deleteExpenses(value.id) }
+        data-testid="delete-btn"
+      >
+        {' '}
+        delete
+      </button>
+    );
+  }
+
+  // buttonEdit(value) {
+  //   return (
+  //     <button
+  //       type="button"
+  //       onClick={ () => deleteExpenses(value.id) }
+  //       data-testid="delete-btn"
+  //     >
+  //       {' '}
+  //       Editar
+  //     </button>
+  //   );
+  // }
+
   render() {
-    const { expenses, deleteExpenses } = this.props;
+    const { expenses } = this.props;
     return (
       <table>
         <thead>
@@ -17,7 +51,6 @@ export default class Table extends Component {
             <th>Valor convertido </th>
             <th>Moeda de conversão</th>
             <th>Editar/Excluir</th>
-
           </tr>
         </thead>
         <tbody>
@@ -35,14 +68,7 @@ export default class Table extends Component {
               </td>
               <td>Real</td>
               <td>
-                <button
-                  type="button"
-                  onClick={ () => deleteExpenses(value.id) }
-                  data-testid="delete-btn"
-                >
-                  {' '}
-                  delete
-                </button>
+                {this.buttonDelete(value)}
               </td>
             </tr>
           ))}

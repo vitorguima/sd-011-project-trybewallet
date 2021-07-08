@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchApi, deleteExpenses } from '../actions';
+import { fetchApi, deleteExpenses, editExpenses } from '../actions';
 import LabelForm from '../components/LabelForm';
 import Table from '../components/Table';
 
@@ -45,6 +45,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   getApi: (state) => dispatch(fetchApi(state)),
   deleteItem: (id) => dispatch(deleteExpenses(id)),
+  editItem: (id) => dispatch(editExpenses(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
