@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-export default class Table extends Component {
+class Table extends Component {
   constructor() {
     super();
 
@@ -23,18 +24,19 @@ export default class Table extends Component {
     );
   }
 
-  // buttonEdit(value) {
-  //   return (
-  //     <button
-  //       type="button"
-  //       onClick={ () => deleteExpenses(value.id) }
-  //       data-testid="delete-btn"
-  //     >
-  //       {' '}
-  //       Editar
-  //     </button>
-  //   );
-  // }
+  buttonEdit(value) {
+    const { editFunc } = this.props;
+    return (
+      <button
+        type="button"
+        onClick={ () => editFunc(value) }
+        data-testid="edit-btn"
+      >
+        {' '}
+        Editar
+      </button>
+    );
+  }
 
   render() {
     const { expenses } = this.props;
@@ -69,6 +71,7 @@ export default class Table extends Component {
               <td>Real</td>
               <td>
                 {this.buttonDelete(value)}
+                {this.buttonEdit(value.id)}
               </td>
             </tr>
           ))}
@@ -78,6 +81,12 @@ export default class Table extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  editFunc: state.wallet.editFunc,
+});
+
+export default connect(mapStateToProps)(Table);
 
 Table.propTypes = {
   coins: PropTypes.array,

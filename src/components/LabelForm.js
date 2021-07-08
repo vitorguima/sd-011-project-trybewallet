@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { editExpenses } from '../actions';
 
-export default class LabelForm extends Component {
+let buttonChange = false;
+
+class LabelForm extends Component {
   constructor(props) {
     super(props);
     const { expenses } = this.props;
@@ -19,9 +23,18 @@ export default class LabelForm extends Component {
     this.select = this.select.bind(this);
     this.handlerClick = this.handlerClick.bind(this);
     this.editForm = this.editForm.bind(this);
+    this.handleExpense = this.handleExpense.bind(this);
   }
 
-  editForm(value) {
+  componentDidMount() {
+    const { edit } = this.props;
+    edit(this.editForm);
+  }
+
+  editForm(editId) {
+    const { expenses } = this.props;
+
+    const value = expenses.find(({ id }) => id === editId);
     this.setState({
       id: value.id,
       value: value.value,
@@ -31,6 +44,7 @@ export default class LabelForm extends Component {
       tag: value.tag,
       exchangeRates: value.exchangeRates,
     });
+    buttonChange = true;
   }
 
   handleChange({ target }) {
@@ -116,6 +130,21 @@ export default class LabelForm extends Component {
     );
   }
 
+  handleExpense() {
+    const { getApi, expenses } = this.props;
+    getApi(this.state);
+    this.setState({
+      id: expenses.length + 1,
+      value: '',
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentacao',
+      exchangeRates: {},
+    });
+    buttonChange = false;
+  }
+
   render() {
     const { value, description } = this.state;
     return (
@@ -142,11 +171,25 @@ export default class LabelForm extends Component {
         </label>
         {this.select()}
         {this.selectMethod()}
-        <button type="button" onClick={ this.handlerClick }>Adicionar despesa</button>
+        { buttonChange
+          ? <button type="button" onClick={ this.handleExpense }>Editar despesa</button>
+          : (
+            <button
+              type="button"
+              onClick={ this.handlerClick }
+            >
+              Adicionar despesa
+            </button>)}
       </form>
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  edit: (editFunc) => dispatch(editExpenses(editFunc)),
+});
+
+export default connect(null, mapDispatchToProps)(LabelForm);
 
 LabelForm.propTypes = {
   coins: PropTypes.array,

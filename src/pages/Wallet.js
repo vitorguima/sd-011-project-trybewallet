@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchApi, deleteExpenses } from '../actions';
+import { fetchApi, deleteExpenses, editExpenses } from '../actions';
 import LabelForm from '../components/LabelForm';
 import Table from '../components/Table';
 
@@ -12,7 +12,10 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, coins, expenses, getApi, deleteItem } = this.props;
+    const {
+      email,
+      coins,
+      expenses, getApi, deleteItem, editId, EditExpensesId } = this.props;
     const valor = expenses
       .reduce((acc, { exchangeRates, currency, value }) => (
         acc + (Number(exchangeRates[currency].ask * value))), 0);
@@ -29,8 +32,17 @@ class Wallet extends React.Component {
           <div data-testid="header-currency-field"> BRL </div>
 
         </header>
-        <LabelForm coins={ coins } getApi={ getApi } expenses={ expenses } />
-        <Table expenses={ expenses } deleteExpenses={ deleteItem } />
+        <LabelForm
+          coins={ coins }
+          getApi={ getApi }
+          expenses={ expenses }
+          editId={ editId }
+        />
+        <Table
+          expenses={ expenses }
+          deleteExpenses={ deleteItem }
+          EditExpensesId={ EditExpensesId }
+        />
       </>
     );
   }
@@ -40,11 +52,13 @@ const mapStateToProps = (state) => ({
   email: state.user.email,
   coins: state.wallet.currencies,
   expenses: state.wallet.expenses,
+  editId: state.wallet.editId,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getApi: (state) => dispatch(fetchApi(state)),
   deleteItem: (id) => dispatch(deleteExpenses(id)),
+  EditExpensesId: (id) => dispatch(editExpenses(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
@@ -54,4 +68,5 @@ Wallet.propTypes = {
   coins: PropTypes.array,
   expenses: PropTypes.array,
   getApi: PropTypes.func,
+  EditExpensesId: PropTypes.func,
 }.isRequired;
