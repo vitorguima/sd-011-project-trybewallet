@@ -30,7 +30,7 @@ class Wallet extends React.Component {
 
         </header>
         <LabelForm coins={ coins } getApi={ getApi } expenses={ expenses } />
-        <Table />
+        <Table expenses={ expenses } />
       </>
     );
   }

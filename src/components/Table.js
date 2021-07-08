@@ -13,7 +13,7 @@ export default class Table extends Component {
             <th>Método de pagamento</th>
             <th>Valor</th>
             <th>Moeda</th>
-            <th>Câmbio ultilizado</th>
+            <th>Câmbio utilizado</th>
             <th>Valor convertido </th>
             <th>Moeda de conversão</th>
             <th>Editar/Excluir</th>
@@ -27,13 +27,13 @@ export default class Table extends Component {
               <td>{ value.tag }</td>
               <td>{ value.method }</td>
               <td>{ value.value }</td>
-              <td>{ value.currency }</td>
+              <td>{ value.exchangeRates[value.currency].name }</td>
               <td>{ (Number(value.exchangeRates[value.currency].ask).toFixed(2)) }</td>
               <td>
                 { (Number(value.exchangeRates[value.currency]
                   .ask * value.value).toFixed(2)) }
               </td>
-              <td>REAL</td>
+              <td>Real</td>
             </tr>
           ))}
         </tbody>
