@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router';
 import * as actions from '../actions';
 
 class Login extends React.Component {
@@ -9,6 +10,7 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
+      shouldRedirect: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleEmail = this.handleEmail.bind(this);
@@ -19,6 +21,7 @@ class Login extends React.Component {
     const { handleLogin } = this.props;
     const { email } = this.state;
     handleLogin(email);
+    this.setState({ shouldRedirect: true });
   }
 
   validateEmailAndPassword() {
@@ -45,7 +48,10 @@ class Login extends React.Component {
 
   render() {
     const disabled = this.validateEmailAndPassword();
-    const { email, password } = this.state;
+    const { email, password, shouldRedirect } = this.state;
+    if (shouldRedirect) {
+      return <Redirect to="/carteira" />;
+    }
     return (
       <div>
         <label htmlFor="email">

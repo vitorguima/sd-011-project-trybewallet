@@ -1,5 +1,3 @@
-import history from '../history';
-
 export const SEND_SUBMIT = 'SEND_SUBMIT';
 export const REQUEST_API_SUCCESS = 'REQUEST_API_SUCCESS';
 export const REQUEST_API_FAIL = 'REQUEST_API_FAIL';
@@ -8,7 +6,6 @@ export const ADD_EXPENSE_FAIL = 'ADD_EXPENSE_FAIL';
 const INITIAL_ID = -1;
 
 export function handleLogin(email) {
-  history.push('/carteira');
   return { type: SEND_SUBMIT, payload: email };
 }
 
