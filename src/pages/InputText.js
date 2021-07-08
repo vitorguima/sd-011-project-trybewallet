@@ -13,7 +13,7 @@ class InputText extends React.Component {
   }
 
   render() {
-    const { id, valor, label } = this.props;
+    const { id, valor, label, type } = this.props;
     return (
       <label htmlFor={ id }>
         { label }
@@ -22,7 +22,7 @@ class InputText extends React.Component {
           onChange={ this.onTrigger }
           value={ valor }
           name={ id }
-          type="text"
+          type={ type }
         />
       </label>
     );
@@ -34,6 +34,7 @@ InputText.propTypes = {
   id: PropTypes.string.isRequired,
   valor: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 export default InputText;

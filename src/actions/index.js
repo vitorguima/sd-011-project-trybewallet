@@ -1,6 +1,7 @@
 // Coloque aqui suas actions
 export const USER_LOGIN = 'USER_LOGIN';
 export const REQUEST_API_SUCCESS = 'REQUEST_API_SUCCESS';
+export const NEW_EXPENSE = 'NEW_EXPENSE';
 
 const saveEmail = (email) => ({
   type: USER_LOGIN,
@@ -25,7 +26,13 @@ const fetchApi = () => (
   }
 );
 
+const addNewExpense = (data) => ({
+  type: NEW_EXPENSE,
+  payload: data,
+});
+
 export {
   saveEmail,
   fetchApi,
+  addNewExpense,
 };

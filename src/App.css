@@ -29,6 +29,17 @@
   color: #61dafb;
 }
 
+.tableHeader {
+  display: flex;
+  flex-direction: row;
+  background-color: red;
+}
+
+/* .itemTable {
+  display: block;
+  width: 10vw;
+} */
+
 @keyframes App-logo-spin {
 
   from {
