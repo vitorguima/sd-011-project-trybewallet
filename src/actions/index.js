@@ -16,6 +16,12 @@ export const getNewCurrencies = (e) => ({ type: 'NEW_CURRENCIES', new: e });
 export const DELETE = 'DELETE';
 export const deleteTable = (e) => ({ type: DELETE, delete: e });
 
+export const EDIT_BOOL = 'EDIT_BOOL';
+export const editing = (e) => ({ type: EDIT_BOOL, edit: e });
+
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
+export const editExpense = (e) => ({ type: EDIT_EXPENSE, edit: e });
+
 export function fetchAPI() {
   return async (dispatch) => {
     try {

@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { fetchAPI, getExpenses, fetchNewCurr } from '../actions';
+import { fetchAPI, getExpenses, fetchNewCurr, editExpense } from '../actions';
 import Header from '../components/Header';
 import TableExpenses from '../components/TableExpenses';
 
+const Alimentação = 'Alimentação';
 class Wallet extends React.Component {
   constructor() {
     super();
@@ -14,7 +15,7 @@ class Wallet extends React.Component {
       description: '',
       currency: 'USD',
       method: 'Dinheiro',
-      tag: 'Alimentação',
+      tag: Alimentação,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -39,10 +40,40 @@ class Wallet extends React.Component {
         onClick={ () => {
           fetchNew();
           dispatchExpenses(this.state);
-          this.setState((prev) => ({ id: prev.id + 1 }));
+          this.setState((prev) => ({
+            id: prev.id + 1,
+            value: '',
+            description: '',
+            currency: 'USD',
+            method: 'Dinheiro',
+            tag: Alimentação,
+          }));
         } }
       >
         Adicionar despesa
+      </button>
+    );
+  }
+
+  buttonEdit() {
+    const { value, description, currency, method, tag } = this.state;
+    const { dispatchEdit, fetchNew } = this.props;
+    return (
+      <button
+        type="button"
+        onClick={ () => {
+          fetchNew();
+          dispatchEdit({ value, description, currency, method, tag });
+          this.setState({
+            value: '',
+            description: '',
+            currency: 'USD',
+            method: 'Dinheiro',
+            tag: Alimentação,
+          });
+        } }
+      >
+        Editar despesa
       </button>
     );
   }
@@ -57,6 +88,7 @@ class Wallet extends React.Component {
             type="text"
             name="value"
             id="value"
+            data-testid="value-input"
             onChange={ this.handleChange }
             value={ value }
           />
@@ -68,6 +100,7 @@ class Wallet extends React.Component {
             id="description"
             onChange={ this.handleChange }
             value={ description }
+            data-testid="description-input"
           />
         </label>
       </>
@@ -83,6 +116,7 @@ class Wallet extends React.Component {
           <select
             id="method"
             name="method"
+            data-testid="method-input"
             onChange={ this.handleChange }
             value={ method }
           >
@@ -93,7 +127,13 @@ class Wallet extends React.Component {
         </label>
         <label htmlFor="tag">
           Tag
-          <select id="tag" name="tag" onChange={ this.handleChange } value={ tag }>
+          <select
+            id="tag"
+            name="tag"
+            onChange={ this.handleChange }
+            value={ tag }
+            data-testid="tag-input"
+          >
             <option onChange={ this.handleChange }>Alimentação</option>
             <option onChange={ this.handleChange }>Lazer</option>
             <option onChange={ this.handleChange }>Trabalho</option>
@@ -107,7 +147,7 @@ class Wallet extends React.Component {
 
   render() {
     const {
-      stateCurrencies, stateIsLoading } = this.props;
+      stateCurrencies, stateIsLoading, stateIsEditing } = this.props;
     const { currency } = this.state;
     if (stateIsLoading) {
       return (
@@ -128,6 +168,7 @@ class Wallet extends React.Component {
             <select
               name="currency"
               id="currency"
+              data-testid="currency-input"
               onChange={ this.handleChange }
               value={ currency }
             >
@@ -143,7 +184,7 @@ class Wallet extends React.Component {
           </label>
           {this.labelmethodTag()}
         </form>
-        {this.buttonExpenses()}
+        {stateIsEditing ? this.buttonEdit() : this.buttonExpenses()}
         <TableExpenses />
       </>
     );
@@ -153,6 +194,7 @@ class Wallet extends React.Component {
 const mapStateToProps = (state) => ({
   stateCurrencies: state.wallet.currencies,
   stateIsLoading: state.wallet.isLoading,
+  stateIsEditing: state.wallet.isEditing,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -161,13 +203,16 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(getExpenses(state));
   },
   fetchNew: () => dispatch(fetchNewCurr()),
+  dispatchEdit: (state) => dispatch(editExpense(state)),
 });
 
 Wallet.propTypes = {
   dispatchCurrencies: PropTypes.func.isRequired,
+  dispatchEdit: PropTypes.func.isRequired,
   dispatchExpenses: PropTypes.func.isRequired,
   fetchNew: PropTypes.func.isRequired,
   stateCurrencies: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
+  stateIsEditing: PropTypes.bool.isRequired,
   stateIsLoading: PropTypes.bool.isRequired,
 };
 

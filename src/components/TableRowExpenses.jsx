@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { deleteTable } from '../actions';
+import { deleteTable, editing } from '../actions';
 
 class TableRowExpenses extends Component {
   render() {
-    const { expenses, dispatchDelete } = this.props;
+    const { expenses, dispatchDelete, dispatchEditing } = this.props;
     return (
       <tr>
         <td>{expenses.description}</td>
@@ -28,9 +28,17 @@ class TableRowExpenses extends Component {
             data-testid="delete-btn"
             onClick={ () => dispatchDelete(expenses) }
           >
-            Deletar
+            Excluir
           </button>
-
+          <button
+            type="button"
+            data-testid="edit-btn"
+            onClick={ () => {
+              dispatchEditing(expenses);
+            } }
+          >
+            Editar
+          </button>
         </td>
       </tr>
     );
@@ -39,10 +47,12 @@ class TableRowExpenses extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchDelete: (state) => dispatch(deleteTable(state)),
+  dispatchEditing: (state) => dispatch(editing(state)),
 });
 
 TableRowExpenses.propTypes = {
   dispatchDelete: PropTypes.func.isRequired,
+  dispatchEditing: PropTypes.func.isRequired,
   expenses: PropTypes.shape({
     currency: PropTypes.string,
     description: PropTypes.string,
