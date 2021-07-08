@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import WalletForm from '../component/WalletForm';
+import '../App.css';
 
 class Wallet extends React.Component {
   render() {
     const { emailUser } = this.props;
     return (
-      <div>
+      <div className="wallet">
         <header>
-          <h1 className="wallet">TrybeWallet</h1>
+          <h1>TrybeWallet</h1>
           <h2 data-testid="email-field">
             Olá:
             { emailUser }
@@ -16,9 +18,10 @@ class Wallet extends React.Component {
           <label htmlFor="expenses">
             Despesas:
             <input data-testid="total-field" type="number" value="0" />
-            <input data-testid="header-currency-field" type="BRL" />
+            <input data-testid="header-currency-field" type="text" value="BRL" />
           </label>
         </header>
+        <WalletForm />
       </div>
     );
   }
