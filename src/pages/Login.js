@@ -1,10 +1,13 @@
 import React from 'react';
 import './login.css';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { login } from '../actions';
 
 class Login extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       email: '',
       passaword: '',
@@ -30,6 +33,8 @@ class Login extends React.Component {
   }
 
   render() {
+    const { email } = this.state;
+    const { reducerLogin } = this.props;
     return (
       <div>
         <header>Trybe Wallet</header>
@@ -57,7 +62,11 @@ class Login extends React.Component {
               />
             </label>
 
-            <button type="button" disabled={ this.buttonLogin() }>
+            <button
+              type="button"
+              disabled={ this.buttonLogin() }
+              onClick={ () => reducerLogin({ email }) }
+            >
               <Link to="/carteira">
                 Entrar
               </Link>
@@ -70,4 +79,12 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  reducerLogin: (email) => dispatch(login(email)),
+});
+
+Login.propTypes = {
+  reducerLogin: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
