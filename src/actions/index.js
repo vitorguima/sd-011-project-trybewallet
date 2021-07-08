@@ -12,9 +12,10 @@ export const saveUser = (payload) => ({
 const fetchCurenciesSucceeded = (payload) => {
   const currencies = Object.values(payload);
   currencies.splice(1, 1);
+
   return {
     type: FETCH_CURENCIES_SUCCEEDED,
-    payload: currencies,
+    payload: currencies.map((item) => item.code),
   };
 };
 
@@ -23,10 +24,7 @@ const fetchCurenciesFailed = (payload) => ({
   payload,
 });
 
-export const fetchCurencies = () => (dispatch) => {
-  console.log('executa fetch');
-  return fetch(url)
-    .then((result) => result.json())
-    .then((data) => dispatch(fetchCurenciesSucceeded(data)))
-    .catch((error) => dispatch(fetchCurenciesFailed(error)));
-};
+export const fetchCurencies = () => (dispatch) => fetch(url)
+  .then((result) => result.json())
+  .then((data) => dispatch(fetchCurenciesSucceeded(data)))
+  .catch((error) => dispatch(fetchCurenciesFailed(error)));
