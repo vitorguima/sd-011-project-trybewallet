@@ -3,24 +3,24 @@
 export const REQUEST_COINS = 'REQUEST_COINS';
 export const REQUEST_COINS_SUCCESS = 'REQUEST_COINS_SUCESS';
 export const REQUEST_COINS_ERROR = 'REQUEST_COINS_ERROR';
-export const LOGIN = 'LOGIN';
+export const SAVE_LOGIN = 'SAVE_LOGIN';
 
-const login = (data) => ({
-  type: 'LOGIN',
-  data,
+export const saveLogin = (email) => ({
+  type: SAVE_LOGIN,
+  email,
 });
 
-const requestCoins = (data) => ({
+export const requestCoins = (data) => ({
   type: REQUEST_COINS,
   data,
 });
 
-const requestCoinsucess = (data) => ({
+export const requestCoinsucess = (data) => ({
   type: REQUEST_COINS_SUCCESS,
   data,
 });
 
-const requestCoinsError = (data) => ({
+export const requestCoinsError = (data) => ({
   type: requestCoinsError,
   data,
 });

@@ -1,25 +1,19 @@
 // Esse reducer será responsável por tratar as informações da pessoa usuária
-import { LOGIN } from '../actions';
+import { SAVE_LOGIN } from '../actions';
 
 const INITIAL_STATE = {
   user: {
     email: '',
-    password: '',
-  },
-  wallet: {
-    currencies: [],
-    expenses: [],
-    isLoading: false,
   },
 };
 
 function loginReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case LOGIN:
+  case SAVE_LOGIN:
     return {
       ...state,
-      data: action.data,
-    }
+      email: action.email,
+    };
   default:
     return state;
   }

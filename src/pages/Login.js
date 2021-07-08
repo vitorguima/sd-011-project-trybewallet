@@ -1,6 +1,10 @@
 import React from 'react';
 import 'bulma/css/bulma.min.css';
 import '../Login.css';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import * as actions from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -20,7 +24,6 @@ class Login extends React.Component {
 
   readForm(e) {
     const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
-
     this.setState({
       [e.target.name]: value,
     }, () => this.validationAll());
@@ -63,7 +66,8 @@ class Login extends React.Component {
   }
 
   render() {
-    const { statusPass, statusEmail } = this.state;
+    const { statusPass, statusEmail, email } = this.state;
+    const { saveLogin } = this.props;
     return (
       <section className="login">
         <h1> Sistema Trybe Wallet </h1>
@@ -95,13 +99,16 @@ class Login extends React.Component {
         </div>
         <div className="field">
           <p className="control">
-            <button
-              className="button is-success"
-              type="button"
-              disabled={ !statusEmail || !statusPass }
-            >
-              Entrar
-            </button>
+            <Link to="/carteira">
+              <button
+                className="button is-success"
+                type="button"
+                disabled={ !statusEmail || !statusPass }
+                onClick={ () => saveLogin(email) }
+              >
+                Entrar
+              </button>
+            </Link>
           </p>
         </div>
       </section>
@@ -109,4 +116,12 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  saveLogin: (e) => dispatch(actions.saveLogin(e)),
+});
+
+Login.propTypes = {
+  saveLogin: PropTypes.func,
+}.isRequired;
+
+export default connect(null, mapDispatchToProps)(Login);

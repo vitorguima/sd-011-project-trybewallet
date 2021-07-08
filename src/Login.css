@@ -1,0 +1,15 @@
+.login {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+  margin-top: 15%;
+  width: fit-content;
+}
+
+.login h1 {
+  color: forestgreen;
+  font-size: large;
+  padding: 3%;
+}
