@@ -2,6 +2,7 @@ export const REQUEST_COIN = 'REQUEST_COIN';
 export const REQUEST_COIN_SUCCESS = 'REQUEST_COIN_SUCCESS';
 export const REQUEST_COIN_FAIL = 'REQUEST_COIN_FAIL';
 export const ADD_EXPENSES = 'ADD_EXPENSES';
+export const DELETE_EXPENSES = 'DELETE_EXPENSES';
 
 function getEmail(email) {
   return {
@@ -29,6 +30,11 @@ const requestCoinFail = (payload) => ({
 const addExpenses = (state, payload) => ({
   type: ADD_EXPENSES,
   state,
+  payload,
+});
+
+const deleteExpenses = (payload) => ({
+  type: DELETE_EXPENSES,
   payload,
 });
 

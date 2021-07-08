@@ -34,6 +34,9 @@ export default class Table extends Component {
                   .ask * value.value).toFixed(2)) }
               </td>
               <td>Real</td>
+              <td>
+                <button type="button" data-testid="delete-btn"> delete</button>
+              </td>
             </tr>
           ))}
         </tbody>
