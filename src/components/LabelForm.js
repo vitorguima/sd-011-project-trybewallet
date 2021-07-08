@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { editExpenses } from '../actions';
+import { editExpenses, updateExpenses } from '../actions';
 
 let buttonChange = false;
 
@@ -75,6 +75,7 @@ class LabelForm extends Component {
         Método de pagamento
         <select
           id="method"
+          data-testid="method-input"
           name="method"
           value={ method }
           onChange={ this.handleChange }
@@ -99,6 +100,7 @@ class LabelForm extends Component {
           <select
             id="Tag"
             name="tag"
+            data-testid="tag-input"
             value={ tag }
             onChange={ this.handleChange }
           >
@@ -113,6 +115,7 @@ class LabelForm extends Component {
           Moeda
           <select
             id="moeda"
+            data-testid="currency-input"
             name="currency"
             value={ currency }
             onChange={ this.handleChange }
@@ -131,8 +134,8 @@ class LabelForm extends Component {
   }
 
   handleExpense() {
-    const { getApi, expenses } = this.props;
-    getApi(this.state);
+    const { update, expenses } = this.props;
+    update(this.state);
     this.setState({
       id: expenses.length + 1,
       value: '',
@@ -152,6 +155,7 @@ class LabelForm extends Component {
         <label htmlFor="valor">
           Valor
           <input
+            data-testid="value-input"
             type="text"
             id="valor"
             name="value"
@@ -163,6 +167,7 @@ class LabelForm extends Component {
           Descrição
           <input
             type="text"
+            data-testid="description-input"
             id="descrição"
             name="description"
             value={ description }
@@ -187,6 +192,7 @@ class LabelForm extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   edit: (editFunc) => dispatch(editExpenses(editFunc)),
+  update: (task) => dispatch(updateExpenses(task)),
 });
 
 export default connect(null, mapDispatchToProps)(LabelForm);

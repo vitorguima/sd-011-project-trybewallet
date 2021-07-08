@@ -5,6 +5,7 @@ import {
   ADD_EXPENSES,
   DELETE_EXPENSES,
   EDIT_EXPENSES,
+  UPDATE_EXPENSES,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -45,6 +46,19 @@ function wallet(state = INITIAL_STATE, action) {
     return {
       ...state,
       editFunc: action.payload,
+    };
+  case UPDATE_EXPENSES:
+    return {
+      ...state,
+      expenses: state.expenses.map((value) => {
+        if (value.id === action.payload.id) {
+          return {
+            id: value.id,
+            ...action.payload,
+            exchangeRates: value.exchangeRates,
+          };
+        } return value;
+      }),
     };
   default:
     return state;
