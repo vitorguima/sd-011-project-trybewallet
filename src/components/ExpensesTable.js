@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import PropTypes from 'prop-types';
 
-import { deleteExpenses } from '../actions/index';
+import { deleteExpenses, editExpense } from '../actions/index';
 
 class ExpensesTable extends Component {
   handleDelete(uniqueId) {
@@ -25,6 +25,20 @@ class ExpensesTable extends Component {
         onClick={ ({ target }) => this.handleDelete(target.id) }
       >
         Excluir
+      </button>
+    );
+  }
+
+  editButton(id) {
+    const { editDispatch } = this.props;
+    return (
+      <button
+        type="button"
+        id={ id }
+        data-testid="edit-btn"
+        onClick={ ({ target }) => editDispatch(target.id) }
+      >
+        Editar
       </button>
     );
   }
@@ -53,6 +67,7 @@ class ExpensesTable extends Component {
           <td>Real</td>
           <td>
             {this.deleteButton(id)}
+            {this.editButton(id)}
           </td>
         </tr>
       )));
@@ -92,6 +107,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   deleteDispatch: (expenses) => dispatch(deleteExpenses(expenses)),
+  editDispatch: (id) => dispatch(editExpense(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpensesTable);
@@ -120,5 +136,6 @@ ExpensesTable.propTypes = {
       }).isRequired,
     }),
   ),
-  dispatchEpenses: PropTypes.func,
+  deleteDispatch: PropTypes.func,
+  editDispatch: PropTypes.func,
 }.isRequired;

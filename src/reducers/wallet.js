@@ -1,22 +1,16 @@
-import { SUBMIT_EXPENSE, REQUEST_API, DELETE_EXPENSE } from '../actions/index';
+import { SUBMIT_EXPENSE, REQUEST_API, DELETE_EXPENSE, EDIT_EXPENSE } from '../actions/index';
 
 const INITIAL_STATE = {
+  idToEdit: false,
   loading: false,
   expenses: [],
 };
 
 function wallet(state = INITIAL_STATE, action) {
-  const {
-    type,
-    nextId,
-    value,
-    description,
-    currency,
-    payment,
-    tag,
-    exchangeRates,
+  const { type, nextId, value, description, currency, payment, tag, exchangeRates,
     loading,
     filteredExpenses,
+    idToEdit,
   } = action;
 
   switch (type) {
@@ -46,6 +40,11 @@ function wallet(state = INITIAL_STATE, action) {
     return {
       ...state,
       expenses: filteredExpenses,
+    };
+  case EDIT_EXPENSE:
+    return {
+      ...state,
+      idToEdit,
     };
   default:
     return state;

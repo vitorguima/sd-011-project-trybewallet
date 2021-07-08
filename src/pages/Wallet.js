@@ -31,10 +31,32 @@ class Wallet extends React.Component {
     this.renderCurrencyOptions = this.renderCurrencyOptions.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.sumExpenses = this.sumExpenses.bind(this);
+    this.submitButton = this.submitButton.bind(this);
+    this.changeStatesToEdit = this.changeStatesToEdit.bind(this);
   }
 
   async componentDidMount() {
     await this.handleCurrencies();
+  }
+
+  changeStatesToEdit() {
+    const { expenses, idToEdit } = this.props;
+    const expenseToEdit = expenses.find(({ id }) => id === idToEdit);
+    console.log(expenseToEdit);
+    // this.setState(() => ({
+
+    // }));
+  }
+
+  submitButton(expense) {
+    return (
+      <button
+        type="button"
+        onClick={ () => this.handleSubmit(expense) }
+      >
+        Adicionar despesa
+      </button>
+    );
   }
 
   handleSubmit(expense) {
@@ -43,6 +65,10 @@ class Wallet extends React.Component {
     this.setState((state) => ({
       nextId: state.nextId + 1,
     }), () => dispatchExpenses(expense));
+  }
+
+  handleStateToEdit() {
+
   }
 
   async handleCurrencies() {
@@ -161,7 +187,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email } = this.props;
+    const { email, idToEdit } = this.props;
     const { nextId, value, description, currency, tag, payment } = this.state;
     const expense = { nextId, value, description, currency, tag, payment };
 
@@ -185,12 +211,7 @@ class Wallet extends React.Component {
               <option value="Saúde">Saúde</option>
             </select>
           </label>
-          <button
-            type="button"
-            onClick={ () => this.handleSubmit(expense) }
-          >
-            Adicionar despesa
-          </button>
+          {idToEdit ? this.changeStatesToEdit() : this.submitButton(expense)}
         </form>
         <ExpensesTable />
       </div>
@@ -201,6 +222,7 @@ class Wallet extends React.Component {
 const mapStateToProps = (state) => ({
   email: state.user.email,
   expenses: state.wallet.expenses,
+  idToEdit: state.wallet.idToEdit,
 });
 
 const mapDispatchToProps = (dispatch) => ({
