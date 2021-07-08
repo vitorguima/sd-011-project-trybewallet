@@ -1,9 +1,20 @@
-import React from 'react';
+import React from 'react'
+import { connect } from 'react-redux'
 
-class Wallet extends React.Component {
-  render() {
-    return <div>TrybeWallet</div>;
-  }
+export const Wallet = (props) => {
+  return (
+    <div>
+      
+    </div>
+  )
 }
 
-export default Wallet;
+const mapStateToProps = (state) => ({
+  
+})
+
+const mapDispatchToProps = {
+  
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet)
