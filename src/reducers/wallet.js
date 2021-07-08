@@ -7,10 +7,10 @@ const INITIAL_STATE = {
 
 function saveWallet(state = INITIAL_STATE, { type, payload }) {
   switch (type) {
-  case 'ADD_EMAIL':
+  case 'ADD_CURRENCIES':
     return {
       ...state,
-      email: payload,
+      currencies: payload,
     };
   default:
     return state;

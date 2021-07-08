@@ -2,9 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Form from './Form';
+import { fetchApi } from '../actions';
 import '../CSS/Wallet.css';
 
 class Wallet extends React.Component {
+  componentDidMount() {
+    fetchApi();
+  }
+
   totalSpent() {
     return 0;
   }
