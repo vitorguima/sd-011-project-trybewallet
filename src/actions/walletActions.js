@@ -2,6 +2,7 @@ import { getCurrentCoins } from '../services/awesomeApi';
 
 export const REQUEST_COINS_SUCESS = 'REQUEST_COINS_SUCESS';
 export const REQUEST_COINS_ERROR = 'REQUEST_COINS_ERROR';
+export const NEW_EXPENSE = 'NEW_EXPENSE';
 
 export const requestCoinsSucess = (coins) => ({
   type: REQUEST_COINS_SUCESS,
@@ -17,6 +18,11 @@ export const requestCoinsError = (error) => ({
   },
 });
 
+export const addNewExpense = (expense) => ({
+  type: NEW_EXPENSE,
+  expense,
+});
+
 export const fetchAwesomeApi = () => (dispatch) => {
   getCurrentCoins()
     .then((coins) => {
@@ -29,4 +35,16 @@ export const fetchAwesomeApi = () => (dispatch) => {
     .catch((error) => dispatch(
       requestCoinsError(error),
     ));
+};
+
+export const newFetchAwesomeApi = (expense) => {
+  getCurrentCoins()
+    .then((coins) => {
+      dispatch(
+        addNewExpense({
+          ...expense,
+          exchengeRates: coins,
+        }),
+      );
+    });
 };
