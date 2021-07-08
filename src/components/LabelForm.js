@@ -23,18 +23,39 @@ export default class LabelForm extends Component {
     });
   }
 
-  render() {
-    const { coins, getApi } = this.props;
-    const { value, description, currency, method, tag } = this.state;
+  select() {
+    const { coins } = this.props;
+    const { currency, method, tag } = this.state;
+
     return (
-      <form>
-        <label htmlFor="valor">
-          Valor
-          <input type="text" id="valor" name="value" value={ value } onChange={ this.handleChange } />
+      <>
+        <label htmlFor="method">
+          Método de pagamento
+          <select
+            id="method"
+            name="method"
+            value={ method }
+            onChange={ this.handleChange }
+          >
+            <option> Metodo de pagamento! </option>
+            <option value="money">Dinheiro </option>
+            <option value="creditCard">Cartão de crédito </option>
+            <option value="debitCard">Cartão de débito </option>
+          </select>
         </label>
-        <label htmlFor="descrição">
-          Descrição
-          <input type="text" id="descrição" name="description" value={ description } onChange={ this.handleChange } />
+        <label htmlFor="Tag">
+          Tag
+          <select
+            id="Tag"
+            value={ tag }
+            onChange={ this.handleChange }
+          >
+            <option value="food"> Alimentação </option>
+            <option> Lazer </option>
+            <option> Trabalho </option>
+            <option> Transporte </option>
+            <option> Saúde </option>
+          </select>
         </label>
         <label htmlFor="moeda">
           Moeda
@@ -48,25 +69,30 @@ export default class LabelForm extends Component {
               </option>))}
           </select>
         </label>
-        <label htmlFor="method">
-          Método de pagamento
-          <select id="method" name="method" value={ method } onChange={ this.handleChange }>
-            <option> Metodo de pagamento! </option>
-            <option value="money">Dinheiro </option>
-            <option value="creditCard">Cartão de crédito </option>
-            <option value="debitCard">Cartão de débito </option>
-          </select>
+      </>
+    );
+  }
+
+  render() {
+    const { coins, getApi } = this.props;
+    const { value, description, currency, method, tag } = this.state;
+    return (
+      <form>
+        <label htmlFor="valor">
+          Valor
+          <input
+            type="text"
+            id="valor"
+            name="value"
+            value={ value }
+            onChange={ this.handleChange }
+          />
         </label>
-        <label htmlFor="Tag">
-          Tag
-          <select id="Tag" value={ tag } >
-            <option value="food"> Alimentação </option>
-            <option> Lazer </option>
-            <option> Trabalho </option>
-            <option> Transporte </option>
-            <option> Saúde </option>
-          </select>
+        <label htmlFor="descrição">
+          Descrição
+          <input type="text" id="descrição" name="description" value={ description } onChange={ this.handleChange } />
         </label>
+
         <button type="button" onClick={ () => getApi(true) }>Adicionar despesa</button>
       </form>
     );
