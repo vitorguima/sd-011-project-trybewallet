@@ -19,17 +19,9 @@ class TableRowExpenses extends Component {
             (Number(expenses.exchangeRates[expenses.currency].ask)
               * Number(expenses.value)).toFixed(2)
           }
-
         </td>
         <td>Real</td>
         <td>
-          <button
-            type="button"
-            data-testid="delete-btn"
-            onClick={ () => dispatchDelete(expenses) }
-          >
-            Excluir
-          </button>
           <button
             type="button"
             data-testid="edit-btn"
@@ -38,6 +30,13 @@ class TableRowExpenses extends Component {
             } }
           >
             Editar
+          </button>
+          <button
+            type="button"
+            data-testid="delete-btn"
+            onClick={ () => dispatchDelete(expenses) }
+          >
+            Excluir
           </button>
         </td>
       </tr>

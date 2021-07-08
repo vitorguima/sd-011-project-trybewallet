@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import { getEmail } from '../actions';
+import rodolfo from '../image/rodolfo.png';
+import filiCavalo from '../image/fili-cavalo.jpg';
+import './styles/Login.css';
 
 class Login extends React.Component {
   constructor() {
@@ -40,7 +43,10 @@ class Login extends React.Component {
     const { password, email, disabled } = this.state;
     const { emailProps } = this.props;
     return (
-      <div>
+      <div className="flex column main">
+        {disabled
+          ? <img src={ rodolfo } alt="rodolfão" className="img" />
+          : <img src={ filiCavalo } alt="filiCavalo" className="img" />}
         <input
           type="text"
           name="email"
@@ -48,6 +54,7 @@ class Login extends React.Component {
           placeholder="Email"
           onChange={ this.handleChange }
           value={ email }
+          className="input"
         />
         <input
           type="password"
@@ -56,6 +63,7 @@ class Login extends React.Component {
           placeholder="Senha"
           onChange={ this.handleChange }
           value={ password }
+          className="input"
         />
         <Link to="/carteira">
           <button
@@ -64,9 +72,9 @@ class Login extends React.Component {
             onClick={ () => {
               emailProps(email);
             } }
+            className="button"
           >
             Entrar
-
           </button>
         </Link>
       </div>

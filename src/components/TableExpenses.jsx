@@ -10,7 +10,7 @@ class TableExpenses extends Component {
       <table>
         <thead>
           <tr>
-            <th name="Descrição">
+            <th>
               Descrição
             </th>
             <th>
