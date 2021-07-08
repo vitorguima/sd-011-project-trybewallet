@@ -1,6 +1,9 @@
 export const LOG_USER = 'LOG_USER';
+
 export const RECEIVE_CURRENCIES = 'RECEIVE_CURRENCIES';
 export const REQUEST_CURRENCIES = 'REQUEST_CURRENCIES';
+
+export const RECEIVE_EXPENSE = 'RECEIVE_EXPENSE';
 
 export const loginUser = (email) => ({
   type: LOG_USER,
@@ -23,9 +26,21 @@ export function fetchCurrencies() {
       .then((data) => {
         data.json()
           .then((json) => {
-            const moedas = Object.keys(json);
-            dispatch(receiveCurrencies(moedas));
+            dispatch(receiveCurrencies(json));
           });
       });
+  };
+}
+
+const receiveExpense = (payload) => ({
+  type: RECEIVE_EXPENSE,
+  payload,
+});
+
+export function addExpense(payload) {
+  return (dispatch, getState) => {
+    dispatch(fetchCurrencies());
+    const newData = getState().wallet.currencies;
+    dispatch(receiveExpense({ ...payload, exchangeRates: newData }));
   };
 }
