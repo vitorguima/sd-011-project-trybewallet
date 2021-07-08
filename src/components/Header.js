@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 class Header extends Component {
   render() {
     const { userEmail } = this.props;
-    console.log(userEmail);
     return (
       <div>
         <label htmlFor="email-field">
@@ -29,5 +28,9 @@ const mapStateToProps = (state) => (
 export default connect(mapStateToProps)(Header);
 
 Header.propTypes = {
-  userEmail: PropTypes.string.isRequired,
+  userEmail: PropTypes.string,
+};
+
+Header.defaultProps = {
+  userEmail: 'alguem@algo.com',
 };
