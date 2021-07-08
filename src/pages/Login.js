@@ -1,9 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import signUp from '../actions';
 
 class Login extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       email: '',
       password: '',
@@ -14,6 +17,7 @@ class Login extends React.Component {
     const { email, password } = this.state;
     const emailRegex = /\b[\w.-]+@[\w.-]+\.\w{2,4}\b/gi; // (regex) https://regexr.comm/2ri2c
     const six = 6;
+    const { login } = this.props;
     return (
       <div>
         <h3>Login</h3>
@@ -39,14 +43,22 @@ class Login extends React.Component {
             disabled={
               !(email.match(emailRegex)) || password.length < six // validação de email e senha (six por conta do magicNumber)
             }
+            onClick={ () => login(email) }
           >
             Entrar
           </button>
         </Link>
-
       </div>
     );
   }
 }
 
-export default Login;
+const mapDisptchToProps = (dispatch) => ({
+  login: (email) => dispatch(signUp(email)),
+});
+
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDisptchToProps)(Login);
