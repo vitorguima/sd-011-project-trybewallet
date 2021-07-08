@@ -16,8 +16,8 @@ class Login extends React.Component {
 
   enableButton() {
     const form = document.querySelector('.login-form');
-    const btnSubmit = document.querySelector('.submit-button');
-    btnSubmit.disabled = !form.checkValidity();
+    const buttonSubmit = document.querySelector('.submit-button');
+    buttonSubmit.disabled = !form.checkValidity();
   }
 
   handleChange({ target: { value, name } }) {
