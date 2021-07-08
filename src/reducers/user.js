@@ -12,7 +12,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
       users: { email: action.payload },
     };
   default:
-      return state;
+    return state;
   }
 };
 
