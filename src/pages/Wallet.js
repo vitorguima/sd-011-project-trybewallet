@@ -3,6 +3,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class Wallet extends React.Component {
+  componentDidMount() {
+    // chamar api
+  }
+
   render() {
     const { email } = this.props;
     return (
@@ -27,7 +31,9 @@ class Wallet extends React.Component {
           </label>
           <label htmlFor="currency">
             Moeda
-            <select id="currency" />
+            <select id="currency">
+              <option value="test">TESTE</option>
+            </select>
           </label>
           <label htmlFor="method">
             Método de pagamento
