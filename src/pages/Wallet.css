@@ -4,8 +4,8 @@
 
 .walletHeader {
   color: #f6fafb;
-  margin: 30px;
   line-height: 50px;
+  margin: 30px;
 }
 
 .stringDetail {
@@ -76,7 +76,7 @@ table , th , td {
   background-color: rgb(255, 50, 50);
   border: none;
   color: #f6fafb;
-  font-weight: bold;
+  font-weight: 777;
   margin: 5px;
   padding: 10px;
   width: 80px;
@@ -86,7 +86,7 @@ table , th , td {
   background-color: rgb(255, 241, 50);
   border: none;
   color: black;
-  font-weight: bold;
+  font-weight: 777;
   margin: 5px;
   padding: 10px;
   width: 80px;
