@@ -69,4 +69,8 @@ const mapDispatchToProps = (dispatch) => ({
   stateEmail: (payload) => dispatch(getEmail(payload)),
 });
 
+Login.propTypes = ({
+  stateEmail: PropTypes.func,
+}).isRequired;
+
 export default connect(null, mapDispatchToProps)(Login);
