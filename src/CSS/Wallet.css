@@ -1,10 +1,10 @@
 .wallet-header {
   display: flex;
-  width: 100vw;
   justify-content: space-around;
-};
+  width: 100vw;
+}
 
 .wallet-header * {
   background-color: red;
   margin: 10px;
-};
+}
