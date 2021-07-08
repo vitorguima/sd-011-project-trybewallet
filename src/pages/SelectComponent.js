@@ -4,34 +4,34 @@ import PropTypes from 'prop-types';
 class SelectComponent extends Component {
   render() {
     const arrayTags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
-    const { coins, coin, payment, tags, onChange } = this.props;
+    const { coins, currency, method, tags, onChange } = this.props;
 
     return (
       <form>
-        <label htmlFor="coin">
+        <label htmlFor="currency">
           Moeda
           <select
-            value={ coin }
+            value={ currency }
             onChange={ onChange }
-            id="coin"
-            name="coin"
+            id="currency"
+            name="currency"
           >
             {coins.map((moeda, index) => (
               <option value={ moeda } key={ index }>{ moeda }</option>
             ))}
           </select>
         </label>
-        <label htmlFor="payment-method">
+        <label htmlFor="method">
           Método de pagamento
           <select
             onChange={ onChange }
-            id="payment-method"
-            name="paymentMethod"
-            value={ payment }
+            id="method"
+            name="method"
+            value={ method }
           >
-            <option value="money">Dinheiro</option>
-            <option value="credit-card">Cartão de crédito</option>
-            <option value="debit-card">Cartão de débito</option>
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
           </select>
         </label>
         <label htmlFor="tag">
@@ -53,8 +53,8 @@ class SelectComponent extends Component {
 
 SelectComponent.propTypes = {
   coins: PropTypes.array,
-  coin: PropTypes.string,
-  payment: PropTypes.string,
+  currency: PropTypes.string,
+  method: PropTypes.string,
   tags: PropTypes.string,
   onChange: PropTypes.func,
 }.isRequired;

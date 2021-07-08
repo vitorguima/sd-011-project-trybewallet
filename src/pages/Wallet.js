@@ -11,13 +11,14 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, coins } = this.props;
+    const { email, coins, expenses } = this.props;
+    const soma = expenses.reduce((acc, { exchangeRates, currency, value }) => acc + (Number(exchangeRates[currency].ask * value)), 0);
     return (
       <main>
         <header>
           <h1>TrybeWallet</h1>
           <h4 data-testid="email-field">{`Bem vindo: ${email}`}</h4>
-          <h4 data-testid="total-field">0</h4>
+          <h4 data-testid="total-field">{ soma || '0' }</h4>
           <h4 data-testid="header-currency-field">BRL</h4>
         </header>
         <section className="form">
@@ -35,6 +36,7 @@ Wallet.propTypes = {
 const mapStateToProps = (state) => ({
   email: state.user.email,
   coins: state.wallet.currencies,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({

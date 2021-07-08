@@ -11,8 +11,8 @@ class Form extends Component {
       id: expenses.length || 0,
       value: '',
       description: '',
-      coin: 'USD',
-      paymentMethod: 'Dinheiro',
+      currency: 'USD',
+      method: 'Dinheiro',
       tag: 'Alimentação',
       exchangeRates: {},
     };
@@ -35,15 +35,16 @@ class Form extends Component {
       id: expenses.length + 1,
       value: '',
       description: '',
-      coin: 'USD',
-      paymentMethod: 'Dinheiro',
+      currency: 'USD',
+      method: 'Dinheiro',
       tag: 'Alimentação',
+      exchangeRates: {},
     });
   }
 
   render() {
     const { coins } = this.props;
-    const { value, description, coin, paymentMethod, tag } = this.state;
+    const { value, description, currency, method, tag } = this.state;
     return (
       <form>
         <label htmlFor="value">
@@ -68,8 +69,8 @@ class Form extends Component {
         </label>
         <SelectComponent
           coins={ coins }
-          coin={ coin }
-          payment={ paymentMethod }
+          currency={ currency }
+          method={ method }
           tags={ tag }
           onChange={ this.handleChange }
         />
