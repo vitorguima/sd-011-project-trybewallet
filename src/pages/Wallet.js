@@ -15,46 +15,66 @@ class Wallet extends React.Component {
       spends: 0,
       exchange: 'BRL',
       acronymsCurrency: [],
+      expenses: [],
     };
     this.setEmail = this.setEmail.bind(this);
     this.setAcronymsCurrency = this.setAcronymsCurrency.bind(this);
     this.addExpense = this.addExpense.bind(this);
     this.setExpenses = this.setExpenses.bind(this);
+    this.setSpends = this.setSpends.bind(this);
   }
 
   componentDidMount() {
-    const { email, expenses, currencies } = this.props;
-    this.setEmail(email);
-    this.setExpenses(expenses);
-    this.setAcronymsCurrency(currencies[currencies.length - 1]);
+    this.setEmail();
+    this.setExpenses();
+    this.setAcronymsCurrency();
   }
 
-  setExpenses(expenses) {
+  setExpenses() {
+    const { expenses } = this.props;
     this.setState({
       expenses,
     });
   }
 
-  setEmail(email) {
+  setEmail() {
+    const { email } = this.props;
     this.setState({
       email,
     });
   }
 
-  setAcronymsCurrency(dataExchange) {
-    const acronyms = Object.keys(dataExchange);
+  setSpends() {
+    const { expenses } = this.state;
+    const spends = expenses.reduce(((acc, expense) => acc + parseFloat(expense.spendsValue)), 0);
+    this.setState({
+      spends,
+    });
+  }
+
+  async setAcronymsCurrency() {
+    const { fetchCurrencie } = this.props;
+    await fetchCurrencie();
+    const { currencies } = this.props;
+    const acronyms = Object.keys(currencies[currencies.length - 1]);
     const acronymsCurrency = acronyms.filter((acron) => acron !== 'USDT');
     this.setState({
       acronymsCurrency,
     });
   }
 
-  addExpense(expense) {
-    const { addNewExpense, fetchCurrencie } = this.props;
+  async addExpense(expense) {
+    const { addNewExpense, fetchCurrencie, currencies } = this.props;
     const { expenses } = this.state;
-    const newExpense = { id: (expenses.length), ...expense };
+    await fetchCurrencie();
+    const newExpense = {
+      id: (expenses.length),
+      ...expense,
+      exchangeRates: currencies[currencies.length - 1],
+    };
     addNewExpense(newExpense);
-    fetchCurrencie();
+    this.setExpenses();
+    this.setSpends();
   }
 
   render() {
