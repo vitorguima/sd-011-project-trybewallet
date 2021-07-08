@@ -45,10 +45,8 @@ class FormDespesa extends Component {
             onChange={ this.handleInput }
           />
         </label>
-        <br />
         <label htmlFor="description">
           Descrição
-          <br />
           <textarea
             name="description"
             id="description"
@@ -56,7 +54,6 @@ class FormDespesa extends Component {
             onChange={ this.handleInput }
           />
         </label>
-        <br />
         <label htmlFor="currency">
           Moeda
           <select
@@ -76,7 +73,6 @@ class FormDespesa extends Component {
     const { metod, tag } = this.state;
     return (
       <form>
-        <br />
         <label htmlFor="method">
           Método de pagamento
           <select name="method" id="method" value={ metod } onChange={ this.handleInput }>
@@ -85,7 +81,6 @@ class FormDespesa extends Component {
             <option>Cartão de débito</option>
           </select>
         </label>
-        <br />
         <label htmlFor="tag">
           Tag
           <select name="tag" id="tag" value={ tag } onChange={ this.handleInput }>
@@ -106,7 +101,6 @@ class FormDespesa extends Component {
       <div>
         {this.renderForm1()}
         {this.renderForm2()}
-        <br />
         <button
           type="button"
           onClick={ () => {

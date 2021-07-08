@@ -7,7 +7,6 @@ class Header extends React.Component {
     const { email, expenses } = this.props;
     const exchangeRate = expenses
       .map((v) => Number(v.exchangeRates[v.currency].ask) * Number(v.value));
-    console.log(exchangeRate);
     return (
       <div>
         <h5 data-testid="email-field">
