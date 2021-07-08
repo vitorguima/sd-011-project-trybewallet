@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import SpendForm from '../components/SpendForm';
+import { addExpense } from '../actions';
+import fetchCurrencies from '../services';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -16,12 +18,21 @@ class Wallet extends React.Component {
     };
     this.setEmail = this.setEmail.bind(this);
     this.setAcronymsCurrency = this.setAcronymsCurrency.bind(this);
+    this.addExpense = this.addExpense.bind(this);
+    this.setExpenses = this.setExpenses.bind(this);
   }
 
   componentDidMount() {
-    const { email } = this.props;
+    const { email, expenses, currencies } = this.props;
     this.setEmail(email);
-    this.getAcronymsCurrency();
+    this.setExpenses(expenses);
+    this.setAcronymsCurrency(currencies[currencies.length - 1]);
+  }
+
+  setExpenses(expenses) {
+    this.setState({
+      expenses,
+    });
   }
 
   setEmail(email) {
@@ -38,15 +49,12 @@ class Wallet extends React.Component {
     });
   }
 
-  async getAcronymsCurrency() {
-    const url = 'https://economia.awesomeapi.com.br/json/all';
-    try {
-      const request = await fetch(url);
-      const response = await request.json();
-      this.setAcronymsCurrency(response);
-    } catch (error) {
-      console.log('Error:', error);
-    }
+  addExpense(expense) {
+    const { addNewExpense, fetchCurrencie } = this.props;
+    const { expenses } = this.state;
+    const newExpense = { id: (expenses.length), ...expense };
+    addNewExpense(newExpense);
+    fetchCurrencie();
   }
 
   render() {
@@ -59,7 +67,7 @@ class Wallet extends React.Component {
     return (
       <div>
         <Header email={ email } spends={ spends } exchange={ exchange } />
-        <SpendForm acronyms={ acronymsCurrency } />
+        <SpendForm acronyms={ acronymsCurrency } addExpense={ this.addExpense } />
       </div>
     );
   }
@@ -67,10 +75,21 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  expenses: state.wallet.expenses,
+  currencies: state.wallet.currencies,
 });
 
-export default connect(mapStateToProps, null)(Wallet);
+const mapDispatchToProps = (dispatch) => ({
+  addNewExpense: (expense) => dispatch(addExpense(expense)),
+  fetchCurrencie: () => dispatch(fetchCurrencies()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
+  addNewExpense: PropTypes.func.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fetchCurrencie: PropTypes.func.isRequired,
 };

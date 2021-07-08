@@ -1,8 +1,6 @@
 import { SET_USER_EMAIL } from '../actions';
 
 // Esse reducer será responsável por tratar as informações da pessoa usuária
-export { SET_USER_EMAIL } from '../actions';
-
 const INITIAL_STATE = {
   email: '',
 };

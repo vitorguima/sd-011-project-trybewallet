@@ -4,16 +4,17 @@ import PropTypes from 'prop-types';
 class SpendForm extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       spendsValue: 0,
       spendsDescribe: '',
       spendCategory: '',
-      // currency: '',
+      currency: '',
       paymentMethod: '',
     };
+    this.handleChange = this.handleChange.bind(this);
     this.inputsTexts = this.inputsTexts.bind(this);
     this.selectInputs = this.selectInputs.bind(this);
+    this.sendValues = this.sendValues.bind(this);
   }
 
   handleChange({ target: { id, value } }) {
@@ -94,11 +95,19 @@ class SpendForm extends React.Component {
     );
   }
 
+  sendValues(event) {
+    event.preventDefault();
+    const { addExpense } = this.props;
+    const expense = { ...this.state };
+    addExpense(expense);
+  }
+
   render() {
     return (
       <form>
         {this.inputsTexts()}
         {this.selectInputs()}
+        <button type="button" onClick={ this.sendValues }>Adicionar despesa</button>
       </form>
     );
   }
@@ -108,4 +117,5 @@ export default SpendForm;
 
 SpendForm.propTypes = {
   acronyms: PropTypes.arrayOf(PropTypes.string).isRequired,
+  addExpense: PropTypes.func.isRequired,
 };
