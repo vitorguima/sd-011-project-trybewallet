@@ -1,8 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import TrybewalletForm from '../components/TrybewalletForm';
 
 class Wallet extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      // value: 0,
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange({ target: { value, name } }) {
+    this.setState({
+      [name]: value,
+    });
+  }
+
   render() {
     const { email } = this.props;
     return (
@@ -18,6 +33,7 @@ class Wallet extends React.Component {
             <span data-testid="header-currency-field">BRL</span>
           </p>
         </header>
+        <TrybewalletForm />
       </div>
     );
   }
