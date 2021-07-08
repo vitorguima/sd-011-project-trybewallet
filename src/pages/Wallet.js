@@ -1,10 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { fetchCoins } from '../actions';
 
 class Wallet extends React.Component {
+  componentDidMount() {
+    const { mostraMoeda } = this.props;
+    mostraMoeda();
+  }
+
   render() {
-    const { email } = this.props;
+    const { email, currencies } = this.props;
     return (
       <div>
         <header>
@@ -24,7 +30,8 @@ class Wallet extends React.Component {
           <label htmlFor="moeda">
             Moeda
             <select name="moeda" id="moeda">
-              <option> </option>
+              {currencies.filter((currencie) => currencie !== 'USDT')
+                .map((currencie) => <option key={ currencie }>{currencie}</option>)}
             </select>
           </label>
           <label htmlFor="método de pagamento">
@@ -52,10 +59,18 @@ class Wallet extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  email: state.user.email });
+  email: state.user.email,
+  currencies: state.wallet.currencies,
+});
 
-export default connect(mapStateToProps)(Wallet);
+const mapDispatchToProps = (dispatch) => ({
+  mostraMoeda: () => dispatch(fetchCoins()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
+  mostraMoeda: PropTypes.func.isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
 };

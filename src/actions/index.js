@@ -3,8 +3,8 @@ export const adicionaEmail = (payload) => ({
   payload,
 });
 
-export const testeCurrencies = (payload) => ({
-  type: 'TESTE_CURRENCIES',
+export const getCurrencies = (payload) => ({
+  type: 'GET_CURRENCIES',
   payload,
 });
 
@@ -12,3 +12,7 @@ export const testeExpencies = (payload) => ({
   type: 'TESTE_EXPENCIES',
   payload,
 });
+
+export const fetchCoins = () => (dispatch) => fetch('https://economia.awesomeapi.com.br/json/all')
+  .then((result) => result.json())
+  .then((data) => dispatch(getCurrencies(Object.keys(data))));

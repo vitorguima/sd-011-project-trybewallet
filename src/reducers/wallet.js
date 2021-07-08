@@ -5,7 +5,7 @@ const INITIAL_STATE = {
 
 function walletReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case 'TESTE_CURRENCIES':
+  case 'GET_CURRENCIES':
     return {
       ...state,
       currencies: action.payload,
