@@ -1,4 +1,4 @@
-import { SUBMIT_EXPENSE, REQUEST_API } from '../actions/index';
+import { SUBMIT_EXPENSE, REQUEST_API, DELETE_EXPENSE } from '../actions/index';
 
 const INITIAL_STATE = {
   loading: false,
@@ -16,6 +16,7 @@ function wallet(state = INITIAL_STATE, action) {
     tag,
     exchangeRates,
     loading,
+    filteredExpenses,
   } = action;
 
   switch (type) {
@@ -40,6 +41,11 @@ function wallet(state = INITIAL_STATE, action) {
     return {
       ...state,
       loading,
+    };
+  case DELETE_EXPENSE:
+    return {
+      ...state,
+      expenses: filteredExpenses,
     };
   default:
     return state;

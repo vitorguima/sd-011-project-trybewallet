@@ -2,6 +2,7 @@ import getCurrency from '../services/Index';
 
 export const SUBMIT_LOGIN = 'SUBMIT_LOGIN';
 export const SUBMIT_EXPENSE = 'SUBMIT_EXPENSE';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 export const REQUEST_API = 'REQUEST_API';
 
 export const submitLogin = (email, password) => ({
@@ -21,6 +22,11 @@ export const submitExpense = (expense, currencies) => ({
   loading: false,
   ...expense,
   exchangeRates: currencies,
+});
+
+export const deleteExpenses = (filteredExpenses) => ({
+  type: DELETE_EXPENSE,
+  filteredExpenses,
 });
 
 export const dispatchExpense = (expense) => async (dispatch) => {

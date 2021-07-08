@@ -4,7 +4,31 @@ import { connect } from 'react-redux';
 
 import PropTypes from 'prop-types';
 
+import { deleteExpenses } from '../actions/index';
+
 class ExpensesTable extends Component {
+  handleDelete(uniqueId) {
+    const { expenses, deleteDispatch } = this.props;
+    const copyOfExpenses = [...expenses];
+    const filteredExpenses = copyOfExpenses
+      .filter(({ id }) => id !== parseInt(uniqueId, 10));
+
+    deleteDispatch(filteredExpenses);
+  }
+
+  deleteButton(id) {
+    return (
+      <button
+        type="button"
+        id={ id }
+        data-testid="delete-btn"
+        onClick={ ({ target }) => this.handleDelete(target.id) }
+      >
+        Excluir
+      </button>
+    );
+  }
+
   renderTableLines(expenses) {
     return (
       expenses.map(({
@@ -18,7 +42,6 @@ class ExpensesTable extends Component {
       }, index) => (
         <tr
           key={ index }
-          id={ id }
         >
           <td>{description}</td>
           <td>{tag}</td>
@@ -28,7 +51,9 @@ class ExpensesTable extends Component {
           <td>{Math.round(exchangeRates[currency].ask * 100) / 100}</td>
           <td>{(Number(value) * Number(exchangeRates[currency].ask))}</td>
           <td>Real</td>
-          <td>Editar/Excluir</td>
+          <td>
+            {this.deleteButton(id)}
+          </td>
         </tr>
       )));
   }
@@ -65,7 +90,11 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-export default connect(mapStateToProps)(ExpensesTable);
+const mapDispatchToProps = (dispatch) => ({
+  deleteDispatch: (expenses) => dispatch(deleteExpenses(expenses)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpensesTable);
 
 ExpensesTable.propTypes = {
   expenses: PropTypes.arrayOf(
