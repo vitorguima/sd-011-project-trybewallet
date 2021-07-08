@@ -39,3 +39,9 @@
     transform: rotate(360deg);
   }
 }
+
+.login {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+}
