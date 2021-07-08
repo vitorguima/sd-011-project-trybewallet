@@ -10,6 +10,18 @@ export const requestCurrencies = (payload) => ({
   payload,
 });
 
-export const fetchCurrencies = () => (dispatch) => fetch('https://economia.awesomeapi.com.br/json/all')
-  .then((response) => response.json())
-  .then((currencies) => dispatch(requestCurrencies(Object.values(currencies))));
+export const requestCurrenciesData = (payload) => ({
+  type: 'GET_CURRENCIES_DATA',
+  payload,
+});
+
+export const sendWalletInfo = (state) => ({
+  type: 'SEND_INFO',
+  state,
+});
+
+export function fetchCurrencies() {
+  return (dispatch) => fetch('https://economia.awesomeapi.com.br/json/all')
+    .then((response) => response.json())
+    .then((currencies) => dispatch(requestCurrencies(currencies)));
+}

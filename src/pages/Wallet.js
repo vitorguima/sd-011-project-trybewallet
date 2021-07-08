@@ -6,7 +6,9 @@ import WalletForm from '../components/WalletForm';
 
 class Wallet extends React.Component {
   render() {
-    const { email } = this.props;
+    const { email, expenses } = this.props;
+    const saveExchangeRates = expenses
+      .map((item) => Number(item.exchangeRates[item.currency].ask) * Number(item.value));
     return (
       <div>
         <header className="walletHeader">
@@ -19,7 +21,12 @@ class Wallet extends React.Component {
             <span data-testid="email-field">{email}</span>
           </h3>
           <h5 data-testid="total-field">
-            Despesa total: 0&nbsp;
+            Despesa total:
+            {saveExchangeRates.reduce((acc, curr) => {
+              acc += curr;
+              return acc;
+            }, 0)}
+            &nbsp;
             <span data-testid="header-currency-field">BRL</span>
           </h5>
         </header>
@@ -34,6 +41,7 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  expenses: state.wallet.expenses,
 });
 
 export default connect(mapStateToProps)(Wallet);

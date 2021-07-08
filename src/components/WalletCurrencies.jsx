@@ -7,11 +7,11 @@ class WalletCurrencies extends Component {
     const { curr } = this.props;
     return (
       <>
-        {curr.map((itens, index) => {
-          if (itens.codein !== 'BRLT') {
+        {Object.keys(curr).map((itens, index) => {
+          if (itens !== 'USDT') {
             return (
               <option key={ index }>
-                { itens.code }
+                { itens }
               </option>);
           }
           return null;
