@@ -17,7 +17,7 @@ class Login extends React.Component {
   render() {
     const { email, password } = this.state;
     const { login } = this.props;
-    const emailRegex = /\b[\w.-]+@[\w.-]+\.\w{2,4}\b/gi; 
+    const emailRegex = /\b[\w.-]+@[\w.-]+\.\w{2,4}\b/gi;
     // Regex ==> https://regexr.comm/2ri2c
     const six = 6;
     return (
