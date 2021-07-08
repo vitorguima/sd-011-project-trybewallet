@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import LabelledInput from '../LabelledInput';
 import LabelledSelect from '../LabelledSelect';
 import { fetchCurrencies } from '../../actions';
-import cloneObject from '../../helpers/utils';
+import { cloneObject } from '../../helpers/utils';
 
 const paymentOptions = [
   { label: 'Dinheiro', value: 'Dinheiro' },

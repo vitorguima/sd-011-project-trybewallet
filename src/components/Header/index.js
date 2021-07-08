@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { roundCurrency } from '../../helpers/utils';
 
 class Header extends React.Component {
   getExpensesSum() {
@@ -8,7 +9,7 @@ class Header extends React.Component {
 
     return expenses
       .reduce((acc, { value, currency, exchangeRates }) => (
-        acc + parseFloat(value) * exchangeRates[currency].ask
+        acc + roundCurrency(parseFloat(value) * exchangeRates[currency].ask)
       ), 0);
   }
 
