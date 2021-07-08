@@ -7,10 +7,9 @@ class BtEdit extends Component {
     return (
       <button
         type="button"
-        data-testid="edit-btn"
         onClick={ editOnClick }
       >
-        Editar Despesa
+        Editar despesa
       </button>
     );
   }
