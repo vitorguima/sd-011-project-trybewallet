@@ -14,8 +14,10 @@ class Wallet extends React.Component {
 
   render() {
     return (
-      <Header />
-      <Expenses />
+      <>
+        <Header />
+        <Expenses />
+      </>
     );
   }
 }
