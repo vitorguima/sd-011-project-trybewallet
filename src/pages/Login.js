@@ -1,5 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { login } from '../actions';
+import trybeWallet from '../image/trybeWallet.png';
 
 class Login extends React.Component {
   constructor(props) {
@@ -31,34 +35,35 @@ class Login extends React.Component {
 
   render() {
     const { email, password, isDisabled } = this.state;
+    const { userLogin } = this.props;
     return (
-      <div className="user-login">
-        <label htmlFor="email">
-          E-mail
+      <div className="main-div">
+        <img src={ trybeWallet } alt="trybeWalletImage" />
+        <div className="user-login">
           <input
             type="text"
             data-testid="email-input"
+            placeholder="e-mail"
             name="email"
             value={ email }
             onChange={ this.handleChange }
             required
           />
-        </label>
-        <label htmlFor="password">
-          Senha
           <input
             type="text"
             data-testid="password-input"
+            placeholder="password"
             name="password"
             value={ password }
             onChange={ this.handleChange }
             required
           />
-        </label>
+        </div>
         <Link to="/carteira">
           <button
             type="button"
             disabled={ isDisabled }
+            onClick={ () => userLogin(email) }
           >
             Entrar
           </button>
@@ -68,4 +73,11 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  userLogin: (email) => dispatch(login(email)) });
+
+export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  userLogin: PropTypes.func.isRequired,
+};

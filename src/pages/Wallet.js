@@ -2,7 +2,7 @@ import React from 'react';
 
 class Wallet extends React.Component {
   render() {
-    return <div>TrybeWallet</div>;
+    return <h1 className="wallet">TrybeWallet</h1>;
   }
 }
 

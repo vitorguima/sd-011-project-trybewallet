@@ -1,11 +1,25 @@
-.title {
+.main-div {
+  align-items: center;
+  border: solid 1px black;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 40%;
+  margin-right: 40%;
   margin-top: 200px;
-  text-align: center;
+  padding-bottom: 60px;
+  padding-top: 60px;
 }
 
 .user-login {
   align-items: center;
   display: flex;
   flex-direction: column;
-  margin-top: 25px;
+  margin-top: 20px;
+}
+
+.wallet {
+  display: flex;
+  justify-content: center;
+  margin-top: 200px;
 }
