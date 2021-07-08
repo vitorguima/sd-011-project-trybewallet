@@ -1,3 +1,5 @@
+import { SAVE_EMAIL_USER } from '../actions';
+
 const INITIAL_STATE = {
   user: {
     email: '',
@@ -6,6 +8,13 @@ const INITIAL_STATE = {
 
 function userReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
+  case SAVE_EMAIL_USER:
+    return {
+      ...state,
+      user: {
+        email: action.payload,
+      },
+    };
   default:
     return state;
   }

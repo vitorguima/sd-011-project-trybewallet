@@ -1,11 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import saveEmailUser from '../actions';
 
 class Login extends React.Component {
   constructor() {
     super();
     this.state = {
-      userEmail: '',
-      userPassword: '',
+      email: '',
+      password: '',
       disableButton: true,
     };
     this.handlerChange = this.handlerChange.bind(this);
@@ -28,41 +32,58 @@ class Login extends React.Component {
   }
 
   checkPassword() {
-    const { userPassword } = this.state;
+    const { password } = this.state;
     const limit = 5;
-    return (userPassword.length > limit);
+    return (password.length > limit);
   }
 
   checkEmail() {
-    const { userEmail } = this.state;
+    const { email } = this.state;
     const eCheck = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    return eCheck.test(userEmail);
+    return eCheck.test(email);
   }
 
   render() {
-    const { userEmail, userPassword, disableButton } = this.state;
+    const { email, password, disableButton } = this.state;
+    const { saveEmail } = this.props;
     return (
       <div>
         <input
-          name="userEmail"
-          type="email"
+          name="email"
+          type="text"
           data-testid="email-input"
           onChange={ (e) => this.handlerChange(e) }
-          value={ userEmail }
+          value={ email }
           placeholder="Digite um e-mail valido"
         />
         <input
-          name="userPassword"
+          name="password"
           type="text"
           data-testid="password-input"
           onChange={ (e) => this.handlerChange(e) }
-          value={ userPassword }
+          value={ password }
           placeholder="Digite a senha com no mínimo 6 caracteres"
         />
-        <button disabled={ disableButton } type="button">Entrar</button>
+        <Link to={ { pathname: 'carteira' } }>
+          <button
+            disabled={ disableButton }
+            type="button"
+            onClick={ () => saveEmail(email) }
+          >
+            Entrar
+          </button>
+        </Link>
       </div>
     );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => (
+  { saveEmail: (email) => dispatch(saveEmailUser(email)) }
+);
+
+export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  saveEmail: PropTypes.func.isRequired,
+};
