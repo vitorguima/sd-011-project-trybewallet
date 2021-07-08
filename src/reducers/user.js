@@ -1,6 +1,6 @@
 // Esse reducer será responsável por tratar as informações da pessoa usuária
 const INITIAL_STATE = {
-  email: '',
+  email: 'vanderlei@vanderlei.com',
 };
 
 function saveEmail(state = INITIAL_STATE, { type, payload }) {
