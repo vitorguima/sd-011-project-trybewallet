@@ -4,6 +4,8 @@
 
 .walletHeader {
   color: #f6fafb;
+  margin: 30px;
+  line-height: 50px;
 }
 
 .stringDetail {

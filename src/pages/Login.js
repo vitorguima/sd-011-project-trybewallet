@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { loginAction } from '../actions';
+import moneyImg from '../pngwing.com.png';
 
 class Login extends React.Component {
   constructor(props) {
@@ -41,46 +42,49 @@ class Login extends React.Component {
     const { email, valid } = this.state;
     const { sendLogin } = this.props;
     return (
-      <div className="loginContainer">
-
-        <div className="loginHeroDiv">
-          <h1>Login</h1>
+      <div className="mainLoginContainer walletHeader">
+        <h1>
+          Trybe
+          <span className="stringDetail">Wallet</span>
+          <span><img src={ moneyImg } alt="money" className="moneyImg" /></span>
+        </h1>
+        <div className="loginContainer">
+          <div className="loginHeroDiv">
+            <h1>Login</h1>
+          </div>
+          <form className="loginForm">
+            <label htmlFor="email" className="formLabel">
+              <input
+                onChange={ this.inputHandle }
+                placeholder="Email"
+                name="email"
+                type="text"
+                onKeyUp={ this.checkInput }
+                data-testid="email-input"
+              />
+            </label>
+            <label htmlFor="password" className="formLabel">
+              <input
+                onChange={ this.inputHandle }
+                placeholder="Senha"
+                name="password"
+                type="password"
+                onKeyUp={ this.checkInput }
+                data-testid="password-input"
+              />
+            </label>
+            <Link to="/carteira">
+              <button
+                className="submitButton"
+                type="button"
+                disabled={ !valid }
+                onClick={ () => sendLogin(email) }
+              >
+                Entrar
+              </button>
+            </Link>
+          </form>
         </div>
-
-        <form className="loginForm">
-          <label htmlFor="email" className="formLabel">
-            <input
-              onChange={ this.inputHandle }
-              placeholder="Email"
-              name="email"
-              type="text"
-              onKeyUp={ this.checkInput }
-              data-testid="email-input"
-            />
-          </label>
-
-          <label htmlFor="password" className="formLabel">
-            <input
-              onChange={ this.inputHandle }
-              placeholder="Senha"
-              name="password"
-              type="password"
-              onKeyUp={ this.checkInput }
-              data-testid="password-input"
-            />
-          </label>
-          <Link to="/carteira">
-            <button
-              className="submitButton"
-              type="button"
-              disabled={ !valid }
-              onClick={ () => sendLogin(email) }
-            >
-              Entrar
-            </button>
-          </Link>
-        </form>
-
       </div>
     );
   }

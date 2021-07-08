@@ -22,7 +22,7 @@ class Wallet extends React.Component {
             Seja bem vindo:&nbsp;
             <span data-testid="email-field">{email}</span>
           </h3>
-          <h5 data-testid="total-field">
+          <h3 data-testid="total-field">
             Despesa total:
             {saveExchangeRates.reduce((acc, curr) => {
               acc += curr;
@@ -30,7 +30,7 @@ class Wallet extends React.Component {
             }, 0)}
             &nbsp;
             <span data-testid="header-currency-field">BRL</span>
-          </h5>
+          </h3>
         </header>
         <div className="walletBodyContainer">
           <section className="walletBody">
