@@ -98,7 +98,7 @@ class ExpenseForm extends React.Component {
             value={ currency }
             data-testid="currency-input"
             id="currency-input"
-            name="currency"
+            name="currency-input"
             onChange={ this.handleChange }
           >
             {currencies.map((coin) => (
