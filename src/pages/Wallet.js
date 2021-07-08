@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { fetchAPI, getExpenses, fetchNewCurr } from '../actions';
 import Header from '../components/Header';
+import TableExpenses from '../components/TableExpenses';
 
 class Wallet extends React.Component {
   constructor() {
@@ -28,6 +29,22 @@ class Wallet extends React.Component {
     this.setState({
       [name]: value,
     });
+  }
+
+  buttonExpenses() {
+    const { dispatchExpenses, fetchNew } = this.props;
+    return (
+      <button
+        type="button"
+        onClick={ () => {
+          fetchNew();
+          dispatchExpenses(this.state);
+          this.setState((prev) => ({ id: prev.id + 1 }));
+        } }
+      >
+        Adicionar despesa
+      </button>
+    );
   }
 
   labelValueDescription() {
@@ -90,7 +107,7 @@ class Wallet extends React.Component {
 
   render() {
     const {
-      stateCurrencies, stateIsLoading, dispatchExpenses, fetchNew } = this.props;
+      stateCurrencies, stateIsLoading } = this.props;
     const { currency } = this.state;
     if (stateIsLoading) {
       return (
@@ -125,16 +142,8 @@ class Wallet extends React.Component {
           </label>
           {this.labelmethodTag()}
         </form>
-        <button
-          type="button"
-          onClick={ () => {
-            fetchNew();
-            dispatchExpenses(this.state);
-            this.setState((prev) => ({ id: prev.id + 1 }));
-          } }
-        >
-          Adicionar despesa
-        </button>
+        {this.buttonExpenses()}
+        <TableExpenses />
       </>
     );
   }
@@ -154,11 +163,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Wallet.propTypes = {
-  stateCurrencies: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
-  stateIsLoading: PropTypes.bool.isRequired,
   dispatchCurrencies: PropTypes.func.isRequired,
   dispatchExpenses: PropTypes.func.isRequired,
   fetchNew: PropTypes.func.isRequired,
+  stateCurrencies: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
+  stateIsLoading: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
