@@ -5,9 +5,9 @@ import Login from './pages/Login';
 function App() {
   const history = useHistory();
   return (
-  <div>
-    <Login history={history} />
-  </div>
+    <div>
+      <Login history={ history } />
+    </div>
   );
 }
 
