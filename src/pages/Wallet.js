@@ -29,7 +29,8 @@ class Wallet extends React.Component {
             <select id="input-select-coin">
               {
                 Object.keys(currencyApi).map((coin, index) => (
-                  <option key={ index } value={ coin }>{coin}</option>
+                  coin !== 'USDT' ? <option key={ index } value={ coin }>{coin}</option>
+                    : null
                 ))
               }
             </select>
