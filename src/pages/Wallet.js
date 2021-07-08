@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchPosts } from '../actions';
+import Table from '../components/Table';
 
 class Wallet extends Component {
   constructor(props) {
@@ -116,6 +117,7 @@ class Wallet extends Component {
         </header>
         { this.form() }
         <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
+        <Table />
       </div>
     );
   }
@@ -134,7 +136,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 Wallet.propTypes = {
   email: PropTypes.string,
-  expenses: PropTypes.expenses,
+  expenses: PropTypes.array,
   loading: PropTypes.bool,
   dispatchFetchPosts: PropTypes.func,
 }.isRequired;
