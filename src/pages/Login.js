@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
   constructor() {
-    super ();
-
+    super();
     this.handleChange = this.handleChange.bind(this);
 
     this.state = {
@@ -21,7 +20,6 @@ class Login extends React.Component {
   emailValidation() {
     const { email, password } = this.state;
     const carValid = /\S+@\S+\.\S+/;
-    //fonte: https://www.horadecodar.com.br/2020/09/07/expressao-regular-para-validar-e-mail-javascript-regex/
     const limitNumber = 6;
     if (carValid.test(email) && password.length >= limitNumber) {
       return false;
@@ -40,21 +38,20 @@ class Login extends React.Component {
           name="email"
           value={ email }
           placeholder="Digite aqui o seu e-mail"
-          onChange= { this.handleChange }
+          onChange={ this.handleChange }
         />
         <input
           data-testid="password-input"
           type="password"
           name="password"
-          value= { password }
-          onChange= { this.handleChange }
+          value={ password }
+          onChange={ this.handleChange }
           placeholder="Senha"
         />
         <Link to="/carteira">
           <button
             type="button"
             disabled={ this.emailValidation() }
-            //onClick={  }
           >
             Entrar
           </button>
