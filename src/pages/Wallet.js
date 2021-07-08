@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchCoin } from '../actions';
+import { fetchCoin, removeDescription } from '../actions';
 import Form from './Form';
 import Table from './Table';
 
@@ -12,7 +12,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, coins, funcCoins, expenses } = this.props;
+    const { email, coins, funcCoins, expenses, removeFuncDescription } = this.props;
     const spent = expenses.reduce((acc, { exchangeRates, currency, value }) => (
       acc + (Number((exchangeRates[currency].ask * value)))
     ), 0);
@@ -25,7 +25,7 @@ class Wallet extends React.Component {
           <p><span data-testid="header-currency-field">BRL</span></p>
         </header>
         <Form coins={ coins } funcCoins={ funcCoins } expenses={ expenses } />
-        <Table expenses={ expenses } />
+        <Table expenses={ expenses } removeFuncDescription={ removeFuncDescription } />
       </div>
     );
   }
@@ -39,6 +39,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   funcCoins: (state) => dispatch(fetchCoin(state)),
+  removeFuncDescription: (id) => dispatch(removeDescription(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

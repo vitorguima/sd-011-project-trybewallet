@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default class Table extends Component {
   render() {
-    const { expenses } = this.props;
+    const { expenses, removeFuncDescription } = this.props;
     return (
       <div>
         <table>
@@ -34,7 +34,15 @@ export default class Table extends Component {
                   * value.value).toFixed(2))}
                 </td>
                 <td>Real</td>
-                <button type="button">Editar/Excluir</button>
+                <td>
+                  <button
+                    data-testid="delete-btn"
+                    type="button"
+                    onClick={ () => removeFuncDescription(value.id) }
+                  >
+                    Excluir
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
