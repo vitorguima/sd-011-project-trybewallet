@@ -9,7 +9,7 @@ class FormAddValue extends Component {
     this.state = {
       id: 0,
       value: '0',
-      item: '',
+      description: '',
       currency: 'USD',
       method: 'dinheiro',
       tag: 'alimentação',
@@ -37,7 +37,7 @@ class FormAddValue extends Component {
     newItem(this.state);
     this.setState({
       value: 0,
-      item: '',
+      description: '',
       currency: 'USD',
       method: 'dinheiro',
       tag: 'alimentação',
@@ -56,7 +56,12 @@ class FormAddValue extends Component {
         </label>
         <label htmlFor="description">
           Descrição:
-          <input type="text" id="item" onChange={ this.handleChange } name="item" />
+          <input
+            id="description"
+            type="text"
+            onChange={ this.handleChange }
+            name="description"
+          />
         </label>
         <label htmlFor="currency">
           Moeda:
@@ -85,12 +90,7 @@ class FormAddValue extends Component {
             <option value="saúde">Saúde</option>
           </select>
         </label>
-        <button
-          type="reset"
-          onClick={ this.addItem }
-        >
-          Adicionar despesa
-        </button>
+        <button type="reset" onClick={ this.addItem }>Adicionar despesa</button>
       </form>
     );
   }
