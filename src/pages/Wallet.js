@@ -1,66 +1,75 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchAPI } from '../actions';
+import { fetchAPI, newExpense } from '../actions';
+import Valor from '../components/Valor';
+import Descricao from '../components/Descricao';
+import Moeda from '../components/Moeda';
+import Pagamento from '../components/Pagamento';
+import Tag from '../components/Tag';
 
 class Wallet extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     currencies: [],
-  //   };
-  // }
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: '',
+      description: '',
+      currency: '',
+      method: '',
+      tag: '',
+      id: 0,
+      totalExpenses: 0,
+    };
+    this.handleInput = this.handleInput.bind(this);
+    this.addExpense = this.addExpense.bind(this);
+  }
 
   componentDidMount() {
     const { setCurrencies } = this.props;
     setCurrencies();
   }
 
+  handleInput({ target }) {
+    const { name, value } = target;
+    this.setState({ [name]: value });
+  }
+
+  addExpense() {
+    const { value, description, currency, method, tag, id, totalExpenses } = this.state;
+    const { setNewExpenses, setCurrencies, allCurrencies } = this.props;
+    const expense = { id, value, description, currency, method, tag };
+    setCurrencies();
+    expense.exchangeRates = allCurrencies;
+    setNewExpenses(expense);
+    this.setState({
+      totalExpenses: totalExpenses + (value * expense.exchangeRates[currency].ask),
+      id: id + 1,
+    });
+  }
+
   render() {
     const { userEmail, allCurrencies } = this.props;
-    const currencies = Object.keys(allCurrencies).filter((currency) => currency !== 'USDT'
-     && currency !== 'DOGE');
+    const { value, description, currency, method, tag, totalExpenses } = this.state;
+    const currencies = Object.keys(allCurrencies).filter((element) => element !== 'USDT'
+     && element !== 'DOGE');
     return (
       <div>
         <header>
           <strong data-testid="email-field">{userEmail}</strong>
-          <p data-testid="total-field">0</p>
+          <p data-testid="total-field">{totalExpenses}</p>
           <p data-testid="header-currency-field">BRL</p>
         </header>
         <form>
-          <label htmlFor="value">
-            Valor:
-            <input type="text" name="value" id="value" value="0" />
-          </label>
-          <label htmlFor="description">
-            Descrição:
-            <input type="text" id="description" name="description" />
-          </label>
-          <label htmlFor="currency">
-            Moeda:
-            <select id="currency" name="currency" value="BRL">
-              { currencies.map((currency,
-                index) => <option key={ index } value={ currency }>{currency}</option>)}
-            </select>
-          </label>
-          <label htmlFor="payment">
-            Método de pagamento:
-            <select id="payment" name="payment" value="dinheiro">
-              <option value="dinheiro">Dinheiro</option>
-              <option value="crédito">Cartão de crédito</option>
-              <option value="débito">Cartão de débito</option>
-            </select>
-          </label>
-          <label htmlFor="tag">
-            Tag:
-            <select name="tag" id="tag">
-              <option value="alimentação">Alimentação</option>
-              <option value="lazer">Lazer</option>
-              <option value="trabalho">Trabalho</option>
-              <option value="transporte">Transporte</option>
-              <option value="saúde">Saúde</option>
-            </select>
-          </label>
+          <Valor value={ value } handleInput={ this.handleInput } />
+          <Descricao description={ description } handleInput={ this.handleInput } />
+          <Moeda
+            currency={ currency }
+            currencies={ currencies }
+            handleInput={ this.handleInput }
+          />
+          <Pagamento method={ method } handleInput={ this.handleInput } />
+          <Tag tag={ tag } handleInput={ this.handleInput } />
+          <button type="button" onClick={ this.addExpense }>Adicionar despesa</button>
         </form>
       </div>
     );
@@ -74,6 +83,7 @@ const MapStateToProps = (state) => ({
 
 const MapDispatchToProps = (dispatch) => ({
   setCurrencies: () => dispatch(fetchAPI()),
+  setNewExpenses: (expense) => dispatch(newExpense(expense)),
 });
 
 Wallet.propTypes = {
