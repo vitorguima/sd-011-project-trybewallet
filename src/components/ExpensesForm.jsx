@@ -1,7 +1,31 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-export default class ExpensesForm extends Component {
+class ExpensesForm extends Component {
+  constructor(props) {
+    super(props);
+    const { currencies } = props;
+    console.log(props);
+
+    this.state = {
+      currency: [...currencies],
+    };
+    this.handleState = this.handleState.bind(this);
+  }
+
+  componentDidMount() {
+    this.handleState();
+  }
+
+  handleState() {
+    const { currencies } = this.props;
+    this.setState(() => ({
+      currency: [...currencies],
+    }));
+  }
+
   render() {
+    const { currency } = this.state;
     return (
       <form>
         <label htmlFor="value">
@@ -15,7 +39,9 @@ export default class ExpensesForm extends Component {
         <label htmlFor="currency-selector">
           Moeda
           <select name="currencySelector" id="currency-selector">
-            <option value="">Empty</option>
+            {currency.map(({ code }) => (
+              <option key={ code } value={ code }>{ code }</option>
+            ))}
           </select>
         </label>
         <label htmlFor="payment-method">
@@ -40,3 +66,9 @@ export default class ExpensesForm extends Component {
     );
   }
 }
+
+ExpensesForm.propTypes = ({
+  currencies: PropTypes.arrayOf(PropTypes.object).isRequired,
+});
+
+export default ExpensesForm;
