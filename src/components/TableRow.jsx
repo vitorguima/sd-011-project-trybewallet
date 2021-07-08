@@ -53,7 +53,7 @@ export default class TableRow extends Component {
         <td>{currency}</td>
         <td>{cambio}</td>
         <td>{convertedValue}</td>
-        <td>Real brasileiro</td>
+        <td>Real</td>
       </tr>
     );
   }
