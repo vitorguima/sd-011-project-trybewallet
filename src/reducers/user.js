@@ -7,7 +7,7 @@ const INITIAL_STATE = {
 const user = (state = INITIAL_STATE, { type, payload }) => {
   switch (type) {
   case SET_FORM:
-    return { email: payload };
+    return { ...state, email: payload };
   default:
     return state;
   }

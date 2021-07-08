@@ -1,15 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Form({ handleSubmit, handleChange, inputForm, isValidated }) {
+function Form({ handleSubmit, handleChange, inputForm }) {
   return (
     <section>
-      <form onSubmit={ handleSubmit }>
+      <form className="login-form" onSubmit={ handleSubmit }>
         <input
           data-testid="email-input"
           name="email"
+          type="email"
           onChange={ handleChange }
           value={ inputForm.email }
+          required
         />
         <input
           data-testid="password-input"
@@ -17,9 +19,12 @@ function Form({ handleSubmit, handleChange, inputForm, isValidated }) {
           name="password"
           onChange={ handleChange }
           value={ inputForm.password }
+          required
+          pattern=".{6,}"
+          title="A senha minima deve ter pelo menos 6 caracteres"
         />
-        <button disabled={ isValidated } type="submit">
-          <span>Entrar</span>
+        <button className="submit-button" disabled type="submit">
+          Entrar
         </button>
       </form>
     </section>
@@ -31,7 +36,6 @@ export default Form;
 Form.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
-  isValidated: PropTypes.bool.isRequired,
   inputForm: PropTypes.shape({
     password: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
