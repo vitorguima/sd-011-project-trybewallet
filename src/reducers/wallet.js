@@ -1,5 +1,7 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 
+export const ADD_EXPENSE = 'add-exp';
+
 const INITIAL = {
   currencies: [],
   expenses: [],
@@ -7,8 +9,12 @@ const INITIAL = {
 
 const wallet = (state = INITIAL, action) => {
   switch (action.type) {
-  case '1':
-    return;
+  case ADD_EXPENSE:
+    console.log(action);
+    return {
+      ...state,
+      expenses: [...state.expenses, action.payload],
+    };
   case '2':
     return;
   default:
