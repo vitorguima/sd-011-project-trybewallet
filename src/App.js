@@ -7,10 +7,10 @@ function App() {
   return (
     <main>
       <div>Hello, TrybeWallet!!!</div>
-      <switch>
+      <Switch>
         <Route exact path="/" component={ Login } />
         <Route exact path="/carteira" component={ Wallet } />
-      </switch>
+      </Switch>
     </main>
   );
 }

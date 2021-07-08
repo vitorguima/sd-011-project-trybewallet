@@ -5,13 +5,13 @@ const INITIAL_STATE = {
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
-  switch (actioin.type) {
-    case 'Login':
-      return {
-        ...state,
-        users: { email: action.payload },
-      };
-    default:
+  switch (action.type) {
+  case 'Login':
+    return {
+      ...state,
+      users: { email: action.payload },
+    };
+  default:
       return state;
   }
 };
