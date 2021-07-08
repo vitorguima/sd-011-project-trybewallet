@@ -4,35 +4,48 @@ import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 
+import getCurrency from '../services/Index';
+
+import { dispatchExpense } from '../actions/index';
+
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      nextId: 0,
       value: 0,
       description: '',
-      currency: 'brl',
-      tag: 'food',
-      payment: 'credit',
-      currencies: [],
+      currency: 'USD',
+      tag: 'Lazer',
+      payment: 'Cartão de crédito',
+      currencies: {},
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.renderHeader = this.renderHeader.bind(this);
     this.renderSelects = this.renderSelects.bind(this);
     this.renderForm = this.renderForm.bind(this);
-    this.getCurrency = this.getCurrency.bind(this);
+    this.handleCurrencies = this.handleCurrencies.bind(this);
     this.renderCurrencyOptions = this.renderCurrencyOptions.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.sumExpenses = this.sumExpenses.bind(this);
   }
 
-  componentDidMount() {
-    this.getCurrency();
+  async componentDidMount() {
+    await this.handleCurrencies();
   }
 
-  async getCurrency() {
-    const URL = 'https://economia.awesomeapi.com.br/json/all';
-    const response = await fetch(URL);
-    const data = await response.json();
+  handleSubmit(expense) {
+    const { dispatchExpenses } = this.props;
+
+    this.setState((state) => ({
+      nextId: state.nextId + 1,
+    }), () => dispatchExpenses(expense));
+  }
+
+  async handleCurrencies() {
+    const data = await getCurrency();
     this.setState((state) => ({
       currencies: {
         ...state.currencies,
@@ -43,18 +56,31 @@ class Wallet extends React.Component {
 
   handleChange({ target }) {
     const { name, value } = target;
+
     this.setState(() => ({
       [name]: value,
     }));
   }
 
+  sumExpenses(expenses) {
+    if (expenses.length) {
+      return (expenses
+        .reduce(
+          (a, b) => a + (Number(b.value) * Number(b.exchangeRates[b.currency].ask)), 0,
+        ));
+    }
+  }
+
   renderHeader(email) {
+    const { expenses } = this.props;
     return (
       <header>
         <p data-testid="email-field">
           { email }
         </p>
-        <p data-testid="total-field">0</p>
+        <p data-testid="total-field">
+          { expenses.length ? this.sumExpenses(expenses) : 0}
+        </p>
         <p data-testid="header-currency-field">BRL</p>
       </header>
     );
@@ -96,9 +122,9 @@ class Wallet extends React.Component {
             value={ payment }
             onChange={ this.handleChange }
           >
-            <option value="credit">Cartão de Crédito</option>
-            <option value="debit">Cartão de Débito</option>
-            <option value="cash">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de Crédito</option>
+            <option value="Cartão de débito">Cartão de Débito</option>
+            <option value="Dinheiro">Dinheiro</option>
           </select>
         </label>
       </>
@@ -107,7 +133,7 @@ class Wallet extends React.Component {
 
   renderForm(value, description, currency, payment) {
     return (
-      <form>
+      <>
         <label htmlFor="value">
           Valor
           <input
@@ -129,32 +155,42 @@ class Wallet extends React.Component {
           />
         </label>
         {this.renderSelects(currency, payment)}
-      </form>
+      </>
     );
   }
 
   render() {
     const { email } = this.props;
-    const { value, description, currency, tag, payment } = this.state;
+    const { nextId, value, description, currency, tag, payment } = this.state;
+    const expense = { nextId, value, description, currency, tag, payment };
+
     return (
       <div className="wallet-wrapper">
-        {this.renderHeader(email)}
-        {this.renderForm(value, description, currency, payment)}
-        <label htmlFor="tag">
-          Tag
-          <select
-            id="tag"
-            name="tag"
-            value={ tag }
-            onChange={ this.handleChange }
+        <form>
+          {this.renderHeader(email)}
+          {this.renderForm(value, description, currency, payment)}
+          <label htmlFor="tag">
+            Tag
+            <select
+              id="tag"
+              name="tag"
+              value={ tag }
+              onChange={ this.handleChange }
+            >
+              <option defaultValue="eating">Alimentação</option>
+              <option value="Lazer">Lazer</option>
+              <option value="Trabalho">Trabalho</option>
+              <option value="Transporte">Transporte</option>
+              <option value="Saúde">Saúde</option>
+            </select>
+          </label>
+          <button
+            type="button"
+            onClick={ () => this.handleSubmit(expense) }
           >
-            <option selected value="eating">Alimentação</option>
-            <option value="fun">Lazer</option>
-            <option value="work">Trabalho</option>
-            <option value="transport">Transporte</option>
-            <option value="health">Saúde</option>
-          </select>
-        </label>
+            Adicionar despesa
+          </button>
+        </form>
       </div>
     );
   }
@@ -162,10 +198,39 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  expenses: state.wallet.expenses,
 });
 
-export default connect(mapStateToProps)(Wallet);
+const mapDispatchToProps = (dispatch) => ({
+  dispatchExpenses: (expense) => dispatch(dispatchExpense(expense)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
-};
+  expenses: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      value: PropTypes.string,
+      description: PropTypes.string,
+      currency: PropTypes.string,
+      method: PropTypes.string,
+      tag: PropTypes.string,
+      exchangeRates: PropTypes.shape({
+        ask: PropTypes.string,
+        bid: PropTypes.string,
+        code: PropTypes.string,
+        codein: PropTypes.string,
+        create_date: PropTypes.string,
+        high: PropTypes.string,
+        low: PropTypes.string,
+        name: PropTypes.string,
+        pctChange: PropTypes.string,
+        timestamp: PropTypes.string,
+        varBid: PropTypes.string,
+      }).isRequired,
+    }),
+  ),
+  dispatchEpenses: PropTypes.func,
+}.isRequired;
