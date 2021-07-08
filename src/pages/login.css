@@ -53,14 +53,14 @@ header {
 
 footer {
   align-content: space-around;
-  background-color:  #036b52;
+  background-color: #036b52;
   bottom: 0;
   color: white;
   display: flex;
   flex-wrap: wrap;
-  left: 0;
   height: 40px;
   justify-content: center;
+  left: 0;
   position: absolute;
   width: 100%;
 }
