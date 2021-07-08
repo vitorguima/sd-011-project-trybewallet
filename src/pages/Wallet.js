@@ -1,19 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { fetchApiRequest } from '../actions';
+import HeaderWallet from './HeaderWallet';
 
 class Wallet extends React.Component {
+  componentDidMount() {
+    const { FetchApi } = this.props;
+    FetchApi();
+  }
+
   render() {
-    const { emailState } = this.props;
+    const { currencyApi } = this.props;
     return (
       <>
-        <header>
-          <h3 data-testid="email-field">
-            {emailState}
-          </h3>
-          <p data-testid="header-currency-field">BRL</p>
-          <p data-testid="total-field">0</p>
-        </header>
+        <HeaderWallet />
         <form>
           <label htmlFor="input-valor">
             Valor
@@ -26,7 +27,11 @@ class Wallet extends React.Component {
           <label htmlFor="input-select-coin">
             Moeda
             <select id="input-select-coin">
-              <option valor="xablau">xablau</option>
+              {
+                Object.keys(currencyApi).map((coin, index) => (
+                  <option key={ index } value={ coin }>{coin}</option>
+                ))
+              }
             </select>
           </label>
           <label htmlFor="input-select-method">
@@ -54,10 +59,15 @@ class Wallet extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  emailState: state.user.email });
+  currencyApi: state.wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  FetchApi: (state) => dispatch(fetchApiRequest(state)) });
 
 Wallet.propTypes = {
-  emailState: PropTypes.string.isRequired,
+  FetchApi: PropTypes.func.isRequired,
+  currencyApi: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-export default connect(mapStateToProps, null)(Wallet);
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
