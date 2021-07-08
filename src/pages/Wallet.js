@@ -87,7 +87,7 @@ class Wallet extends React.Component {
       * expense.exchangeRates[expense.currency].ask)).toFixed(2);
   }
 
-  // // Função criada para setar os valores a serem editados
+  // Função criada para setar os valores a serem editados no state do componente e ativar o modo de edição
   editMode({ currency, description, exchangeRates, id, method, tag, value }) {
     const { activeEditMode } = this.props;
     activeEditMode();
@@ -96,6 +96,7 @@ class Wallet extends React.Component {
     });
   }
 
+  // Função criada para salvar na store as edições feitas no gasto e desativar o modo de edição
   editOnClick() {
     const { del, save, desactiveEditMode } = this.props;
     const { value, description, currency, method, tag, id, exchangeRates } = this.state;
@@ -132,7 +133,7 @@ class Wallet extends React.Component {
         <table className="table">
           <HeaderList />
           <tbody>
-            {total.map((expense, index) => (
+            {[...total.sort((a, b) => a.id - b.id)].map((expense, index) => (
               <tr key={ index } className="line">
                 <td className="column">{expense.description}</td>
                 <td className="column">{expense.tag}</td>

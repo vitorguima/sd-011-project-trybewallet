@@ -16,7 +16,6 @@ class SeCurrency extends Component {
           onChange={ handle }
         >
           {currencies
-            .filter((item) => item !== 'USDT')
             .map((item, index) => (
               <option value={ item } key={ index }>{item}</option>))}
         </select>
