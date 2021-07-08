@@ -31,7 +31,7 @@ class TableRow extends Component {
         <td>{tag}</td>
         <td>{method}</td>
         <td>{value}</td>
-        <td>{currency}</td>
+        <td>{exchangeRates[currency].name.split('/')[0]}</td>
         <td>{parseFloat(exchangeRates[currency].ask).toFixed(2)}</td>
         <td>{parseFloat(value * exchangeRates[currency].ask).toFixed(2)}</td>
         <td>Real</td>

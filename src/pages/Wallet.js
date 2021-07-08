@@ -19,16 +19,25 @@ class Wallet extends React.Component {
       method: '',
       tag: '',
       id: 0,
-      totalExpenses: 0,
     };
     this.handleInput = this.handleInput.bind(this);
     this.addExpense = this.addExpense.bind(this);
+    // this.updateExpenses = this.updateExpenses.bind(this);
   }
 
   componentDidMount() {
     const { setCurrencies } = this.props;
     setCurrencies();
+    // this.updateExpenses();
   }
+
+  // updateExpenses() {
+  //   const { expenses } = this.props;
+  //   const total = expenses.reduce((acc, curr) => acc.value + curr.value, 0);
+  //   this.setState({
+  //     totalExpenses: total,
+  //   });
+  // }
 
   handleInput({ target }) {
     const { name, value } = target;
@@ -36,21 +45,22 @@ class Wallet extends React.Component {
   }
 
   addExpense() {
-    const { value, description, currency, method, tag, id, totalExpenses } = this.state;
+    const { value, description, currency, method, tag, id } = this.state;
     const { setNewExpenses, setCurrencies, allCurrencies } = this.props;
     const expense = { id, value, description, currency, method, tag };
     setCurrencies();
     expense.exchangeRates = allCurrencies;
     setNewExpenses(expense);
     this.setState({
-      totalExpenses: totalExpenses + (value * expense.exchangeRates[currency].ask),
       id: id + 1,
     });
   }
 
   render() {
-    const { userEmail, allCurrencies } = this.props;
-    const { value, description, currency, method, tag, totalExpenses } = this.state;
+    const { userEmail, allCurrencies, expenses } = this.props;
+    const { value, description, currency, method, tag } = this.state;
+    const totalExpenses = expenses.reduce((acc,
+      curr) => acc + (curr.value * curr.exchangeRates[curr.currency].ask), 0);
     const currencies = Object.keys(allCurrencies).filter((element) => element !== 'USDT'
      && element !== 'DOGE');
     return (
@@ -81,6 +91,7 @@ class Wallet extends React.Component {
 const MapStateToProps = (state) => ({
   userEmail: state.user.email,
   allCurrencies: state.wallet.currencies,
+  expenses: state.wallet.expenses,
 });
 
 const MapDispatchToProps = (dispatch) => ({

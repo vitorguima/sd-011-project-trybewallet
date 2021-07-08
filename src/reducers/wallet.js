@@ -11,9 +11,15 @@ const wallet = (state = INITIAL_STATE, { type, payload }) => {
   case ADD_CURRENCY:
     return { ...state, currencies: payload };
   case ADD_EXPENSE:
-    return { ...state, expenses: [...state.expenses, payload] };
+    return {
+      ...state,
+      expenses: [...state.expenses, payload],
+    };
   case REMOVE_EXPENSE:
-    return { ...state, expenses: state.expenses.filter((e) => e.id !== payload) };
+    return {
+      ...state,
+      expenses: state.expenses.filter((e) => e.id !== payload),
+    };
   default:
     return state;
   }
