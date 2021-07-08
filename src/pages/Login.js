@@ -65,38 +65,40 @@ class Login extends React.Component {
   render() {
     const { disable, error, redirect } = this.state;
     return (
-      <form>
-        <input
-          type="email"
-          style={ { display: 'block' } }
-          data-testid="email-input"
-          placeholder="Email"
-          onChange={ this.handleChangeEmail }
-          onBlur={ this.handleOnBlur }
-          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-          title="Informe um email válido."
-        />
-        <input
-          type="password"
-          style={ { display: 'block' } }
-          data-testid="password-input"
-          placeholder="Password"
-          onChange={ this.handleChangePassword }
-          onBlur={ this.handleOnBlur }
-          pattern=".{6,}"
-          title="A senha deve ter, ao menos, 9 caracteres."
-        />
-        <p>{error !== null ? error : null}</p>
-        <button
-          type="button"
-          disabled={ disable }
-          className={ styles.button }
-          onClick={ this.handleClick }
-        >
-          Entrar
-        </button>
-        {redirect && <Redirect to="/carteira" />}
-      </form>
+      <section>
+        <form>
+          <input
+            type="email"
+            style={ { display: 'block' } }
+            data-testid="email-input"
+            placeholder="Email"
+            onChange={ this.handleChangeEmail }
+            onBlur={ this.handleOnBlur }
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+            title="Informe um email válido."
+          />
+          <input
+            type="password"
+            style={ { display: 'block' } }
+            data-testid="password-input"
+            placeholder="Password"
+            onChange={ this.handleChangePassword }
+            onBlur={ this.handleOnBlur }
+            pattern=".{6,}"
+            title="A senha deve ter, ao menos, 9 caracteres."
+          />
+          <p>{error !== null ? error : null}</p>
+          <button
+            type="button"
+            disabled={ disable }
+            className={ styles.button }
+            onClick={ this.handleClick }
+          >
+            Entrar
+          </button>
+          {redirect && <Redirect to="/carteira" />}
+        </form>
+      </section>
     );
   }
 }
