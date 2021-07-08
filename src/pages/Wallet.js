@@ -23,6 +23,7 @@ class Wallet extends React.Component {
     this.totalPrice = this.totalPrice.bind(this);
     this.renderButton = this.renderButton.bind(this);
     this.renderGenInpt = this.renderGenInpt.bind(this);
+    this.renderTable = this.renderTable.bind(this);
   }
 
   async componentDidMount() {
@@ -82,6 +83,47 @@ class Wallet extends React.Component {
     return <input type={ type } name={ name } id={ id } onChange={ this.changeState } />;
   }
 
+  renderTable() {
+    const { expenses } = this.props;
+    const ths = [
+      'Descrição',
+      'Tag',
+      'Método de pagamento',
+      'Valor',
+      'Moeda',
+      'Câmbio utilizado',
+      'Valor convertido',
+      'Moeda de conversão',
+      'Editar/Excluir'];
+    return (
+      <table>
+        <thead>
+          <tr>
+            { ths.map((word) => <th key={ word }>{ word }</th>) }
+          </tr>
+        </thead>
+        <tbody>
+          {expenses.map((expense) => {
+            const { name, ask } = expense.exchangeRates[expense.currency];
+            return (
+              <tr key={ expense.id }>
+                <td>{ expense.description }</td>
+                <td>{ expense.tag }</td>
+                <td>{ expense.method }</td>
+                <td>{ parseFloat(expense.value) }</td>
+                <td>{ name.split('/')[0] }</td>
+                <td>{ (parseFloat(ask)).toFixed(2) }</td>
+                <td>{ (parseFloat(ask) * parseFloat(expense.value)).toFixed(2) }</td>
+                <td>Real</td>
+                <td>Editar/Excluir</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    );
+  }
+
   render() {
     const { email } = this.props;
     const { currencies } = this.state;
@@ -127,6 +169,7 @@ class Wallet extends React.Component {
           </label>
           { this.renderButton() }
         </form>
+        { this.renderTable() }
       </div>
     );
   }
