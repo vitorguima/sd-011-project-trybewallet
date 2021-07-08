@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchApi } from '../actions';
 import LabelForm from '../components/LabelForm';
+import Table from '../components/Table';
 
 class Wallet extends React.Component {
   componentDidMount() {
@@ -29,6 +30,7 @@ class Wallet extends React.Component {
 
         </header>
         <LabelForm coins={ coins } getApi={ getApi } expenses={ expenses } />
+        <Table />
       </>
     );
   }
