@@ -56,9 +56,8 @@ class FormAddValue extends Component {
         </label>
         <label htmlFor="description">
           Descrição:
-          <input
+          <textarea
             id="description"
-            type="text"
             onChange={ this.handleChange }
             name="description"
           />
