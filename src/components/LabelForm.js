@@ -40,7 +40,7 @@ export default class LabelForm extends Component {
           Tag
           <select id="Tag">
             <option value="food"> Alimentação </option>
-            <option > Lazer </option>
+            <option> Lazer </option>
             <option> Trabalho </option>
             <option> Transporte </option>
             <option> Saúde </option>
