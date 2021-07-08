@@ -1,7 +1,13 @@
-/* eslint-disable max-lines-per-function */
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import {
+  expenses,
+  description,
+  currency,
+  paymentMethod,
+  category,
+} from '../walletComponents/walletElements';
 
 class Wallet extends React.Component {
   render() {
@@ -17,43 +23,11 @@ class Wallet extends React.Component {
           <p data-testid="header-currency-field">BRL</p>
         </section>
         <form>
-          <label htmlFor="expenses">
-            Valor
-            <input id="expenses" type="number" />
-          </label>
-          {/*  */}
-          <label htmlFor="description">
-            Descrição
-            <input id="description" />
-          </label>
-          {/*  */}
-          <label htmlFor="currency">
-            Moeda
-            <select id="currency">
-              <option>a</option>
-            </select>
-          </label>
-          {/*  */}
-          <label htmlFor="payment-method">
-            Método de pagamento
-            <select id="payment-method">
-              <option>Dinheiro</option>
-              <option>Cartão de crédito</option>
-              <option>Cartão de débito</option>
-            </select>
-          </label>
-          {/*  */}
-          <label htmlFor="category">
-            Tag
-            <select id="category">
-              <option>Alimentação</option>
-              <option>Lazer</option>
-              <option>Trabalho</option>
-              <option>Transporte</option>
-              <option>Saúde</option>
-            </select>
-          </label>
-          {/*  */}
+          {expenses()}
+          {description()}
+          {currency()}
+          {paymentMethod()}
+          {category()}
         </form>
       </div>
     );
