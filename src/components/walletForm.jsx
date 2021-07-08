@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { requestExpense } from '../actions';
+import paymentMethods from '../data/paymentMethods';
+import tags from '../data/tags';
 
 class WalletForm extends React.Component {
   constructor() {
@@ -40,41 +42,43 @@ class WalletForm extends React.Component {
     const { coins } = this.props;
     return (
       <form>
-        <label htmlFor="value"> Valor:</label>
-        <input
-          type="number"
-          id="value"
-          name="value"
-          onChange={ this.handleExpenseFormInputs }
-        />
-        <label htmlFor="description">Descrição:</label>
-        <input
-          type="text"
-          id="description"
-          name="description"
-          onChange={ this.handleExpenseFormInputs }
-        />
-        <label htmlFor="currency">Moeda:</label>
-        <select name="currency" id="currency" onChange={ this.handleExpenseFormInputs }>
-          { coins && coins.map((coin) => (
-            <option key={ coin }>{ coin }</option>)) }
-        </select>
+        <label htmlFor="value">
+          Valor:
+          <input
+            type="number"
+            id="value"
+            name="value"
+            onChange={ this.handleExpenseFormInputs }
+          />
+        </label>
+        <label htmlFor="description">
+          Descrição:
+          <input
+            type="text"
+            id="description"
+            name="description"
+            onChange={ this.handleExpenseFormInputs }
+          />
+        </label>
+        <label htmlFor="currency">
+          Moeda:
+          <select name="currency" id="currency" onChange={ this.handleExpenseFormInputs }>
+            { coins && coins.map((coin) => (
+              <option key={ coin }>{ coin }</option>)) }
+          </select>
+        </label>
         <label htmlFor="method">
           Método de pagamento:
+          <select name="method" id="method" onChange={ this.handleExpenseFormInputs }>
+            { paymentMethods.map((method) => <option key={ method }>{method}</option>) }
+          </select>
         </label>
-        <select name="method" id="method" onChange={ this.handleExpenseFormInputs }>
-          <option>Dinheiro</option>
-          <option>Cartão de crédito</option>
-          <option>Cartão de débito</option>
-        </select>
-        <label htmlFor="tag">Tag:</label>
-        <select name="tag" id="tag" onChange={ this.handleExpenseFormInputs }>
-          <option>Alimentação</option>
-          <option>Lazer</option>
-          <option>Trabalho</option>
-          <option>Transporte</option>
-          <option>Saúde</option>
-        </select>
+        <label htmlFor="tag">
+          Tag:
+          <select name="tag" id="tag" onChange={ this.handleExpenseFormInputs }>
+            { tags.map((tag) => <option key={ tag }>{tag}</option>)}
+          </select>
+        </label>
         <button
           type="button"
           onClick={ () => this.requestExpenseData() }
