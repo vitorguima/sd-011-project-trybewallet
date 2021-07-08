@@ -23,9 +23,7 @@ export function fetchCurrencyQuote(form) {
           exchangeRates = {
             ...exchangeRates,
             [enchanges.code]: {
-              code: enchanges.code,
-              name: enchanges.name,
-              ask: enchanges.ask,
+              ...enchanges,
             },
           };
         });
