@@ -18,6 +18,7 @@ class Login extends React.Component {
 
   emailValid() {
     const { password, email } = this.state;
+    // fonte de onde retirei a ideia da validação do email https://www.horadecodar.com.br/2020/09/07/expressao-regular-para-validar-e-mail-javascript-regex/
     const re = /\S+@\S+\.\S+/;
     const magicNumber = 6;
     if (re.test(email) && password.length >= magicNumber) {
