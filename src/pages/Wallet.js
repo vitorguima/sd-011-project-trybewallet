@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Expenses from '../components/ExpenseForm';
+import Table from '../components/ExpenseTable';
 import { fetchAPI } from '../services/API';
 import { getData } from '../actions';
 
@@ -39,6 +40,7 @@ export default function Wallet() {
         </div>
       </nav>
       <div>{getForm()}</div>
+      <Table />
     </div>
   );
 }
