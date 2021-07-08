@@ -5,48 +5,67 @@ export const REQUEST_CURRENCIES = 'REQUEST_CURRENCIES';
 
 export const RECEIVE_EXPENSE = 'RECEIVE_EXPENSE';
 export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
+export const START_EDIT_EXPENSE = 'START_EDIT_EXPENSE';
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
 
 export const loginUser = (email) => ({
   type: LOG_USER,
   payload: email,
 });
 
-const receiveCurrencies = (payload) => ({
+const receiveCurrencies = (currencies) => ({
   type: RECEIVE_CURRENCIES,
-  payload,
+  payload: currencies,
 });
 
 const requestCurrencies = () => ({
   type: REQUEST_CURRENCIES,
 });
 
+const getCurrencies = () => (
+  fetch('https://economia.awesomeapi.com.br/json/all')
+    .then((data) => (
+      data.json()
+        .then((json) => json)
+    ))
+);
+
 export function fetchCurrencies() {
   return async (dispatch) => {
     dispatch(requestCurrencies());
-    return fetch('https://economia.awesomeapi.com.br/json/all')
+    return getCurrencies()
       .then((data) => {
-        data.json()
-          .then((json) => {
-            dispatch(receiveCurrencies(json));
-          });
+        const moedas = Object.keys(data).filter((moeda) => moeda !== 'USDT');
+        dispatch(receiveCurrencies(moedas));
       });
   };
 }
 
-const receiveExpense = (payload) => ({
+const receiveExpense = (expense) => ({
   type: RECEIVE_EXPENSE,
-  payload,
+  payload: expense,
 });
 
-export const removeExpense = (payload) => ({
+export const removeExpense = (id) => ({
   type: REMOVE_EXPENSE,
-  payload,
+  payload: id,
 });
 
 export function addExpense(payload) {
-  return (dispatch, getState) => {
-    dispatch(fetchCurrencies());
-    const newData = getState().wallet.currencies;
-    dispatch(receiveExpense({ ...payload, exchangeRates: newData }));
-  };
+  return async (dispatch) => (
+    getCurrencies()
+      .then((data) => {
+        dispatch(receiveExpense({ ...payload, exchangeRates: data }));
+      })
+  );
 }
+
+export const starEditExpense = (id) => ({
+  type: START_EDIT_EXPENSE,
+  payload: id,
+});
+
+export const editExpense = (newExpense) => ({
+  type: EDIT_EXPENSE,
+  payload: newExpense,
+});

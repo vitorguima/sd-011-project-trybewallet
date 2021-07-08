@@ -1,10 +1,12 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { fetchCurrencies, addExpense } from '../actions';
+import { fetchCurrencies, addExpense, editExpense } from '../actions';
 
-class ExpenseForm extends PureComponent {
+const food = 'Alimentação';
+
+class ExpenseForm extends Component {
   constructor(props) {
     super(props);
 
@@ -12,17 +14,21 @@ class ExpenseForm extends PureComponent {
 
     this.state = {
       email,
-      value: undefined,
+      value: '',
       description: '',
       currency: 'USD',
       method: 'dinheiro',
-      tag: 'Alimentação',
+      tag: food,
+      startEdit: false,
+      tags: [food, 'Lazer', 'Trabalho', 'Transporte', 'Saúde'],
     };
 
     this.handleInput = this.handleInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.finishEditExpense = this.finishEditExpense.bind(this);
     this.renderSelects = this.renderSelects.bind(this);
     this.totalPrice = this.totalPrice.bind(this);
+    this.editOn = this.editOn.bind(this);
   }
 
   componentDidMount() {
@@ -43,15 +49,45 @@ class ExpenseForm extends PureComponent {
     const { addNewExpense, email } = this.props;
 
     addNewExpense(expense);
+
+    this.setState({
+      email,
+      value: '',
+      description: '',
+      currency: 'USD',
+      method: 'dinheiro',
+      tag: food,
+    });
+    event.preventDefault();
+  }
+
+  finishEditExpense(event) {
+    event.preventDefault();
+    const { value, description, currency, method, tag } = this.state;
+    const { email, editCurrentExpense, currentExpense: {
+      id, exchangeRates,
+    } } = this.props;
+    const expense = { value, description, currency, method, tag, id, exchangeRates };
     this.setState({
       email,
       value: undefined,
       description: '',
       currency: 'USD',
       method: 'dinheiro',
-      tag: 'Alimentação',
-    });
-    event.preventDefault();
+      tag: food,
+      startEdit: false,
+    }, () => editCurrentExpense(expense));
+  }
+
+  editOn() {
+    const { edit, currentExpense } = this.props;
+    const { startEdit } = this.state;
+    if (edit && !startEdit) {
+      this.setState({
+        ...currentExpense,
+        startEdit: true,
+      });
+    }
   }
 
   totalPrice() {
@@ -62,9 +98,8 @@ class ExpenseForm extends PureComponent {
   }
 
   renderSelects() {
-    const { currency, method, tag } = this.state;
+    const { currency, method, tag, tags } = this.state;
     const { currencies } = this.props;
-    const moedas = Object.keys(currencies).filter((item) => item !== 'USDT');
     return (
       <>
         <label htmlFor="currency">
@@ -74,10 +109,10 @@ class ExpenseForm extends PureComponent {
             value={ currency }
             id="currency"
             name="currency"
+            data-testid="currency-input"
           >
-            {moedas.map((currMoeda) => (
-              <option key={ currMoeda } value={ currMoeda }>{currMoeda}</option>
-            ))}
+            {currencies.map((moeda) => (
+              <option key={ moeda } value={ moeda }>{moeda}</option>))}
           </select>
         </label>
         <label htmlFor="method">
@@ -87,6 +122,7 @@ class ExpenseForm extends PureComponent {
             value={ method }
             name="method"
             id="method"
+            data-testid="method-input"
           >
             <option value="Dinheiro">Dinheiro</option>
             <option value="Cartão de crédito">Cartão de crédito</option>
@@ -95,12 +131,15 @@ class ExpenseForm extends PureComponent {
         </label>
         <label htmlFor="tag">
           Tag
-          <select onChange={ this.handleInput } value={ tag } id="tag" name="tag">
-            <option value="Alimentação">Alimentação</option>
-            <option value="Lazer">Lazer</option>
-            <option value="Trabalho">Trabalho</option>
-            <option value="Transporte">Transporte</option>
-            <option value="Saúde">Saúde</option>
+          <select
+            onChange={ this.handleInput }
+            value={ tag }
+            id="tag"
+            name="tag"
+            data-testid="tag-input"
+          >
+            {tags.map((currTag) => (
+              <option key={ currTag } value={ currTag }>{currTag}</option>))}
           </select>
         </label>
       </>
@@ -109,6 +148,8 @@ class ExpenseForm extends PureComponent {
 
   render() {
     const { email, value, description } = this.state;
+    const { edit } = this.props;
+    this.editOn();
     return (
       <>
         <header>
@@ -124,6 +165,7 @@ class ExpenseForm extends PureComponent {
               type="text"
               id="value"
               name="value"
+              data-testid="value-input"
               onChange={ this.handleInput }
             />
           </label>
@@ -134,16 +176,20 @@ class ExpenseForm extends PureComponent {
               type="text"
               id="description"
               name="description"
+              data-testid="description-input"
               onChange={ this.handleInput }
             />
           </label>
           {this.renderSelects()}
-          <button
-            type="submit"
-            onClick={ (event) => this.handleSubmit(event) }
-          >
-            Adicionar despesa
-          </button>
+          {edit
+            ? (
+              <button type="submit" onClick={ this.finishEditExpense }>
+                Editar despesa
+              </button>)
+            : (
+              <button type="submit" onClick={ this.handleSubmit }>
+                Adicionar despesa
+              </button>)}
         </form>
       </>
     );
@@ -154,11 +200,14 @@ const mapStateToProps = (state) => ({
   email: state.user.email,
   currencies: state.wallet.currencies,
   expenses: state.wallet.expenses,
+  edit: state.wallet.edit,
+  currentExpense: state.wallet.currentExpense,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   fetchMoedas: () => dispatch(fetchCurrencies()),
   addNewExpense: (data) => dispatch(addExpense(data)),
+  editCurrentExpense: (expense) => dispatch(editExpense(expense)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpenseForm);
