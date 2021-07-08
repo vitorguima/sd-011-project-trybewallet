@@ -1,20 +1,18 @@
 const INITIAL_STATE = {
-  user: {
-    email: '',
-  },
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
+  currencies: [],
+  expenses: [],
 };
 
-function walletReducer(state = INITIAL_STATE, action) {
+function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case 'NEW_ACTION':
-    return { state: action.state };
+  case 'RECEIVE_COINS':
+    return {
+      ...state,
+      expenses: Object.values(action.coins).filter(({ codein }) => codein !== 'BRLT'),
+    };
   default:
     return state;
   }
 }
 
-export default walletReducer;
+export default wallet;

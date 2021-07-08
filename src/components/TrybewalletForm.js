@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { fetchCoins } from '../actions';
 
 class TrybewalletForm extends React.Component {
   constructor() {
@@ -13,6 +15,11 @@ class TrybewalletForm extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  componentDidMount() {
+    const { dispatch, fetchCoinsAction } = this.props;
+    dispatch(fetchCoinsAction());
+  }
+
   handleChange({ target: { value, name } }) {
     this.setState({
       [name]: value,
@@ -20,6 +27,7 @@ class TrybewalletForm extends React.Component {
   }
 
   render() {
+    const { coins } = this.props;
     return (
       <form className="trybewallet-form">
         <label htmlFor="value">
@@ -40,7 +48,9 @@ class TrybewalletForm extends React.Component {
         <label htmlFor="coin">
           Moeda
           <select name="coin" id="coin" onChange={ this.handleChange }>
-            <option value="brl">BRL</option>
+            { coins.map(({ code }) => (
+              <option key={ code } value={ code }>{ code }</option>
+            )) }
           </select>
         </label>
 
@@ -68,4 +78,19 @@ class TrybewalletForm extends React.Component {
   }
 }
 
-export default connect(null)(TrybewalletForm);
+const mapStateToProps = (state) => ({
+  coins: state.wallet.expenses,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatch,
+  fetchCoinsAction: fetchCoins,
+});
+
+TrybewalletForm.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  fetchCoinsAction: PropTypes.func.isRequired,
+  coins: PropTypes.arrayOf(PropTypes.any).isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TrybewalletForm);
