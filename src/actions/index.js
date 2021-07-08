@@ -16,3 +16,4 @@ export const walletExpenses = (payload) => ({
   type: ACTION_EXPENSES,
   payload,
 });
+
