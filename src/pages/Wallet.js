@@ -7,6 +7,7 @@ import Descricao from '../components/Descricao';
 import Moeda from '../components/Moeda';
 import Pagamento from '../components/Pagamento';
 import Tag from '../components/Tag';
+import Tabela from '../components/Tabela';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -71,6 +72,7 @@ class Wallet extends React.Component {
           <Tag tag={ tag } handleInput={ this.handleInput } />
           <button type="button" onClick={ this.addExpense }>Adicionar despesa</button>
         </form>
+        <Tabela />
       </div>
     );
   }
