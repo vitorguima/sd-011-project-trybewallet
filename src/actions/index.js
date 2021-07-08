@@ -1,5 +1,6 @@
 export const SAVE_EMAIL = 'SAVE_EMAIL';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 
 export const saveEmail = (email) => ({
   type: SAVE_EMAIL,
@@ -21,3 +22,8 @@ export const fetchCurrencies = (payload) => (dispatch) => {
       dispatch(addExpense(payload));
     });
 };
+
+export const removeExpense = (id) => ({
+  type: REMOVE_EXPENSE,
+  id,
+});

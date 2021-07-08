@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { roundCurrency } from '../../helpers/utils';
+import { removeExpense } from '../../actions';
 
 const headers = [
   'Descrição', 'Tag', 'Método de pagamento', 'Valor', 'Moeda', 'Câmbio utilizado',
@@ -14,7 +15,7 @@ class ExpenseTable extends React.Component {
   }
 
   generateTableBody() {
-    const { expenses } = this.props;
+    const { expenses, deleteExpense } = this.props;
 
     return expenses.map((expense, index) => (
       <tr key={ index }>
@@ -28,7 +29,15 @@ class ExpenseTable extends React.Component {
           { roundCurrency(expense.value * expense.exchangeRates[expense.currency].ask) }
         </td>
         <td>Real</td>
-        <td>Buttons</td>
+        <td>
+          <button
+            type="button"
+            onClick={ () => deleteExpense(expense.id) }
+            data-testid="delete-btn"
+          >
+            Deletar
+          </button>
+        </td>
       </tr>
     ));
   }
@@ -49,8 +58,13 @@ const mapStateToProps = ({ wallet: { expenses } }) => ({
   expenses,
 });
 
-export default connect(mapStateToProps)(ExpenseTable);
+const mapDispatchToProps = (dispatch) => ({
+  deleteExpense: (id) => dispatch(removeExpense(id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseTable);
 
 ExpenseTable.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object),
+  deleteExpense: PropTypes.func,
 }.isRequired;
