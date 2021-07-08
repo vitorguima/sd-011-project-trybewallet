@@ -86,7 +86,7 @@ class ExpenseForm extends React.Component {
             <option>Saúde</option>
           </select>
         </label>
-        <button type="button" onClick={ () => sendForm(form) }>Enviar</button>
+        <button type="button" onClick={ () => sendForm(form) }>Adicionar despesa</button>
       </form>
     );
   }
