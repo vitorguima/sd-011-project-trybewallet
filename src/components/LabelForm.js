@@ -13,6 +13,14 @@ export default class LabelForm extends Component {
       tag: 'Alimentacao',
       exchangeRates: {},
     };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange({ target }) {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    });
   }
 
   render() {
@@ -22,15 +30,15 @@ export default class LabelForm extends Component {
       <form>
         <label htmlFor="valor">
           Valor
-          <input type="text" id="valor" name="valor" value={ value } />
+          <input type="text" id="valor" name="value" value={ value } />
         </label>
         <label htmlFor="descrição">
           Descrição
-          <input type="text" id="descrição" name="descrição" value={ description } />
+          <input type="text" id="descrição" name="description" value={ description } />
         </label>
         <label htmlFor="moeda">
           Moeda
-          <select id="moeda" value={ currency }>
+          <select id="moeda" name="currency" value={ currency }>
             {coins.map((coin, key) => (
               <option
                 key={ key }
@@ -42,7 +50,7 @@ export default class LabelForm extends Component {
         </label>
         <label htmlFor="method">
           Método de pagamento
-          <select id="method" value={ method }>
+          <select id="method" name="method" value={ method }>
             <option> Metodo de pagamento! </option>
             <option value="money">Dinheiro </option>
             <option value="creditCard">Cartão de crédito </option>
