@@ -1,6 +1,7 @@
 export const REQUEST_COIN = 'REQUEST_COIN';
 export const REQUEST_COIN_SUCCESS = 'REQUEST_COIN_SUCCESS';
 export const REQUEST_COIN_FAIL = 'REQUEST_COIN_FAIL';
+export const ADD_EXPENSES = 'ADD_EXPENSES';
 
 function getEmail(email) {
   return {
@@ -25,10 +26,15 @@ const requestCoinFail = (payload) => ({
   payload,
 });
 
-export const fetchApi = () => (dispatch) => {
+const addExpenses = (payload) => ({
+  type: ADD_EXPENSES,
+  payload,
+});
+
+export const fetchApi = (param = null) => (dispatch) => {
   dispatch(requestCoin());
   return fetch('https://economia.awesomeapi.com.br/json/all')
     .then((result) => result.json())
-    .then((result) => dispatch(requestCoinSuccess(result)))
+    .then((result) => dispatch(param ? addExpenses(result) : requestCoinSuccess(result)))
     .catch((error) => dispatch(requestCoinFail(error)));
 };
