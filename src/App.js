@@ -1,7 +1,15 @@
 import React from 'react';
+// import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import Routes from './routes';
 
-function App() {
-  return <div>Hello, TrybeWallet!</div>;
+class App extends React.Component {
+  render() {
+    return (
+      <div>
+        <Routes />
+      </div>
+    );
+  }
 }
 
 export default App;
