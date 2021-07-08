@@ -28,7 +28,17 @@ export default class LabelForm extends Component {
   }
 
   handlerClick() {
-
+    const { getApi, expenses } = this.props;
+    getApi(this.state);
+    this.setState({
+      id: expenses.length + 1,
+      value: '',
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentacao',
+      exchangeRates: {},
+    });
   }
 
   selectMethod() {
@@ -93,7 +103,6 @@ export default class LabelForm extends Component {
   }
 
   render() {
-    const { getApi } = this.props;
     const { value, description } = this.state;
     return (
       <form>
@@ -119,7 +128,7 @@ export default class LabelForm extends Component {
         </label>
         {this.select()}
         {this.selectMethod()}
-        <button type="button" onClick={ () => getApi(true) }>Adicionar despesa</button>
+        <button type="button" onClick={ this.handlerClick }>Adicionar despesa</button>
       </form>
     );
   }

@@ -26,9 +26,10 @@ const requestCoinFail = (payload) => ({
   payload,
 });
 
-const addExpenses = (payload) => ({
+const addExpenses = (state, payload) => ({
   type: ADD_EXPENSES,
   payload,
+  state,
 });
 
 export const fetchApi = (state = null) => (dispatch) => {
@@ -36,6 +37,6 @@ export const fetchApi = (state = null) => (dispatch) => {
   return fetch('https://economia.awesomeapi.com.br/json/all')
     .then((result) => result.json())
     .then((result) => dispatch(state
-      ? addExpenses(result) : requestCoinSuccess(result)))
+      ? addExpenses(state, result) : requestCoinSuccess(result)))
     .catch((error) => dispatch(requestCoinFail(error)));
 };
