@@ -11,16 +11,24 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { userEmail, loading } = this.props;
+    const { userEmail, expenses } = this.props;
+    const radix = 10;
     return (
       <div>
         TrybeWallet
         <header>
           <p data-testid="email-field">{`Usuário: ${userEmail}`}</p>
-          <p data-testid="total-field">0</p>
+          <p data-testid="total-field">
+            {(expenses.length === 0) ? 0
+              : expenses.reduce((acc, expense) => (
+                acc + (parseInt(expense.value, radix))
+                * Object.values(expense.exchangeRates).find((cotacao) => (
+                  cotacao.code === expense.currency
+                )).ask), 0)}
+          </p>
           <p data-testid="header-currency-field">BRL</p>
         </header>
-        { (loading) ? <p>Carregando...</p> : <WalletForm />}
+        <WalletForm />
       </div>
     );
   }
@@ -29,6 +37,7 @@ class Wallet extends React.Component {
 const mapStateToProps = (state) => ({
   userEmail: state.user.email,
   loading: state.wallet.isLoading,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -40,5 +49,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 Wallet.propTypes = {
   userEmail: PropTypes.string.isRequired,
   fetchCurrenciesAPI: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
+  expenses: PropTypes.shape({
+    currency: PropTypes.string,
+    length: PropTypes.func,
+    reduce: PropTypes.func,
+  }).isRequired,
 };
