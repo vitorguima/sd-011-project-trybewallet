@@ -1,13 +1,15 @@
 import { LOGIN } from '../actions';
 
 const INITIAL_STATE = {
-  login: false,
+  email: '',
 };
 
 function wasLogged(state = INITIAL_STATE, action) {
   switch (action.type) {
   case LOGIN:
-    return { login: true };
+    return {
+      email: '',
+    };
   default:
     return state;
   }
