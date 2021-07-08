@@ -1,7 +1,24 @@
 import React, { Component } from 'react';
 
 class NewExpenseForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currencyOptions: [],
+    };
+  }
+
+  componentDidMount() {
+    fetch('https://economia.awesomeapi.com.br/json/all')
+      .then((response) => response.json())
+      .then((data) => {
+        const currencyCodes = Object.values(data).map(({ code }) => code);
+        this.setState({ currencyOptions: [...new Set(currencyCodes)] });
+      });
+  }
+
   render() {
+    const { currencyOptions } = this.state;
     return (
       <form>
         <label htmlFor="value-input">
@@ -15,7 +32,11 @@ class NewExpenseForm extends Component {
         <label htmlFor="currency-input">
           Moeda
           <select id="currency-input">
-            <option>BRL</option>
+            {
+              currencyOptions.map((currency) => (
+                <option key={ currency }>{currency}</option>
+              ))
+            }
           </select>
         </label>
         <label htmlFor="método de pagamento">
