@@ -29,10 +29,10 @@ function wallet(state = INITIAL_STATE, action) {
       isLoading: false,
     };
   case ADD_EXPENSES:
-    action.state.exchangeRates = action.state;
+    action.state.exchangeRates = action.payload;
     return {
       ...state,
-      expenses: [...state.expenses, action.payload],
+      expenses: [...state.expenses, action.state],
     };
   default:
     return state;
