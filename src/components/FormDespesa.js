@@ -9,9 +9,9 @@ class FormDespesa extends Component {
     this.state = {
       valor: '',
       descricao: '',
-      moeda: '',
-      metod: '',
-      tag: '',
+      moeda: 'USD',
+      metod: 'Dinheiro',
+      tag: 'Alimentação',
       id: 0,
     };
     this.handleInput = this.handleInput.bind(this);
@@ -111,9 +111,9 @@ class FormDespesa extends Component {
             this.setState((prevState) => ({
               valor: '',
               descricao: '',
-              moeda: '',
-              metod: '',
-              tag: '',
+              moeda: 'USD',
+              metod: 'Dinheiro',
+              tag: 'Alimentação',
               id: prevState.id + 1,
             }));
           } }

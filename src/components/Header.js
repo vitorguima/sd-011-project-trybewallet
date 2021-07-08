@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 class Header extends React.Component {
   render() {
     const { email, expenses } = this.props;
-    const values = expenses.map((value) => value.valor);
-    const valueSum = values.reduce((acc, curr) => acc + curr, 0);
-    console.log(valueSum);
+    const exchangeRate = expenses
+      .map((value) => Number(value.exchangeRates[value.moeda].ask) * Number(value.valor));
+    console.log(exchangeRate);
     return (
       <div>
         <h5 data-testid="email-field">
@@ -16,7 +16,12 @@ class Header extends React.Component {
         </h5>
         <h5 data-testid="header-currency-field">
           Despesa total:
-          <span data-testid="total-field"> 0.00</span>
+          <span data-testid="total-field">
+            {exchangeRate.reduce((acc, curr) => {
+              acc += curr;
+              return acc;
+            }, 0)}
+          </span>
           BRL
         </h5>
       </div>
@@ -33,4 +38,7 @@ export default connect(mapStateToProps)(Header);
 
 Header.propTypes = {
   email: PropTypes.string.isRequired,
+  expenses: PropTypes.shape({
+    map: PropTypes.func,
+  }).isRequired,
 };
