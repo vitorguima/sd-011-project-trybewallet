@@ -1,15 +1,10 @@
 export const loginAction = (email) => ({ type: 'LOGIN_ACTION', email });
 
-export const newAction = (email) => ({ type: 'LOGIN_ACTION', email });
+export const addExpense = (expense) => ({ type: 'ADD_EXPENSE', expense });
 
-const requestCoins = () => ({
-  type: 'REQUEST_COINS',
-});
+const requestCoins = () => ({ type: 'REQUEST_COINS' });
 
-const receiveCoins = (coins) => ({
-  type: 'RECEIVE_COINS',
-  coins,
-});
+const receiveCoins = (coins) => ({ type: 'RECEIVE_COINS', coins });
 
 export const fetchCoins = () => (dispatch) => {
   dispatch(requestCoins());

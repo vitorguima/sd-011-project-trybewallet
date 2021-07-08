@@ -1,18 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchCoins } from '../actions';
+import { fetchCoins, addExpense } from '../actions';
 
 class TrybewalletForm extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      // value: 0,
-      // description: '',
-      // coin: '',
-      // payment: '',
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'money',
+      tag: 'food',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -26,15 +28,21 @@ class TrybewalletForm extends React.Component {
     });
   }
 
+  async handleClick() {
+    const { addExpenseAction, dispatch, fetchCoinsAction, exchangeRates } = this.props;
+    await dispatch(fetchCoinsAction());
+    const { value, description, currency, method, tag } = this.state;
+    addExpenseAction({ value, description, currency, method, tag, exchangeRates });
+  }
+
   render() {
-    const { coins } = this.props;
+    const { exchangeRates } = this.props;
     return (
       <form className="trybewallet-form">
         <label htmlFor="value">
           Valor
           <input type="number" name="value" id="value" onChange={ this.handleChange } />
         </label>
-
         <label htmlFor="description">
           Descrição
           <input
@@ -44,53 +52,57 @@ class TrybewalletForm extends React.Component {
             onChange={ this.handleChange }
           />
         </label>
-
-        <label htmlFor="coin">
+        <label htmlFor="currency">
           Moeda
-          <select name="coin" id="coin" onChange={ this.handleChange }>
-            { coins.map(({ code }) => (
+          <select name="currency" id="currency" onChange={ this.handleChange }>
+            { Object.values(exchangeRates).map(({ code }) => (
               <option key={ code } value={ code }>{ code }</option>
             )) }
           </select>
         </label>
-
-        <label htmlFor="payment">
+        <label htmlFor="method">
           Método de pagamento
-          <select name="payment" id="payment" onChange={ this.handleChange }>
-            <option value="money">Dinheiro</option>
-            <option value="credit">Cartão de crédito</option>
-            <option value="debit">Cartão de débito</option>
+          <select name="method" id="method" onChange={ this.handleChange }>
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
           </select>
         </label>
-
         <label htmlFor="tag">
           Tag
           <select name="tag" id="tag" onChange={ this.handleChange }>
-            <option value="food">Alimentação</option>
-            <option value="leisure">Lazer</option>
-            <option value="work">Trabalho</option>
-            <option value="transport">Transporte</option>
-            <option value="health">Saúde</option>
+            <option value="Alimentação">Alimentação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Saúde">Saúde</option>
           </select>
         </label>
+        <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
       </form>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  coins: state.wallet.expenses,
+  exchangeRates: state.wallet.currencies,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   dispatch,
   fetchCoinsAction: fetchCoins,
+  addExpenseAction: (expense) => dispatch(addExpense(expense)),
 });
 
 TrybewalletForm.propTypes = {
   dispatch: PropTypes.func.isRequired,
   fetchCoinsAction: PropTypes.func.isRequired,
-  coins: PropTypes.arrayOf(PropTypes.any).isRequired,
+  exchangeRates: PropTypes.objectOf(PropTypes.any),
+  addExpenseAction: PropTypes.func.isRequired,
+};
+
+TrybewalletForm.defaultProps = {
+  exchangeRates: {},
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TrybewalletForm);
