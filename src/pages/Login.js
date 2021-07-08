@@ -1,23 +1,34 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { login } from '../actions';
 import styles from './Login.module.css';
 
 class Login extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       email: '',
       password: '',
       disable: true,
       error: null,
+      redirect: false,
     };
+
+    this.handleClick = this.handleClick.bind(this);
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
     this.handleChangePassword = this.handleChangePassword.bind(this);
     this.handleOnBlur = this.handleOnBlur.bind(this);
   }
 
-  handleSubmit(event) {
-    event.preventDefaul();
+  handleClick(event) {
+    const { email, password } = this.state;
+    event.preventDefault();
+    const { user } = this.props;
+    this.setState({ redirect: true });
+    user({ email, password });
   }
 
   handleChangeEmail({ target }) {
@@ -52,9 +63,9 @@ class Login extends React.Component {
   }
 
   render() {
-    const { disable, error } = this.state;
+    const { disable, error, redirect } = this.state;
     return (
-      <form onSubmit={ this.handleSubmit }>
+      <form>
         <input
           type="email"
           style={ { display: 'block' } }
@@ -84,9 +95,18 @@ class Login extends React.Component {
         >
           Entrar
         </button>
+        {redirect && <Redirect to="/carteira" />}
       </form>
     );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  user: (payload) => dispatch(login(payload)),
+});
+
+Login.propTypes = {
+  user: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
