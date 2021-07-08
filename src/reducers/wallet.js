@@ -3,7 +3,7 @@ const INITIAL_STATE = {
   expenses: [],
 };
 
-export const wallet = (state = INITIAL_STATE, { type, payload }) => {
+const wallet = (state = INITIAL_STATE, { type, payload }) => {
   switch (type) {
   case 'WALLET':
     return {

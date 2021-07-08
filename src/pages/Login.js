@@ -1,54 +1,45 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { setForm } from '../actions';
+import Form from './Form';
 
 function Login() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [isValidated, setIsValidated] = useState(true);
   const [inputForm, setInputForm] = useState({
     email: '',
     password: '',
   });
-  const VALID_PASS = 5;
+  const VALID_PASS = 6;
   const VALID_EMAIL = /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(setForm(inputForm));
+    dispatch(setForm(inputForm.email));
     setInputForm({ email: '', password: '' });
+    history.push({
+      pathname: '/carteira',
+    });
   };
-  const handleChange = ({ target }) => {
-    const { value, name } = target;
-    if (inputForm.email && VALID_EMAIL.test(inputForm.email)
-    && inputForm.password.length >= VALID_PASS) {
-      setIsValidated(false);
-    }
+  const handleChange = ({ target: { value, name } }) => {
     setInputForm({
       ...inputForm,
       [name]: value,
     });
+    setIsValidated(true);
+    if (VALID_EMAIL.test(inputForm.email)
+    && inputForm.password.length + 1 >= VALID_PASS) {
+      setIsValidated(false);
+    }
   };
   return (
-    <section>
-      <form onSubmit={ handleSubmit }>
-        <input
-          data-testid="email-input"
-          type="email"
-          name="email"
-          onChange={ handleChange }
-          value={ inputForm.email }
-        />
-        <input
-          data-testid="password-input"
-          type="password"
-          name="password"
-          onChange={ handleChange }
-          value={ inputForm.password }
-        />
-        <button disabled={ isValidated } type="submit">
-          <span>Entrar</span>
-        </button>
-      </form>
-    </section>
+    <Form
+      handleChange={ handleChange }
+      handleSubmit={ handleSubmit }
+      isValidated={ isValidated }
+      inputForm={ inputForm }
+    />
   );
 }
 
