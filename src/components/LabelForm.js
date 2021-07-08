@@ -37,9 +37,9 @@ export default class LabelForm extends Component {
           onChange={ this.handleChange }
         >
           <option> Metodo de pagamento! </option>
-          <option value="money">Dinheiro </option>
-          <option value="creditCard">Cartão de crédito </option>
-          <option value="debitCard">Cartão de débito </option>
+          <option value="Dinheiro">Dinheiro </option>
+          <option value="Cartão de crédito">Cartão de crédito </option>
+          <option value="Cartão de débito">Cartão de débito </option>
         </select>
       </label>
     );
