@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { emailAction } from '../actions';
+import { Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
   constructor(props) {
@@ -67,7 +69,11 @@ class Login extends React.Component {
     const { history, sendEmail } = this.props;
     const { email } = this.state;
     sendEmail(email);
-    history.push('/carteira');
+    history.push('carteira');
+    this.setState({
+      email: '',
+      password: '',
+    });
   }
 
   render() {
