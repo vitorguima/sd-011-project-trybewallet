@@ -1,15 +1,18 @@
+
 import React from 'react';
 import Header from '../components/Header';
-import Form from '../components/Form';
+import NewExpense from '../components/NewExpenses';
+import Expenses from '../components/Expenses';
 
 class Wallet extends React.Component {
   render() {
     return (
       <div>
         <Header />
-        <h2>Wallet</h2>
-        <Form />
-      </div>);
+        <NewExpense />
+        <Expenses />
+      </div>
+    );
   }
 }
 
