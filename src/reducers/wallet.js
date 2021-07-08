@@ -1,4 +1,4 @@
-import { DATA_FAILURE, ADD_EXPENSE, REMOVE_EXPENSE } from '../actions';
+import { DATA_FAILURE, ADD_EXPENSE, REMOVE_EXPENSE, GET_CURRENCIES } from '../actions';
 const initialState = { currencies: [], expenses: [] };
 
 const walletReducer = (state = initialState, action) => {
@@ -11,6 +11,10 @@ const walletReducer = (state = initialState, action) => {
       const len = state.expenses.length;
       const newExpense = { ...payload, id: len };
       return { ...state, expenses: [...state.expenses, newExpense] };
+    }
+
+    case GET_CURRENCIES: {
+      return { ...state, currencies: payload };
     }
 
     case REMOVE_EXPENSE: {

@@ -14,10 +14,10 @@ export default function () {
 
   const getExpenses = () => {
     if (userExpenses.length > 0) {
-      return userExpenses.map((el) => {
+      return userExpenses.map((el, index) => {
         const { description, method, tag, value, name, convertedPrice, ask, id } = el;
         return (
-          <tr>
+          <tr key={index}>
             <th>{description}</th>
             <td>{tag}</td>
             <td>{method} </td>

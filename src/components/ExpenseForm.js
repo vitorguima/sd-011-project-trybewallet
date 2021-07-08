@@ -2,17 +2,25 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { sendExpense } from '../services/API';
 
-export default function ExpenseForm(props) {
+export default function ExpenseForm() {
+  const currencies = useSelector((state) => state.wallet.currencies);
   const getOptions = () => {
-    if (props.currencies) {
-      return props.currencies.map((el) => <option value={`${el}`}>{el}</option>);
+    if (currencies.length > 0) {
+      return currencies.map((el, index) => {
+        return (
+          <option key={index} value={el.code}>
+            {el.code}
+          </option>
+        );
+      });
     }
   };
   const dispatch = useDispatch();
   const formSub = document.getElementById('expensesForm');
 
   const handleFormSubmit = (e) => {
-    const data = new FormData(e);
+    const { target } = e;
+    const data = new FormData(target);
     const expense = {};
     for (let pair of data) {
       const [key, value] = pair;
@@ -28,39 +36,45 @@ export default function ExpenseForm(props) {
       onSubmit={handleFormSubmit}
     >
       <div className="form-group ">
-        <label for="valueInput">
+        <label htmlFor="valueInput">
           Valor
           <input
             required
+            id="valueInput"
             name="value"
             type="number"
             step=".01"
             className="form-control"
-            id="valueInput"
             placeholder="Adicione o valor"
           />
         </label>
       </div>
       <div className="form-group">
-        <label for="currencyInput">
+        <label htmlFor="currency">
           Moeda
-          <select id="currencyInput" name="currency" className="form-select">
+          <select defaultValue="USD" id="currency" name="currency" className="form-select">
             {getOptions()}
           </select>
         </label>
       </div>
       <div className="form-group">
-        <label for="paymentMethod">
+        <label htmlFor="paymentMethod">
           Método de pagamento
-          <select required name="method" defaultValue="Selecione a moeda:" className="form-select">
+          <select
+            id="paymentMethod"
+            required
+            name="method"
+            defaultValue="Selecione a moeda:"
+            className="form-select"
+          >
             <option value="Dinheiro">Dinheiro</option>
-            <option value="Cartão de Crédito">Cartão de Crédito</option>
-            <option value="Cartão de Débito">Cartão de Débito</option>
+            <option value="Cartão de crédito">Cartão de Crédito</option>
+            <option value="Cartão de débito">Cartão de Débito</option>
           </select>
         </label>
       </div>
       <div className="form-group">
-        <label for="tagInput">
+        <label htmlFor="tagInput">
           Tag
           <select required name="tag" id="tagInput" className="form-select">
             <option value="Alimentação">Alimentação</option>
@@ -72,7 +86,7 @@ export default function ExpenseForm(props) {
         </label>
       </div>
       <div className="form-group ">
-        <label for="descriptionInput">
+        <label htmlFor="descriptionInput">
           Descrição
           <input
             required
@@ -84,14 +98,8 @@ export default function ExpenseForm(props) {
           />
         </label>
       </div>
-      <button
-        type="button"
-        className="btn btn-primary"
-        onClick={() => {
-          handleFormSubmit(formSub);
-        }}
-      >
-        Adicionar
+      <button type="submit" className="btn btn-primary">
+        Adicionar despesa
       </button>
     </form>
   );

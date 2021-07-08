@@ -17,7 +17,7 @@ const mockedExchange = jest.spyOn(global, 'fetch').mockImplementation(() => apiR
 afterEach(() => jest.clearAllMocks());
 
 describe('4 - Crie uma página para sua carteira com as seguintes características:', () => {
-  test('A rota para esta página deve ser \'/carteira\'', () => {
+  test("A rota para esta página deve ser '/carteira'", () => {
     const { history } = renderWithRouterAndStore(<App />);
     history.push('/carteira');
     const email = screen.queryByTestId('email-input');
@@ -49,7 +49,7 @@ describe('5 - Crie um header para a página de carteira contendo as seguintes ca
     expect(totalField).toContainHTML(INITIAL_VALUE);
   });
 
-  test('Crie um campo que mostre que qual câmbio está sendo utilizado, que será neste caso \'BRL\'', () => {
+  test("Crie um campo que mostre que qual câmbio está sendo utilizado, que será neste caso 'BRL'", () => {
     renderWithRouterAndStore(<Wallet />, '/carteira');
     const exchangeField = screen.getByTestId('header-currency-field');
 
@@ -126,13 +126,25 @@ describe('7 - Implemente a lógica para preencher as opções do campo "Moedas",
     const currencyInput = await screen.findByRole('combobox', {
       name: /moeda/i,
     });
-
+    // console.log(currencyInput);
     const coinOptions = within(currencyInput).getAllByRole('option');
     const coinOptionsValues = coinOptions.map((coinOption) => coinOption.value);
 
     const expectedCoinOptions = [
-      'USD', 'CAD', 'EUR', 'GBP', 'ARS', 'BTC', 'LTC',
-      'JPY', 'CHF', 'AUD', 'CNY', 'ILS', 'ETH', 'XRP',
+      'USD',
+      'CAD',
+      'EUR',
+      'GBP',
+      'ARS',
+      'BTC',
+      'LTC',
+      'JPY',
+      'CHF',
+      'AUD',
+      'CNY',
+      'ILS',
+      'ETH',
+      'XRP',
     ];
 
     expect(coinOptionsValues).toEqual(expectedCoinOptions);
@@ -144,7 +156,7 @@ describe('7 - Implemente a lógica para preencher as opções do campo "Moedas",
 });
 
 describe('8 - Desenvolva a opção de "Adicionar despesa" na sua tabela de gastos', () => {
-  test('Crie um botão com o texto \'Adicionar despesa\' que salva as informações da despesa no estado global e atualiza a soma de despesas no header', async () => {
+  test("Crie um botão com o texto 'Adicionar despesa' que salva as informações da despesa no estado global e atualiza a soma de despesas no header", async () => {
     const { store } = renderWithRouterAndStore(<Wallet />, '/carteira');
 
     const addButton = await screen.findByRole('button', {

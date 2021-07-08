@@ -3,29 +3,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import Expenses from '../components/ExpenseForm';
 import Table from '../components/ExpenseTable';
 import { fetchAPI } from '../services/API';
-import { getData } from '../actions';
 import { Link } from 'react-router-dom';
 
 export default function Wallet() {
   const dispatch = useDispatch();
   const userStore = useSelector((state) => state.user);
   const thumbnail = 'https://remotar.com.br/wp-content/uploads/2020/10/Trybe-200x200.jpg';
-  const [currencies, setCurrencies] = useState('');
-  const walletStore = useSelector((state) => state.wallet);
-  useEffect(() => {
-    if (!currencies) {
-      fetchAPI().then((r) => {
-        setCurrencies(r);
-        dispatch(getData(r));
-      });
-    }
-  }, [currencies]);
 
-  const getForm = () => {
-    if (currencies) {
-      return <Expenses currencies={currencies.map((el) => el.code)} />;
-    }
-  };
+  const walletStore = useSelector((state) => state.wallet);
+  const { currencies } = walletStore;
+
+  useEffect(() => {
+    dispatch(fetchAPI());
+  }, []);
 
   const getTotalExpenses = () => {
     const { expenses } = walletStore;
@@ -37,6 +27,12 @@ export default function Wallet() {
       return `R$ ${expenses.reduce(redx, 0)}`;
     }
     return `R$0,00`;
+  };
+
+  const showExpenses = () => {
+    if (currencies.length > 0) {
+      return <Expenses />;
+    }
   };
 
   return (
@@ -56,7 +52,8 @@ export default function Wallet() {
           </div>
         </div>
       </nav>
-      <div>{getForm()}</div>
+      {/* <Expenses /> */}
+      {showExpenses()}
       <Table />
     </div>
   );
