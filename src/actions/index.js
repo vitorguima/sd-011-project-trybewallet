@@ -33,7 +33,7 @@ const addExpenses = (state, payload) => ({
   payload,
 });
 
-const deleteExpenses = (payload) => ({
+export const deleteExpenses = (payload) => ({
   type: DELETE_EXPENSES,
   payload,
 });

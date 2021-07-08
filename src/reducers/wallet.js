@@ -3,6 +3,7 @@ import {
   REQUEST_COIN_SUCCESS,
   REQUEST_COIN_FAIL,
   ADD_EXPENSES,
+  DELETE_EXPENSES,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -33,6 +34,11 @@ function wallet(state = INITIAL_STATE, action) {
     return {
       ...state,
       expenses: [...state.expenses, action.state],
+    };
+  case DELETE_EXPENSES:
+    return {
+      ...state,
+      expenses: state.expenses.filter(({ id }) => action.payload !== id),
     };
   default:
     return state;

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default class Table extends Component {
   render() {
-    const { expenses } = this.props;
+    const { expenses, deleteExpenses } = this.props;
     return (
       <table>
         <thead>
@@ -35,7 +35,7 @@ export default class Table extends Component {
               </td>
               <td>Real</td>
               <td>
-                <button type="button" data-testid="delete-btn"> delete</button>
+                <button type="button" onClick={ () => deleteExpenses(value.id) } data-testid="delete-btn"> delete</button>
               </td>
             </tr>
           ))}
