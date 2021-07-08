@@ -1,52 +1,18 @@
-import React from 'react';
+import React, { Component } from 'react';
+import LoginForm from '../components/LoginForm';
+import Button from '../components/Button';
 
-class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: '',
-      password: '',
-    };
-  }
-
+class Login extends Component {
   render() {
-    const { email, password } = this.state;
-
     return (
       <div>
-        <form>
-          <label htmlFor="email-input">
-            Login:
-            { ' ' }
-            <input
-              type="email"
-              value={ email }
-              data-testid="email-input"
-              placeholder="alguem@email.com"
-            />
-
-          </label>
-          <label htmlFor="password-input">
-            Senha:
-            { ' ' }
-            <input
-              type="password"
-              value={ password }
-              data-testid="password-input"
-              placeholder="Digite sua senha"
-            />
-          </label>
-        </form>
-        <div>
-          <button
-            type="button"
-          >
-            Entrar
-          </button>
-        </div>
+        <LoginForm />
+        <Button />
       </div>
     );
   }
 }
+
+// Requisito 1, componentizado LogiForm e Button que compõe o formulário.
 
 export default Login;
