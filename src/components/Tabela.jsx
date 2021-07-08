@@ -11,8 +11,13 @@ class Tabela extends Component {
   //   };
   // }
 
+  componentDidMount() {
+    console.log('tabela');
+  }
+
   render() {
     const { allExpenses } = this.props;
+    console.log(allExpenses);
     return (
       <table>
         <thead>
