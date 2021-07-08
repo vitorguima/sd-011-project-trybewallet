@@ -3,6 +3,7 @@ import {
   REQUEST_COIN,
   REQUEST_COIN_SUCCESS,
   REQUEST_COIN_ERROR,
+  RESPONSE_PARAM_SUCCESS,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -28,6 +29,12 @@ function wallet(state = INITIAL_STATE, action) {
     return {
       ...state,
       isLoading: false,
+    };
+  case RESPONSE_PARAM_SUCCESS:
+    action.state.exchangeRates = action.payload;
+    return {
+      ...state,
+      expenses: [...state.expenses, action.state],
     };
   default:
     return state;

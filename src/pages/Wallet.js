@@ -5,30 +5,25 @@ import { fetchCoin } from '../actions';
 import Form from './Form';
 
 class Wallet extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      spent: 0,
-    };
-  }
-
   componentDidMount() {
     const { funcCoins } = this.props;
     funcCoins();
   }
 
   render() {
-    const { spent } = this.state;
-    const { email, coins } = this.props;
+    const { email, coins, funcCoins, expenses } = this.props;
+    const spent = expenses.reduce((acc, { exchangeRates, currency, value }) => (
+      acc + (Number((exchangeRates[currency].ask * value)))
+    ), 0);
     return (
       <div>
         <div>TrybeWallet</div>
         <header>
           <p><span data-testid="email-field">{ email }</span></p>
-          <p><span data-testid="total-field">{ spent }</span></p>
+          <p><span data-testid="total-field">{ spent || '0'}</span></p>
           <p><span data-testid="header-currency-field">BRL</span></p>
         </header>
-        <Form coins={ coins } />
+        <Form coins={ coins } funcCoins={ funcCoins } expenses={ expenses } />
       </div>
     );
   }
@@ -37,10 +32,11 @@ class Wallet extends React.Component {
 const mapStateToProps = (state) => ({
   email: state.user.email,
   coins: state.wallet.currencies,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  funcCoins: () => dispatch(fetchCoin()),
+  funcCoins: (state) => dispatch(fetchCoin(state)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
