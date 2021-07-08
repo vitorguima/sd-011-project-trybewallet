@@ -17,6 +17,7 @@ function wallet(state = INITIAL_STATE, action) {
     return {
       ...state,
       currencies: action.payload,
+      exchange: action.payload,
       loading: false,
     };
   case 'FETCH_ERROR':
@@ -30,12 +31,12 @@ function wallet(state = INITIAL_STATE, action) {
       expenses: [...state.expenses, action.payload],
     };
 
-  case 'FETCH_EXCHANGE_SUCESS':
-    return {
-      ...state,
-      exchange: action.payload,
-      loading: false,
-    };
+  // case 'FETCH_EXCHANGE_SUCESS':
+  //   return {
+  //     ...state,
+  //     exchange: action.payload,
+  //     loading: false,
+  //   };
   default:
     return state;
   }

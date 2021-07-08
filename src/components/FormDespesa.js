@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { mountExpenses, fetchMoedas, fetchExchange } from '../actions';
+import { mountExpenses, fetchMoedas } from '../actions';
 
 class FormDespesa extends Component {
   constructor() {
     super();
     this.state = {
-      valor: '',
-      descricao: '',
-      moeda: 'USD',
-      metod: 'Dinheiro',
+      value: '',
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
       tag: 'Alimentação',
       id: 0,
     };
@@ -18,9 +18,8 @@ class FormDespesa extends Component {
   }
 
   componentDidMount() {
-    const { dispatchFetchMoedas, dispatchfetchExchange } = this.props;
+    const { dispatchFetchMoedas } = this.props;
     dispatchFetchMoedas();
-    dispatchfetchExchange();
   }
 
   handleInput({ target }) {
@@ -36,31 +35,31 @@ class FormDespesa extends Component {
     const moedas = Object.keys(currencies).filter((code) => code !== 'USDT');
     return (
       <form>
-        <label htmlFor="valor">
+        <label htmlFor="value">
           Valor
           <input
             type="number"
-            id="valor"
-            name="valor"
+            id="value"
+            name="value"
             value={ valor }
             onChange={ this.handleInput }
           />
         </label>
         <br />
-        <label htmlFor="descricao">
+        <label htmlFor="description">
           Descrição
           <br />
           <textarea
-            name="descricao"
-            id="descricao"
+            name="description"
+            id="description"
             value={ descricao }
             onChange={ this.handleInput }
           />
         </label>
         <br />
-        <label htmlFor="moeda">
+        <label htmlFor="currency">
           Moeda
-          <select name="moeda" id="moeda" onChange={ this.handleInput } value={ moeda }>
+          <select name="currency" id="currency" onChange={ this.handleInput } value={ moeda }>
             {moedas.map((res, i) => <option key={ i } value={ res }>{res}</option>)}
           </select>
         </label>
@@ -73,9 +72,9 @@ class FormDespesa extends Component {
     return (
       <form>
         <br />
-        <label htmlFor="metod">
+        <label htmlFor="method">
           Método de pagamento
-          <select name="metod" id="metod" value={ metod } onChange={ this.handleInput }>
+          <select name="method" id="method" value={ metod } onChange={ this.handleInput }>
             <option>Dinheiro</option>
             <option>Cartão de crédito</option>
             <option>Cartão de débito</option>
@@ -97,7 +96,7 @@ class FormDespesa extends Component {
   }
 
   render() {
-    const { MountExpenses, exchange, dispatchfetchExchange } = this.props;
+    const { MountExpenses, exchange, dispatchFetchMoedas } = this.props;
     return (
       <div>
         {this.renderForm1()}
@@ -106,13 +105,14 @@ class FormDespesa extends Component {
         <button
           type="button"
           onClick={ () => {
-            dispatchfetchExchange();
+            // dispatchfetchExchange();
+            dispatchFetchMoedas();
             MountExpenses({ ...this.state, exchangeRates: exchange });
             this.setState((prevState) => ({
-              valor: '',
-              descricao: '',
-              moeda: 'USD',
-              metod: 'Dinheiro',
+              value: '',
+              description: '',
+              currency: 'USD',
+              method: 'Dinheiro',
               tag: 'Alimentação',
               id: prevState.id + 1,
             }));
@@ -133,7 +133,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   MountExpenses: (state) => dispatch(mountExpenses(state)),
   dispatchFetchMoedas: (state) => dispatch(fetchMoedas(state)),
-  dispatchfetchExchange: (state) => dispatch(fetchExchange(state)),
+  // dispatchfetchExchange: (state) => dispatch(fetchExchange(state)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormDespesa);
@@ -141,7 +141,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(FormDespesa);
 FormDespesa.propTypes = {
   currencies: PropTypes.arrayOf(String).isRequired,
   dispatchFetchMoedas: PropTypes.func.isRequired,
-  dispatchfetchExchange: PropTypes.func.isRequired,
   MountExpenses: PropTypes.func.isRequired,
   exchange: PropTypes.objectOf(Object).isRequired,
 };
