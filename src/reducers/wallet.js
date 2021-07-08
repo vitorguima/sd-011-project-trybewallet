@@ -26,39 +26,39 @@ const INITIAL_STATE = {
 
 function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case SAVE_CURRENCIES:
-      return {
-        ...state,
-        currencies: action.payload,
-      };
-    case SAVE_EXPENSES:
-      return {
-        ...state,
-        expenses: [...state.expenses, action.payload],
-      };
-    case DELETE_EXPENSE:
-      return {
-        ...state,
-        expenses: [...state.expenses.filter((expense) => expense.id !== action.payload)],
-      };
-    case ENABLE_EDIT_MODE:
-      return {
-        ...state,
-        editingExpense: {
-          isEditableMode: true,
-          id: action.payload,
-        },
-      };
-    case EDIT_EXPENSE:
-      return {
-        ...state,
-        expenses: getExpensesEdited(state, action),
-        editingExpense: {
-          isEditableMode: false,
-        },
-      };
-    default:
-      return state;
+  case SAVE_CURRENCIES:
+    return {
+      ...state,
+      currencies: action.payload,
+    };
+  case SAVE_EXPENSES:
+    return {
+      ...state,
+      expenses: [...state.expenses, action.payload],
+    };
+  case DELETE_EXPENSE:
+    return {
+      ...state,
+      expenses: [...state.expenses.filter((expense) => expense.id !== action.payload)],
+    };
+  case ENABLE_EDIT_MODE:
+    return {
+      ...state,
+      editingExpense: {
+        isEditableMode: true,
+        id: action.payload,
+      },
+    };
+  case EDIT_EXPENSE:
+    return {
+      ...state,
+      expenses: getExpensesEdited(state, action),
+      editingExpense: {
+        isEditableMode: false,
+      },
+    };
+  default:
+    return state;
   }
 }
 
