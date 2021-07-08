@@ -29,9 +29,9 @@ class Login extends React.Component {
     const SIX = 6;
     const validEmail = 'alguem@email.com';
     if (email === validEmail && password.length >= SIX) {
-      return false;
+      return true;
     }
-    return true;
+    return false;
   }
 
   handleEmail(event) {
@@ -47,7 +47,7 @@ class Login extends React.Component {
   }
 
   render() {
-    const disabled = this.validateEmailAndPassword();
+    const isEnabled = this.validateEmailAndPassword();
     const { email, password, shouldRedirect } = this.state;
     if (shouldRedirect) {
       return <Redirect to="/carteira" />;
@@ -76,7 +76,7 @@ class Login extends React.Component {
             onChange={ this.handlePassword }
           />
         </label>
-        <button disabled={ disabled } type="button" onClick={ this.handleSubmit }>
+        <button disabled={ !isEnabled } type="button" onClick={ this.handleSubmit }>
           Entrar
         </button>
       </div>

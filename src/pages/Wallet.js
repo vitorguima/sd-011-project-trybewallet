@@ -27,8 +27,8 @@ class Wallet extends React.Component {
     const { expenses } = this.props;
     const total = expenses.reduce((acc, current) => {
       const { value, currency, exchangeRates } = current;
-      const convertedValue = parseFloat(exchangeRates[currency].ask);
-      return acc + parseFloat(value) * convertedValue;
+      const conversionTax = parseFloat(exchangeRates[currency].ask);
+      return acc + parseFloat(value) * conversionTax;
     }, 0);
     return total;
   }
@@ -72,26 +72,16 @@ class Wallet extends React.Component {
             name="currency"
             onChange={ this.handleOnChange }
           >
-            {
-              Object.keys(currencies)
-                .filter((item) => item !== 'USDT')
-                .map((item, index) => {
-                  return (
-                    <option key={ index } value={item}>
-                      {item}
-                    </option>
-                  )
-                })
-            }
+            {currencies.map((item, index) => (
+              <option key={ index } value={ item }>
+                {item}
+              </option>
+            ))}
           </select>
         </label>
         <label htmlFor="method">
           Método de pagamento:
-          <select
-            id="method"
-            name="method"
-            onChange={ this.handleOnChange }
-          >
+          <select id="method" name="method" onChange={ this.handleOnChange }>
             <option>Dinheiro</option>
             <option>Cartão de crédito</option>
             <option>Cartão de débito</option>
@@ -134,8 +124,58 @@ class Wallet extends React.Component {
   }
 
   renderTable() {
-    const { expenses } = this.props;
-    const tableHeader = (
+    const { expenses, deleteExpense } = this.props;
+    const tableHeader = this.renderTableHeader();
+    const tableBody = expenses.map((item) => {
+      const { id, description, tag, method,
+        value,
+        currency,
+        exchangeRates,
+      } = item;
+      const valueNumber = parseFloat(value);
+      const currencyData = exchangeRates[currency];
+      const currencyName = currencyData.name;
+      const conversionTax = parseFloat(currencyData.ask);
+      const brazilianValue = valueNumber * conversionTax;
+      return (
+        <tr key={ id }>
+          <td>{description}</td>
+          <td>{tag}</td>
+          <td>{method}</td>
+          <td>{valueNumber}</td>
+          <td>{currencyName}</td>
+          <td>{conversionTax.toFixed(2)}</td>
+          <td>{brazilianValue.toFixed(2)}</td>
+          <td>Real</td>
+          <td>
+            <button
+              data-testid="delete-btn"
+              type="button"
+              onClick={ () => {
+                deleteExpense(id);
+              } }
+            >
+              Delete
+            </button>
+            <button data-testid="edit-btn" type="button">Update</button>
+          </td>
+        </tr>
+      );
+    });
+    return (
+      <table>
+        <thead>
+          {tableHeader}
+        </thead>
+        <tbody>
+          {tableBody}
+        </tbody>
+      </table>
+    );
+  }
+
+  renderTableHeader() {
+    return (
       <tr>
         <th>Descrição</th>
         <th>Tag</th>
@@ -147,48 +187,7 @@ class Wallet extends React.Component {
         <th>Moeda de conversão</th>
         <th>Editar/Excluir</th>
       </tr>
-    )
-    const tableBody = expenses.map((expense, index) => {
-        const {
-          description,
-          tag,
-          method,
-          value,
-          currency,
-          exchangeRates
-        } = expense;
-        const valueNumber = parseFloat(value);
-        const currencyData = exchangeRates[currency]
-        const currencyName = currencyData.name;
-        const conversionRate = parseFloat(currencyData.ask);
-        const brazilianValue = valueNumber * conversionRate;
-        return (
-          <tr key={ index }>
-            <td>{description}</td>
-            <td>{tag}</td>
-            <td>{method}</td>
-            <td>{valueNumber.toFixed(2)}</td>
-            <td>{currencyName}</td>
-            <td>{conversionRate.toFixed(2)}</td>
-            <td>{brazilianValue.toFixed(2)}</td>
-            <td>Real</td>
-            <td>
-              <button data-testid="edit-btn" type="button">Delete</button>
-              <button data-testid="delete-btn" type="button">Update</button>
-            </td>
-          </tr>
-        );
-      })
-     return (
-         <table>
-           <thead>
-            {tableHeader}
-           </thead>
-           <tbody>
-            {tableBody}
-           </tbody>
-         </table>
-     );
+    );
   }
 
   render() {
@@ -210,15 +209,17 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   fetchAPI: () => dispatch(actions.fetchAPI()),
-  addExpense: (data) => dispatch(actions.addExpense(data)),
+  addExpense: (walletState) => dispatch(actions.addExpense(walletState)),
+  deleteExpense: (id) => dispatch(actions.deleteExpense(id)),
 });
 
 Wallet.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
-  currencies: PropTypes.object.isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   email: PropTypes.string.isRequired,
   fetchAPI: PropTypes.func.isRequired,
   addExpense: PropTypes.func.isRequired,
+  deleteExpense: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
