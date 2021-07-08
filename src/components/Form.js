@@ -21,7 +21,7 @@ class Form extends React.Component {
           </select>
         </label>
         <label htmlFor="payment">
-          Método de pagamento
+          Método de pagamento:
           <select type="text" name="payment">
             <option>Dinheiro</option>
             <option>Cartão de crédito</option>
