@@ -1,19 +1,23 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import LabelledInput from '../LabelledInput';
 import LabelledSelect from '../LabelledSelect';
+import { fetchCurrencies } from '../../actions';
+import cloneObject from '../../helpers/utils';
 
 const paymentOptions = [
-  { label: 'Dinheiro', value: 'cash' },
-  { label: 'Cartão de crédito', value: 'credit' },
-  { label: 'Cartão de débito', value: 'debit' },
+  { label: 'Dinheiro', value: 'Dinheiro' },
+  { label: 'Cartão de crédito', value: 'Cartão de crédito' },
+  { label: 'Cartão de débito', value: 'Cartão de débito' },
 ];
 
 const tagOptions = [
-  { label: 'Alimentação', value: 'food' },
-  { label: 'Lazer', value: 'leisure' },
-  { label: 'Trabalho', value: 'work' },
-  { label: 'Transporte', value: 'transportation' },
-  { label: 'Saúde', value: 'health' },
+  { label: 'Alimentação', value: 'Alimentação' },
+  { label: 'Lazer', value: 'Lazer' },
+  { label: 'Trabalho', value: 'Trabalho' },
+  { label: 'Transporte', value: 'Transporte' },
+  { label: 'Saúde', value: 'Saúde' },
 ];
 
 const baseURL = 'https://economia.awesomeapi.com.br/json/all';
@@ -23,20 +27,23 @@ const currencyCodes = [
   'JPY', 'CHF', 'AUD', 'CNY', 'ILS', 'ETH', 'XRP',
 ];
 
-export default class ExpenseForm extends React.Component {
+const initialState = {
+  value: 0,
+  description: '',
+  currency: '',
+  method: paymentOptions[0].value,
+  tag: tagOptions[0].value,
+  currencyOptions: [],
+};
+
+class ExpenseForm extends React.Component {
   constructor() {
     super();
 
-    this.state = {
-      value: 0,
-      description: '',
-      currency: '',
-      payment: paymentOptions[0].value,
-      tag: tagOptions[0].value,
-      currencyOptions: [],
-    };
+    this.state = { ...initialState };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -44,7 +51,6 @@ export default class ExpenseForm extends React.Component {
   }
 
   handleChange({ name, value }) {
-    console.log(name, value);
     this.setState({
       [name]: value,
     });
@@ -75,8 +81,27 @@ export default class ExpenseForm extends React.Component {
     });
   }
 
+  resetState() {
+    this.setState(({ currencyOptions }) => ({
+      ...initialState,
+      currency: currencyOptions[0].value,
+      currencyOptions,
+    }));
+  }
+
+  handleSubmit() {
+    const stateClone = cloneObject(this.state);
+    const { newExpense } = this.props;
+
+    delete stateClone.currencyOptions;
+
+    newExpense(stateClone);
+
+    this.resetState();
+  }
+
   render() {
-    const { value, description, currency, payment, tag, currencyOptions } = this.state;
+    const { value, description, currency, method, tag, currencyOptions } = this.state;
 
     return (
       <form>
@@ -104,11 +129,11 @@ export default class ExpenseForm extends React.Component {
           onChange={ this.handleChange }
         />
         <LabelledSelect
-          id="payment"
+          id="method"
           label="Método de pagamento"
-          name="payment"
+          name="method"
           options={ paymentOptions }
-          value={ payment }
+          value={ method }
           onChange={ this.handleChange }
         />
         <LabelledSelect
@@ -119,7 +144,18 @@ export default class ExpenseForm extends React.Component {
           value={ tag }
           onChange={ this.handleChange }
         />
+        <button type="button" onClick={ this.handleSubmit }>Adicionar despesa</button>
       </form>
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  newExpense: (payload) => dispatch(fetchCurrencies(payload)),
+});
+
+export default connect(null, mapDispatchToProps)(ExpenseForm);
+
+ExpenseForm.propTypes = {
+  newExpense: PropTypes.func,
+}.isRequired;
