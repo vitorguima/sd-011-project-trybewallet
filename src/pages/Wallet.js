@@ -1,26 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Form from '../component/Form';
 
 class Wallet extends React.Component {
   constructor() {
     super();
     this.state = {
-      valor: 0,
+      value: 0,
     };
   }
 
   render() {
-    const { valor } = this.state;
     const { emailUser } = this.props;
+    const { value } = this.state;
     return (
       <div>
-        <h2>TrybeWallet</h2>
         <header>
-          <span data-testid="email-field">{ `Email: ${emailUser}` }</span>
-          <span data-testid="total-field">{ `Despesa Total: ${valor}`}</span>
+          <span data-testid="email-field">{`Email: ${emailUser}`}</span>
+          <span data-testid="total-field">{`Despesa Total: ${value}`}</span>
           <span data-testid="header-currency-field">BRL</span>
         </header>
+        <Form />
       </div>
     );
   }
