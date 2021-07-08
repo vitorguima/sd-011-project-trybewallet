@@ -5,23 +5,9 @@ class ExpensesForm extends Component {
   constructor(props) {
     super(props);
     const { currencies } = props;
-    console.log(props);
-
     this.state = {
       currency: [...currencies],
     };
-    this.handleState = this.handleState.bind(this);
-  }
-
-  componentDidMount() {
-    this.handleState();
-  }
-
-  handleState() {
-    const { currencies } = this.props;
-    this.setState(() => ({
-      currency: [...currencies],
-    }));
   }
 
   render() {

@@ -39,9 +39,7 @@ class Wallet extends React.Component {
           <span data-testid="header-currency-field">BRL</span>
         </header>
         <main>
-          { console.log(currency) }
-          {currency.length > 0 && <ExpensesForm currencies={ currency } />
-}
+          {currency.length > 0 && <ExpensesForm currencies={ currency } />}
         </main>
       </div>
     );
