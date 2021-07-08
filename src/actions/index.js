@@ -14,6 +14,8 @@ export const REQUEST_COIN_FAIL = 'REQUEST_COIN_FAIL';
 
 export const PAYMENT_SUCESS = 'PAYMENT_SUCESS';
 
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
+
 const requestCoin = () => ({
   type: REQUEST_COIN,
 });
@@ -32,6 +34,11 @@ const paymentSucess = (state, payload) => ({
   type: PAYMENT_SUCESS,
   payload,
   state,
+});
+
+export const deleteExpense = (payload) => ({
+  type: DELETE_EXPENSE,
+  payload,
 });
 
 export const getApi = (state = false) => async (dispatch) => {

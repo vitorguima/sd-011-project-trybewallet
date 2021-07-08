@@ -3,7 +3,8 @@ import {
   REQUEST_COIN,
   REQUEST_COIN_SUCESS,
   REQUEST_COIN_FAIL,
-  PAYMENT_SUCESS } from '../actions';
+  PAYMENT_SUCESS,
+  DELETE_EXPENSE } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -34,6 +35,11 @@ export default function reducerWallet(state = INITIAL_STATE, action) {
     return {
       ...state,
       expenses: [...state.expenses, action.state],
+    };
+  case DELETE_EXPENSE:
+    return {
+      ...state,
+      expenses: state.expenses.filter((id) => id.id !== action.payload),
     };
   default:
     return state;
