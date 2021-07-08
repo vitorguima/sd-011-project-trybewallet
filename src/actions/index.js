@@ -4,6 +4,7 @@ export const RECEIVE_CURRENCIES = 'RECEIVE_CURRENCIES';
 export const REQUEST_CURRENCIES = 'REQUEST_CURRENCIES';
 
 export const RECEIVE_EXPENSE = 'RECEIVE_EXPENSE';
+export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 
 export const loginUser = (email) => ({
   type: LOG_USER,
@@ -34,6 +35,11 @@ export function fetchCurrencies() {
 
 const receiveExpense = (payload) => ({
   type: RECEIVE_EXPENSE,
+  payload,
+});
+
+export const removeExpense = (payload) => ({
+  type: REMOVE_EXPENSE,
   payload,
 });
 

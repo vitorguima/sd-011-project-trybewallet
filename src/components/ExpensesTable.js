@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import { removeExpense } from '../actions';
+
 class ExpensesTable extends PureComponent {
   constructor() {
     super();
@@ -11,6 +13,7 @@ class ExpensesTable extends PureComponent {
 
   renderExpense(expense) {
     const { id, description, tag, method, value, currency, exchangeRates } = expense;
+    const { remove } = this.props;
     const moeda = exchangeRates[currency];
     return (
       <tr key={ id }>
@@ -22,7 +25,15 @@ class ExpensesTable extends PureComponent {
         <td><p>{parseFloat(moeda.ask).toFixed(2)}</p></td>
         <td><p>{(value * moeda.ask).toFixed(2)}</p></td>
         <td><p>Real</p></td>
-        <td><button type="button">Deletar</button></td>
+        <td>
+          <button
+            type="button"
+            data-testid="delete-btn"
+            onClick={ () => remove(id) }
+          >
+            Deletar
+          </button>
+        </td>
       </tr>
     );
   }
@@ -60,11 +71,11 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-// const mapDispatchToProps = (dispatch) => ({
-//   fetchMoedas: () => dispatch(fetchCurrencies()),
-// });
+const mapDispatchToProps = (dispatch) => ({
+  remove: (id) => dispatch(removeExpense(id)),
+});
 
-export default connect(mapStateToProps, null)(ExpensesTable);
+export default connect(mapStateToProps, mapDispatchToProps)(ExpensesTable);
 
 ExpensesTable.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object),
