@@ -12,7 +12,8 @@ class Wallet extends React.Component {
 
   render() {
     const { email, coins, expenses } = this.props;
-    const soma = expenses.reduce((acc, { exchangeRates, currency, value }) => acc + (Number(exchangeRates[currency].ask * value)), 0);
+    const soma = expenses.reduce((acc, { exchangeRates, currency, value }) => (
+      acc + (Number(exchangeRates[currency].ask * value))), 0);
     return (
       <main>
         <header>
@@ -31,6 +32,8 @@ class Wallet extends React.Component {
 
 Wallet.propTypes = {
   email: PropTypes.string,
+  coins: PropTypes.array,
+  expences: PropTypes.object,
 }.isRequired;
 
 const mapStateToProps = (state) => ({
