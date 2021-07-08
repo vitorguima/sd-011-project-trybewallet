@@ -10,7 +10,7 @@ class WalletForm extends React.Component {
     super();
 
     this.state = {
-      id: -1,
+      id: 0,
       value: 0,
       description: '',
       currency: 'USD',
@@ -31,10 +31,10 @@ class WalletForm extends React.Component {
   }
 
   requestExpenseData() {
-    const { requestExpenseInfo } = this.props;
-    this.setState((prevState) => ({
-      id: prevState.id + 1,
-    }),
+    const { expenses, requestExpenseInfo } = this.props;
+    this.setState({
+      id: expenses.length,
+    },
     () => requestExpenseInfo(this.state));
   }
 
@@ -92,6 +92,7 @@ class WalletForm extends React.Component {
 
 const mapStateToProps = (state) => ({
   coins: state.wallet.coins,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -100,11 +101,13 @@ const mapDispatchToProps = (dispatch) => ({
 
 WalletForm.propTypes = {
   coins: PropTypes.arrayOf(PropTypes.string),
+  expenses: PropTypes.arrayOf(PropTypes.object),
   requestExpenseInfo: PropTypes.func.isRequired,
 };
 
 WalletForm.defaultProps = {
   coins: [],
+  expenses: [],
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletForm);
