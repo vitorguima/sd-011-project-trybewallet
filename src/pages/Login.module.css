@@ -1,4 +1,4 @@
 .button:disabled {
-  opacity: 0.8;
   cursor: wait;
+  opacity: 0.8;
 }
