@@ -1,23 +1,29 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { fetchPosts } from '../actions';
 
 export class Wallet extends Component {
   form() {
+    const { currencies } = this.props;
     return (
       <form>
         <label htmlFor="value">
-          Valor:
+          Valor
           <input type="text" name="value" id="value" />
         </label>
         <label htmlFor="description">
-          Descrição:
+          Descrição
           <input type="text" name="description" id="description" />
         </label>
         <label htmlFor="coin">
-          Moeda
+          Moeda:
           <select name="coin" id="coin">
-            vazio
+            {currencies.map((coin, index) => (
+              <option key={ index } value={ coin }>
+                { coin }
+              </option>
+            ))}
           </select>
         </label>
         <label htmlFor="payment">
@@ -66,11 +72,19 @@ export class Wallet extends Component {
 const mapStateToProps = (state) => ({
   email: state.user.email,
   total: state.wallet.total,
+  loading: state.wallet.loading,
+  currencies: state.wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatchFetchPosts: dispatch(fetchPosts()),
 });
 
 Wallet.propTypes = {
   email: PropTypes.string,
   total: PropTypes.number,
+  loading: PropTypes.bool,
+  dispatchFetchPosts: PropTypes.func,
 }.isRequired;
 
-export default connect(mapStateToProps)(Wallet);
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

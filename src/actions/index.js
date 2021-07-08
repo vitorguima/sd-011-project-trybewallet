@@ -22,7 +22,7 @@ export function fetchPosts() {
   return (dispatch) => {
     dispatch(loadingFetch());
     return fetch('https://economia.awesomeapi.com.br/json/all')
-      .then((response) => response.json)
+      .then((response) => response.json())
       .then((responseJson) => dispatch(acceptFetch(responseJson)))
       .catch((error) => dispatch(rejectFetch(error)));
   };
