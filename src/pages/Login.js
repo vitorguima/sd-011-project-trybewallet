@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import setUser from '../actions';
-import { Link } from 'react-router-dom';
+import user from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -17,8 +16,8 @@ class Login extends React.Component {
   }
 
   validateEmail(email) {
-    var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    const validEmail = email.match(validRegex)
+    const reg = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const validEmail = email.match(reg);
     if (validEmail !== null) {
       return true;
     }
@@ -45,13 +44,13 @@ class Login extends React.Component {
 
   render() {
     const { email, disableEmail, disablePassword } = this.state;
-    const { setUserAction } = this.props;
+    const { setUserAction, history } = this.props;
     return (
       <form>
         <label htmlFor="email">
           E-mail
           <input
-            data-testid="email-input" 
+            data-testid="email-input"
             type="text"
             name="email"
             onChange={ this.handleEmail }
@@ -61,30 +60,29 @@ class Login extends React.Component {
         <label htmlFor="password">
           Senha
           <input
-            data-testid="password-input" 
+            data-testid="password-input"
             type="password"
             name="password"
             onChange={ this.handlePassword }
           />
         </label>
-        <Link
-          to="/carteira"
+        <button
+          type="button"
+          onClick={ () => {
+            setUserAction(email) 
+            history.push('/carteira')
+          }}
+          disabled={ disableEmail || disablePassword }
         >
-          <button
-            type="button"
-            onClick={ () => setUserAction(email) }
-            disabled={ disableEmail || disablePassword }
-          >
-            Entrar
-          </button>
-        </Link>
+          Entrar
+        </button>
       </form>
     );
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  setUserAction: (payload) => dispatch(setUser(payload)),
+  setUserAction: (payload) => dispatch(user(payload)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);

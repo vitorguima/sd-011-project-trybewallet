@@ -1,8 +1,8 @@
 export const SET_USER = 'SET_USER';
 
-const setUser = (payload) => ({
+const user = (payload) => ({
   type: SET_USER,
   payload,
 });
 
-export default setUser;
+export default user;

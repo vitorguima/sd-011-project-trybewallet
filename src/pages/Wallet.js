@@ -1,26 +1,34 @@
 import React from 'react';
-// import { connect } from 'react-redux'
+import { connect } from 'react-redux'
+import store from '../store'
 
 class Wallet extends React.Component {
   renderHeader() {
+    const { userEmail } = this.props;
+    return(
+      <header>
+        <p data-testid="email-field">{ userEmail }</p>
+        <p data-testid="total-field">0</p>
+        <p data-testid="header-currency-field">BRL</p>
+      </header>
+    )
   }
-  
+
   render() {
-    // const { user } = this.props
-    // console.log(user)
+    
     return (
-    <div>
-      {/* { userEmail } */}
-      TrybeWallet
-    </div>);
+      <div>
+        { this.renderHeader() }
+        <h3>TrybeWallet</h3>
+      </div>
+    );
   }
 }
 
-// const mapStateToProps = (state) => ({
-//   user: state.userReducer.user.email
-// })
+const mapStateToProps = (state) => ({
+  userEmail: state.user.email
+})
 
-// export default connect(mapStateToProps)(Wallet);
+export default connect(mapStateToProps)(Wallet);
 
-export default Wallet;
-
+// export default Wallet;
