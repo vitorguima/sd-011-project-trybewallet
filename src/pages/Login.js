@@ -1,4 +1,7 @@
 import React from 'react';
+import './Style.css';
+
+const minPassword = 6;
 
 class Login extends React.Component {
   constructor(props) {
@@ -9,6 +12,7 @@ class Login extends React.Component {
       password: '',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.confirmedEmail = this.confirmedEmail.bind(this);
   }
 
   handleChange({ target }) {
@@ -18,30 +22,60 @@ class Login extends React.Component {
     }));
   }
 
+  // peguei uma dica de como altenticar email no atackoverflow
+  // https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript?page=3&tab=Votes
+  confirmedEmail(email) {
+    const emailPattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+    return emailPattern.test(email);
+  }
+  // confirmedPassword() {
+  //   const passwordPattern =
+  // }
+
+  buttonLogin() {
+    const { email, password } = this.state;
+
+    if (email.length <= 0 || password.length < minPassword
+        || !this.confirmedEmail(email)) {
+      return <button type="button" disabled>Entrar</button>;
+    }
+    return <button type="button">Entrar</button>;
+  }
+
   render() {
     const { email, password } = this.state;
 
     return (
-      <div>
+      <div className="body-login">
+        <h2>Trybe Wallet</h2>
         <label htmlFor="email">
+          E-mail
           <input
+            className="input-email"
             value={ email }
             type="email"
             name="email"
             placeholder="E-mail"
             data-testid="email-input"
+            onChange={ this.handleChange }
           />
         </label>
         <label htmlFor="password">
+          Senha
           <input
+            className="input-password"
+            minLength="6"
             value={ password }
             type="password"
             name="password"
             placeholder="Senha"
             data-testid="password-input"
+            onChange={ this.handleChange }
           />
         </label>
-        <button type="button">Entrar</button>
+        <div className="button-login">
+          {this.buttonLogin()}
+        </div>
       </div>);
   }
 }

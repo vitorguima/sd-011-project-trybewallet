@@ -1,0 +1,16 @@
+.body-login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  height: 400px;
+  background-color: rgb(83, 111, 124);
+}
+
+.button-login {
+  border-radius: 5px;
+  color:rgb(0, 0, 0);
+  cursor: pointer;
+  border: 1px solid #000;
+}
