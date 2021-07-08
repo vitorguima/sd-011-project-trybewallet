@@ -94,13 +94,3 @@ export default connect(null, mapDispatchToProps)(Login);
 Login.propTypes = {
   fazerLogin: PropTypes.func.isRequired,
 };
-
-// function validatePassword (){
-//   const { password } = this.state
-//   const num = 5;
-//   const passLen = password.length;
-//   if (passLen <= num){
-//     return false;
-//   }
-//   return true;
-// }
