@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Form from './Form';
 import { getCoins } from '../actions';
+import Table from './Table';
 
 class Wallet extends React.Component {
   componentDidMount() {
@@ -25,6 +26,7 @@ class Wallet extends React.Component {
         <section className="form">
           <Form coins={ coins } />
         </section>
+        <Table />
       </main>
     );
   }

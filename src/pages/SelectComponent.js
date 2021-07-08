@@ -5,7 +5,6 @@ class SelectComponent extends Component {
   render() {
     const arrayTags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     const { coins, currency, method, tags, onChange } = this.props;
-
     return (
       <form>
         <label htmlFor="currency">
