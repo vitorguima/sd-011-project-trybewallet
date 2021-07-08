@@ -30,13 +30,11 @@ function wallet(state = INITIAL_STATE, action) {
       ...state,
       expenses: [...state.expenses, action.payload],
     };
-
-  // case 'FETCH_EXCHANGE_SUCESS':
-  //   return {
-  //     ...state,
-  //     exchange: action.payload,
-  //     loading: false,
-  //   };
+  case 'RMV_EXPENSE':
+    return {
+      ...state,
+      expenses: state.expenses.filter((exps, i) => i !== action.index),
+    };
   default:
     return state;
   }

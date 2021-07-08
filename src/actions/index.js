@@ -29,11 +29,6 @@ export const requestMoedasError = (payload) => ({
   payload,
 });
 
-export const requestExchangeSucess = (payload) => ({
-  type: 'FETCH_EXCHANGE_SUCESS',
-  payload,
-});
-
 export const fetchMoedas = () => (dispatch) => {
   dispatch(requestMoedas());
   return fetch('https://economia.awesomeapi.com.br/json/all')
@@ -42,9 +37,7 @@ export const fetchMoedas = () => (dispatch) => {
     .catch((error) => dispatch(requestMoedasError(error.message)));
 };
 
-export const fetchExchange = () => (dispatch) => {
-  dispatch(requestMoedas());
-  return fetch('https://economia.awesomeapi.com.br/json/all')
-    .then((result) => result.json())
-    .then((data) => dispatch(requestExchangeSucess(data)));
-};
+export const removeExpense = (index) => ({
+  type: 'RMV_EXPENSE',
+  index,
+});
