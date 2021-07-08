@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 class Login extends React.Component {
   constructor(props) {
@@ -59,13 +59,11 @@ class Login extends React.Component {
           />
         </label>
         <button type="button" disabled={ verified }>
-          <Link to="/carteira">
-            Entrar
-          </Link>
+          Entrar
         </button>
       </div>
     );
   }
 }
 
-export default Login;
+export default connect()(Login);
