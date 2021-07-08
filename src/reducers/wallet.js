@@ -9,7 +9,7 @@ const INITIAL_STATE = {
 const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case ADD_EXPENSE:
-    return { ...state, clients: [...state.expenses, action.payload] };
+    return { ...state, expenses: [...state.expenses, action.payload] };
   case REQUEST_DATA:
     return { ...state, loading: true };
   case REQUEST_DATA_SUCCESS:

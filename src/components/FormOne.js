@@ -11,7 +11,7 @@ class FormOne extends React.Component {
           Valor
           <input
             type="number"
-            name="valor"
+            name="value"
             id="valor-input"
             onChange={ (estado) => handleState(estado) }
           />

@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { fetchData, loginAction } from '../actions';
 
 class FormTwo extends React.Component {
-
   componentDidMount() {
     const { setFetch } = this.props;
     setFetch();
@@ -20,7 +19,7 @@ class FormTwo extends React.Component {
           Moeda
           <select
             id="moeda-input"
-            name="moeda"
+            name="currency"
             onChange={ (estado) => handleState(estado) }
           >
             { arrMoedas.map((moeda, index) => <option key={ index }>{ moeda }</option>)}
@@ -30,7 +29,7 @@ class FormTwo extends React.Component {
           Método de pagamento
           <select
             id="pagamento-input"
-            name="pagamento"
+            name="method"
             onChange={ (estado) => handleState(estado) }
           >
             <option>Dinheiro</option>
@@ -58,4 +57,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(FormTwo);
 FormTwo.propTypes = {
   handleState: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  setFetch: PropTypes.func.isRequired,
 };
