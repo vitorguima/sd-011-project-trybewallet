@@ -1,9 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { emailAction } from '../actions';
-import { Redirect } from 'react-router';
-import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
   constructor(props) {
