@@ -9,7 +9,7 @@ class Wallet extends React.Component {
     this.state = {
       value: 0,
       description: '',
-      currency: null,
+      currency: 'USD',
       method: '',
       tag: '',
 
@@ -72,9 +72,17 @@ class Wallet extends React.Component {
             name="currency"
             onChange={ this.handleOnChange }
           >
-            {Object.keys(currencies)
-              .filter((item) => item !== 'USDT')
-              .map((item, index) => <option key={ index }>{item}</option>)}
+            {
+              Object.keys(currencies)
+                .filter((item) => item !== 'USDT')
+                .map((item, index) => {
+                  return (
+                    <option key={ index } value={item}>
+                      {item}
+                    </option>
+                  )
+                })
+            }
           </select>
         </label>
         <label htmlFor="method">
@@ -125,11 +133,70 @@ class Wallet extends React.Component {
     );
   }
 
+  renderTable() {
+    const { expenses } = this.props;
+    const tableHeader = (
+      <tr>
+        <th>Descrição</th>
+        <th>Tag</th>
+        <th>Método de pagamento</th>
+        <th>Valor</th>
+        <th>Moeda</th>
+        <th>Câmbio utilizado</th>
+        <th>Valor convertido</th>
+        <th>Moeda de conversão</th>
+        <th>Editar/Excluir</th>
+      </tr>
+    )
+    const tableBody = expenses.map((expense, index) => {
+        const {
+          description,
+          tag,
+          method,
+          value,
+          currency,
+          exchangeRates
+        } = expense;
+        const valueNumber = parseFloat(value);
+        const currencyData = exchangeRates[currency]
+        const currencyName = currencyData.name;
+        const conversionRate = parseFloat(currencyData.ask);
+        const brazilianValue = valueNumber * conversionRate;
+        return (
+          <tr key={ index }>
+            <td>{description}</td>
+            <td>{tag}</td>
+            <td>{method}</td>
+            <td>{valueNumber.toFixed(2)}</td>
+            <td>{currencyName}</td>
+            <td>{conversionRate.toFixed(2)}</td>
+            <td>{brazilianValue.toFixed(2)}</td>
+            <td>Real</td>
+            <td>
+              <button data-testid="edit-btn" type="button">Delete</button>
+              <button data-testid="delete-btn" type="button">Update</button>
+            </td>
+          </tr>
+        );
+      })
+     return (
+         <table>
+           <thead>
+            {tableHeader}
+           </thead>
+           <tbody>
+            {tableBody}
+           </tbody>
+         </table>
+     );
+  }
+
   render() {
     return (
       <div>
         {this.renderHeader()}
         {this.renderForm()}
+        {this.renderTable()}
       </div>
     );
   }
@@ -147,8 +214,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Wallet.propTypes = {
-  expenses: PropTypes.number.isRequired,
-  currencies: PropTypes.string.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  currencies: PropTypes.object.isRequired,
   email: PropTypes.string.isRequired,
   fetchAPI: PropTypes.func.isRequired,
   addExpense: PropTypes.func.isRequired,

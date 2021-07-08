@@ -1,7 +1,7 @@
 import * as actions from '../actions';
 
 const INITIAL_STATE = {
-  currencies: [],
+  currencies: {},
   expenses: [],
 };
 
