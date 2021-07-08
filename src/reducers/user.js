@@ -3,21 +3,21 @@
 import { SET_USER } from '../actions';
 
 const INITIAL_STATE = {
-  email: '',
-  password: '',
+  user: {
+    email: '',
+  },
 };
 
-function setUser(state = INITIAL_STATE, action) {
+function userReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case SET_USER:
-    return {
-      ...state,
-      email: action.payload,
-      password: action.payload,
-    };
-  default:
-    return state;
+    case SET_USER:
+      return {
+        ...state,
+        user: { email: action.payload }
+      }
+    default:
+      return state;
   }
 }
 
-export default setUser;
+export default userReducer;

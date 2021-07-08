@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import setUser from '../reducers/user';
+import setUser from '../actions';
+import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
   constructor() {
     super();
     this.state = {
       email: '',
-      password: '',
       disableEmail: true,
       disablePassword: true,
     };
@@ -16,10 +16,13 @@ class Login extends React.Component {
     this.handlePassword = this.handlePassword.bind(this);
   }
 
-  // https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
   validateEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+$/;
-    return re.test(email);
+    var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const validEmail = email.match(validRegex)
+    if (validEmail !== null) {
+      return true;
+    }
+    return false;
   }
 
   handleEmail({ target: { value } }) {
@@ -32,7 +35,6 @@ class Login extends React.Component {
   }
 
   handlePassword({ target: { value } }) {
-    this.setState({ password: value });
     const numberFive = 5;
     if (value.length > numberFive) {
       this.setState({ disablePassword: false });
@@ -41,47 +43,48 @@ class Login extends React.Component {
     }
   }
 
-  teste() {
-    console.log('opa!');
-  }
-
   render() {
-    const { email, password, disableEmail, disablePassword } = this.state;
+    const { email, disableEmail, disablePassword } = this.state;
     const { setUserAction } = this.props;
     return (
       <form>
-        <label data-testid="email-input" htmlFor="email">
+        <label htmlFor="email">
           E-mail
           <input
+            data-testid="email-input" 
             type="text"
             name="email"
             onChange={ this.handleEmail }
             value={ email }
           />
         </label>
-        <label data-testid="password-input" htmlFor="password">
+        <label htmlFor="password">
           Senha
           <input
+            data-testid="password-input" 
             type="password"
             name="password"
             onChange={ this.handlePassword }
-            value={ password }
           />
         </label>
-        <button
-          type="button"
-          onClick={ () => setUserAction(email, password) }
-          disabled={ !!disableEmail || !!disablePassword }
+        <Link
+          to="/carteira"
         >
-          Entrar
-        </button>
+          <button
+            type="button"
+            onClick={ () => setUserAction(email) }
+            disabled={ disableEmail || disablePassword }
+          >
+            Entrar
+          </button>
+        </Link>
       </form>
     );
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  setUserAction: (email, password) => dispatch(setUser(email, password)),
+  setUserAction: (payload) => dispatch(setUser(payload)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);

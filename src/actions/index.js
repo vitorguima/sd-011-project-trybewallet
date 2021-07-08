@@ -1,8 +1,8 @@
-// Coloque aqui suas actions
 export const SET_USER = 'SET_USER';
 
-export const setUser = (email, password) => ({
+const setUser = (payload) => ({
   type: SET_USER,
-  email,
-  password,
+  payload,
 });
+
+export default setUser;
