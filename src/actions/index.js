@@ -11,13 +11,15 @@ export const requestCurrencyTypes = (payload) => ({
   payload,
 });
 
-// export const requestCurrencyTypesData = (payload) => ({
-//   type: 'GET_CURRENCIES_DATA',
-//   payload,
-// });
-
 export function fetchCurrencyTypes() {
   return (dispatch) => fetch('https://economia.awesomeapi.com.br/json/all')
     .then((response) => response.json())
     .then((currencies) => dispatch(requestCurrencyTypes(currencies)));
 }
+
+export const saveExpenses = (expenses) => ({
+  type: 'SAVE_EXPENSES',
+  payload: {
+    expenses,
+  },
+});
