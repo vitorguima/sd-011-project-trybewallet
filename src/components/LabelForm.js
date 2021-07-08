@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 export default class LabelForm extends Component {
   constructor(props) {
     super(props);
+    const { expenses } = this.props;
     this.state = {
       id: expenses.length,
       value: '',

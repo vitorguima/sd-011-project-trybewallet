@@ -18,7 +18,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, coins } = this.props;
+    const { email, coins, expenses } = this.props;
     const { valor } = this.state;
     return (
       <>
@@ -33,7 +33,7 @@ class Wallet extends React.Component {
           <div data-testid="header-currency-field"> BRL </div>
 
         </header>
-        <LabelForm coins={ coins } getApi={ getApi } />
+        <LabelForm coins={ coins } getApi={ getApi } expenses={ expenses } />
       </>
     );
   }
@@ -42,6 +42,7 @@ class Wallet extends React.Component {
 const mapStateToProps = (state) => ({
   email: state.user.email,
   coins: state.wallet.currencies,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
