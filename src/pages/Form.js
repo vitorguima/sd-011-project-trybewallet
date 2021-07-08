@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import SelectComponent from './SelectComponent';
 
 export default class Form extends Component {
   constructor() {
@@ -7,50 +8,53 @@ export default class Form extends Component {
     this.state = {
       value: '',
       description: '',
-      coin: '',
-      paymentMethod: '',
-      tag: '',
+      coin: 'USD',
+      paymentMethod: 'Dinheiro',
+      tag: 'Alimentação',
     };
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange({ target }) {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    });
   }
 
   render() {
     const { coins } = this.props;
+    const { value, description, coin, paymentMethod, tag } = this.state;
     return (
       <form>
         <label htmlFor="value">
           Valor
-          <input id="value" type="text" name="value" />
+          <input
+            onChange={ this.handleChange }
+            id="value"
+            type="text"
+            name="value"
+            value={ value }
+          />
         </label>
         <label htmlFor="description">
           Descrição
-          <input id="description" type="text" name="description" />
+          <input
+            onChange={ this.handleChange }
+            id="description"
+            type="text"
+            name="description"
+            value={ description }
+          />
         </label>
-        <label htmlFor="coin">
-          Moeda
-          <select id="coin" name="coin">
-            {coins.map((coin, index) => (
-              <option value={ coin } key={ index }>{coin}</option>
-            ))}
-          </select>
-        </label>
-        <label htmlFor="payment-method">
-          Método de pagamento
-          <select id="payment-method" name="paymentMethod">
-            <option value="money">Dinheiro</option>
-            <option value="credit-card">Cartão de crédito</option>
-            <option value="debit-card">Cartão de débito</option>
-          </select>
-        </label>
-        <label htmlFor="tag">
-          Tag
-          <select id="tag" name="tag">
-            <option value="food">Alimentação</option>
-            <option value="leisure">Lazer</option>
-            <option value="work">Trabalho</option>
-            <option value="transport">Transporte</option>
-            <option value="health">Saúde</option>
-          </select>
-        </label>
+        <SelectComponent
+          coins={ coins }
+          coin={ coin }
+          payment={ paymentMethod }
+          tags={ tag }
+          onChange={ this.handleChange }
+        />
         <button type="button">Adicionar despesa</button>
       </form>
     );
