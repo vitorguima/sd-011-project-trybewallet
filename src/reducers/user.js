@@ -1,12 +1,10 @@
-import { LOGIN } from '../actions';
-
 const INITIAL_STATE = {
   email: '',
 };
 
-const user = (state = INITIAL_STATE, action) => {
+const loginReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case LOGIN:
+  case 'LOGIN':
     return {
       ...state,
       email: action.email,
@@ -16,4 +14,4 @@ const user = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default user;
+export default loginReducer;

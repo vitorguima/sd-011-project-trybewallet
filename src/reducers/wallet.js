@@ -1,49 +1,40 @@
-import {
-  SAVE_EXPENSE,
-  DELETE_EXPENSE,
-  EDIT_EXPENSE,
-  SAVE_EDITED_EXPENSE,
-  GET_CURRENCIES } from '../actions';
-
 const INITIAL_STATE = {
   expenses: [],
-  expenseInEdition: {},
-  inEdition: false,
-  currencies: [] };
+};
 
-const wallet = (state = INITIAL_STATE, action) => {
+const walletReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case SAVE_EXPENSE:
+  case 'EXPENSE':
     return {
       ...state,
-      expenses: [...state.expenses, action.expense],
+      expenses: state.expenses.concat(action.expense),
     };
-  case DELETE_EXPENSE:
+  case 'DELETE':
+    return ({
+      ...state,
+      expenses: [...action.newExpenses],
+    });
+  case 'EDIT_EXPENSE':
     return {
       ...state,
-      expenses: action.expense,
+      expenses: [
+        ...state.expenses.filter((expense) => expense.id !== action.expense.id),
+        action.expense,
+      ].sort((a, b) => a.id - b.id),
     };
-  case EDIT_EXPENSE:
-    return {
-      ...state,
-      expenseInEdition: action.expense,
-      inEdition: action.expenseInEdition,
-    };
-  case SAVE_EDITED_EXPENSE:
-    return {
-      ...state,
-      expenses: action.expense,
-      expenseInEdition: {},
-      inEdition: false,
-    };
-  case GET_CURRENCIES:
+  case 'CURRENCIES':
     return {
       ...state,
       currencies: action.currencies,
+    };
+  case 'RATES':
+    return {
+      ...state,
+      rates: action.rates,
     };
   default:
     return state;
   }
 };
 
-export default wallet;
+export default walletReducer;
