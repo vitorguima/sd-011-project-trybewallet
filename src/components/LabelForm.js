@@ -46,6 +46,7 @@ export default class LabelForm extends Component {
             <option> Saúde </option>
           </select>
         </label>
+        <button type="button" onClick={ () => getApi(true) }>Adicionar despesa</button>
       </form>
     );
   }

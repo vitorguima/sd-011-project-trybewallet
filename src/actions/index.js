@@ -31,10 +31,11 @@ const addExpenses = (payload) => ({
   payload,
 });
 
-export const fetchApi = (param = null) => (dispatch) => {
+export const fetchApi = (state = null) => (dispatch) => {
   dispatch(requestCoin());
   return fetch('https://economia.awesomeapi.com.br/json/all')
     .then((result) => result.json())
-    .then((result) => dispatch(param ? addExpenses(result) : requestCoinSuccess(result)))
+    .then((result) => dispatch(state
+      ? addExpenses(result) : requestCoinSuccess(result)))
     .catch((error) => dispatch(requestCoinFail(error)));
 };
