@@ -10,6 +10,7 @@ class Login extends React.Component {
     super(props);
     this.handleEmail = this.handleEmail.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
+
     this.state = {
       email: '',
       password: '',
@@ -48,7 +49,9 @@ class Login extends React.Component {
         <label htmlFor="senha" data-testid="password-input">
           <input
             value={ password }
-            onChange={ this.handlePassword }
+            onChange={
+              this.handlePassword
+            }
             type="password"
             name="senha"
             id="senha"
@@ -57,14 +60,18 @@ class Login extends React.Component {
         </label>
         <Link
           to="/carteira"
-          onClick={ (e) => {
-            if (email !== DEFAULT_EMAIL && password.length < SIX) {
-              e.preventDefault();
-            }
-            setUserEmailAction(email);
-          } }
         >
-          Entrar
+          <button
+            type="button"
+            onClick={ (e) => {
+              if (email === DEFAULT_EMAIL && password.length < SIX) {
+                e.preventDefault();
+              }
+              setUserEmailAction(email);
+            } }
+          >
+            Entrar
+          </button>
         </Link>
       </form>
     );
