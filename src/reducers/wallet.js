@@ -22,6 +22,12 @@ function walletReducer(state = INITIAL_STATE, action) {
       ...state,
       isLoading: false,
     };
+  case 'ADD_DETAILS':
+    action.state.exchangeRates = action.payload;
+    return {
+      ...state,
+      expenses: [...state.expenses, action.state],
+    };
   default:
     return {
       ...state,
