@@ -1,6 +1,11 @@
 // Coloque aqui suas actions
 export const newUser = (state) => ({ type: 'NEW_USER', state });
 
+export const deleteExpense = (state) => ({
+  type: 'DELETE_EXPENSE',
+  state,
+});
+
 export const newExpense = (state, json) => ({
   type: 'NEW_EXPENSE',
   state,

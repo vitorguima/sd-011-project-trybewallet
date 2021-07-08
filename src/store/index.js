@@ -12,6 +12,7 @@ const INITIAL_STATE = {
     expenses: [],
     isFetching: false,
     error: '',
+    index: 0,
   },
 };
 
