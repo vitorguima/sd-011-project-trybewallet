@@ -1,9 +1,25 @@
 // Coloque aqui suas actions
-const LOGIN = 'LOGIN';
+export const LOGIN = 'LOGIN';
+export const REQUEST_API = 'REQUEST_API';
+export const REQUEST_API_SUCCESS = 'REQUEST_API_SUCCESS';
 
-const email = (credentials) => ({
+export const emailLogin = (payload) => ({
   type: LOGIN,
-  payload: credentials,
+  payload,
 });
 
-export default email;
+export const requestApi = () => ({
+  type: REQUEST_API,
+});
+
+export const requestApiSuccess = (data) => ({
+  type: REQUEST_API_SUCCESS,
+  data,
+});
+
+export const fetchApi = () => async (dispatch) => {
+  dispatch(requestApi());
+  const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+  const result = await response.json(response);
+  dispatch(requestApiSuccess(Object.keys(result).filter((curr) => curr !== 'USDT')));
+};

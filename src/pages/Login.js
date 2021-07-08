@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import userAction from '../actions';
+import { emailLogin } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -81,7 +81,7 @@ Login.defaultProps = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  fazerLogin: (credentials) => dispatch(userAction(credentials)),
+  fazerLogin: (email) => dispatch(emailLogin(email)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
