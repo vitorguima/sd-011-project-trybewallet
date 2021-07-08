@@ -12,7 +12,9 @@ class Wallet extends React.Component {
 
   render() {
     const { email, coins, expenses, getApi } = this.props;
-    const valor = expenses.reduce((acc, { exchangeRates, currency, value }) => acc + (Number(exchangeRates[currency].ask * value)), 0);
+    const valor = expenses
+      .reduce((acc, { exchangeRates, currency, value }) => (
+        acc + (Number(exchangeRates[currency].ask * value))), 0);
     return (
       <>
         <header>
@@ -46,4 +48,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 
 Wallet.propTypes = {
   email: PropTypes.string,
+  coins: PropTypes.array,
+  expenses: PropTypes.array,
+  getApi: PropTypes.func,
 }.isRequired;
