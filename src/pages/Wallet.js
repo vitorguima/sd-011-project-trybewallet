@@ -13,7 +13,6 @@ class Wallet extends React.Component {
   render() {
     const { email } = this.props;
     const { value } = this.state;
-
     return (
       <div>
         <header>
@@ -22,14 +21,42 @@ class Wallet extends React.Component {
           <div data-testid="total-field">{ value }</div>
           <div data-testid="header-currency-field">BRL</div>
         </header>
-        { /* Reconmendação do readme */ }
         <form>
           <label htmlFor="name">
             Nome:
             <input type="text" name="name" />
           </label>
+          <label htmlFor="valor">
+            Valor:
+            <input type="text" name="valor" />
+          </label>
+          <label htmlFor="descrição">
+            Descrição:
+            <input type="text" name="descrição" />
+          </label>
+          <label htmlFor="moeda">
+            Moeda:
+            <select> </select>
+          </label>
+          <label htmlFor="pagamento">
+            Método de pagamento:
+            <select name="pagamento">
+              <option value="dinheiro">Dinheiro</option>
+              <option value="cartão-de-credito">Cartão de crédito</option>
+              <option value="cartão-de-debito">Cartão de débito</option>
+            </select>
+          </label>
+          <label htmlFor="tag">
+            Tag:
+            <select>
+              <option value="alimentacao">Alimentação</option>
+              <option value="lazer">Lazer</option>
+              <option value="trabalho">Trabalho</option>
+              <option value="transporte">Transporte</option>
+              <option value="saude">Saúde</option>
+            </select>
+          </label>
         </form>
-
       </div>
     );
   }
