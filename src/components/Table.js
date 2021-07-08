@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class Table extends Component {
   render() {
+    const { expenses } = this.props;
     return (
       <table>
         <thead>
           <tr>
             <th>Descrição</th>
             <th>Tag</th>
-            <th>Metodo de Pagamento</th>
-            <th>value</th>
+            <th>Método de pagamento</th>
+            <th>Valor</th>
             <th>Moeda</th>
             <th>Câmbio ultilizado</th>
-            <th>valor convertido </th>
+            <th>Valor convertido </th>
             <th>Moeda de conversão</th>
             <th>Editar/Excluir</th>
 
@@ -40,3 +42,9 @@ export default class Table extends Component {
     );
   }
 }
+
+Table.propTypes = {
+  coins: PropTypes.array,
+  getApi: PropTypes.func,
+  expenses: PropTypes.array,
+}.isRequired;
