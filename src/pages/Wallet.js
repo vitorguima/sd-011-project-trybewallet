@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import FormOne from '../components/FormOne';
 import FormTwo from '../components/FormTwo';
 import FormThree from '../components/FormThree';
+import ExpensesTable from '../components/ExpensesTable';
 import { expenseAction } from '../actions';
 import { fetchDataTwo } from '../actions/fetchTwo';
 
@@ -67,6 +68,7 @@ class Wallet extends React.Component {
             Adicionar despesa
           </button>
         </form>
+        <ExpensesTable />
       </div>);
   }
 }
