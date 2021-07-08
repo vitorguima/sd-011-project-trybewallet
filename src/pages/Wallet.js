@@ -33,7 +33,7 @@ class Wallet extends React.Component {
           <div data-testid="header-currency-field"> BRL </div>
 
         </header>
-        <LabelForm coins={ coins } />
+        <LabelForm coins={ coins } getApi={ getApi } />
       </>
     );
   }
