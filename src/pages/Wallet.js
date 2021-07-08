@@ -111,4 +111,5 @@ Wallet.propTypes = {
   fetchAPI: PropTypes.func.isRequired,
   saveNewExpense: PropTypes.func.isRequired,
   currencies: PropTypes.shape(PropTypes.object.isRequired),
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
