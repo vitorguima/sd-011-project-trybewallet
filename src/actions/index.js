@@ -29,10 +29,22 @@ export const requestMoedasError = (payload) => ({
   payload,
 });
 
+export const requestExchangeSucess = (payload) => ({
+  type: 'FETCH_EXCHANGE_SUCESS',
+  payload,
+});
+
 export const fetchMoedas = () => (dispatch) => {
   dispatch(requestMoedas());
   return fetch('https://economia.awesomeapi.com.br/json/all')
     .then((result) => result.json())
     .then((data) => dispatch(requestMoedasSucess(data)))
     .catch((error) => dispatch(requestMoedasError(error.message)));
+};
+
+export const fetchExchange = () => (dispatch) => {
+  dispatch(requestMoedas());
+  return fetch('https://economia.awesomeapi.com.br/json/all')
+    .then((result) => result.json())
+    .then((data) => dispatch(requestExchangeSucess(data)));
 };

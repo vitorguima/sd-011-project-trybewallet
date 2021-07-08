@@ -2,6 +2,7 @@
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
+  exchange: null,
   loading: false,
 };
 
@@ -27,6 +28,13 @@ function wallet(state = INITIAL_STATE, action) {
     return {
       ...state,
       expenses: [...state.expenses, action.payload],
+    };
+
+  case 'FETCH_EXCHANGE_SUCESS':
+    return {
+      ...state,
+      exchange: action.payload,
+      loading: false,
     };
   default:
     return state;

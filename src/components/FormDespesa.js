@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { mountExpenses, fetchMoedas } from '../actions';
+import { mountExpenses, fetchMoedas, fetchExchange } from '../actions';
 
 class FormDespesa extends Component {
   constructor() {
@@ -18,8 +18,9 @@ class FormDespesa extends Component {
   }
 
   componentDidMount() {
-    const { dispatchFetchMoedas } = this.props;
+    const { dispatchFetchMoedas, dispatchfetchExchange } = this.props;
     dispatchFetchMoedas();
+    dispatchfetchExchange();
   }
 
   handleInput({ target }) {
@@ -96,7 +97,7 @@ class FormDespesa extends Component {
   }
 
   render() {
-    const { MountExpenses } = this.props;
+    const { MountExpenses, exchange, dispatchfetchExchange } = this.props;
     return (
       <div>
         {this.renderForm1()}
@@ -105,7 +106,8 @@ class FormDespesa extends Component {
         <button
           type="button"
           onClick={ () => {
-            MountExpenses(this.state);
+            dispatchfetchExchange();
+            MountExpenses({ ...this.state, exchangeRates: exchange });
             this.setState((prevState) => ({
               valor: '',
               descricao: '',
@@ -125,11 +127,13 @@ class FormDespesa extends Component {
 
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
+  exchange: state.wallet.exchange,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   MountExpenses: (state) => dispatch(mountExpenses(state)),
   dispatchFetchMoedas: (state) => dispatch(fetchMoedas(state)),
+  dispatchfetchExchange: (state) => dispatch(fetchExchange(state)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormDespesa);
@@ -137,5 +141,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(FormDespesa);
 FormDespesa.propTypes = {
   currencies: PropTypes.arrayOf(String).isRequired,
   dispatchFetchMoedas: PropTypes.func.isRequired,
+  dispatchfetchExchange: PropTypes.func.isRequired,
   MountExpenses: PropTypes.func.isRequired,
+  exchange: PropTypes.objectOf(Object).isRequired,
 };
