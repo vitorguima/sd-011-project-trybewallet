@@ -1,8 +1,13 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
+import { saveEmailAction } from '../actions'
 
 const Login = () => {
   const [login, setLogin] = useState({email:'',password:''});
+  const dispatch = useDispatch();
+  const history = useHistory();
+  // const emailUser = useSelector((state) => state.user.email)
 
   function handleInput(e) {
     const { target } = e;
@@ -23,11 +28,19 @@ const Login = () => {
     }
   }
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    dispatch(saveEmailAction(login.email))
+    history.push('/carteira')
+  }
+
+
   return (
     <form action="">
       <input data-testid="email-input" type="email" onChange={handleInput}/>
       <input data-testid="password-input" type="password" onChange={handleInput}/>
-      <button disabled={validateEmailInput()}>Entrar</button>
+      <button disabled={validateEmailInput()} onClick={handleSubmit}>Entrar</button>
+      {/* <button>{emailUser}</button> */}
     </form>
   )
 }
