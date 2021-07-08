@@ -4,15 +4,16 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import Wallet from './pages/Wallet';
 import store from './store';
+import './App.css';
 
 class App extends React.Component {
   render() {
     return (
       <Provider store={ store }>
         <BrowserRouter>
-          <div>Hello, TrybeWallet!</div>
+          <div className="title">Hello, TrybeWallet!</div>
           <Route path="/" component={ Login } />
-          <Route path="/wallet" component={ Wallet } />
+          <Route path="/carteira" component={ Wallet } />
         </BrowserRouter>
       </Provider>
     );
