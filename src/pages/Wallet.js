@@ -1,14 +1,16 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { fetchCurrencies } from "../actions";
 
 class Wallet extends React.Component {
   componentDidMount() {
-    // chamar api
+    const { getCurrencies } = this.props;
+    getCurrencies();
   }
 
   render() {
-    const { email } = this.props;
+    const { email, currencies } = this.props;
     return (
       <div>
         <header data-testid="email-field">{email}</header>
@@ -32,7 +34,9 @@ class Wallet extends React.Component {
           <label htmlFor="currency">
             Moeda
             <select id="currency">
-              <option value="test">TESTE</option>
+              {Object.keys(currencies).map((curr) =>
+                curr !== "USDT" ? <option id={curr}>{curr}</option> : null
+              )}
             </select>
           </label>
           <label htmlFor="method">
@@ -62,11 +66,22 @@ class Wallet extends React.Component {
 function mapStateToProps(state) {
   return {
     email: state.user.email,
+    currencies: state.wallet.currencies,
   };
 }
 
-export default connect(mapStateToProps)(Wallet);
+const mapDispatchToProps = (dispatch) => ({
+  getCurrencies: () => dispatch(fetchCurrencies()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
+  getCurrencies: PropTypes.func.isRequired,
+  currencies: PropTypes.objectOf(PropTypes.any),
+};
+
+Wallet.defaultProps = {
+  currencies: {},
 };
