@@ -5,12 +5,13 @@ class InValue extends Component {
   render() {
     const { value, handle } = this.props;
     return (
-      <label htmlFor="value">
+      <label htmlFor="value-input">
         Valor:
         <input
+          data-testid="value-input"
           type="number"
           name="value"
-          id="value"
+          id="value-input"
           onChange={ handle }
           value={ value }
         />

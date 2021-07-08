@@ -211,11 +211,14 @@ const INITIAL_STATE = {
   expenses: [],
   isLoading: false,
   id: 0,
+  editMode: false,
 };
 const REQUEST_API = 'REQUEST_API';
 const GET_CURRENCIES = 'GET_CURRENCIES';
 const ADD_EXPENSE = 'ADD_EXPENSE';
 const DEL_EXPENSE = 'DEL_EXPENSE';
+const EDIT_ON = 'EDIT_ON';
+const EDIT_OFF = 'EDIT_OFF';
 
 const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -229,6 +232,10 @@ const wallet = (state = INITIAL_STATE, action) => {
     return { ...state,
       expenses: state.expenses
         .filter((expense) => expense.id !== action.id) };
+  case EDIT_ON:
+    return { ...state, editMode: true };
+  case EDIT_OFF:
+    return { ...state, editMode: false };
   default:
     return state;
   }

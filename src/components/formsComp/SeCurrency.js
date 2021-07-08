@@ -6,11 +6,12 @@ class SeCurrency extends Component {
   render() {
     const { value, handle, currencies } = this.props;
     return (
-      <label htmlFor="currency">
+      <label htmlFor="currency-input">
         Moeda:
         <select
           name="currency"
-          id="currency"
+          data-testid="currency-input"
+          id="currency-input"
           value={ value }
           onChange={ handle }
         >

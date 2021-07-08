@@ -9,6 +9,10 @@ export const addExpenseAction = (expense) => ({ type: 'ADD_EXPENSE', expense });
 
 export const delExpenseAction = (id) => ({ type: 'DEL_EXPENSE', id });
 
+export const activeEditModeAction = () => ({ type: 'EDIT_ON' });
+
+export const desactiveEditModeAction = () => ({ type: 'EDIT_OFF' });
+
 export const setExpenseAction = (expense) => async (dispatch) => {
   const reponse = await fetch('https://economia.awesomeapi.com.br/json/all');
   const json = await reponse.json(reponse);

@@ -5,11 +5,12 @@ class SeMethod extends Component {
   render() {
     const { value, handle } = this.props;
     return (
-      <label htmlFor="method">
+      <label htmlFor="method-input">
         Método de pagamento:
         <select
           name="method"
-          id="method"
+          data-testid="method-input"
+          id="method-input"
           value={ value }
           onChange={ handle }
         >

@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchAPIAction, setExpenseAction } from '../actions';
+import { fetchAPIAction, setExpenseAction, activeEditModeAction,
+  desactiveEditModeAction, delExpenseAction } from '../actions';
 import Header from '../components/Header';
 import HeaderList from '../components/HeaderList';
 import InValue from '../components/formsComp/InValue';
@@ -10,6 +11,8 @@ import SeCurrency from '../components/formsComp/SeCurrency';
 import SeMethod from '../components/formsComp/SeMethod';
 import SeTag from '../components/formsComp/SeTag';
 import BtDelet from '../components/BtDelet';
+import BtAdd from '../components/BtAdd';
+import BtEdit from '../components/BtEdit';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -19,9 +22,13 @@ class Wallet extends React.Component {
       description: '',
       currency: 'USD',
       method: 'Dinheiro',
-      tag: 'Alimentação',
+      tag: '',
+      id: '',
+      exchangeRates: '',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.addOnClick = this.addOnClick.bind(this);
+    this.editOnClick = this.editOnClick.bind(this);
   }
 
   componentDidMount() {
@@ -37,13 +44,16 @@ class Wallet extends React.Component {
 
   addOnClick() {
     const { add, id } = this.props;
-    add({ id, ...this.state });
+    const { value, description, currency, method, tag } = this.state;
+    add({ id, value, description, currency, method, tag });
     this.setState({
       value: 0,
       description: '',
       currency: 'USD',
       method: 'Dinheiro',
-      tag: 'Alimentação',
+      tag: '',
+      id: '',
+      exchangeRates: '',
     });
   }
 
@@ -77,8 +87,34 @@ class Wallet extends React.Component {
       * expense.exchangeRates[expense.currency].ask)).toFixed(2);
   }
 
+  // // Função criada para setar os valores a serem editados
+  editMode({ currency, description, exchangeRates, id, method, tag, value }) {
+    const { activeEditMode } = this.props;
+    activeEditMode();
+    this.setState({
+      currency, description, method, tag, value, id, exchangeRates,
+    });
+  }
+
+  editOnClick() {
+    const { del, add, desactiveEditMode } = this.props;
+    const { value, description, currency, method, tag, id, exchangeRates } = this.state;
+    del(id);
+    add({ value, description, currency, method, tag, id, exchangeRates });
+    desactiveEditMode();
+    this.setState({
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: '',
+      id: '',
+      exchangeRates: '',
+    });
+  }
+
   render() {
-    const { email, total } = this.props;
+    const { email, total, editMode } = this.props;
     const { value, description, currency, method, tag } = this.state;
     return (
       <div>
@@ -89,12 +125,9 @@ class Wallet extends React.Component {
           <SeCurrency handle={ this.handleChange } value={ currency } />
           <SeMethod handle={ this.handleChange } value={ method } />
           <SeTag handle={ this.handleChange } value={ tag } />
-          <button
-            type="button"
-            onClick={ () => this.addOnClick() }
-          >
-            Adicionar despesa
-          </button>
+          {!editMode
+            ? <BtAdd addOnClick={ this.addOnClick } />
+            : <BtEdit editOnClick={ this.editOnClick } /> }
         </form>
         <table className="table">
           <HeaderList />
@@ -111,6 +144,13 @@ class Wallet extends React.Component {
                 <td className="column">Real</td>
                 <td className="column">
                   <BtDelet id={ expense.id } />
+                  <button
+                    type="button"
+                    data-testid="edit-btn"
+                    onClick={ () => this.editMode(expense) }
+                  >
+                    Edt
+                  </button>
                 </td>
               </tr>))}
           </tbody>
@@ -122,13 +162,16 @@ class Wallet extends React.Component {
 const mapStateToProps = (state) => ({
   email: state.user.email,
   total: state.wallet.expenses,
-  isLoading: state.wallet.isLoading,
+  editMode: state.wallet.editMode,
   id: state.wallet.id,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   requestAPI: () => dispatch(fetchAPIAction()),
   add: (expense) => dispatch(setExpenseAction(expense)),
+  activeEditMode: () => dispatch(activeEditModeAction()),
+  desactiveEditMode: () => dispatch(desactiveEditModeAction()),
+  del: (id) => dispatch(delExpenseAction(id)),
 });
 
 Wallet.propTypes = {

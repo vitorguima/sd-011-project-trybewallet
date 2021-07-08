@@ -5,12 +5,13 @@ class InDescript extends Component {
   render() {
     const { value, handle } = this.props;
     return (
-      <label htmlFor="description">
+      <label htmlFor="description-input">
         Descrição
         <input
           type="text"
           name="description"
-          id="description"
+          data-testid="description-input"
+          id="description-input"
           onChange={ handle }
           value={ value }
         />

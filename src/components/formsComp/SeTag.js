@@ -5,12 +5,13 @@ class SeTag extends Component {
   render() {
     const { value, handle } = this.props;
     return (
-      <label htmlFor="tag">
+      <label htmlFor="tag-input">
         Tag:
         <select
           required
           name="tag"
-          id="tag"
+          data-testid="tag-input"
+          id="tag-input"
           value={ value }
           onChange={ handle }
         >
