@@ -11,10 +11,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, loading, coins } = this.props;
-    if (loading) {
-      return <div>Loading</div>;
-    }
+    const { email, coins } = this.props;
     return (
       <main>
         <header>
@@ -37,7 +34,6 @@ Wallet.propTypes = {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
-  loading: state.wallet.isLoading,
   coins: state.wallet.currencies,
 });
 
