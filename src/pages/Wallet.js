@@ -1,11 +1,13 @@
 import React from 'react';
 import Header from '../components/Header';
+import AddExpenseForm from '../components/AddExpenseForm';
 
 function Wallet() {
   return (
-    <div>
+    <>
       <Header />
-    </div>
+      <AddExpenseForm />
+    </>
   );
 }
 
