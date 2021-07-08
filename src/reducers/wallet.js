@@ -10,7 +10,6 @@ const INITIAL = {
 const wallet = (state = INITIAL, action) => {
   switch (action.type) {
   case ADD_EXPENSE:
-    console.log(action);
     return {
       ...state,
       expenses: [...state.expenses, action.payload],
