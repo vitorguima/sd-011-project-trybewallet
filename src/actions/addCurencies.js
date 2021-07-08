@@ -7,7 +7,7 @@ function addCurencies() {
       type: ADD_CURRENCIES,
       payload: Object.entries(result).reduce((acc, [key, val]) => {
         if (key === 'USDT') return acc;
-        return val.code;
+        return acc.concat(val.code);
       }, []),
     }))
   );
