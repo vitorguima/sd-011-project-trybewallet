@@ -10,8 +10,6 @@ class Login extends React.Component {
     super(props);
     this.handleEmail = this.handleEmail.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
-    this.handleButton = this.handleButton.bind(this);
-
     this.state = {
       email: '',
       password: '',
@@ -30,16 +28,10 @@ class Login extends React.Component {
     });
   }
 
-  handleButton() {
-    const DEFAULT_EMAIL = 'alguem@alguem.com';
+  render() {
+    const DEFAULT_EMAIL = 'alguem@email.com';
     const SIX = 6;
     const { email, password } = this.state;
-    return email === DEFAULT_EMAIL && password.lenght >= SIX;
-  }
-
-  render() {
-    const { email, password } = this.state;
-    const verified = this.handleButton();
     const { setUserEmailAction } = this.props;
     return (
       <form>
@@ -66,7 +58,7 @@ class Login extends React.Component {
         <Link
           to="/carteira"
           onClick={ (e) => {
-            if (verified) {
+            if (email !== DEFAULT_EMAIL && password.length < SIX) {
               e.preventDefault();
             }
             setUserEmailAction(email);
