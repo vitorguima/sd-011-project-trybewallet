@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { deleteTable } from '../actions';
 
-export default class TableRowExpenses extends Component {
+class TableRowExpenses extends Component {
   render() {
-    const { expenses } = this.props;
+    const { expenses, dispatchDelete } = this.props;
     return (
       <tr>
         <td>{expenses.description}</td>
@@ -20,12 +22,27 @@ export default class TableRowExpenses extends Component {
 
         </td>
         <td>Real</td>
+        <td>
+          <button
+            type="button"
+            data-testid="delete-btn"
+            onClick={ () => dispatchDelete(expenses) }
+          >
+            Deletar
+          </button>
+
+        </td>
       </tr>
     );
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  dispatchDelete: (state) => dispatch(deleteTable(state)),
+});
+
 TableRowExpenses.propTypes = {
+  dispatchDelete: PropTypes.func.isRequired,
   expenses: PropTypes.shape({
     currency: PropTypes.string,
     description: PropTypes.string,
@@ -35,3 +52,5 @@ TableRowExpenses.propTypes = {
     value: PropTypes.string,
   }).isRequired,
 };
+
+export default connect(null, mapDispatchToProps)(TableRowExpenses);
