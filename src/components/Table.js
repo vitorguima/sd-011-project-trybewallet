@@ -35,7 +35,14 @@ export default class Table extends Component {
               </td>
               <td>Real</td>
               <td>
-                <button type="button" onClick={ () => deleteExpenses(value.id) } data-testid="delete-btn"> delete</button>
+                <button
+                  type="button"
+                  onClick={ () => deleteExpenses(value.id) }
+                  data-testid="delete-btn"
+                >
+                  {' '}
+                  delete
+                </button>
               </td>
             </tr>
           ))}
