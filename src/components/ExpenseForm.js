@@ -1,4 +1,7 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { addExpense } from '../actions';
+import { sendExpense, getExchangeRate } from '../services/API';
 
 export default function ExpenseForm(props) {
   const getOptions = () => {
@@ -7,12 +10,29 @@ export default function ExpenseForm(props) {
     }
   };
 
+  const dispatch = useDispatch();
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    const { target } = e;
+    const data = new FormData(target);
+    const expense = {};
+    for (let pair of data) {
+      const [key, value] = pair;
+      expense[key] = value;
+    }
+    const exchangeRate = await getExchangeRate();
+    expense.exchangeRate = exchangeRate;
+    dispatch(addExpense(expense));
+  };
+
   return (
-    <form className="d-flex justify-content-between border ">
+    <form className="d-flex justify-content-between border p-2" onSubmit={handleFormSubmit}>
       <div className="form-group ">
         <label for="valueInput">
           Valor
           <input
+            name="value"
             type="number"
             className="form-control"
             id="valueInput"
@@ -21,15 +41,17 @@ export default function ExpenseForm(props) {
         </label>
       </div>
       <div className="form-group">
-        <label for="exampleInputPassword1">
+        <label for="currencyInput">
           Moeda
-          <select className="form-select">{getOptions()}</select>
+          <select id="currencyInput" name="currency" className="form-select">
+            {getOptions()}
+          </select>
         </label>
       </div>
       <div className="form-group">
         <label for="paymentMethod">
           Método de pagamento
-          <select defaultValue="Selecione a moeda:" className="form-select">
+          <select name="method" defaultValue="Selecione a moeda:" className="form-select">
             <option value="Dinheiro">Dinheiro</option>
             <option value="Cartão de Crédito">Cartão de Crédito</option>
             <option value="Cartão de Débito">Cartão de Débito</option>
@@ -37,15 +59,27 @@ export default function ExpenseForm(props) {
         </label>
       </div>
       <div className="form-group">
-        <label for="paymentMethod">
+        <label for="tagInput">
           Tag
-          <select className="form-select">
+          <select name="tag" id="tagInput" className="form-select">
             <option value="Alimentação">Alimentação</option>
             <option value="Lazer">Lazer</option>
             <option value="Trabalho">Trabalho</option>
             <option value="Transporte">Transporte</option>
             <option value="Saúde">Saúde</option>
           </select>
+        </label>
+      </div>
+      <div className="form-group ">
+        <label for="descriptionInput">
+          Descrição
+          <input
+            name="description"
+            type="number"
+            className="form-control"
+            id="descriptionInput"
+            placeholder="Adicione a descrição"
+          />
         </label>
       </div>
       <button type="submit" className="btn btn-primary">

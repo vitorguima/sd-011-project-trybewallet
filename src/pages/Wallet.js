@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Expenses from '../components/ExpenseForm';
-import API from '../services/API';
+import { fetchAPI } from '../services/API';
+import { getData } from '../actions';
 
 export default function Wallet() {
   const dispatch = useDispatch();
@@ -12,7 +13,10 @@ export default function Wallet() {
 
   useEffect(() => {
     if (!currencies) {
-      dispatch(API()).then(() => setCurrencies(walletStore.currencies));
+      fetchAPI().then((r) => {
+        setCurrencies(r);
+        dispatch(getData(r));
+      });
     }
   }, [currencies]);
 
