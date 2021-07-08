@@ -10,6 +10,7 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
+      saveinfo: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.confirmedEmail = this.confirmedEmail.bind(this);
@@ -23,7 +24,7 @@ class Login extends React.Component {
   }
 
   // peguei uma dica de como altenticar email no atackoverflow
-  // https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript?page=3&tab=Votes
+  // https://pt.stackoverflow.com/questions/1386/express%C3%A3o-regular-para-valida%C3%A7%C3%A3o-de-e-mail
   confirmedEmail(email) {
     const emailPattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
     return emailPattern.test(email);

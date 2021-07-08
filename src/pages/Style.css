@@ -1,16 +1,16 @@
-.body-login {
+/* .body-login {
+  align-items: center;
+  background-color: #f2f2f2;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  background-color: rgb(83, 111, 124);
   height: 400px;
   width: 400px;
 }
 
 .button-login {
   border-radius: 5px;
-  color: rgb(0, 0, 0);
   border: 1px solid black;
+  color: black;
   cursor: pointer;
-}
+} */
