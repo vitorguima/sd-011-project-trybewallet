@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { fetchApi } from '../actions';
 import LabelForm from '../components/LabelForm';
 
 class Wallet extends React.Component {
@@ -11,8 +12,13 @@ class Wallet extends React.Component {
     };
   }
 
+  componentDidMount() {
+    const { getApi } = this.props;
+    getApi();
+  }
+
   render() {
-    const { email } = this.props;
+    const { email, coins } = this.props;
     const { valor } = this.state;
     return (
       <>
@@ -27,7 +33,7 @@ class Wallet extends React.Component {
           <div data-testid="header-currency-field"> BRL </div>
 
         </header>
-        <LabelForm />
+        <LabelForm coins={ coins } />
       </>
     );
   }
@@ -35,9 +41,14 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  coins: state.wallet.currencies,
 });
 
-export default connect(mapStateToProps)(Wallet);
+const mapDispatchToProps = (dispatch) => ({
+  getApi: dispatch(fetchApi()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 
 Wallet.propTypes = {
   email: PropTypes.string,
