@@ -18,6 +18,19 @@ export default class LabelForm extends Component {
     this.selectMethod = this.selectMethod.bind(this);
     this.select = this.select.bind(this);
     this.handlerClick = this.handlerClick.bind(this);
+    this.editForm = this.editForm.bind(this);
+  }
+
+  editForm(value) {
+    this.setState({
+      id: value.id,
+      value: value.value,
+      description: value.description,
+      currency: value.currency,
+      method: value.method,
+      tag: value.tag,
+      exchangeRates: value.exchangeRates,
+    });
   }
 
   handleChange({ target }) {
