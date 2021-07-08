@@ -33,7 +33,7 @@ export default class LabelForm extends Component {
             <option> Metodo de pagamento! </option>
             <option valor="money">Dinheiro </option>
             <option valor="creditCard">Cartão de crédito </option>
-            <option>Cartão de débito </option>
+            <option valor="debitCard">Cartão de débito </option>
           </select>
         </label>
         <label htmlFor="Tag">
