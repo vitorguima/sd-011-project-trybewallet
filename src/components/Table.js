@@ -17,6 +17,19 @@ class Table extends Component {
     );
   }
 
+  edit(id) {
+    const { expenses, editForm } = this.props;
+    return (
+      <button
+        type="button"
+        data-testid="edit-btn"
+        onClick={ () => editForm(expenses.find((expense) => expense.id === id)) }
+      >
+        Editar
+      </button>
+    );
+  }
+
   render() {
     const { expenses } = this.props;
     return (
@@ -58,7 +71,7 @@ class Table extends Component {
               <td>Real</td>
               <td>{ exchangeRates[currency].name }</td>
               <td>
-                <button type="button">Editar</button>
+                { this.edit(id)}
                 { this.delete(id) }
               </td>
             </tr>
@@ -80,6 +93,7 @@ const mapDispatchToProps = (dispatch) => ({
 Table.propTypes = {
   expenses: PropTypes.array,
   dispatchDeleteExpense: PropTypes.func,
+  editForm: PropTypes.func,
 }.isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);

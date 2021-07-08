@@ -41,3 +41,8 @@ export const deleteExpense = (id) => ({
   type: 'DELETE_EXPENSE',
   id,
 });
+
+export const changeExpense = (expense) => ({
+  type: 'CHANGE_EXPENSE',
+  expense,
+});

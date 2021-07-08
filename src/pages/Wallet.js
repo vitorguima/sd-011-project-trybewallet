@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchPosts } from '../actions';
+import { fetchPosts, changeExpense } from '../actions';
 import Table from '../components/Table';
+
+const Alimentacao = 'Alimentação';
+let btnName = false;
 
 class Wallet extends Component {
   constructor(props) {
@@ -15,11 +18,13 @@ class Wallet extends Component {
       description: '',
       currency: 'USD',
       method: 'Dinheiro',
-      tag: 'Alimentação',
+      tag: Alimentacao,
       exchangeRates: {},
     };
     this.form = this.form.bind(this);
     this.change = this.change.bind(this);
+    this.editForm = this.editForm.bind(this);
+    this.submitChange = this.submitChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -33,6 +38,19 @@ class Wallet extends Component {
     this.setState({ [id]: value });
   }
 
+  editForm(form) {
+    this.setState({
+      id: form.id,
+      value: form.value,
+      description: form.description,
+      currency: form.currency,
+      method: form.method,
+      tag: form.tag,
+      exchangeRates: form.exchangeRates,
+    });
+    btnName = true;
+  }
+
   handleClick() {
     const { expenses, dispatchFetchPosts } = this.props;
     dispatchFetchPosts(this.state);
@@ -42,32 +60,40 @@ class Wallet extends Component {
       description: '',
       currency: 'USD',
       method: 'Dinheiro',
-      tag: 'Alimentação',
+      tag: Alimentacao,
       exchangeRates: {},
     });
+    btnName = false;
   }
 
-  form() {
+  submitChange() {
+    const { expenses, dispatchChangeExpense } = this.props;
+    dispatchChangeExpense(this.state);
+    this.setState({
+      id: expenses.length + 1,
+      value: '',
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: Alimentacao,
+      exchangeRates: {},
+    });
+    btnName = false;
+  }
+
+  selects() {
     const { currencies } = this.props;
-    const { value, description, currency, method, tag } = this.state;
+    const { currency, method, tag } = this.state;
     return (
-      <form>
-        <label htmlFor="value">
-          Valor
-          <input type="text" value={ value } id="value" onChange={ this.change } />
-        </label>
-        <label htmlFor="description">
-          Descrição
-          <input
-            type="text"
-            value={ description }
-            id="description"
-            onChange={ this.change }
-          />
-        </label>
+      <div>
         <label htmlFor="currency">
           Moeda
-          <select value={ currency } id="currency" onChange={ this.change }>
+          <select
+            value={ currency }
+            data-testid="currency-input"
+            id="currency"
+            onChange={ this.change }
+          >
             {currencies.map((coin, index) => (
               <option key={ index } value={ coin }>
                 { coin }
@@ -77,7 +103,12 @@ class Wallet extends Component {
         </label>
         <label htmlFor="method">
           Método de pagamento
-          <select value={ method } id="method" onChange={ this.change }>
+          <select
+            value={ method }
+            data-testid="method-input"
+            id="method"
+            onChange={ this.change }
+          >
             <option value="Dinheiro">Dinheiro</option>
             <option value="Cartão de crédito">Cartão de crédito</option>
             <option value="Cartão de débito">Cartão de débito</option>
@@ -85,14 +116,43 @@ class Wallet extends Component {
         </label>
         <label htmlFor="tag">
           Tag
-          <select value={ tag } id="tag" onChange={ this.change }>
-            <option value="Alimentacao">Alimentação</option>
+          <select value={ tag } data-testid="tag-input" id="tag" onChange={ this.change }>
+            <option value={ Alimentacao }>Alimentação</option>
             <option value="Lazer">Lazer</option>
             <option value="Trabalho">Trabalho</option>
             <option value="Transporte">Transporte</option>
             <option value="Saude">Saúde</option>
           </select>
         </label>
+      </div>
+    );
+  }
+
+  form() {
+    const { value, description } = this.state;
+    return (
+      <form>
+        <label htmlFor="value">
+          Valor
+          <input
+            type="text"
+            value={ value }
+            id="value"
+            onChange={ this.change }
+            data-testid="value-input"
+          />
+        </label>
+        <label htmlFor="description">
+          Descrição
+          <input
+            type="text"
+            value={ description }
+            id="description"
+            data-testid="description-input"
+            onChange={ this.change }
+          />
+        </label>
+        { this.selects() }
       </form>
     );
   }
@@ -116,8 +176,10 @@ class Wallet extends Component {
           </p>
         </header>
         { this.form() }
-        <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
-        <Table />
+        { btnName
+          ? <button type="button" onClick={ this.submitChange }>Editar despesa</button>
+          : <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>}
+        <Table editForm={ this.editForm } />
       </div>
     );
   }
@@ -132,6 +194,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchFetchPosts: (state) => dispatch(fetchPosts(state)),
+  dispatchChangeExpense: (state) => dispatch(changeExpense(state)),
 });
 
 Wallet.propTypes = {
