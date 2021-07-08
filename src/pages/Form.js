@@ -2,6 +2,17 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 export default class Form extends Component {
+  constructor() {
+    super();
+    this.state = {
+      value: '',
+      description: '',
+      coin: '',
+      paymentMethod: '',
+      tag: '',
+    };
+  }
+
   render() {
     const { coins } = this.props;
     return (
@@ -24,7 +35,7 @@ export default class Form extends Component {
         </label>
         <label htmlFor="payment-method">
           Método de pagamento
-          <select id="payment-method" name="payment-method">
+          <select id="payment-method" name="paymentMethod">
             <option value="money">Dinheiro</option>
             <option value="credit-card">Cartão de crédito</option>
             <option value="debit-card">Cartão de débito</option>
@@ -40,6 +51,7 @@ export default class Form extends Component {
             <option value="health">Saúde</option>
           </select>
         </label>
+        <button type="button">Adicionar despesa</button>
       </form>
     );
   }
