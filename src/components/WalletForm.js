@@ -9,6 +9,14 @@ import { updateCurrencyToNewExpense } from '../actions/wallet';
 class WalletForm extends Component {
   constructor() {
     super();
+    // this.state = {
+    //   id: 0,
+    //   value: 0,
+    //   description: '',
+    //   currency: 'USD',
+    //   method: 'Dinheiro',
+    //   tag: 'Alimentação',
+    // }
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -24,14 +32,17 @@ class WalletForm extends Component {
       <>
         <label htmlFor="moeda">
           Moeda:
-          <select id="moeda" name="currency" onChange={ this.handleChange }>
+          <select
+            id="moeda"
+            name="currency"
+            onChange={ this.handleChange }
+          >
             <WalletFetchedCurrencies />
           </select>
         </label>
         <label htmlFor="metodo-de-pagamento">
           Método de pagamento:
           <select
-            defaultValue="Dinheiro"
             name="method"
             onChange={ this.handleChange }
             id="metodo-de-pagamento"
@@ -42,7 +53,6 @@ class WalletForm extends Component {
         <label htmlFor="categoria">
           Tag:
           <select
-            defaultValue="Alimentação"
             id="categoria"
             name="tag"
             onChange={ this.handleChange }

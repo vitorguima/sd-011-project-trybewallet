@@ -18,18 +18,15 @@ class ExpensesTable extends Component {
               <td>{ expense.method }</td>
               <td>{ expense.value }</td>
               <td>
-                { (Object.values(expense.exchangeRates).find((cotacao) => (
-                  cotacao.code === expense.currency
-                )).name).split('/')[0]}
+                { expense.exchangeRates[expense.currency].name.split('/')[0]}
+
               </td>
               <td>
-                { parseFloat(Object.values(expense.exchangeRates).find((cotacao) => (
-                  cotacao.code === expense.currency)).ask).toFixed(2)}
+                { parseFloat(expense.exchangeRates[expense.currency].ask).toFixed(2)}
               </td>
               <td>
-                { Object.values(expense.exchangeRates).find((cotacao) => (
-                  cotacao.code === expense.currency
-                )).ask * expense.value}
+                { (expense.exchangeRates[expense.currency]
+                  .ask * expense.value).toFixed(2) }
               </td>
               <td>Real</td>
               <td>

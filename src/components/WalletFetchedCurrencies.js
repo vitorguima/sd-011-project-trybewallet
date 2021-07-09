@@ -7,10 +7,10 @@ class WalletFetchedCurrencies extends Component {
     const { fetchedCurr } = this.props;
     return (
       <>
-        { Object.values(fetchedCurr).filter((filtered) => (filtered.codein !== 'BRLT'))
+        { fetchedCurr.filter((filteredCurr) => filteredCurr !== 'USDT')
           .map((currency, index) => (
             <option key={ index }>
-              { currency.code }
+              { currency }
             </option>
           ))}
       </>

@@ -19,7 +19,7 @@ const wallet = (state = INITIAL_STATE, action) => {
   case REQUEST_SUCCESS:
     return {
       ...state,
-      currencies: action.currencies,
+      currencies: Object.keys(action.currencies),
     };
   case ADD_EXPENSE: {
     const newExpense = {
