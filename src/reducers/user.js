@@ -8,7 +8,7 @@ const USER_STATE = {
 function functionUser(state = USER_STATE, action) {
   switch (action.type) {
   default:
-    return 0;
+    return state;
   }
 }
 

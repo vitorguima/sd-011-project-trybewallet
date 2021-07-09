@@ -14,7 +14,7 @@ const WALLET_STATE = {
 function functionUser(state = WALLET_STATE, action) {
   switch (action.type) {
   default:
-    return 0;
+    return state;
   }
 }
 
