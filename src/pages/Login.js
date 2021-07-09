@@ -4,33 +4,41 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logInWallet } from '../actions';
 
+const patterns = {
+  email: /^([a-z\d.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/,
+  password: /^[\w@-]{6,20}$/,
+};
+
 class login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: false,
-      password: false,
-      validEmail: '',
+      email: '',
+      password: '',
+      disabled: true,
     };
-    this.validate = this.validate.bind(this);
+    this.handleInput = this.handleInput.bind(this);
   }
 
-  validate(field, regex) {
-    const { attributes: { name } } = field;
-    if (regex[name.value].test(field.value)) this.setState({ [name.value]: true });
-    if (name.value === 'email') this.setState({ validEmail: field.value });
+  validate() {
+    const { email, password } = this.state;
+    return patterns.email.test(email) && patterns.password.test(password);
+  }
+
+  handleInput(target) {
+    const { value, name } = target;
+    this.setState({ [name]: value }, () => this.setState({ disabled: !this.validate() }));
+  }
+
+  handleButton() {
+    const { submitLogIn, history } = this.props;
+    const { email } = this.state;
+    submitLogIn(email);
+    history.push('/carteira');
   }
 
   render() {
-    const patterns = {
-      email: /^([a-z\d.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/,
-      password: /^[\w@-]{6,20}$/,
-    };
-
-    const { submitLogIn } = this.props;
-    const { email, validEmail, password } = this.state;
-    const disable = (email && password);
-    // console.log(disable)
+    const { disabled } = this.state;
 
     return (
       <div>
@@ -42,7 +50,7 @@ class login extends React.Component {
               name="email"
               type="email"
               placeholder="Digite seu email"
-              onChange={ ({ target }) => this.validate(target, patterns) }
+              onChange={ ({ target }) => this.handleInput(target) }
               required
             />
           </label>
@@ -54,13 +62,13 @@ class login extends React.Component {
               type="password"
               placeholder="Digite sua senha"
               minLength="6"
-              onChange={ ({ target }) => this.validate(target, patterns) }
+              onChange={ ({ target }) => this.handleInput(target) }
               required
             />
             <button
               type="button"
-              onClick={ () => submitLogIn(validEmail) }
-              disabled={ !disable }
+              onClick={ () => this.handleButton() }
+              disabled={ disabled }
             >
               Entrar
             </button>
@@ -75,13 +83,9 @@ const mapDispatchToProps = (dispatch) => ({
   submitLogIn: (value) => dispatch(logInWallet(value)),
 });
 
-// const mapStateToProps = (state) => ({
-//   email: state.user.email,
-// });
-
 login.propTypes = {
   submitLogIn: PropTypes.func.isRequired,
-  // email: PropTypes.string.isRequired,
+  history: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(login);
