@@ -16,19 +16,20 @@ class Header extends React.Component {
       <header>
         <h1>Minha carteira</h1>
         <p>
-          Logado como:
+          Logado como:&nbsp;
           <span data-testid="email-field">
             {user.email}
           </span>
         </p>
         <p>
-          Gasto total:
+          Gasto total:&nbsp;
           <span data-testid="total-field">
             { total.toFixed(2) }
           </span>
+          &nbsp;BRL
         </p>
         <p>
-          Câmbio realizado para:
+          Câmbio realizado para:&nbsp;
           <span data-testid="header-currency-field">
             BRL
           </span>
