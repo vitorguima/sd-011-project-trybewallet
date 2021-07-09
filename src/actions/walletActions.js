@@ -1,8 +1,9 @@
-import { getCurrentCoins } from '../services/awesomeApi';
+import { getCorrentCoins } from '../services/awesomeApi';
 
 export const REQUEST_COINS_SUCESS = 'REQUEST_COINS_SUCESS';
 export const REQUEST_COINS_ERROR = 'REQUEST_COINS_ERROR';
 export const NEW_EXPENSE = 'NEW_EXPENSE';
+export const DEL_EXPENSE = 'DEL_EXPENSE';
 
 export const requestCoinsSucess = (coins) => ({
   type: REQUEST_COINS_SUCESS,
@@ -23,11 +24,16 @@ export const addNewExpense = (expense) => ({
   expense,
 });
 
+export const delExpense = (expense) => ({
+  type: 'DEL_EXPENSE',
+  payload: expense,
+});
+
 export const fetchAwesomeApi = () => (dispatch) => {
-  getCurrentCoins()
+  getCorrentCoins()
     .then((coins) => {
-      const denaro = Object.keys(coins);
-      const newCoins = denaro.filter((coin) => coin !== 'USDT');
+      const alou = Object.keys(coins);
+      const newCoins = alou.filter((coin) => coin !== 'USDT');
       dispatch(
         requestCoinsSucess(newCoins),
       );
@@ -37,13 +43,14 @@ export const fetchAwesomeApi = () => (dispatch) => {
     ));
 };
 
-export const newFetchAwesomeApi = (expense) => {
-  getCurrentCoins()
+export const newFetchAwesomeApi = (expense) => (dispatch) => {
+  getCorrentCoins()
     .then((coins) => {
+      console.log(expense);
       dispatch(
         addNewExpense({
           ...expense,
-          exchengeRates: coins,
+          exchangeRates: coins,
         }),
       );
     });

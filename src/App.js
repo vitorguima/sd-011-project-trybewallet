@@ -1,7 +1,5 @@
 import React from 'react';
-// import { Provider } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
-// import store from './store';
 import Login from './pages/Login';
 import Wallet from './pages/Wallet';
 
