@@ -37,7 +37,9 @@ export function fetchToExpenses(forms) {
     dispatch(fetchCurrenciesStart());
     return fetch('https://economia.awesomeapi.com.br/json/all')
       .then((response) => response.json())
-      .then((json) => dispatch(fetchCurrenciesToExpenses({ ...forms, exchangeRates: json })));
+      .then((json) => dispatch(
+        fetchCurrenciesToExpenses({ ...forms, exchangeRates: json }),
+      ));
   };
 }
 

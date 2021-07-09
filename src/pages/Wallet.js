@@ -40,7 +40,6 @@ class Wallet extends React.Component {
 
   addExpenseToGlobal() {
     const { requestExpenses, userExpense } = this.props;
-    console.log(userExpense);
     let id = 0;
     if (userExpense.length > 0) {
       id = userExpense[userExpense.length - 1].id + 1;
@@ -51,17 +50,27 @@ class Wallet extends React.Component {
 
   sumTotalOfExpenses() {
     const { userExpense } = this.props;
+
     let total = 0;
-    userExpense.forEach(expense => {
-      const num = parseInt(expense.value, 10);
+
+    userExpense.forEach((expense) => {
+      const { exchangeRates } = expense;
+
+      const conversionRate = {
+        userValueInput: Number(expense.value),
+        currValueOfCurrency: Number(exchangeRates[expense.currency].ask),
+      };
+
+      const { userValueInput, currValueOfCurrency } = conversionRate;
+      const num = userValueInput * currValueOfCurrency;
       total += num;
     });
     return total;
   }
 
   render() {
-    const { email, currencies, userExpense } = this.props;
-    const currentExpense = userExpense;
+    const { email, currencies } = this.props;
+    // const currentExpense = userExpense;
     return (
       <div
         className="main-page"
@@ -87,7 +96,7 @@ class Wallet extends React.Component {
             className="add-expense"
             onClick={ () => this.addExpenseToGlobal() }
           >
-            Adicionar despesas
+            Adicionar despesa
           </button>
         </form>
       </div>
@@ -112,4 +121,6 @@ Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   request: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  userExpense: PropTypes.arrayOf(PropTypes.object).isRequired,
+  requestExpenses: PropTypes.func.isRequired,
 };
