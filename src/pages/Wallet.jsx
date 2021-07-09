@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout } from '../components/common';
-import { Header, Select } from '../components/Wallet';
+import { Header, Select, ExpensesTable } from '../components/Wallet';
 
 import withStore from '../utils/withStore';
 
@@ -116,6 +116,8 @@ class Wallet extends React.Component {
 
             <button type="submit">Adicionar despesa</button>
           </form>
+
+          <ExpensesTable />
         </main>
       </Layout>
     );
