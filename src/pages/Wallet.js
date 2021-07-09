@@ -28,14 +28,14 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, authorization } = this.props;
+    const { email, authorization, total } = this.props;
     const { currency } = this.state;
     return (
       <div>
         { authorization && <Redirect to="/" /> }
         <header>
           <span data-testid="email-field">{ email }</span>
-          <span data-testid="total-field">0</span>
+          <span data-testid="total-field">{ total }</span>
           <span data-testid="header-currency-field">BRL</span>
         </header>
         <main>
@@ -46,14 +46,21 @@ class Wallet extends React.Component {
   }
 }
 
-const mapStateToProps = ({ user }) => ({
+const mapStateToProps = ({ user, wallet }) => ({
   email: user.email,
   authorization: user.authorization,
+  total: wallet.totalCalculed,
 });
 
 Wallet.propTypes = ({
   email: PropTypes.string.isRequired,
-  authorization: PropTypes.bool.isRequired,
+  authorization: PropTypes.bool,
+  total: PropTypes.number,
+});
+
+Wallet.defaultProps = ({
+  total: 0,
+  authorization: false,
 });
 
 export default connect(mapStateToProps)(Wallet);
