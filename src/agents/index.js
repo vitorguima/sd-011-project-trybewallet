@@ -21,3 +21,5 @@ export const addNewExpense = (expense) => (dispatch) => fetchCurrencies()
     dispatch(receiveCurrencies(currencies));
     dispatch(receiveNewExpense(expense));
   });
+
+export const deleteExpense = createAgent('deleteExpense');

@@ -19,6 +19,10 @@ const actions = {
     nextState.currencies = currencies;
     return nextState;
   },
+  deleteExpense: (nextState, id) => {
+    nextState.expenses = nextState.expenses.filter((expense) => expense.id !== id);
+    return nextState;
+  },
 };
 
 export default createReducer(initialState, actions);

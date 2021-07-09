@@ -1,32 +1,49 @@
 import React from 'react';
 import withStore from '../../utils/withStore';
-
-
+import { deleteExpense } from '../../agents';
 
 class ExpensesTable extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.handleDeleteItem = this.handleDeleteItem.bind(this);
+  }
+
+  handleDeleteItem(id) {
+    const { deleteExpense } = this.props;
+
+    deleteExpense(id);
+  }
+
+  renderTableHeader() {
+    return (
+      <thead>
+        <tr>
+          <th>Descrição</th>
+          <th>Tag</th>
+          <th>Método de pagamento</th>
+          <th>Valor</th>
+          <th>Moeda</th>
+          <th>Câmbio utilizado</th>
+          <th>Valor convertido</th>
+          <th>Moeda de conversão</th>
+          <th>Editar/Excluir</th>
+        </tr>
+      </thead>
+    );
+  }
+
   render() {
     const { wallet } = this.props;
 
-    return(
+    return (
       <table>
-        <thead>
-          <tr>
-            <th>Descrição</th>
-            <th>Tag</th>
-            <th>Método de pagamento</th>
-            <th>Valor</th>
-            <th>Moeda</th>
-            <th>Câmbio utilizado</th>
-            <th>Valor convertido</th>
-            <th>Moeda de conversão</th>
-            <th>Editar/Excluir</th>
-          </tr>
-        </thead>
+        { this.renderTableHeader() }
         <tbody>
           { wallet.expenses.map(({ currency, description, exchangeRates, id, method, tag, value }) => {
             const usedExchange = parseFloat(exchangeRates[currency].ask);
             const convertedValue = usedExchange * parseFloat(value);
-            const [convertedFrom, convertedTo] = exchangeRates[currency].name.split('/');
+            const [convertedFrom] = exchangeRates[currency].name.split('/');
 
             return (
               <tr key={ id }>
@@ -42,7 +59,11 @@ class ExpensesTable extends React.Component {
                   <button type="button">
                     Editar
                   </button>
-                  <button type="button">
+                  <button
+                    type="button"
+                    data-testid="delete-btn"
+                    onClick={ () => this.handleDeleteItem(id) }
+                  >
                     Excluir
                   </button>
                 </td>
@@ -55,4 +76,4 @@ class ExpensesTable extends React.Component {
   }
 }
 
-export default withStore(ExpensesTable, ['wallet']);
+export default withStore(ExpensesTable, ['wallet'], [deleteExpense]);
