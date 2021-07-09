@@ -1,9 +1,12 @@
 export const SET_USER = 'SET_USER';
+export const SAVE_EXPENSE = 'SAVE_EXPENSE';
 export const REQUEST_API = 'REQUEST_API';
 export const REQUEST_API_SUCCESS = 'REQUEST_API_SUCCESS';
 export const REQUEST_API_ERROR = 'REQUEST_API_ERROR';
 
 const setUser = (payload) => ({ type: SET_USER, payload });
+
+export const saveExpense = (payload) => ({ type: SAVE_EXPENSE, payload });
 
 const requestApi = (payload) => ({ type: REQUEST_API, payload });
 
