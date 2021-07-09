@@ -1,9 +1,9 @@
 .App {
+  height: 100px;
   align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100px;
 }
 
 .App-logo {
@@ -45,11 +45,7 @@
 }
 
 .box-login {
-  border-bottom-width: 4px;
-  border-style: solid;
-  border-top-width: 0.1px;
-  border-right-width: 0.3px;
-  border-left-width: 0.2px;
+  border: 3px solid black;
   height: 150px;
   width: 300px;
   background-color: #006666;
