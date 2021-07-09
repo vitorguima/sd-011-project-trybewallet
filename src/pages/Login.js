@@ -2,28 +2,35 @@ import React from 'react';
 import '../styles/login.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { login } from '../actions';
+import { logInWallet } from '../actions';
 
-class Login extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     disabled: true,
-  //   };
+class login extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: false,
+      password: false,
+      validEmail: '',
+    };
+    this.validate = this.validate.bind(this);
+  }
 
-  //   // this.handleChange = this.handleChange.bind(this);
-  // }
-  // handleChange({ target }) {
-  //   const { value } = target;
-  //   this.setState({ email: value, disabled: false });
-  // }
-
-  // handleClick(event) {
-  //   return event.preventDefault(event); // retirar esse prevent
-  // }
+  validate(field, regex) {
+    const { attributes: { name } } = field;
+    if (regex[name.value].test(field.value)) this.setState({ [name.value]: true });
+    if (name.value === 'email') this.setState({ validEmail: field.value });
+  }
 
   render() {
-    const { submitLogin, email, disabled } = this.props;
+    const patterns = {
+      email: /^([a-z\d.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/,
+      password: /^[\w@-]{6,20}$/,
+    };
+
+    const { submitLogIn } = this.props;
+    const { email, validEmail, password } = this.state;
+    const disable = (email && password);
+    // console.log(disable)
 
     return (
       <div>
@@ -34,8 +41,8 @@ class Login extends React.Component {
               data-testid="email-input"
               name="email"
               type="email"
-              value={ email }
-              onChange={ ({ target }) => submitLogin(target) }
+              placeholder="Digite seu email"
+              onChange={ ({ target }) => this.validate(target, patterns) }
               required
             />
           </label>
@@ -45,14 +52,15 @@ class Login extends React.Component {
               data-testid="password-input"
               name="password"
               type="password"
+              placeholder="Digite sua senha"
               minLength="6"
-              onChange={ ({ target }) => submitLogin(target) }
+              onChange={ ({ target }) => this.validate(target, patterns) }
               required
             />
             <button
-              type="submit"
-              onClick={ () => submitLogin(email) }
-              disabled={ disabled }
+              type="button"
+              onClick={ () => submitLogIn(validEmail) }
+              disabled={ !disable }
             >
               Entrar
             </button>
@@ -64,18 +72,16 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  submitLogin: (value) => dispatch(login(value)),
+  submitLogIn: (value) => dispatch(logInWallet(value)),
 });
 
-const mapStateToProps = (state) => ({
-  email: state.user.email,
-  disabled: state.user.disabled,
-});
+// const mapStateToProps = (state) => ({
+//   email: state.user.email,
+// });
 
-Login.propTypes = {
-  submitLogin: PropTypes.func.isRequired,
-  disabled: PropTypes.bool.isRequired,
-  email: PropTypes.string.isRequired,
+login.propTypes = {
+  submitLogIn: PropTypes.func.isRequired,
+  // email: PropTypes.string.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(login);
