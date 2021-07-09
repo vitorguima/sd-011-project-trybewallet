@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { setUserEmail } from '../actions/Login';
 
-class Login extends React.Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     this.handleEmail = this.handleEmail.bind(this);
@@ -30,28 +30,30 @@ class Login extends React.Component {
   }
 
   render() {
-    const DEFAULT_EMAIL = 'alguem@email.com';
-    const SIX = 6;
+    const VALID_EMAIL = 'alguem@email.com';
+    const VALID_PASSWORD = '123456';
     const { email, password } = this.state;
     const { setUserEmailAction } = this.props;
     return (
       <form>
-        <label htmlFor="email" data-testid="email-input">
+        <label htmlFor="email">
           <input
             value={ email }
             onChange={ this.handleEmail }
+            data-testid="email-input"
             type="email"
             name="email"
             id="email"
             placeholder="Email"
           />
         </label>
-        <label htmlFor="senha" data-testid="password-input">
+        <label htmlFor="senha">
           <input
             value={ password }
             onChange={
               this.handlePassword
             }
+            data-testid="password-input"
             type="password"
             name="senha"
             id="senha"
@@ -63,12 +65,11 @@ class Login extends React.Component {
         >
           <button
             type="button"
-            onClick={ (e) => {
-              if (email === DEFAULT_EMAIL && password.length < SIX) {
-                e.preventDefault();
-              }
+            id="buttonSubmit"
+            onClick={ () => {
               setUserEmailAction(email);
             } }
+            disabled={ !(email === VALID_EMAIL && password === VALID_PASSWORD) }
           >
             Entrar
           </button>
