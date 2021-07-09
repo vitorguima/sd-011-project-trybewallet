@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import  actionFunctions from '../actions'
 
@@ -7,7 +7,6 @@ const Login = () => {
   const [login, setLogin] = useState({email:'',password:''});
   const dispatch = useDispatch();
   const history = useHistory();
-  // const emailUser = useSelector((state) => state.user.email)
 
   function handleInput(e) {
     const { target } = e;

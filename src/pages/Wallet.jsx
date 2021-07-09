@@ -1,8 +1,16 @@
 import React from 'react';
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import  actionFunctions from '../actions'
+import CoinOptions from '../components/CoinOptions';
 
 const Wallet = () => {
-  const userEmail = useSelector((state) => state.user.email)
+  const dispatch = useDispatch();
+  const userEmail = useSelector((state) => state.user.email);
+  const allCurrencies = useSelector((state) => state.wallet.currencies);
+  useEffect(() => {
+    dispatch(actionFunctions.fetchCurrency())
+  },[]) // segundo parâmentro sendo array vazio apenas atualiza na montagem do componente
   return (
     <>
       <nav>
@@ -27,6 +35,7 @@ const Wallet = () => {
           <label>
             Moeda
             <select name="" id="">
+              {/* {allCurrencies.filter((currency) => currency !== 'USDT')} */}
             </select>
           </label>
           <label>

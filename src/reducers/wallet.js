@@ -6,10 +6,10 @@ const INITIAL_STATE = {
 function user(state = INITIAL_STATE, action) {
   const { type, payload } = action;
   switch (type) {
-  case 'PLACEHOLDER':
+  case 'REQUEST_WALLET_SUCCESS':
     return {
       ...state,
-      email: payload,
+      currencies: payload,
     };
   default:
     return state;
