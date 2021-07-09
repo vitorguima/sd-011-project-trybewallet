@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchAPI } from '../actions';
 import Form from './Form';
+import Table from './Table';
+import '../App.css';
 
 class Wallet extends Component {
   render() {
@@ -19,12 +21,13 @@ class Wallet extends Component {
 
     return (
       <div>
-        <header>
+        <header className="header">
           <span data-testid="email-field">{email}</span>
           <span data-testid="total-field">{ reducerExpenses() }</span>
           <span data-testid="header-currency-field">BRL</span>
           <Form />
         </header>
+        <Table />
       </div>
     );
   }

@@ -13,25 +13,27 @@ class Login extends Component {
       password: '',
       status: true,
     };
+    this.activeButton = this.activeButton.bind(this);
+    this.handleInput = this.handleInput.bind(this);
+  }
+
+  activeButton() {
+    const { email, password } = this.state;
+    const regex = /\w+@\w+.com(.br)?/;
+    const numMin = 6;
+    if (regex.test(email) && password.length >= numMin) {
+      this.setState({ status: false });
+    } else {
+      this.setState({ status: true });
+    }
+  }
+
+  handleInput({ target }) {
+    const { value, name } = target;
+    this.setState({ [name]: value }, () => this.activeButton());
   }
 
   render() {
-    const activeButton = () => {
-      const { email, password } = this.state;
-      const regex = /\w+@\w+.com(.br)?/;
-      const numMin = 6;
-      if (regex.test(email) && password.length >= numMin) {
-        this.setState({ status: false });
-      } else {
-        this.setState({ status: true });
-      }
-    };
-
-    const handleInput = ({ target }) => {
-      const { value, name } = target;
-      this.setState({ [name]: value }, () => activeButton());
-    };
-
     const { status, email } = this.state;
     const { loginValidation } = this.props;
     return (
@@ -40,14 +42,14 @@ class Login extends Component {
         <input
           data-testid="email-input"
           name="email"
-          onChange={ handleInput }
+          onChange={ this.handleInput }
           type="email"
           placeholder="Nome"
         />
         <input
           data-testid="password-input"
           name="password"
-          onChange={ handleInput }
+          onChange={ this.handleInput }
           type="password"
           placeholder="Senha"
         />

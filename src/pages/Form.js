@@ -23,7 +23,6 @@ class Form extends Component {
   handleInput({ target }) {
     const { value, name } = target;
     this.setState({ [name]: value });
-    console.log('test');
   }
 
   render() {
