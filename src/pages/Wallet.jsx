@@ -37,6 +37,8 @@ class Wallet extends React.Component {
     const { wallet } = this.props;
     const { currency, paymentMethod, tag } = this.state;
 
+    const currencyList = Object.keys(wallet.currencies).filter((cur) => cur !== 'USDT');
+
     return (
       <>
         <Select
@@ -44,7 +46,7 @@ class Wallet extends React.Component {
           name="currency"
           value={ currency }
           handleChange={ this.handleInputChange }
-          options={ wallet.currencies }
+          options={ currencyList }
           label="Moeda"
         />
 
