@@ -24,36 +24,37 @@ class Form extends Component {
             onChange={ this.handleChange }
           />
         </label>
-        <label htmlFor="descricao">
-          Descrição:
-          <textarea
-            type="text"
-            name="descricao"
-            placeholder="Digite a descrição do produto"
-            onChange={ this.handleChange }
-          />
-        </label>
         <label htmlFor="moeda">
           Moeda:
-          {/* <select /> */}
+          <select><option id="moeda" value="CAD">CAD</option></select>
         </label>
         <label htmlFor="payment">
           Método de pagamento:
           <select>
-            <option value="dinheiro">Dinheiro</option>
-            <option value="credito">Cartão de crédito</option>
-            <option value="debito">Cartão de débito</option>
+            <option id="payment" value="dinheiro">Dinheiro</option>
+            <option id="payment" value="credito">Cartão de crédito</option>
+            <option id="payment" value="debito">Cartão de débito</option>
           </select>
         </label>
         <label htmlFor="tag">
           Tag:
           <select>
-            <option value="alimentacao">Alimentação</option>
-            <option value="lazer">Lazer</option>
-            <option value="trabalho">Trabalho</option>
-            <option value="transporte">Transporte</option>
-            <option value="saude">Saúde</option>
+            <option id="tag" value="alimentacao">Alimentação</option>
+            <option id="tag" value="lazer">Lazer</option>
+            <option id="tag" value="trabalho">Trabalho</option>
+            <option id="tag" value="transporte">Transporte</option>
+            <option id="tag" value="saude">Saúde</option>
           </select>
+        </label>
+        <label htmlFor="descricao">
+          Descrição:
+          <input
+            id="descricao"
+            type="text"
+            name="descricao"
+            placeholder="Digite a descrição do produto"
+            onChange={ this.handleChange }
+          />
         </label>
       </form>
     );
