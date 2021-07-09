@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import Logo from '../Images/logo.png';
-import { loginEnterClickAction } from '../Actions';
-import PasswordInput from '../Components/PasswordInput';
+import Logo from '../images/logo.png';
+import { loginEnterClickAction } from '../actions';
+import PasswordInput from '../components/PasswordInput';
 
 class Login extends React.Component {
   constructor() {
