@@ -1,16 +1,16 @@
+import { SET_USEREMAIL } from '../actions';
+
 const INITIAL_STATE = {
-  user: {
-    email: '',
-  },
+  email: '',
 };
 
-function userReducer(state = INITIAL_STATE, action) {
+function user(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case 'value':
-    return { ...state };
+  case SET_USEREMAIL:
+    return { ...state, email: action.payload };
   default:
     return state;
   }
 }
 
-export default userReducer;
+export default user;

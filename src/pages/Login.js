@@ -1,17 +1,23 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
+import { setUserEmail } from '../actions';
 
 class Login extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       email: '',
       password: '',
       disabled: true,
+      login: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.checkEmail = this.checkEmail.bind(this);
+    this.handleClkic = this.handleClkic.bind(this);
   }
 
   handleChange({ target }) {
@@ -38,8 +44,16 @@ class Login extends React.Component {
     }
   }
 
+  handleClkic(param) {
+    const { setUserEmailAction } = this.props;
+    setUserEmailAction(param);
+    this.setState({
+      login: true,
+    });
+  }
+
   render() {
-    const { email, disabled, password } = this.state;
+    const { email, disabled, password, login } = this.state;
     return (
       <>
         Login:
@@ -60,14 +74,24 @@ class Login extends React.Component {
           data-testid="password-input"
         />
         <button
-          type="button"
+          type="submit"
+          onClick={ () => this.handleClkic(email) }
           disabled={ disabled }
         >
           Entrar
         </button>
+        {login ? <Redirect to="/carteira" /> : ''}
       </>
     );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  setUserEmailAction: (payload) => dispatch(setUserEmail(payload)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  setUserEmailAction: PropTypes.func.isRequired,
+};
