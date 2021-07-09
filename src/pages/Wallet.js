@@ -20,17 +20,17 @@ class Wallet extends React.Component {
     return (
       <form>
         <label htmlFor="value">
-          Valor:
+          Valor
           <input type="number" />
         </label>
 
         <label htmlFor="description">
-          Descrição:
+          Descrição
           <input type="text" />
         </label>
 
         <label htmlFor="currency">
-          Moeda:
+          Moeda
           <select name="currency" id="currency">
             <option value="br">BR</option>
           </select>
