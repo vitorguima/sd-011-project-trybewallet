@@ -1,8 +1,8 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Login from './Pages/Login.js';
+import Login from './Pages/Login';
 import './App.css';
-import Wallet from './Pages/Wallet.js';
+import Wallet from './Pages/Wallet';
 
 function App() {
   return (
