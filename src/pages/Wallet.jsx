@@ -4,27 +4,28 @@ import { Header, Select } from '../components/Wallet';
 
 import withStore from '../utils/withStore';
 
-import { fetchCurrencies } from '../agents';
+import { addNewExpense, updateCurrencies } from '../agents';
 
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      amount: 0,
+      value: 0,
       description: '',
-      currency: '',
-      paymentMethod: '',
-      tag: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
-    const { fetchCurrencies } = this.props;
+    const { updateCurrencies } = this.props;
 
-    fetchCurrencies();
+    updateCurrencies();
   }
 
   handleInputChange({ target }) {
@@ -33,9 +34,17 @@ class Wallet extends React.Component {
     this.setState({ [name]: value });
   }
 
+  handleSubmit(e) {
+    e.preventDefault();
+
+    const { addNewExpense } = this.props;
+
+    addNewExpense(this.state);
+  }
+
   renderSelects() {
     const { wallet } = this.props;
-    const { currency, paymentMethod, tag } = this.state;
+    const { currency, method, tag } = this.state;
 
     const currencyList = Object.keys(wallet.currencies).filter((cur) => cur !== 'USDT');
 
@@ -51,9 +60,9 @@ class Wallet extends React.Component {
         />
 
         <Select
-          id="expense-paymentMethod"
-          name="paymentMethod"
-          value={ paymentMethod }
+          id="expense-method"
+          name="method"
+          value={ method }
           handleChange={ this.handleInputChange }
           options={ ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'] }
           label="Método de pagamento"
@@ -72,22 +81,22 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { amount, description } = this.state;
+    const { value, description } = this.state;
 
     return (
       <Layout title="Minha Carteira">
         <Header />
         <main>
           <form
-            onSubmit={ (e) => e.preventDefault() }
+            onSubmit={ this.handleSubmit }
           >
-            <label htmlFor="expense-amount">
+            <label htmlFor="expense-value">
               Valor
               <input
-                id="expense-amount"
+                id="expense-value"
                 type="number"
-                name="amount"
-                value={ amount }
+                name="value"
+                value={ value }
                 onChange={ this.handleInputChange }
               />
             </label>
@@ -104,6 +113,8 @@ class Wallet extends React.Component {
             </label>
 
             { this.renderSelects() }
+
+            <button type="submit">Adicionar despesa</button>
           </form>
         </main>
       </Layout>
@@ -111,4 +122,4 @@ class Wallet extends React.Component {
   }
 }
 
-export default withStore(Wallet, ['wallet'], [fetchCurrencies]);
+export default withStore(Wallet, ['wallet'], [addNewExpense, updateCurrencies]);
