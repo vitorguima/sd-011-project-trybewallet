@@ -1,16 +1,40 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import fetchCurrency from '../services/api';
 
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { currencies: [] };
     this.calculateTotal = this.calculateTotal.bind(this);
+    this.getCurrencies = this.getCurrencies.bind(this);
+  }
+
+  componentDidMount() {
+    this.getCurrencies();
+  }
+
+  async getCurrencies() {
+    const getCurrencies = await fetchCurrency();
+    const arrayCurrencies = Object.keys(getCurrencies)
+      .filter((currency) => currency !== 'USDT');
+    console.log(arrayCurrencies);
+    this.setState({
+      currencies: arrayCurrencies,
+    });
+  }
+
+  listCurrencies() {
+    const { currencies } = this.state;
+    return currencies.map((currency) => (
+      <option key={ currency } value={ currency }>
+        { currency }
+      </option>));
   }
 
   calculateTotal() {
     const { walletExpenses } = this.props;
-    console.log(walletExpenses);
     const total = walletExpenses.reduce((acc, curr) => acc + curr, 0);
     if (!total) return 0;
     return total;
@@ -32,7 +56,7 @@ class Wallet extends React.Component {
         <label htmlFor="moeda">
           Moeda
           <select name="moeda" id="moeda">
-            <option name="moeda" value="br">BR</option>
+            { this.listCurrencies() }
           </select>
         </label>
 
@@ -94,4 +118,4 @@ const mapStateToProps = (state) => ({
   walletExpenses: state.wallet.expenses,
 });
 
-export default connect(mapStateToProps)(Wallet);
+export default connect(mapStateToProps, null)(Wallet);
