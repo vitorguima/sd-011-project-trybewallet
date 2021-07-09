@@ -1,9 +1,13 @@
 import React from 'react';
+
+import withStore from '../utils/withStore';
+
 import { Layout } from '../components';
+import { login } from '../actions';
 
 class Login extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       email: '',
@@ -23,6 +27,11 @@ class Login extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    const { history, login } = this.props;
+    const { email } = this.state;
+
+    login({ email });
+    history.push('/carteira');
   }
 
   validateFields() {
@@ -73,4 +82,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default withStore(Login, null, [login]);
