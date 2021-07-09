@@ -1,14 +1,10 @@
-const wallet = {
-  user: {
-    email: '',
-    password: '',
-  },
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
-};
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import rootReducers from '../reducers';
 
-export default wallet;
+const store = createStore(rootReducers, composeWithDevTools(applyMiddleware(thunk)));
+
+export default store;
 
 // local onde é armazenado o estado global da aplicação.

@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { newUser } from '../actions';
 
 class LoginForm extends Component {
   constructor(props) {
@@ -30,7 +33,9 @@ class LoginForm extends Component {
   }
 
   handleSubmit() {
-    console.log('Teste');
+    const { email } = this.state;
+    const { emailStore } = this.props;
+    emailStore(email);
   }
 
   render() {
@@ -78,6 +83,16 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm;
+const mapDispatchToProps = (dispatch) => ({
+  emailStore: (email) => dispatch(newUser(email)),
+});
+
+// mapDispatchToProps - vai mandar o e-mail logado para o estado global (store).
+
+LoginForm.propTypes = {
+  emailStore: PropTypes.string,
+}.isRequired;
+
+export default connect(null, mapDispatchToProps)(LoginForm);
 
 // Foi criado o formulário do requisito 1.
