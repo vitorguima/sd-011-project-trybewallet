@@ -30,7 +30,7 @@ const fetchCurrency = () => {
   return (dispatch) => {
     return fetch(`https://economia.awesomeapi.com.br/json/all`)
     .then((result) => result.json())
-    .then((data) => dispatch(requestCurrencySuccess(Object.keys(data))))
+    .then((data) => dispatch(requestCurrencySuccess(data)))
     .catch(console.log)
   } 
 }

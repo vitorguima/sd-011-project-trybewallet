@@ -8,6 +8,7 @@ const Wallet = () => {
   const dispatch = useDispatch();
   const userEmail = useSelector((state) => state.user.email);
   const allCurrencies = useSelector((state) => state.wallet.currencies);
+
   useEffect(() => {
     dispatch(actionFunctions.fetchCurrency())
   },[]) // segundo parâmentro sendo array vazio apenas atualiza na montagem do componente
@@ -34,8 +35,8 @@ const Wallet = () => {
           </label>
           <label>
             Moeda
-            <select name="" id="">
-              {/* {allCurrencies.filter((currency) => currency !== 'USDT')} */}
+            <select name="moeda" id="">
+              <CoinOptions currencies={allCurrencies} />
             </select>
           </label>
           <label>
@@ -56,6 +57,7 @@ const Wallet = () => {
               <option value="Saúde">Saúde</option>
             </select>
           </label>
+          <button>Adicionar despesa</button>
         </form>
       </nav>
     </>
