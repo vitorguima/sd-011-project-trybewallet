@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import WalletForm from '../components/WalletForm';
 import { fetchCurrencies } from '../actions/wallet';
 import ExpensesTable from '../components/ExpensesTable';
+import './Wallet.css';
 
 class Wallet extends React.Component {
   componentDidMount() {
@@ -15,23 +16,23 @@ class Wallet extends React.Component {
     const { userEmail, expenses } = this.props;
     const radix = 10;
     return (
-      <div>
-        TrybeWallet
-        <header>
+      <>
+        <header className="wallet-header">
+          <p>Trybewallet</p>
           <p data-testid="email-field">{`Usuário: ${userEmail}`}</p>
-          <p data-testid="total-field">
-            {(expenses.length === 0) ? 0
-              : expenses.reduce((acc, expense) => (
+          <span className="total-expenses">
+            Despesa Total: R$
+            <p data-testid="total-field">
+              {expenses.reduce((acc, expense) => (
                 acc + (parseInt(expense.value, radix))
-                * Object.values(expense.exchangeRates).find((cotacao) => (
-                  cotacao.code === expense.currency
-                )).ask), 0)}
-          </p>
-          <p data-testid="header-currency-field">BRL</p>
+                * expense.exchangeRates[expense.currency].ask), 0).toFixed(2)}
+            </p>
+            <p data-testid="header-currency-field">BRL</p>
+          </span>
         </header>
         <WalletForm />
         <ExpensesTable />
-      </div>
+      </>
     );
   }
 }

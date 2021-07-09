@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { deleteExpense } from '../actions/wallet';
 import TableHeaders from './TableHeaders';
+import './ExpensesTable.css';
 
 class ExpensesTable extends Component {
   render() {
     const { expenses, deleteExpenseFromState } = this.props;
     return (
-      <table>
+      <table className="expenses-table">
         <TableHeaders />
         <tbody>
           { expenses.map((expense, index) => (

@@ -5,6 +5,7 @@ import WalletFetchedCurrencies from './WalletFetchedCurrencies';
 import PaymentMethods from './PaymentMethods';
 import TagCategories from './TagCategories';
 import { updateCurrencyToNewExpense } from '../actions/wallet';
+import './WalletForm.css';
 
 class WalletForm extends Component {
   constructor() {
@@ -68,7 +69,7 @@ class WalletForm extends Component {
     const { state } = this;
     const { addNewExpense } = this.props;
     return (
-      <form>
+      <form className="wallet-form">
         <label htmlFor="valor">
           Valor:
           <input

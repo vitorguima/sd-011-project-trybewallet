@@ -1,0 +1,9 @@
+.wallet-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.total-expenses {
+  display: flex;
+}
