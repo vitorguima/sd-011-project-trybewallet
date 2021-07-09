@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Form from './Form';
+import Table from './Table';
 import { fetchCurrencies, newExpenseAction } from '../actions';
 
 class Wallet extends React.Component {
@@ -43,10 +44,11 @@ class Wallet extends React.Component {
         <header>
           <p data-testid="email-field">{email}</p>
           <p data-testid="total-field">
-            Despesa Total (header): R$
+            Despesa Total: R$
             {total}
           </p>
         </header>
+        <Table />
         <Form />
         <button type="button" onClick={ this.handleClick }>
           Adicionar despesa
