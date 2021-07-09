@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ExpensesForm from '../components/ExpensesForm';
 import fetchApi from '../services';
@@ -28,11 +27,10 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, authorization, total } = this.props;
+    const { email, total } = this.props;
     const { currency } = this.state;
     return (
       <div>
-        { authorization && <Redirect to="/" /> }
         <header>
           <span data-testid="email-field">{ email }</span>
           <span data-testid="total-field">{ total }</span>
@@ -48,19 +46,16 @@ class Wallet extends React.Component {
 
 const mapStateToProps = ({ user, wallet }) => ({
   email: user.email,
-  authorization: user.authorization,
   total: wallet.totalCalculed,
 });
 
 Wallet.propTypes = ({
   email: PropTypes.string.isRequired,
-  authorization: PropTypes.bool,
   total: PropTypes.number,
 });
 
 Wallet.defaultProps = ({
   total: 0,
-  authorization: false,
 });
 
 export default connect(mapStateToProps)(Wallet);
