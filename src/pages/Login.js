@@ -2,30 +2,29 @@ import React from 'react';
 import '../styles/login.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import login from '../actions';
+import { login } from '../actions';
 
 class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: '',
-    };
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     disabled: true,
+  //   };
 
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange({ target }) {
-    const { value } = target;
-    this.setState({ email: value });
-  }
+  //   // this.handleChange = this.handleChange.bind(this);
+  // }
+  // handleChange({ target }) {
+  //   const { value } = target;
+  //   this.setState({ email: value, disabled: false });
+  // }
 
   // handleClick(event) {
-  // return event.preventDefault(event); // retirar esse prevent
+  //   return event.preventDefault(event); // retirar esse prevent
   // }
 
   render() {
-    const { submitLogin } = this.props;
-    const { email } = this.state;
+    const { submitLogin, email, disabled } = this.props;
+
     return (
       <div>
         <form className="login">
@@ -36,7 +35,7 @@ class Login extends React.Component {
               name="email"
               type="email"
               value={ email }
-              onChange={ this.handleChange }
+              onChange={ ({ target }) => submitLogin(target) }
               required
             />
           </label>
@@ -47,12 +46,13 @@ class Login extends React.Component {
               name="password"
               type="password"
               minLength="6"
-              // value={ redux } onChange={ hendleChange }
+              onChange={ ({ target }) => submitLogin(target) }
               required
             />
             <button
               type="submit"
-              onClick={ submitLogin(email) }
+              onClick={ () => submitLogin(email) }
+              disabled={ disabled }
             >
               Entrar
             </button>
@@ -67,8 +67,15 @@ const mapDispatchToProps = (dispatch) => ({
   submitLogin: (value) => dispatch(login(value)),
 });
 
+const mapStateToProps = (state) => ({
+  email: state.user.email,
+  disabled: state.user.disabled,
+});
+
 Login.propTypes = {
-  submitLogin: PropTypes.string.isRequired,
+  submitLogin: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired,
+  email: PropTypes.string.isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

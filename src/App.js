@@ -1,4 +1,5 @@
 import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
 
 class App extends React.Component {
@@ -6,7 +7,9 @@ class App extends React.Component {
     return (
       <>
         <div>Hello, TrybeWallet!</div>
-        <Login />
+        <Switch>
+          <Route exact path="/" component={ Login } />
+        </Switch>
       </>
     );
   }
