@@ -17,6 +17,12 @@ export default function Wallet() {
     dispatch(fetchAPI());
   }, []);
 
+  const getTotal = () => {
+    if (total > 0) {
+      return total;
+    }
+    return 0;
+  };
   return (
     <div className="wallet">
       <nav>
@@ -29,7 +35,7 @@ export default function Wallet() {
             {userStore.email}
           </span>
           <div className="m-2">
-            <div data-testid="total-field">{total.toFixed(2)}</div>
+            <div data-testid="total-field">{getTotal()}</div>
             <span data-testid="header-currency-field">BRL</span>
           </div>
         </div>

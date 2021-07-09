@@ -14,17 +14,20 @@ export default function () {
   const getExpenses = () => {
     if (userExpenses.length > 0) {
       return userExpenses.map((el, index) => {
-        const { description, method, tag, value, name, convertedPrice, ask, id } = el;
+        const { description, method, tag, value, exchangeRates, currency, id } = el;
+        const { name, ask } = exchangeRates[currency];
+        const convertedPrice = ask * value;
+
         return (
           <tr key={index}>
-            <th>{description}</th>
-            <td>{tag}</td>
-            <td>{method} </td>
-            <td>{value}</td>
-            <td>{name}</td>
-            <td>{ask}</td>
-            <td>{convertedPrice}</td>
-            <td>Real</td>
+            <th role="cell">{description}</th>
+            <td role="cell">{tag}</td>
+            <td role="cell">{method} </td>
+            <td role="cell">{value}</td>
+            <td role="cell">{name}</td>
+            <td role="cell">{parseFloat(ask).toFixed(2)}</td>
+            <td role="cell">{convertedPrice}</td>
+            <td role="cell">Real</td>
             <td>
               <button data-testid="edit-btn" className="btn fas fa-edit btn-info m-1" />
               <button
@@ -45,11 +48,11 @@ export default function () {
         <tr>
           <th scope="col">Descrição</th>
           <th scope="col">Tag</th>
-          <th scope="col">Método de Pagamento</th>
+          <th scope="col">Método de pagamento</th>
           <th scope="col">Valor</th>
           <th scope="col">Moeda</th>
           <th scope="col">Câmbio utilizado</th>
-          <th scope="col">Valor Convertido</th>
+          <th scope="col">Valor convertido</th>
           <th scope="col">Moeda de conversão</th>
           <th scope="col">Editar/Excluir</th>
         </tr>

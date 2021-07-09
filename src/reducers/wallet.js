@@ -30,8 +30,8 @@ const walletReducer = (state = initialState, action) => {
     case REMOVE_EXPENSE: {
       const updatedExpenses = [...payload.filter((el) => state.expenses.includes(el))];
       const total = updatedExpenses.reduce(redx, 0);
-      const newIndex = updatedExpenses.map((el, i) => ({ ...el, id: i }));
-      return { ...state, expenses: newIndex, total };
+      // const newIndex = updatedExpenses.map((el, i) => ({ ...el, id: i }));
+      return { ...state, expenses: updatedExpenses, total };
     }
 
     default:
