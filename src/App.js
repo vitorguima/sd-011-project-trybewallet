@@ -7,8 +7,8 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/" render={ () => <Login /> } />
-        <Route path="/carteira" render={ () => <Wallet /> } />
+        <Route exact path="/" render={ () => <Login /> } />
+        <Route exact path="/carteira" render={ () => <Wallet /> } />
       </Switch>
     </BrowserRouter>
   );
