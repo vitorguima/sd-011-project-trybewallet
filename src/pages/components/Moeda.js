@@ -11,7 +11,7 @@ class Moeda extends React.Component {
 
   render() {
     const { data } = this.props;
-    console.log(data);
+    // console.log((data.map((coins) => Object.values(coins))));
     return (
       <label htmlFor="Moeda">
         Moeda
