@@ -10,9 +10,9 @@ class Header extends React.Component {
     this.state = {
       id: 0,
       value: 0,
-      currency: 0,
-      method: 0,
-      tag: 0,
+      currency: '',
+      method: '',
+      tag: '',
       description: '',
     };
 
@@ -20,8 +20,8 @@ class Header extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  getDataUser(event) {
-    const { target } = event;
+  getDataUser(e) {
+    const { target } = e;
     this.setState((old) => ({
       ...old,
       [target.name]: target.value,
@@ -32,7 +32,7 @@ class Header extends React.Component {
     const { newExpense, expenses } = this.props;
     const { id, value, currency, method, tag, description } = this.state;
     const expensesLength = expenses.length;
-    const stateTwo = {
+    const state2 = {
       id,
       value,
       currency,
@@ -40,7 +40,7 @@ class Header extends React.Component {
       tag,
       description,
     };
-    newExpense(stateTwo);
+    newExpense(state2);
 
     if (expensesLength >= 0) {
       this.setState({ id: expensesLength + 1 });
@@ -50,6 +50,7 @@ class Header extends React.Component {
   totalExpenses() {
     let total = 0;
     const { expenses } = this.props;
+
     expenses.forEach(({ value, currency, exchangeRates }) => {
       total += exchangeRates[currency].ask * value;
     });
@@ -60,34 +61,34 @@ class Header extends React.Component {
   inputText(label) {
     return (
       <label htmlFor={ label === 'Valor' ? 'value' : 'description' }>
-        { label }
+        {label}
         <input
           type="text"
           name={ label === 'Valor' ? 'value' : 'description' }
           id={ label === 'Valor' ? 'value' : 'description' }
-          onChange={ (event) => this.getDataUser(event) }
+          onChange={ (e) => this.getDataUser(e) }
         />
       </label>
     );
   }
 
   inputCurrency() {
-    const { denaro } = this.props;
+    const { moedas } = this.props;
     return (
-      <label clasName="labels-form" htmlFor="currencys">
+      <label className="labels-form" htmlFor="currencie">
         Moeda
         <select
-          clasName="inputs-form"
-          id="currencys"
+          className="inputs-form"
+          id="currencie"
           name="currency"
-          onChange={ (event) => this.getDataUser(event) }
+          onChange={ (e) => this.getDataUser(e) }
         >
-          {denaro.map((currencys) => (
+          { moedas.map((currencie) => (
             <option
-              value={ currencys }
-              key={ currencys }
+              value={ currencie }
+              key={ currencie }
             >
-              { currencys }
+              { currencie }
             </option>
           ))}
         </select>
@@ -101,9 +102,9 @@ class Header extends React.Component {
         Tag
         <select
           className="inputs-form"
-          id="category"
+          id="tag"
           name="tag"
-          onChange={ (event) => this.getDataUser(event) }
+          onChange={ (e) => this.getDataUser(e) }
         >
           <option>Alimentação</option>
           <option>Lazer</option>
@@ -115,19 +116,19 @@ class Header extends React.Component {
     );
   }
 
-  inoutMethod() {
+  inputMethod() {
     return (
       <label className="labels-form" htmlFor="payment">
         Método de pagamento
         <select
           className="inputs-form"
           id="payment"
-          name="payment"
-          onChange={ (event) => this.getDataUser(event) }
+          name="method"
+          onChange={ (e) => this.getDataUser(e) }
         >
           <option>Dinheiro</option>
-          <option>Cartão de Crédito</option>
-          <option>Cartão de Débito</option>
+          <option>Cartão de crédito</option>
+          <option>Cartão de débito</option>
         </select>
       </label>
     );
@@ -138,8 +139,8 @@ class Header extends React.Component {
     return (
       <header>
         <section>
-          <h1>Trybe Wallet Exchange</h1>
-          <h2 data-testid="email-field">{ user || 'name' }</h2>
+          <h1>TRYBEWALLET</h1>
+          <h2 data-testid="email-field">{ user || 'name'}</h2>
           <h2 data-testid="total-field">{ this.totalExpenses() }</h2>
           <h2 data-testid="header-currency-field">BRL</h2>
         </section>
@@ -147,12 +148,13 @@ class Header extends React.Component {
           <form>
             {this.inputText('Valor')}
             {this.inputText('Descrição')}
-            {this.inputCurrency()}
-            {this.inputMethod()}
-            {this.inputTag()}
+            { this.inputCurrency() }
+            { this.inputMethod() }
+            {this.inputTag() }
             <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
           </form>
         </section>
+
       </header>
     );
   }
@@ -164,7 +166,7 @@ Header.propTypes = {
 
 const mapStateToProps = (state) => ({
   user: state.user.email,
-  monete: state.wallet.currencies,
+  moedas: state.wallet.currencies,
   expenses: state.wallet.expenses,
 });
 
