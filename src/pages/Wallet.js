@@ -13,6 +13,15 @@ class Wallet extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  componentDidMount() {
+    this.fetchCurrencies();
+  }
+
+  async fetchCurrencies() {
+    const { requestApi } = this.props;
+    await requestApi();
+  }
+
   handleChange({ target }) {
     this.setState({ [target.name]: target.value });
   }
