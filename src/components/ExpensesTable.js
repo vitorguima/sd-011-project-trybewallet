@@ -10,47 +10,40 @@ class ExpensesTable extends Component {
     return (
       <table>
         <TableHeaders />
-        { expenses.map((expense, index) => (
-          <tr key={ index }>
-            <td>
-              { expense.description }
-            </td>
-            <td>
-              { expense.tag }
-            </td>
-            <td>
-              { expense.method }
-            </td>
-            <td>
-              { expense.value }
-            </td>
-            <td>
-              { (Object.values(expense.exchangeRates).find((cotacao) => (
-                cotacao.code === expense.currency
-              )).name).split('/')[0]}
-            </td>
-            <td>
-              { parseFloat(Object.values(expense.exchangeRates).find((cotacao) => (
-                cotacao.code === expense.currency
-              )).ask).toFixed(2)}
-            </td>
-            <td>
-              { Object.values(expense.exchangeRates).find((cotacao) => (
-                cotacao.code === expense.currency
-              )).ask * expense.value}
-            </td>
-            <td> Real </td>
-            <td>
-              <button
-                type="button"
-                onClick={ () => deleteExpenseFromState(expense) }
-                data-testid="delete-btn"
-              >
-                Excluir
-              </button>
-            </td>
-          </tr>
-        ))}
+        <tbody>
+          { expenses.map((expense, index) => (
+            <tr key={ index }>
+              <td>{ expense.description }</td>
+              <td>{ expense.tag }</td>
+              <td>{ expense.method }</td>
+              <td>{ expense.value }</td>
+              <td>
+                { (Object.values(expense.exchangeRates).find((cotacao) => (
+                  cotacao.code === expense.currency
+                )).name).split('/')[0]}
+              </td>
+              <td>
+                { parseFloat(Object.values(expense.exchangeRates).find((cotacao) => (
+                  cotacao.code === expense.currency)).ask).toFixed(2)}
+              </td>
+              <td>
+                { Object.values(expense.exchangeRates).find((cotacao) => (
+                  cotacao.code === expense.currency
+                )).ask * expense.value}
+              </td>
+              <td>Real</td>
+              <td>
+                <button
+                  type="button"
+                  onClick={ () => deleteExpenseFromState(expense) }
+                  data-testid="delete-btn"
+                >
+                  Excluir
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     );
   }
@@ -67,8 +60,8 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(mapStateToProps, mapDispatchToProps)(ExpensesTable);
 
 ExpensesTable.propTypes = {
-  expenses: PropTypes.shape({
-    map: PropTypes.func,
-  }).isRequired,
+  expenses: PropTypes.arrayOf(
+    PropTypes.string,
+  ).isRequired,
   deleteExpenseFromState: PropTypes.func.isRequired,
 };

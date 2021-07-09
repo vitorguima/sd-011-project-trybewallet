@@ -19,6 +19,41 @@ class WalletForm extends Component {
     });
   }
 
+  renderSelectInputs() {
+    return (
+      <>
+        <label htmlFor="moeda">
+          Moeda:
+          <select id="moeda" name="currency" onChange={ this.handleChange }>
+            <WalletFetchedCurrencies />
+          </select>
+        </label>
+        <label htmlFor="metodo-de-pagamento">
+          Método de pagamento:
+          <select
+            defaultValue="Dinheiro"
+            name="method"
+            onChange={ this.handleChange }
+            id="metodo-de-pagamento"
+          >
+            <PaymentMethods />
+          </select>
+        </label>
+        <label htmlFor="categoria">
+          Tag:
+          <select
+            defaultValue="Alimentação"
+            id="categoria"
+            name="tag"
+            onChange={ this.handleChange }
+          >
+            <TagCategories />
+          </select>
+        </label>
+      </>
+    );
+  }
+
   render() {
     const { state } = this;
     const { addNewExpense } = this.props;
@@ -29,8 +64,8 @@ class WalletForm extends Component {
           <input
             name="value"
             type="number"
-            id="valor"
             onChange={ this.handleChange }
+            id="valor"
           />
         </label>
         <label htmlFor="descricao">
@@ -38,28 +73,11 @@ class WalletForm extends Component {
           <input
             name="description"
             type="text"
-            id="descricao"
             onChange={ this.handleChange }
+            id="descricao"
           />
         </label>
-        <label htmlFor="moeda">
-          Moeda:
-          <select id="moeda" name="currency" onChange={ this.handleChange }>
-            <WalletFetchedCurrencies />
-          </select>
-        </label>
-        <label htmlFor="metodo-de-pagamento">
-          Método de pagamento:
-          <select id="metodo-de-pagamento" name="method" onChange={ this.handleChange }>
-            <PaymentMethods />
-          </select>
-        </label>
-        <label htmlFor="categoria">
-          Tag:
-          <select id="categoria" name="tag" onChange={ this.handleChange }>
-            <TagCategories />
-          </select>
-        </label>
+        { this.renderSelectInputs() }
         <button type="button" onClick={ () => addNewExpense(state) }>
           Adicionar despesa
         </button>

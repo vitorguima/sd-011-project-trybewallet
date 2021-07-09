@@ -25,8 +25,7 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps)(WalletFetchedCurrencies);
 
 WalletFetchedCurrencies.propTypes = {
-  fetchedCurr: PropTypes.shape({
-    map: PropTypes.func,
-    filter: PropTypes.func,
-  }).isRequired,
+  fetchedCurr: PropTypes.arrayOf(
+    PropTypes.string,
+  ).isRequired,
 };

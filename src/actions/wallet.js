@@ -20,11 +20,6 @@ export const fetchCurrencies = () => (dispatch) => {
     .then((currencies) => dispatch(requestCurrenciesSuccess(currencies)));
 };
 
-// const requestUpdatedCurrencySuccess = (currencies) => ({
-//   type: UPDATE_CURRENCY,
-//   currencies,
-// });
-
 export const addExpense = (state, updateCurrencies) => ({
   type: ADD_EXPENSE,
   state,
@@ -35,8 +30,6 @@ export const updateCurrencyToNewExpense = (state) => (dispatch) => {
   dispatch(requestCurrencies());
   return fetch('https://economia.awesomeapi.com.br/json/all')
     .then((result) => result.json())
-    //  .then((currencies) => dispatch(requestCurrenciesSuccess(Object.values(currencies))))
-    //  .then((currencies) => dispatch(requestUpdatedCurrencySuccess(currencies)))
     .then((currencies) => dispatch(requestCurrenciesSuccess(currencies)))
     .then((updateCurrencies) => dispatch(addExpense(state, updateCurrencies)));
 };

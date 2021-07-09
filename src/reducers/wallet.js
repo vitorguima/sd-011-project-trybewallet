@@ -8,7 +8,6 @@ import {
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
-  //  isLoading: false,
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
@@ -16,13 +15,11 @@ const wallet = (state = INITIAL_STATE, action) => {
   case REQUEST_CURRENCIES:
     return {
       ...state,
-      //  isLoading: true,
     };
   case REQUEST_SUCCESS:
     return {
       ...state,
       currencies: action.currencies,
-      //  isLoading: false,
     };
   case ADD_EXPENSE: {
     const newExpense = {
