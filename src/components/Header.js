@@ -1,9 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import './header.css';
 
-function Header({ email }) {
+function Header() {
+  // usei react hooks redux
+  const email = useSelector((state) => state.user.email);
   return (
     <header>
       <div>
@@ -18,12 +19,4 @@ function Header({ email }) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  email: state.user.email,
-});
-
-Header.propTypes = {
-  email: PropTypes.string.isRequired,
-};
-
-export default connect(mapStateToProps, null)(Header);
+export default Header;

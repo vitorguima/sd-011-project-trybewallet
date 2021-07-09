@@ -1,6 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { isFetching } from '../actions';
+import CoinOptions from './CoinOptions';
 
 function AddExpenseForm() {
+  const dispatch = useDispatch();
+  const fetching = () => dispatch(isFetching());
+  useEffect(() => {
+    fetching();
+  });
   return (
     <form>
       <label htmlFor="spent">
@@ -14,7 +22,7 @@ function AddExpenseForm() {
       <label htmlFor="coin">
         Moeda:
         <select type="text" id="coin">
-          <option>oi</option>
+          <CoinOptions />
         </select>
       </label>
       <label htmlFor="payment">

@@ -1,15 +1,16 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
+import { SPEND_WALLET } from '../actions';
+
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
 };
 
 export default function wallet(state = INITIAL_STATE, action) {
-  if (action.type === 'ADD_WALLET') {
+  if (action.type === SPEND_WALLET) {
     return {
-      wallet: {
-        // implemente o wallet no state
-      },
+      ...state,
+      currencies: action.payload,
     };
   }
   return state;

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import { setEmailStore } from '../actions';
 import './login.css';
 
@@ -10,13 +9,15 @@ import './login.css';
 const regexToEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
 const regexToPassword = /[\w]{6}/;
 
-function Login({ handleLogOn }) {
+function Login() {
   const [isDisabled, setIsDisabled] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [validEmail, setValidEmail] = useState(false);
   const [validPassword, setValidPassword] = useState(false);
   const history = useHistory();
+  const dispatch = useDispatch();
+  const addEmailtoStore = () => dispatch(setEmailStore(email, password));
   useEffect(() => {
     if (validEmail && validPassword) return setIsDisabled(false);
   });
@@ -33,8 +34,7 @@ function Login({ handleLogOn }) {
     }
   }
   function handleLogin() {
-    if (email === '' && password === '') return Error('campo vazio');
-    handleLogOn(email);
+    addEmailtoStore();
     history.push('/carteira');
   }
   return (
@@ -60,12 +60,14 @@ function Login({ handleLogOn }) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  handleLogOn: (email) => dispatch(setEmailStore(email)),
-});
+export default Login;
 
-Login.propTypes = {
-  handleLogOn: PropTypes.func.isRequired,
-};
+// const mapDispatchToProps = (dispatch) => ({
+// handleLogOn: (email) => dispatch(setEmailStore(email)),
+// });
 
-export default connect(null, mapDispatchToProps)(Login);
+// Login.propTypes = {
+//  handleLogOn: PropTypes.func.isRequired,
+// };
+
+// export default connect(null, mapDispatchToProps)(Login);
