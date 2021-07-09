@@ -12,13 +12,9 @@ class Wallet extends React.Component {
     super(props);
 
     this.state = {
-      email: '',
-      spends: 0,
-      exchange: 'BRL',
       acronymsCurrency: [],
       expenses: [],
     };
-    this.setEmail = this.setEmail.bind(this);
     this.setAcronymsCurrency = this.setAcronymsCurrency.bind(this);
     this.addExpense = this.addExpense.bind(this);
     this.setExpenses = this.setExpenses.bind(this);
@@ -26,7 +22,6 @@ class Wallet extends React.Component {
   }
 
   componentDidMount() {
-    this.setEmail();
     this.setExpenses();
     this.setAcronymsCurrency();
   }
@@ -38,22 +33,13 @@ class Wallet extends React.Component {
     });
   }
 
-  setEmail() {
-    const { email } = this.props;
-    this.setState({
-      email,
-    });
-  }
-
   setSpends() {
-    const { expenses } = this.state;
+    const { expenses, spends: oldSpends } = this.state;
     const spends = expenses.reduce((
       (acc, { value, currency, exchangeRates }) => (
         acc + (parseFloat(value) * exchangeRates[currency].ask)
       )), 0);
-    this.setState({
-      spends,
-    });
+    if (spends !== oldSpends) this.setState({ spends });
   }
 
   async setAcronymsCurrency() {
@@ -83,14 +69,11 @@ class Wallet extends React.Component {
 
   render() {
     const {
-      email,
-      spends,
-      exchange,
       acronymsCurrency,
     } = this.state;
     return (
       <div>
-        <Header email={ email } spends={ spends } exchange={ exchange } />
+        <Header />
         <SpendForm acronyms={ acronymsCurrency } addExpense={ this.addExpense } />
         <ExpensesTable />
       </div>
@@ -112,7 +95,6 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 
 Wallet.propTypes = {
-  email: PropTypes.string.isRequired,
   addNewExpense: PropTypes.func.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   currencies: PropTypes.arrayOf(PropTypes.object).isRequired,

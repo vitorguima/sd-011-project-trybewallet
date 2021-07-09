@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import ButtonDelete from './ButtonDelete';
 
 class ExpensesTable extends React.Component {
   getConvertValue(value, currency, exchangeRates) {
@@ -36,7 +37,7 @@ class ExpensesTable extends React.Component {
             <td>{this.getConvertValue(exchangeRates[currency].ask)}</td>
             <td>{this.getConvertValue(value, currency, exchangeRates)}</td>
             <td>Real</td>
-            <td>{}</td>
+            <td><ButtonDelete id={ id } /></td>
           </tr>
         )) }
       </table>
