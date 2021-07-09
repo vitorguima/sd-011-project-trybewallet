@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import Form from './Form';
+
 class Wallet extends React.Component {
   render() {
     const { getUser } = this.props;
@@ -19,6 +21,7 @@ class Wallet extends React.Component {
             BRL
           </div>
         </header>
+        <Form />
       </div>
     );
   }
