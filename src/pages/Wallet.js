@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import updateCurrency from '../reducers/wallet';
+// import { updateCurrency } from '../reducers/wallet';
 
 class Wallet extends React.Component {
   render() {
-    const { email, crncys } = this.props;
+    const { email, currency } = this.props;
     return (
       <div>
         <header>
@@ -15,13 +15,11 @@ class Wallet extends React.Component {
             <option>BRL</option>
           </select>
         </header>
-        {/* Formulário */}
         <form>
           <label htmlFor="expenseInput">
             Valor
             <input type="number" name="expense" id="expenseInput" />
           </label>
-
           <label htmlFor="expenseDescription">
             Descrição
             <textarea id="expenseDescription" />
@@ -29,7 +27,9 @@ class Wallet extends React.Component {
           <label htmlFor="currency">
             Moeda
             <select id="currency">
-              { crncys.map((crncy, index) => <option key={ index }>{crncy}</option>) }
+              { Object.keys(currency)
+                .filter((c) => c !== 'USDT')
+                .map((crncy, index) => <option key={ index }>{crncy}</option>) }
             </select>
           </label>
           <label htmlFor="payment-method">
@@ -57,12 +57,12 @@ class Wallet extends React.Component {
 }
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
-  crncys: PropTypes.string.isRequired,
+  currency: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  email: state.updateEmail.email,
-  crncys: state.updateCurrency.currency,
+  email: state.user.email,
+  currency: state.wallet.currency,
 });
 
 export default connect(mapStateToProps)(Wallet);
