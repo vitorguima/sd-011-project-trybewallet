@@ -14,17 +14,13 @@ class Form extends React.Component {
     return (
       <div>
         <div>
-          Despesa Total:
-          <span data-testid="total-field"> 0 </span>
-        </div>
-        <div>
           Moeda:
           <span data-testid="header-currency-field"> BRL </span>
         </div>
-        <form>
-          <label htmlFor="value">
+        <form id="newExpense-form">
+          <label htmlFor="totalValue">
             Valor
-            <input type="number" id="value" />
+            <input type="number" id="totalValue" />
           </label>
           <label htmlFor="description">
             Descrição
@@ -33,26 +29,26 @@ class Form extends React.Component {
           <label htmlFor="currency">
             Moeda
             <select id="currency">
-              {Object.keys(currencies).map((curr) => (
-                curr !== 'USDT' ? <option id={ curr }>{curr}</option> : null))}
+              {Object.keys(currencies).map((curr, index) => (curr !== 'USDT' ? (
+                <option key={ index } id={ curr }>{curr}</option>) : null))}
             </select>
           </label>
           <label htmlFor="method">
             Método de pagamento
             <select id="method">
-              <option value="money">Dinheiro</option>
-              <option value="credit">Cartão de crédito</option>
-              <option value="debit">Cartão de débito</option>
+              <option value="Dinheiro">Dinheiro</option>
+              <option value="Cartão de crédito">Cartão de crédito</option>
+              <option value="Cartão de débito">Cartão de débito</option>
             </select>
           </label>
           <label htmlFor="tag">
             Tag
             <select id="tag">
-              <option value="food">Alimentação</option>
-              <option value="freeTime">Lazer</option>
-              <option value="health">Saúde</option>
-              <option value="work">Trabalho</option>
-              <option value="transport">Transporte</option>
+              <option value="Alimentação">Alimentação</option>
+              <option value="Lazer">Lazer</option>
+              <option value="Saúde">Saúde</option>
+              <option value="Trabalho">Trabalho</option>
+              <option value="Transporte">Transporte</option>
             </select>
           </label>
         </form>
@@ -75,9 +71,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(Form);
 
 Form.propTypes = {
   getCurrencies: PropTypes.func.isRequired,
-  currencies: PropTypes.objectOf(PropTypes.any),
+  currencies: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.any),
+    PropTypes.objectOf(PropTypes.any),
+  ]),
 };
 
 Form.defaultProps = {
-  currencies: {},
+  currencies: [],
 };
