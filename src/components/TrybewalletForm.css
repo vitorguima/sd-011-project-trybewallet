@@ -1,0 +1,27 @@
+* {
+  box-sizing: border-box;
+}
+
+.trybewallet-form {
+  align-items: center;
+  background-color: rgba(25, 131, 4, 0.527);
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.trybewallet-form > * {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 10px;
+}
+
+.trybewallet-form input {
+  margin-top: 10px;
+}
+
+.trybewallet-form select {
+  margin-top: 8px;
+}

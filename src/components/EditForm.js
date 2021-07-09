@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import './EditForm.css';
 import PropTypes from 'prop-types';
 import { editExpense } from '../actions';
 import Select from './Select';
@@ -51,9 +52,10 @@ class EditForm extends React.Component {
     const coinsOptions = Object.values(exchangeRates);
     return (
       <form className="edit-form">
-        <label htmlFor="value">
+        <label className="title is-6" htmlFor="value">
           Valor
           <input
+            className="input is-small"
             data-testid="value-input"
             type="number"
             name="value"
@@ -61,9 +63,10 @@ class EditForm extends React.Component {
             onChange={ this.handleChange }
           />
         </label>
-        <label htmlFor="description">
+        <label className="title is-6" htmlFor="description">
           Descrição
           <input
+            className="input is-small"
             data-testid="description-input"
             type="text"
             name="description"
@@ -74,7 +77,13 @@ class EditForm extends React.Component {
         <Select id="currency" options={ coinsOptions } onChange={ this.handleChange } />
         <Select id="method" options={ methodOptions } onChange={ this.handleChange } />
         <Select id="tag" options={ tagOptions } onChange={ this.handleChange } />
-        <button type="button" onClick={ this.handleClick }>Editar despesa</button>
+        <button
+          className="button is-warning"
+          type="button"
+          onClick={ this.handleClick }
+        >
+          Editar despesa
+        </button>
       </form>
     );
   }

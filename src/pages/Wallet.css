@@ -1,0 +1,23 @@
+.trybewallet-page {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.trybewallet-header {
+  align-items: center;
+  background-color: rgba(25, 131, 4, 0.527);
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.wallet-page-title {
+  margin: 20px;
+}
+
+.user-info {
+  margin: 20px;
+  margin-right: 80px;
+}

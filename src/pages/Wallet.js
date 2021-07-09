@@ -1,4 +1,5 @@
 import React from 'react';
+import './Wallet.css';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import TrybewalletForm from '../components/TrybewalletForm';
@@ -8,7 +9,7 @@ import EditForm from '../components/EditForm';
 class Wallet extends React.Component {
   render() {
     const { email, expenses, editMode } = this.props;
-    let total = 0;
+    let total = '0.00';
     if (expenses.length > 0) {
       total = expenses.map(({ value, currency, exchangeRates }) => {
         const { [currency]: { ask } } = exchangeRates;
@@ -22,15 +23,20 @@ class Wallet extends React.Component {
     return (
       <div className="trybewallet-page">
         <header className="trybewallet-header">
-          <p data-testid="email-field">{ `Email de login: ${email}` }</p>
-          <p>
-            {'Despesa total: '}
-            <span data-testid="total-field">{ total }</span>
-          </p>
-          <p>
-            {'Câmbio utilizado: '}
-            <span data-testid="header-currency-field">BRL</span>
-          </p>
+          <h1 className="wallet-page-title title is-3">Trybewallet &#128184;</h1>
+          <div className="user-info">
+            <p
+              className="title is-6"
+              data-testid="email-field"
+            >
+              { `Email de login: ${email}` }
+            </p>
+            <p className="title is-6">
+              {'Despesa total: R$ '}
+              <span data-testid="total-field">{ total }</span>
+              <span data-testid="header-currency-field"> BRL</span>
+            </p>
+          </div>
         </header>
         { editMode ? <EditForm /> : <TrybewalletForm /> }
         <ExpenseTable />

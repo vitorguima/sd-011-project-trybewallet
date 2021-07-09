@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import './Login.css';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { loginAction } from '../actions';
@@ -31,8 +32,11 @@ class Login extends React.Component {
     const { emailDispatch } = this.props;
     return (
       <div className="login-page">
+        <h1 className="login-page-title title is-1">Trybewallet &#128184;</h1>
+        <h2 className="login-page-subtitle subtitle is-4">Controle de despesas</h2>
         <form className="login-form" onChange={ this.enableButton }>
           <input
+            className="input is-focused is-rounded"
             placeholder="e-mail"
             name="email"
             type="email"
@@ -41,6 +45,7 @@ class Login extends React.Component {
             onChange={ this.handleChange }
           />
           <input
+            className="input is-focused is-rounded"
             placeholder="senha"
             type="password"
             data-testid="password-input"
@@ -53,7 +58,7 @@ class Login extends React.Component {
             onClick={ () => emailDispatch(email) }
           >
             <button
-              className="submit-button"
+              className="submit-button button is-info is-light"
               type="submit"
               disabled
             >

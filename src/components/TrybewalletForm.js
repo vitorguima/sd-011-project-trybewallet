@@ -1,4 +1,5 @@
 import React from 'react';
+import './TrybewalletForm.css';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchCoins, addExpense } from '../actions';
@@ -42,13 +43,20 @@ class TrybewalletForm extends React.Component {
     const coinsOptions = Object.values(exchangeRates);
     return (
       <form className="trybewallet-form">
-        <label htmlFor="value">
+        <label className="title is-6" htmlFor="value">
           Valor
-          <input type="number" name="value" id="value" onChange={ this.handleChange } />
+          <input
+            className="value input is-small"
+            type="number"
+            name="value"
+            id="value"
+            onChange={ this.handleChange }
+          />
         </label>
-        <label htmlFor="description">
+        <label className="title is-6" htmlFor="description">
           Descrição
           <input
+            className="description input is-small"
             type="text"
             name="description"
             id="description"
@@ -58,7 +66,13 @@ class TrybewalletForm extends React.Component {
         <Select id="currency" options={ coinsOptions } onChange={ this.handleChange } />
         <Select id="method" options={ methodOptions } onChange={ this.handleChange } />
         <Select id="tag" options={ tagOptions } onChange={ this.handleChange } />
-        <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
+        <button
+          type="button"
+          onClick={ this.handleClick }
+          className="button is-info is-light"
+        >
+          Adicionar despesa
+        </button>
       </form>
     );
   }

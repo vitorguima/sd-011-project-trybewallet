@@ -1,0 +1,27 @@
+* {
+  box-sizing: border-box;
+}
+
+.edit-form {
+  align-items: center;
+  background-color: rgba(17, 127, 218, 0.527);
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.edit-form > * {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 10px;
+}
+
+.edit-form input {
+  margin-top: 10px;
+}
+
+.edit-form select {
+  margin-top: 8px;
+}

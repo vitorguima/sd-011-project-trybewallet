@@ -9,9 +9,10 @@ class Select extends React.Component {
     if (id === 'tag') text = 'Tag';
     if (id === 'currency') text = 'Moeda';
     return (
-      <label htmlFor={ id }>
+      <label className="title is-6" htmlFor={ id }>
         { text }
         <select
+          className="select is-rounded"
           name={ id }
           id={ id }
           onChange={ onChange }
