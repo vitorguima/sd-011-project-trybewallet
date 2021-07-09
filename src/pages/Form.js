@@ -26,24 +26,24 @@ class Form extends Component {
         </label>
         <label htmlFor="moeda">
           Moeda:
-          <select><option id="moeda" value="CAD">CAD</option></select>
+          <select id="moeda"><option value="CAD">CAD</option></select>
         </label>
         <label htmlFor="payment">
           Método de pagamento:
-          <select>
-            <option id="payment" value="dinheiro">Dinheiro</option>
-            <option id="payment" value="credito">Cartão de crédito</option>
-            <option id="payment" value="debito">Cartão de débito</option>
+          <select name="payment" id="payment">
+            <option value="dinheiro">Dinheiro</option>
+            <option value="credito">Cartão de crédito</option>
+            <option value="debito">Cartão de débito</option>
           </select>
         </label>
         <label htmlFor="tag">
           Tag:
-          <select>
-            <option id="tag" value="alimentacao">Alimentação</option>
-            <option id="tag" value="lazer">Lazer</option>
-            <option id="tag" value="trabalho">Trabalho</option>
-            <option id="tag" value="transporte">Transporte</option>
-            <option id="tag" value="saude">Saúde</option>
+          <select name="tag" id="tag">
+            <option value="alimentacao">Alimentação</option>
+            <option value="lazer">Lazer</option>
+            <option value="trabalho">Trabalho</option>
+            <option value="transporte">Transporte</option>
+            <option value="saude">Saúde</option>
           </select>
         </label>
         <label htmlFor="descricao">
