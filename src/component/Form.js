@@ -1,23 +1,33 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { fetchCurrencies } from '../actions';
 
 class Form extends React.Component {
+  componentDidMount() {
+    const { getCurrency } = this.props;
+    getCurrency();
+  }
+
   render() {
     const methodPayment = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tagOption = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
+    const { currencyAcronyms } = this.props;
     return (
       <form>
         <label htmlFor="value">
           Valor:
-          <input type="text" id="value" name="value" />
+          <input type="number" id="value" name="value" />
         </label>
         <label htmlFor="description">
           Descrição:
           <input type="text" id="description" name="description" />
         </label>
-        <label htmlFor="coin">
+        <label htmlFor="currency">
           Moeda:
-          <select id="coin" name="coin">
-            vazio
+          <select id="currency" name="currency">
+            {currencyAcronyms
+              .map((curr, index) => <option key={ index }>{curr}</option>)}
           </select>
         </label>
         <label htmlFor="methods">
@@ -39,4 +49,17 @@ class Form extends React.Component {
   }
 }
 
-export default Form;
+const mapStateToProps = (state) => ({
+  currencyAcronyms: state.wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getCurrency: () => dispatch(fetchCurrencies()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
+
+Form.propTypes = {
+  currencyAcronyms: PropTypes.arrayOf(PropTypes.string),
+  getCurrency: PropTypes.func,
+}.isRequired;
