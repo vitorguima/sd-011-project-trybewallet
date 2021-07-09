@@ -1,4 +1,5 @@
 import React from 'react';
+import './Expenses.css';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { removeExpense, getExpense } from '../actions';
@@ -22,22 +23,23 @@ class Expenses extends React.Component {
   render() {
     const { expenses } = this.props;
     return (
-      <tbody>
+      <tbody className="expenses-table-body">
         { expenses.map((expense) => {
           const { id, value, description, currency, method, tag } = expense;
           const { exchangeRates: { [currency]: { ask, name } } } = expense;
           return (
             <tr key={ id }>
-              <td>{ description }</td>
-              <td>{ tag }</td>
-              <td>{ method }</td>
-              <td>{ value }</td>
-              <td>{ name }</td>
-              <td>{ parseFloat(ask).toFixed(2) }</td>
-              <td>{ (value * ask).toFixed(2) }</td>
-              <td>Real</td>
-              <td>
+              <td className="description">{ description }</td>
+              <td className="expense-tag">{ tag }</td>
+              <td className="method">{ method }</td>
+              <td className="value">{ value }</td>
+              <td className="currency">{ name }</td>
+              <td className="exchange">{ parseFloat(ask).toFixed(2) }</td>
+              <td className="converted">{ (value * ask).toFixed(2) }</td>
+              <td className="currency-converted">Real</td>
+              <td className="buttons">
                 <button
+                  className="button is-small"
                   type="button"
                   data-testid="edit-btn"
                   name="edit"
@@ -47,6 +49,7 @@ class Expenses extends React.Component {
                   &#128395;
                 </button>
                 <button
+                  className="button is-small"
                   type="button"
                   data-testid="delete-btn"
                   name="remove"

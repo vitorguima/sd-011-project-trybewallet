@@ -1,0 +1,64 @@
+.expenses-table {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.expenses-table-head {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.expenses-table-head > tr {
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  width: 100%;
+}
+
+.expenses-table-head > tr > th {
+  font-size: 0.8em;
+  padding: 10px;
+}
+
+.description {
+  width: 28%;
+}
+
+.expense-tag {
+  width: 6%;
+}
+
+.method {
+  width: 9%;
+}
+
+.value {
+  width: 6%;
+}
+
+.currency {
+  width: 17%;
+}
+
+.exchange {
+  width: 6%;
+}
+
+.converted {
+  width: 8%;
+}
+
+.currency-converted {
+  width: 10%;
+}
+
+.buttons {
+  width: 10%;
+}
