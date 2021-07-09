@@ -1,4 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import { loginUser } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -34,11 +38,13 @@ class Login extends React.Component {
   }
 
   render() {
-    const { enabledBtn } = this.state;
-
+    const { isLogged, walletLogin } = this.props;
+    const { email, enabledBtn } = this.state;
     return (
       <div>
+        { isLogged && <Redirect to="/carteira" /> }
         <form>
+          <h1>TrybeWallet</h1>
           <fieldset>
             <input
               type="email"
@@ -59,6 +65,7 @@ class Login extends React.Component {
             <button
               type="button"
               disabled={ enabledBtn }
+              onClick={ () => walletLogin(email) }
             >
               Entrar
             </button>
@@ -69,4 +76,17 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => ({
+  isLogged: state.user.isLogged,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  walletLogin: (email) => dispatch(loginUser(email)),
+});
+
+Login.propTypes = {
+  isLogged: PropTypes.bool,
+  walletLogin: PropTypes.func,
+}.isRequired;
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
