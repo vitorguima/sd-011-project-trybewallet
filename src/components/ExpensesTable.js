@@ -62,7 +62,7 @@ class ExpensesTable extends Component {
           <td>{method}</td>
           <td>{value}</td>
           <td>{exchangeRates[currency].name}</td>
-          <td>{Math.round(exchangeRates[currency].ask * 100) / 100}</td>
+          <td>{(Math.round(exchangeRates[currency].ask * 100) / 100).toFixed(2)}</td>
           <td>{(Number(value) * Number(exchangeRates[currency].ask))}</td>
           <td>Real</td>
           <td>

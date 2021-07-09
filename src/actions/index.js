@@ -4,6 +4,7 @@ export const SUBMIT_LOGIN = 'SUBMIT_LOGIN';
 export const SUBMIT_EXPENSE = 'SUBMIT_EXPENSE';
 export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 export const EDIT_EXPENSE = 'EDIT_EXPENSE';
+export const SUBMIT_EDIT = 'SUBMIT_EDIT';
 export const REQUEST_API = 'REQUEST_API';
 
 export const submitLogin = (email, password) => ({
@@ -28,6 +29,11 @@ export const submitExpense = (expense, currencies) => ({
 export const editExpense = (id) => ({
   type: EDIT_EXPENSE,
   idToEdit: id,
+});
+
+export const submitEdit = (editedExpenses) => ({
+  type: SUBMIT_EDIT,
+  editedExpenses,
 });
 
 export const deleteExpenses = (filteredExpenses) => ({
