@@ -11,7 +11,7 @@ export const App = (props) => {
   return (
     <Switch>
       <Route exact path="/" component={ Login } />
-      <Route path="/" component={ Wallet } />
+      <Route path="/carteira" component={ Wallet } />
       <Route component={ NotAPage } />
     </Switch>
   );
