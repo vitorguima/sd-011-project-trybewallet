@@ -11,29 +11,11 @@ export default function Wallet() {
   const thumbnail = 'https://remotar.com.br/wp-content/uploads/2020/10/Trybe-200x200.jpg';
 
   const walletStore = useSelector((state) => state.wallet);
-  const { currencies } = walletStore;
+  const { total } = walletStore;
 
   useEffect(() => {
     dispatch(fetchAPI());
   }, []);
-
-  const getTotalExpenses = () => {
-    const { expenses } = walletStore;
-    if (expenses.length > 0) {
-      const redx = (prev, next) => {
-        const total = parseFloat(prev) + parseFloat(next.convertedPrice);
-        return parseFloat(total).toFixed(2);
-      };
-      return `R$ ${expenses.reduce(redx, 0)}`;
-    }
-    return `R$0,00`;
-  };
-
-  const showExpenses = () => {
-    if (currencies.length > 0) {
-      return <Expenses />;
-    }
-  };
 
   return (
     <div className="wallet">
@@ -47,13 +29,12 @@ export default function Wallet() {
             {userStore.email}
           </span>
           <div className="m-2">
-            <span data-testid="total-field">{`Despesas totais: ${getTotalExpenses()} `}</span>
-            <span data-testid="header-currency-field">{`BRL`}</span>
+            <div data-testid="total-field">{total.toFixed(2)}</div>
+            <span data-testid="header-currency-field">BRL</span>
           </div>
         </div>
       </nav>
-      {/* <Expenses /> */}
-      {showExpenses()}
+      <Expenses />
       <Table />
     </div>
   );

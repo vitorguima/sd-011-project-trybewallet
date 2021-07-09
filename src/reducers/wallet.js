@@ -1,5 +1,11 @@
 import { DATA_FAILURE, ADD_EXPENSE, REMOVE_EXPENSE, GET_CURRENCIES } from '../actions';
-const initialState = { currencies: [], expenses: [] };
+const initialState = { currencies: [], expenses: [], total: 0 };
+
+const redx = (prev, curr) => {
+  const { currency, value, exchangeRates } = curr;
+  const { ask } = exchangeRates[currency];
+  return prev + value * ask;
+};
 
 const walletReducer = (state = initialState, action) => {
   const { type, payload } = action;
@@ -8,9 +14,13 @@ const walletReducer = (state = initialState, action) => {
       return { ...state, payload };
     }
     case ADD_EXPENSE: {
-      const len = state.expenses.length;
+      const { expenses } = state;
+      const len = expenses.length;
       const newExpense = { ...payload, id: len };
-      return { ...state, expenses: [...state.expenses, newExpense] };
+      const updatedExpenses = [...state.expenses, newExpense];
+
+      const total = updatedExpenses.reduce(redx, 0);
+      return { ...state, expenses: updatedExpenses, total };
     }
 
     case GET_CURRENCIES: {
@@ -18,12 +28,12 @@ const walletReducer = (state = initialState, action) => {
     }
 
     case REMOVE_EXPENSE: {
-      const newObj = [];
-      payload.forEach((el, index) => {
-        newObj[index] = { ...el, id: index };
-      });
-      return { ...state, expenses: newObj };
+      const updatedExpenses = [...payload.filter((el) => state.expenses.includes(el))];
+      const total = updatedExpenses.reduce(redx, 0);
+      const newIndex = updatedExpenses.map((el, i) => ({ ...el, id: i }));
+      return { ...state, expenses: newIndex, total };
     }
+
     default:
       return { ...state };
   }

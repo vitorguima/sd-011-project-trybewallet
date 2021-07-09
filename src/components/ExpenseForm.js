@@ -4,6 +4,8 @@ import { sendExpense } from '../services/API';
 
 export default function ExpenseForm() {
   const currencies = useSelector((state) => state.wallet.currencies);
+  const dispatch = useDispatch();
+
   const getOptions = () => {
     if (currencies.length > 0) {
       return currencies.map((el, index) => {
@@ -15,10 +17,9 @@ export default function ExpenseForm() {
       });
     }
   };
-  const dispatch = useDispatch();
-  const formSub = document.getElementById('expensesForm');
 
   const handleFormSubmit = (e) => {
+    e.preventDefault();
     const { target } = e;
     const data = new FormData(target);
     const expense = {};

@@ -7,7 +7,6 @@ export default function () {
   const userExpenses = useSelector((state) => state.wallet.expenses);
 
   const handleDelete = (id) => {
-    console.log(id);
     const updatedExpenses = userExpenses.filter((el) => el.id !== id);
     dispatch(removeExpense(updatedExpenses));
   };
