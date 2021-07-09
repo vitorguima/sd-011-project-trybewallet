@@ -19,34 +19,34 @@ class Wallet extends React.Component {
   renderForm() {
     return (
       <form>
-        <label htmlFor="value">
+        <label htmlFor="valor">
           Valor
-          <input type="number" />
+          <input type="number" name="valor" id="valor" />
         </label>
 
-        <label htmlFor="description">
+        <label htmlFor="descricao">
           Descrição
-          <input type="text" />
+          <input type="text" name="descricao" id="descricao"/>
         </label>
 
-        <label htmlFor="currency">
+        <label htmlFor="moeda">
           Moeda
-          <select name="currency" id="currency">
-            <option value="br">BR</option>
+          <select name="moeda" id="moeda">
+            <option name="moeda" value="br">BR</option>
           </select>
         </label>
 
-        <label htmlFor="payment-method">
+        <label htmlFor="metodo">
           Método de Pagamento
-          <select name="payment-method" id="payment-method">
+          <select name="metodo" id="metodo">
             <option value="cash">Dinheiro</option>
             <option value="credit-card">Cartão de crédito</option>
             <option value="debit-card">Cartão de débito</option>
           </select>
         </label>
-        <label htmlFor="expense-tag">
+        <label htmlFor="tag">
           Tag
-          <select name="expense-tag" id="expense-tag">
+          <select name="tag" id="tag">
             <option value="food">Alimentação</option>
             <option value="leisure">Lazer</option>
             <option value="work">Trabalho</option>
@@ -86,7 +86,7 @@ class Wallet extends React.Component {
 
 Wallet.propTypes = {
   userEmail: PropTypes.string.isRequired,
-  walletExpenses: PropTypes.arrayOf(PropTypes.number).isRequired,
+  walletExpenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const mapStateToProps = (state) => ({
