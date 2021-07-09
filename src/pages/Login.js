@@ -22,7 +22,7 @@ class Login extends React.Component {
   }
 
   validateLogin() {
-    const minimumLength = 6;
+    const minimumLength = 5;
     const { email, password } = this.state;
     const checkedEmail = email.includes('@') && email.includes('.com');
     const checkedPassword = password.length >= minimumLength;
@@ -41,7 +41,7 @@ class Login extends React.Component {
   render() {
     const { email, disabled, shouldRedirect } = this.state;
     const { sendEmail } = this.props;
-    if (shouldRedirect) return <Redirect to="/wallet" />;
+    if (shouldRedirect) return <Redirect to="/carteira" />;
     return (
       <div>
         <div>
