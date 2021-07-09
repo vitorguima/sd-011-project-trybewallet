@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { setUser } from '../actions';
+import * as userActions from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -100,7 +100,7 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  user: (email) => dispatch(setUser(email)),
+  user: (email) => dispatch(userActions.setUser(email)),
 });
 
 const mapStateToProps = (state) => ({
