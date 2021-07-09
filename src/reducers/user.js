@@ -1,1 +1,11 @@
-// Esse reducer será responsável por tratar as informações da pessoa usuária
+import createReducer from '../utils/createReducer';
+
+const INITIAL_STATE = {
+  email: '',
+};
+
+const ACTIONS = {
+  LOGIN: (_, { email }) => ({ email }),
+};
+
+export default createReducer(INITIAL_STATE, ACTIONS);
