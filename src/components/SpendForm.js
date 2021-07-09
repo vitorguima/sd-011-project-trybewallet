@@ -5,11 +5,11 @@ class SpendForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      spendsValue: 0,
-      spendsDescribe: '',
-      spendCategory: '',
+      value: 0,
+      description: '',
+      tag: '',
       currency: '',
-      paymentMethod: '',
+      method: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.inputsTexts = this.inputsTexts.bind(this);
@@ -24,24 +24,24 @@ class SpendForm extends React.Component {
   }
 
   inputsTexts() {
-    const { spendsValue, spendsDescribe } = this.state;
+    const { value, description } = this.state;
     return (
       <fieldset>
-        <label htmlFor="spendsValue">
+        <label htmlFor="value">
           Valor
           <input
-            id="spendsValue"
+            id="value"
             type="number"
-            value={ spendsValue }
+            value={ value }
             onChange={ this.handleChange }
           />
         </label>
-        <label htmlFor="spendsDescribe">
+        <label htmlFor="description">
           Descrição
           <input
-            id="spendsDescribe"
+            id="description"
             type="text"
-            value={ spendsDescribe }
+            value={ description }
             onChange={ this.handleChange }
           />
         </label>
@@ -51,8 +51,8 @@ class SpendForm extends React.Component {
 
   selectInputs() {
     const {
-      paymentMethod,
-      spendCategory,
+      method,
+      tag,
     } = this.state;
     const { acronyms } = this.props;
     return (
@@ -65,30 +65,30 @@ class SpendForm extends React.Component {
             ))}
           </select>
         </label>
-        <label htmlFor="paymentMethod">
+        <label htmlFor="method">
           Método de pagamento
           <select
-            id="paymentMethod"
-            value={ paymentMethod }
+            id="method"
+            value={ method }
             onChange={ this.handleChange }
           >
-            <option value="money">Dinheiro</option>
-            <option value="credit">Cartão de crédito</option>
-            <option value="debit">Cartão de débito</option>
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
           </select>
         </label>
-        <label htmlFor="spendCategory">
+        <label htmlFor="tag">
           Tag
           <select
-            id="spendCategory"
-            value={ spendCategory }
+            id="tag"
+            value={ tag }
             onChange={ this.handleChange }
           >
-            <option value="food">Alimentação</option>
-            <option value="leisure">Lazer</option>
-            <option value="work">Trabalho</option>
-            <option value="transport">Transporte</option>
-            <option value="health">Saúde</option>
+            <option value="Alimentação">Alimentação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Saúde">Saúde</option>
           </select>
         </label>
       </fieldset>

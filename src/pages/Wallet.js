@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import SpendForm from '../components/SpendForm';
+import ExpensesTable from '../components/ExpensesTable';
 import { addExpense } from '../actions';
 import fetchCurrencies from '../services';
 
@@ -46,7 +47,10 @@ class Wallet extends React.Component {
 
   setSpends() {
     const { expenses } = this.state;
-    const spends = expenses.reduce(((acc, expense) => acc + parseFloat(expense.spendsValue)), 0);
+    const spends = expenses.reduce((
+      (acc, { value, currency, exchangeRates }) => (
+        acc + (parseFloat(value) * exchangeRates[currency].ask)
+      )), 0);
     this.setState({
       spends,
     });
