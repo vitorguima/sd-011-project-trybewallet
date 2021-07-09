@@ -1,10 +1,32 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import * as actions from '../actions';
 
 class Table extends Component {
+  constructor() {
+    super();
+    this.handleCurrecyTrueName = this.handleCurrecyTrueName.bind(this);
+    this.handleCambioUtilizado = this.handleCambioUtilizado.bind(this);
+  }
+
+  handleCurrecyTrueName({ currency, exchangeRates }) {
+    return Object.values(exchangeRates).find((coin) => coin.code === currency).name;
+  }
+
+  handleCambioUtilizado({ currency, exchangeRates }) {
+    const valor = Object.values(exchangeRates).find((coin) => coin.code === currency).ask;
+    return Number(valor).toFixed(2);
+  }
+
+  handleConvertCambio({ value, currency, exchangeRates }) {
+    const valor = Object.values(exchangeRates).find((coin) => coin.code === currency).ask;
+    return (Number(valor) * value).toFixed(2);
+  }
+
   render() {
-    const { expenses } = this.props;
+    const { expenses, expensesDelete } = this.props;
+    console.log(expenses);
     return (
       <table>
         <tr className="tr_table">
@@ -18,17 +40,25 @@ class Table extends Component {
           <th>Moeda de conversão</th>
           <th>Editar/Excluir</th>
         </tr>
-        <tr className="tr_table">
-          {expenses.map((info) => (
-            <>
-              <td key={ info.id }>{info.id}</td>
-              <td key={ info.tag }>{info.tag}</td>
-              <td key={ info.method }>{info.method}</td>
-              <td key={ info.value }>{info.value}</td>
-              <td key={ info.currency }>{info.currency}</td>
-            </>
-          ))}
-        </tr>
+        {expenses.map((info) => (
+          <tr key={ info.id } className="tr_table">
+            <td>{info.description}</td>
+            <td>{info.tag}</td>
+            <td key={ info.id }>{info.method}</td>
+            <td key={ info.id }>{info.value}</td>
+            <td key={ info.id }>{ this.handleCurrecyTrueName(info) }</td>
+            <td key={ info.id }>{ this.handleCambioUtilizado(info) }</td>
+            <td key={ info.id }>{ this.handleConvertCambio(info) }</td>
+            <td key={ info.id }>Real</td>
+            <button
+              data-testid="delete-btn"
+              type="button"
+              onClick={ () => expensesDelete(info.id) }
+            >
+              Deletar
+            </button>
+          </tr>
+        ))}
       </table>
     );
   }
@@ -36,10 +66,15 @@ class Table extends Component {
 
 Table.propTypes = {
   expenses: PropTypes.func.isRequired,
+  expensesDelete: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-export default connect(mapStateToProps)(Table);
+const mapDispatchToProps = (dispatch) => ({
+  expensesDelete: (expense) => dispatch(actions.expensesDelete(expense)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Table);

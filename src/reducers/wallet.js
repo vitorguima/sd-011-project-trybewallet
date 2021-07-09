@@ -1,4 +1,4 @@
-import { REQUEST_API, GET_DATA, EXPENSE_WALLET } from '../actions';
+import { REQUEST_API, GET_DATA, EXPENSE_WALLET, DELETE_EXPENSES } from '../actions';
 
 const INITIAL_STATE_WALLET = {
   currencies: [],
@@ -20,6 +20,11 @@ export default function walletVerification(state = INITIAL_STATE_WALLET, action)
     return {
       ...state,
       expenses: [...state.expenses, action.expenses],
+    };
+  case DELETE_EXPENSES:
+    return {
+      ...state,
+      expenses: state.expenses.filter((a) => a.id !== action.expense),
     };
   default:
     return { ...state, totalfield: 0 };
