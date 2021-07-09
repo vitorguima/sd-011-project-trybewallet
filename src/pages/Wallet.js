@@ -8,16 +8,60 @@ import {
   paymentMethod,
   category,
 } from '../walletComponents/walletElements';
-import { fetchCurrencies } from '../actions';
+import { fetchCurrencies, fetchToExpenses } from '../actions';
 
 class Wallet extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      value: 0,
+      description: '',
+      currency: '',
+      method: '',
+      tag: '',
+    };
+
+    this.handlerInputChange = this.handlerInputChange.bind(this);
+    this.addExpenseToGlobal = this.addExpenseToGlobal.bind(this);
+    this.sumTotalOfExpenses = this.sumTotalOfExpenses.bind(this);
+  }
+
   componentDidMount() {
     const { request } = this.props;
     request();
   }
 
+  handlerInputChange({ target: { name, value } }) {
+    this.setState({
+      [name]: value,
+    });
+  }
+
+  addExpenseToGlobal() {
+    const { requestExpenses, userExpense } = this.props;
+    console.log(userExpense);
+    let id = 0;
+    if (userExpense.length > 0) {
+      id = userExpense[userExpense.length - 1].id + 1;
+    }
+
+    requestExpenses({ ...this.state, id });
+  }
+
+  sumTotalOfExpenses() {
+    const { userExpense } = this.props;
+    let total = 0;
+    userExpense.forEach(expense => {
+      const num = parseInt(expense.value, 10);
+      total += num;
+    });
+    return total;
+  }
+
   render() {
-    const { email, currencies } = this.props;
+    const { email, currencies, userExpense } = this.props;
+    const currentExpense = userExpense;
     return (
       <div
         className="main-page"
@@ -25,15 +69,26 @@ class Wallet extends React.Component {
         <section>
           <div className="title">TrybeWallet</div>
           <p data-testid="email-field">{email}</p>
-          <p data-testid="total-field">0</p>
+          <p
+            data-testid="total-field"
+          >
+            { this.sumTotalOfExpenses() }
+          </p>
           <p data-testid="header-currency-field">BRL</p>
         </section>
         <form>
-          {expenses()}
-          {description()}
-          {currency(currencies)}
-          {paymentMethod()}
-          {category()}
+          {expenses(this.handlerInputChange)}
+          {description(this.handlerInputChange)}
+          {currency(currencies, this.handlerInputChange)}
+          {paymentMethod(this.handlerInputChange)}
+          {category(this.handlerInputChange)}
+          <button
+            type="button"
+            className="add-expense"
+            onClick={ () => this.addExpenseToGlobal() }
+          >
+            Adicionar despesas
+          </button>
         </form>
       </div>
     );
@@ -43,10 +98,12 @@ class Wallet extends React.Component {
 const mapStateToProps = (state) => ({
   email: state.user.email,
   currencies: state.wallet.currencies,
+  userExpense: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   request: () => dispatch(fetchCurrencies()),
+  requestExpenses: (forms) => dispatch(fetchToExpenses(forms)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

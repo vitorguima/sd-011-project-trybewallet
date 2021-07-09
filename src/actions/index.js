@@ -2,6 +2,7 @@
 export const SAVE_EMAIL = 'SAVE_EMAIL';
 export const REQUEST_CURRENCIES = 'REQUEST_CURRENCIES';
 export const RECEIVE_CURRENCIES = 'RECEIVE_CURRENCIES';
+export const ADD_EXPENSE = 'ADD_EXPENSE';
 
 const saveEmail = (email) => ({
   type: SAVE_EMAIL,
@@ -17,12 +18,26 @@ const fetchCurrenciesSuccess = (data) => ({
   currencies: Object.keys(data).filter((currency) => currency !== 'USDT'),
 });
 
+const fetchCurrenciesToExpenses = (data) => ({
+  type: ADD_EXPENSE,
+  expenses: data,
+});
+
 export function fetchCurrencies() {
   return (dispatch) => {
     dispatch(fetchCurrenciesStart());
     return fetch('https://economia.awesomeapi.com.br/json/all')
       .then((response) => response.json())
       .then((json) => dispatch(fetchCurrenciesSuccess(json)));
+  };
+}
+
+export function fetchToExpenses(forms) {
+  return (dispatch) => {
+    dispatch(fetchCurrenciesStart());
+    return fetch('https://economia.awesomeapi.com.br/json/all')
+      .then((response) => response.json())
+      .then((json) => dispatch(fetchCurrenciesToExpenses({ ...forms, exchangeRates: json })));
   };
 }
 
