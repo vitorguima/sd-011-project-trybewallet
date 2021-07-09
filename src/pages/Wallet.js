@@ -41,11 +41,25 @@ class Wallet extends React.Component {
 
   changeStatesToEdit() {
     const { expenses, idToEdit } = this.props;
-    const expenseToEdit = expenses.find(({ id }) => id === idToEdit);
-    console.log(expenseToEdit);
-    // this.setState(() => ({
+    const expenseToEdit = expenses.find(({ id }) => id === parseInt(idToEdit, 10));
 
-    // }));
+    this.setState(() => ({
+      nextId: expenseToEdit.id,
+      value: expenseToEdit.value,
+      description: expenseToEdit.desription,
+      currency: expenseToEdit.currency,
+      tag: expenseToEdit.tag,
+      payment: expenseToEdit.payment,
+      currencies: expenseToEdit.currencies,
+    }));
+
+    return (
+      <button
+        type="button"
+      >
+        Editar Despesa
+      </button>
+    );
   }
 
   submitButton(expense) {
@@ -65,10 +79,6 @@ class Wallet extends React.Component {
     this.setState((state) => ({
       nextId: state.nextId + 1,
     }), () => dispatchExpenses(expense));
-  }
-
-  handleStateToEdit() {
-
   }
 
   async handleCurrencies() {
