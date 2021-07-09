@@ -2,8 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Form from '../Form';
+import { fetchMoeda } from '../actions';
 
 class Wallet extends React.Component {
+  componentDidMount() {
+    const { thunk } = this.props;
+    thunk();
+  }
+
   render() {
     const { username } = this.props;
     return (
@@ -41,8 +47,13 @@ class Wallet extends React.Component {
 const mapStateToProps = (state) => ({
   username: state.user.email });
 
-export default connect(mapStateToProps)(Wallet);
+const mapDispatchToProps = (dispatch) => ({
+  thunk: () => dispatch(fetchMoeda()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 
 Wallet.propTypes = {
   username: PropTypes.string.isRequired,
+  thunk: PropTypes.func.isRequired,
 };
