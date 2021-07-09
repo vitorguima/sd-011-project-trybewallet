@@ -8,6 +8,7 @@ class PasswordInput extends Component {
       <div className="password-input-container">
         <input
           id="password"
+          className="password-input"
           data-testid="password-input"
           type="password"
           placeholder="Digite sua senha"
