@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchCoins, addExpense } from '../actions';
+import { methodOptions, tagOptions } from '../data';
+import Select from './Select';
 
 class TrybewalletForm extends React.Component {
   constructor(props) {
@@ -10,8 +12,8 @@ class TrybewalletForm extends React.Component {
       value: 0,
       description: '',
       currency: 'USD',
-      method: 'money',
-      tag: 'food',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -37,6 +39,7 @@ class TrybewalletForm extends React.Component {
 
   render() {
     const { exchangeRates } = this.props;
+    const coinsOptions = Object.values(exchangeRates);
     return (
       <form className="trybewallet-form">
         <label htmlFor="value">
@@ -52,32 +55,9 @@ class TrybewalletForm extends React.Component {
             onChange={ this.handleChange }
           />
         </label>
-        <label htmlFor="currency">
-          Moeda
-          <select name="currency" id="currency" onChange={ this.handleChange }>
-            { Object.values(exchangeRates).map(({ code }, index) => (
-              <option key={ index } value={ code }>{ code }</option>
-            )) }
-          </select>
-        </label>
-        <label htmlFor="method">
-          Método de pagamento
-          <select name="method" id="method" onChange={ this.handleChange }>
-            <option value="Dinheiro">Dinheiro</option>
-            <option value="Cartão de crédito">Cartão de crédito</option>
-            <option value="Cartão de débito">Cartão de débito</option>
-          </select>
-        </label>
-        <label htmlFor="tag">
-          Tag
-          <select name="tag" id="tag" onChange={ this.handleChange }>
-            <option value="Alimentação">Alimentação</option>
-            <option value="Lazer">Lazer</option>
-            <option value="Trabalho">Trabalho</option>
-            <option value="Transporte">Transporte</option>
-            <option value="Saúde">Saúde</option>
-          </select>
-        </label>
+        <Select id="currency" options={ coinsOptions } onChange={ this.handleChange } />
+        <Select id="method" options={ methodOptions } onChange={ this.handleChange } />
+        <Select id="tag" options={ tagOptions } onChange={ this.handleChange } />
         <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
       </form>
     );

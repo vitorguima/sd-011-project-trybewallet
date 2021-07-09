@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import TrybewalletForm from '../components/TrybewalletForm';
 import ExpenseTable from '../components/ExpenseTable';
+import EditForm from '../components/EditForm';
 
 class Wallet extends React.Component {
   render() {
-    const { email, expenses } = this.props;
+    const { email, expenses, editMode } = this.props;
     let total = 0;
     if (expenses.length > 0) {
       total = expenses.map(({ value, currency, exchangeRates }) => {
@@ -31,7 +32,7 @@ class Wallet extends React.Component {
             <span data-testid="header-currency-field">BRL</span>
           </p>
         </header>
-        <TrybewalletForm />
+        { editMode ? <EditForm /> : <TrybewalletForm /> }
         <ExpenseTable />
       </div>
     );
@@ -41,11 +42,17 @@ class Wallet extends React.Component {
 const mapStateToProps = (state) => ({
   email: state.user.email,
   expenses: state.wallet.expenses,
+  editMode: state.wallet.editMode,
 });
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
+  editMode: PropTypes.bool,
+};
+
+Wallet.defaultProps = {
+  editMode: false,
 };
 
 export default connect(mapStateToProps)(Wallet);

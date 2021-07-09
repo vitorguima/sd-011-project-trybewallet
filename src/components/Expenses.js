@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { removeExpense } from '../actions';
+import { removeExpense, getExpense } from '../actions';
 
 class Expenses extends React.Component {
   constructor() {
@@ -10,9 +10,12 @@ class Expenses extends React.Component {
   }
 
   handleClick({ target: { name, dataset } }) {
-    const { removeExpenseAction } = this.props;
+    const { removeExpenseAction, getExpenseAction } = this.props;
     if (name === 'remove') {
       removeExpenseAction(dataset.id);
+    }
+    if (name === 'edit') {
+      getExpenseAction(dataset.id);
     }
   }
 
@@ -34,7 +37,15 @@ class Expenses extends React.Component {
               <td>{ (value * ask).toFixed(2) }</td>
               <td>Real</td>
               <td>
-                <button type="button">&#128395;</button>
+                <button
+                  type="button"
+                  data-testid="edit-btn"
+                  name="edit"
+                  data-id={ id }
+                  onClick={ this.handleClick }
+                >
+                  &#128395;
+                </button>
                 <button
                   type="button"
                   data-testid="delete-btn"
@@ -56,6 +67,7 @@ class Expenses extends React.Component {
 Expenses.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
   removeExpenseAction: PropTypes.func.isRequired,
+  getExpenseAction: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -64,6 +76,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   removeExpenseAction: (expenseId) => dispatch(removeExpense(expenseId)),
+  getExpenseAction: (expenseId) => dispatch(getExpense(expenseId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Expenses);
