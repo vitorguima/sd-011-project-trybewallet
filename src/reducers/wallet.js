@@ -13,7 +13,7 @@ function walletReducer(state = INITIAL_STATE, action) {
   case 'TESTE_EXPENCIES':
     return {
       ...state,
-      expenses: action.payload,
+      expenses: [...state.expenses, action.payload],
     };
   default:
     return state;

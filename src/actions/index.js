@@ -16,3 +16,7 @@ export const testeExpencies = (payload) => ({
 export const fetchCoins = () => (dispatch) => fetch('https://economia.awesomeapi.com.br/json/all')
   .then((result) => result.json())
   .then((data) => dispatch(getCurrencies(Object.keys(data))));
+
+export const fetchExchangeRates = () => (dispatch) => fetch('https://economia.awesomeapi.com.br/json/all')
+  .then((result) => result.json())
+  .then((data) => dispatch(getCurrencies(data)));
