@@ -1,19 +1,19 @@
 import createReducer from '../utils/createReducer';
 
-const INITIAL_STATE = {
+const initialState = {
   currencies: [],
   expenses: [],
 };
 
-const ACTIONS = {
-  ADD_NEW_EXPENSE: (state, expense) => {
-    state.expenses.push(expense);
-    return state;
+const actions = {
+  addNewExpense: (nextState, expense) => {
+    nextState.expenses.push(expense);
+    return nextState;
   },
-  RECEIVE_CURRENCIES: (state, currencies) => {
-    state.currencies = currencies;
-    return state;
+  receiveCurrencies: (nextState, currencies) => {
+    nextState.currencies = currencies;
+    return nextState;
   },
 };
 
-export default createReducer(INITIAL_STATE, ACTIONS);
+export default createReducer(initialState, actions);

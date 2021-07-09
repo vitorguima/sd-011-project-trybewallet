@@ -3,7 +3,7 @@ import React from 'react';
 import withStore from '../utils/withStore';
 
 import { Layout } from '../components/common';
-import { login } from '../actions';
+import { login } from '../agents';
 
 class Login extends React.Component {
   constructor(props) {

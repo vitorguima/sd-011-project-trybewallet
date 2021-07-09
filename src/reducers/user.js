@@ -1,11 +1,11 @@
 import createReducer from '../utils/createReducer';
 
-const INITIAL_STATE = {
+const initialState = {
   email: '',
 };
 
-const ACTIONS = {
+const actions = {
   LOGIN: (_, { email }) => ({ email }),
 };
 
-export default createReducer(INITIAL_STATE, ACTIONS);
+export default createReducer(initialState, actions);

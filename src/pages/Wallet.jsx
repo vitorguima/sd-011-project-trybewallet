@@ -4,7 +4,7 @@ import { Header, Select } from '../components/Wallet';
 
 import withStore from '../utils/withStore';
 
-import { fetchCurrencies } from '../actions';
+import { fetchCurrencies } from '../agents';
 
 class Wallet extends React.Component {
   constructor(props) {
