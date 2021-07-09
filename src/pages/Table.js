@@ -4,12 +4,6 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 
 class Table extends Component {
-  constructor() {
-    super();
-    this.handleCurrecyTrueName = this.handleCurrecyTrueName.bind(this);
-    this.handleCambioUtilizado = this.handleCambioUtilizado.bind(this);
-  }
-
   handleCurrecyTrueName({ currency, exchangeRates }) {
     return Object.values(exchangeRates).find((coin) => coin.code === currency).name;
   }
