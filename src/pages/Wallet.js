@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchApi } from '../actions';
+import { fetchApiThunk } from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
@@ -9,7 +9,6 @@ class Wallet extends React.Component {
     this.state = {
       totalValue: '',
       description: '',
-      // currency: '',
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -23,7 +22,7 @@ class Wallet extends React.Component {
       <label htmlFor={ name }>
         { label }
         <input
-          id= { name }
+          id={ name }
           type="text"
           name={ name }
           onChange={ this.handleChange }
@@ -37,11 +36,9 @@ class Wallet extends React.Component {
     return (
       <label htmlFor={ name }>
         { label }
-        <select aria-labelledby={ name } value={ standard } id= { name }>
-          { arraySelect.map((item, index) => (
-            <option key={ `${name}-${index}` } value={ `${name}-${index}` }>
-              { item }
-            </option>
+        <select value={ standard } id={ name }>
+          { arraySelect.map((item) => (
+            <option key={ item } value={ item }>{ item }</option>
           ))}
         </select>
       </label>
@@ -60,27 +57,27 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const currencies = ['BRL', 'DOLAR'];
     const payments = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const expense = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     const { totalValue, description } = this.state;
-
-    const { getCurrencies } = this.props;
-    console.log(getCurrencies);
+    const { currencies, loadingCurrencies } = this.props;
+    delete currencies.USDT;
+    const currenciesArray = Object.keys(currencies).map((currency) => currency);
 
     return (
+
       <div>
         { this.renderHeader() }
         <h3>TrybeWallet</h3>
-        <form>
-          { this.createInput('totalValue', 'Valor', totalValue) }
-          { this.createInput('description', 'Descrição', description) }
-          { this.createSelect('coin', 'Moeda', currencies, 'BRL')}
-          { this.createSelect(
-            'payment', 'Método de pagamento', payments, 'Cartão de crédito',
-          )}
-          { this.createSelect('expense', 'Tag', expense, 'Alimentação') }
-        </form>
+        { loadingCurrencies ? <p>Carregando...</p> : (
+          <form>
+            { this.createInput('totalValue', 'Valor', totalValue) }
+            { this.createInput('description', 'Descrição', description) }
+            { this.createSelect('coin', 'Moeda', currenciesArray, 'BRL')}
+            { this.createSelect('payment', 'Método de pagamento', payments, 'Dinheiro')}
+            { this.createSelect('expense', 'Tag', expense, 'Alimentação') }
+          </form>
+        )}
       </div>
     );
   }
@@ -88,15 +85,18 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   userEmail: state.user.email,
-  // currenciesGlobal: state.
+  currencies: state.wallet.currencies,
+  loadingCurrencies: state.wallet.isLoading,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getCurrencies: () => dispatch(fetchApi())
+  requestApi: () => dispatch(fetchApiThunk()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 
 Wallet.propTypes = ({
-  userEmail: PropTypes.string.isRequired,
-});
+  userEmail: PropTypes.string,
+  currencies: PropTypes.shape({ Object }),
+  loadingCurrencies: PropTypes.bool,
+}).isRequired;
