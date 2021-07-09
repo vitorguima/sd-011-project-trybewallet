@@ -3,11 +3,13 @@ import {
   REQUEST_SUCCESS,
   ADD_EXPENSE,
   DELETE_EXPENSE,
+  EDIT_EXPENSE,
 } from '../actions/wallet';
 
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
+  enableEdit: false,
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
@@ -40,6 +42,11 @@ const wallet = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       expenses: state.expenses.filter((expense) => expense.id !== action.expense.id),
+    };
+  case EDIT_EXPENSE:
+    return {
+      ...state,
+      enableEdit: true,
     };
   default:
     return state;

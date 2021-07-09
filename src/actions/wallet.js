@@ -3,6 +3,7 @@ export const REQUEST_SUCCESS = 'REQUEST_SUCCESS';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const UPDATE_CURRENCY = 'UPDATE_CURRENCY';
 export const DELETE_EXPENSE = 'DELETE_EXPENSE';
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
 
 const requestCurrencies = () => ({
   type: REQUEST_CURRENCIES,
@@ -36,5 +37,10 @@ export const updateCurrencyToNewExpense = (state) => (dispatch) => {
 
 export const deleteExpense = (expense) => ({
   type: DELETE_EXPENSE,
+  expense,
+});
+
+export const editExpense = (expense) => ({
+  type: EDIT_EXPENSE,
   expense,
 });

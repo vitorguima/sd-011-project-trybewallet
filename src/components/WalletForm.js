@@ -34,6 +34,7 @@ class WalletForm extends Component {
         <label htmlFor="moeda">
           Moeda:
           <select
+            data-testid="currency-input"
             id="moeda"
             name="currency"
             onChange={ this.handleChange }
@@ -44,6 +45,7 @@ class WalletForm extends Component {
         <label htmlFor="metodo-de-pagamento">
           Método de pagamento:
           <select
+            data-testid="method-input"
             name="method"
             onChange={ this.handleChange }
             id="metodo-de-pagamento"
@@ -54,6 +56,7 @@ class WalletForm extends Component {
         <label htmlFor="categoria">
           Tag:
           <select
+            data-testid="tag-input"
             id="categoria"
             name="tag"
             onChange={ this.handleChange }
@@ -65,14 +68,32 @@ class WalletForm extends Component {
     );
   }
 
-  render() {
+  renderButtons() {
+    const { addNewExpense, enableEditButton } = this.props;
     const { state } = this;
-    const { addNewExpense } = this.props;
+    if (!enableEditButton) {
+      return (
+        <button type="button" onClick={ () => addNewExpense(state) }>
+          Adicionar despesa
+        </button>
+      );
+    }
+    if (enableEditButton) {
+      return (
+        <button type="button" onClick={ () => addNewExpense(state) }>
+          Editar despesa
+        </button>
+      );
+    }
+  }
+
+  render() {
     return (
       <form className="wallet-form">
         <label htmlFor="valor">
           Valor:
           <input
+            data-testid="value-input"
             name="value"
             type="number"
             onChange={ this.handleChange }
@@ -82,6 +103,7 @@ class WalletForm extends Component {
         <label htmlFor="descricao">
           Descrição:
           <input
+            data-testid="description-input"
             name="description"
             type="text"
             onChange={ this.handleChange }
@@ -89,20 +111,23 @@ class WalletForm extends Component {
           />
         </label>
         { this.renderSelectInputs() }
-        <button type="button" onClick={ () => addNewExpense(state) }>
-          Adicionar despesa
-        </button>
+        { this.renderButtons() }
       </form>
     );
   }
 }
 
+const mapStateToProps = (state) => ({
+  enableEditButton: state.wallet.enableEdit,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   addNewExpense: (state) => dispatch(updateCurrencyToNewExpense(state)),
 });
 
-export default connect(null, mapDispatchToProps)(WalletForm);
+export default connect(mapStateToProps, mapDispatchToProps)(WalletForm);
 
 WalletForm.propTypes = {
   addNewExpense: PropTypes.func.isRequired,
+  enableEditButton: PropTypes.func.isRequired,
 };
