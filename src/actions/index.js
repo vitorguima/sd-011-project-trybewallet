@@ -2,6 +2,7 @@ export const SET_EMAIL = 'SET_EMAIL';
 export const REQUEST_CURRENCIES = 'REQUEST_CURRENCIES';
 export const GET_CURRENCIES = 'GET_CURRENCIES';
 export const FAILED_REQUEST = 'FAILED_REQUEST';
+export const SET_EXPENSE = 'SET_EXPENSE';
 
 export const emailAction = (email) => (
   {
@@ -39,3 +40,11 @@ export const fetchCurrencies = () => (dispatch) => {
       (error) => dispatch(failedRequest(error)),
     );
 };
+
+export const expenseAction = (expense) => (
+  {
+    type: SET_EXPENSE,
+    expense,
+    value: expense.value,
+  }
+);

@@ -2,9 +2,7 @@
 import { SET_EMAIL } from '../actions';
 
 const GLOBAL_STATE = {
-  user: {
-    email: '',
-  },
+  email: '',
 };
 
 const user = (state = GLOBAL_STATE, action) => {

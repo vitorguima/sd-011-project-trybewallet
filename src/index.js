@@ -13,7 +13,7 @@ ReactDOM.render(
     <BrowserRouter>
       <Switch>
         <Route path="/" exact render={ (props) => <Login { ...props } /> } />
-        <Route path="/carteira" component={ Wallet } />
+        <Route path="/carteira" exact component={ Wallet } />
       </Switch>
     </BrowserRouter>
   </Provider>,

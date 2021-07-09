@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchCurrencies } from '../actions';
+import { expenseAction, fetchCurrencies } from '../actions';
 
 class Form extends Component {
   constructor(props) {
@@ -9,12 +9,53 @@ class Form extends Component {
 
     this.state = {
       currencies: [],
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      id: 0,
     };
     this.fetchApi = this.fetchApi.bind(this);
+    this.changeValues = this.changeValues.bind(this);
+    this.createExpense = this.createExpense.bind(this);
   }
 
   componentDidMount() {
     this.fetchApi();
+  }
+
+  changeValues({ target }) {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    });
+  }
+
+  createExpense() {
+    const { value, description, currency, method, tag, id } = this.state;
+    this.fetchApi();
+    const { setExpense, currencies } = this.props;
+    const expense = {
+      id,
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      exchangeRates: currencies,
+    };
+    setExpense(expense);
+    console.log(method);
+    this.setState((prev) => ({
+      id: prev.id + 1,
+      currencies: [],
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+    }));
   }
 
   fetchApi() {
@@ -23,54 +64,56 @@ class Form extends Component {
       async () => {
         await fetchCurrenciesApi();
         const { currencies } = this.props;
-        const currArr = Object.values(currencies);
-        currArr.splice(1, 1);
         this.setState({
-          currencies: currArr,
+          currencies,
         });
       },
     );
   }
 
   render() {
-    const { currencies } = this.state;
+    const { currencies, method, tag, description, currency, value } = this.state;
+    const FIFTEEN = 20;
     return (
       <div>
         <form>
-          <label htmlFor="valor">
+          <label htmlFor="value">
             Valor:
-            <input type="number" name="valor" id="valor" />
+            <input type="number" name="value" id="value" value={ value } onChange={ this.changeValues } />
           </label>
-          <label htmlFor="descricao">
+          <label htmlFor="description">
             Descrição:
-            <input type="text" name="descricao" id="descricao" />
+            <input type="text" name="description" id="description" value={ description } onChange={ this.changeValues } />
           </label>
-          <label htmlFor="moeda">
+          <label htmlFor="currency">
             Moeda:
-            <select name="moeda" id="moeda">
-              { currencies.map((code, index) => (
-                <option key={ index } value={ code.code }>{code.code}</option>
-              ))}
+            <select name="currency" id="currency" value={ currency } onChange={ this.changeValues }>
+              { Object.values(currencies).splice(1, FIFTEEN).map((code, index) => (
+                <option key={ index }>{code.code}</option>
+              )) }
             </select>
           </label>
-          <label htmlFor="pagamento">
+          <label htmlFor="method">
             Método de pagamento:
-            <select name="pagamento" id="pagamento">
-              <option value="dinheiro">Dinheiro</option>
-              <option value="credito">Cartão de Crédito</option>
-              <option value="debito">Cartão de Débito</option>
+            <select name="method" id="method" value={ method } onChange={ this.changeValues }>
+              <option>Dinheiro</option>
+              <option>Cartão de Crédito</option>
+              <option>Cartão de Débito</option>
             </select>
           </label>
-          <label htmlFor="categoria">
+          <label htmlFor="tag">
             Tag:
-            <select name="categoria" id="categoria">
-              <option value="alimentacao">Alimentação</option>
-              <option value="lazer">Lazer</option>
-              <option value="trabalho">Trabalho</option>
-              <option value="transporte">Transporte</option>
-              <option value="saude">Saúde</option>
+            <select name="tag" id="tag" value={ tag } onChange={ this.changeValues }>
+              <option>Alimentação</option>
+              <option>Lazer</option>
+              <option>Trabalho</option>
+              <option>Transporte</option>
+              <option>Saúde</option>
             </select>
           </label>
+          <button type="button" onClick={ this.createExpense }>
+            Adicionar despesa
+          </button>
         </form>
       </div>
     );
@@ -83,11 +126,13 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   fetchCurrenciesApi: () => dispatch(fetchCurrencies()),
+  setExpense: (state) => dispatch(expenseAction(state)),
 });
 
 Form.propTypes = {
   fetchCurrenciesApi: PropTypes.func.isRequired,
   currencies: PropTypes.objectOf(Object).isRequired,
+  setExpense: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);
