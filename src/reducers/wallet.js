@@ -10,6 +10,10 @@ const ACTIONS = {
     state.expenses.push(expense);
     return state;
   },
+  RECEIVE_CURRENCIES: (state, currencies) => {
+    state.currencies = currencies;
+    return state;
+  },
 };
 
 export default createReducer(INITIAL_STATE, ACTIONS);

@@ -4,6 +4,8 @@ import { Header, Select } from '../components/Login';
 
 import withStore from '../utils/withStore';
 
+import { fetchCurrencies } from '../actions';
+
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
@@ -19,6 +21,12 @@ class Wallet extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
+  componentDidMount() {
+    const { fetchCurrencies } = this.props;
+
+    fetchCurrencies();
+  }
+
   handleInputChange({ target }) {
     const { name, value } = target;
 
@@ -26,6 +34,7 @@ class Wallet extends React.Component {
   }
 
   renderSelects() {
+    const { wallet } = this.props;
     const { currency, paymentMethod, tag } = this.state;
 
     return (
@@ -35,7 +44,7 @@ class Wallet extends React.Component {
           name="currency"
           value={ currency }
           handleChange={ this.handleInputChange }
-          options={ [] }
+          options={ wallet.currencies }
           label="Moeda"
         />
 
@@ -100,4 +109,4 @@ class Wallet extends React.Component {
   }
 }
 
-export default withStore(Wallet, ['user']);
+export default withStore(Wallet, ['wallet'], [fetchCurrencies]);
