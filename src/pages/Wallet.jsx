@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout } from '../components/common';
-import { Header, Select } from '../components/Login';
+import { Header, Select } from '../components/Wallet';
 
 import withStore from '../utils/withStore';
 
