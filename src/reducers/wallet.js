@@ -1,26 +1,42 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
+import { SUBMIT_CURRENCIES } from '../actions/submitCurrencies';
+import { SUBMIT_EXPENSES } from '../actions/submitExpenses';
 
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
 };
 
-const user = (state = INITIAL_STATE, action) => {
+const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case 'WALLET_ADD':
-    return {
-      currencies: action.currencies,
-      expenses: action.expenses,
-    };
-  case 'WALLET_SUB':
+  case SUBMIT_EXPENSES:
     return {
       ...state,
-      currencies: action.currencies,
-      expenses: state.expenses - action.expenses,
+      currencies: state.currencies,
+      expenses: [...state.expenses, {
+        id: (state.expenses.length !== 0 ? state.expenses.length : 0),
+        value: action.state.value,
+        description: action.state.description,
+        currency: action.state.currency,
+        method: action.state.method,
+        tag: action.state.tag,
+        exchangeRates: action.exchange,
+      }],
+    };
+  // case 'WALLET_SUB':
+  //   return {
+  //     ...state,
+  //     currencies: action.currencies,
+  //     expenses: state.expenses - action.expenses,
+  //   };
+  case SUBMIT_CURRENCIES:
+    return {
+      ...state,
+      currencies: action.array,
     };
   default:
     return state;
   }
 };
 
-export default user;
+export default wallet;
