@@ -8,6 +8,7 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
+      canLogin: false,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -17,17 +18,31 @@ class Login extends React.Component {
   handleInputChange({ target }) {
     const { name, value } = target;
     this.setState({ [name]: value });
+    this.validateFields();
   }
 
   handleSubmit(e) {
     e.preventDefault();
   }
 
-  render() {
+  validateFields() {
     const { email, password } = this.state;
+    const MIN_PASSWORD_LENGTH = 5;
+
+    if (/(.*)@(.*)\.com/.test(email)
+      && password.length >= MIN_PASSWORD_LENGTH
+    ) {
+      this.setState({ canLogin: true });
+    } else {
+      this.setState({ canLogin: false });
+    }
+  }
+
+  render() {
+    const { email, password, canLogin } = this.state;
 
     return (
-      <Layout>
+      <Layout title="Login">
         <main>
           <form onSubmit={ this.handleSubmit }>
             <input
@@ -45,7 +60,12 @@ class Login extends React.Component {
               value={ password }
             />
 
-            <button type="submit">Entrar</button>
+            <button
+              type="submit"
+              disabled={ !canLogin }
+            >
+              Entrar
+            </button>
           </form>
         </main>
       </Layout>

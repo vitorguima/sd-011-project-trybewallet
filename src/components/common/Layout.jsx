@@ -2,7 +2,9 @@ import React from 'react';
 
 class Layout extends React.Component {
   componentDidMount() {
-    document.title = 'Trybe Wallet';
+    const { title } = this.props;
+
+    document.title = `${title ? `${title} | ` : ''}Trybe Wallet`;
   }
 
   render() {
@@ -14,7 +16,11 @@ class Layout extends React.Component {
           <h1>Trybe Wallet</h1>
         </header>
         { children }
-        <footer>Trybe Wallet por <a href="https://github.com/heyset">Matheus "Set" Inacio</a></footer>
+        <footer>
+          <p>
+            Trybe Wallet por <a href="https://github.com/heyset">Matheus "Set" Inacio</a>
+          </p>
+        </footer>
       </>
     );
   }
