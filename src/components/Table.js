@@ -4,24 +4,29 @@ import { connect } from 'react-redux';
 import { removeExpense } from '../actions';
 
 class Table extends Component {
+  renderThead() {
+    return (
+      <thead>
+        <tr>
+          <th>Descrição</th>
+          <th>Tag</th>
+          <th>Método de pagamento</th>
+          <th>Valor</th>
+          <th>Moeda</th>
+          <th>Câmbio utilizado</th>
+          <th>Valor convertido</th>
+          <th>Moeda de conversão</th>
+          <th>Editar/Excluir</th>
+        </tr>
+      </thead>);
+  }
+
   render() {
-    const { expenses, removeExpenseAct } = this.props;
+    const { expenses, removeExpenseAct, functionForm } = this.props;
     return (
       <div>
         <table>
-          <thead>
-            <tr>
-              <th>Descrição</th>
-              <th>Tag</th>
-              <th>Método de pagamento</th>
-              <th>Valor</th>
-              <th>Moeda</th>
-              <th>Câmbio utilizado</th>
-              <th>Valor convertido</th>
-              <th>Moeda de conversão</th>
-              <th>Editar/Excluir</th>
-            </tr>
-          </thead>
+          {this.renderThead()}
           <tbody>
             {expenses.map((v, i) => (
               <tr key={ i }>
@@ -35,6 +40,15 @@ class Table extends Component {
                   {(Number(v.exchangeRates[v.currency].ask) * Number(v.value)).toFixed(2)}
                 </td>
                 <td>Real</td>
+                <td>
+                  <button
+                    type="button"
+                    data-testid="edit-btn"
+                    onClick={ () => functionForm(v.id) }
+                  >
+                    Editar
+                  </button>
+                </td>
                 <td>
                   <button
                     type="button"
@@ -56,11 +70,13 @@ Table.propTypes = {
   expenses: PropTypes.shape({
     map: PropTypes.func.isRequired,
   }).isRequired,
+  functionForm: PropTypes.func.isRequired,
   removeExpenseAct: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
+  functionForm: state.wallet.formFuction,
 });
 
 const mapDispatchToProps = (dispatch) => ({

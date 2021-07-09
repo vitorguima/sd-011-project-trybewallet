@@ -16,9 +16,8 @@ function wallet(state = INITIAL_STATE, action) {
   case 'FETCH_SUCESS':
     return {
       ...state,
-      currencies: action.payload,
+      currencies: Object.keys(action.payload).filter((code) => code !== 'USDT'),
       exchange: action.payload,
-      loading: false,
     };
   case 'FETCH_ERROR':
     return {
@@ -35,9 +34,29 @@ function wallet(state = INITIAL_STATE, action) {
       ...state,
       expenses: state.expenses.filter((exps, i) => i !== action.index),
     };
+  case 'GET_FORM':
+    return {
+      ...state,
+      formFuction: action.payload,
+    };
+  case 'UPDT_FORM':
+    return {
+      ...state,
+      expenses: state.expenses.map((exp) => {
+        if (exp.id === action.payload.id) {
+          return {
+            id: exp.id,
+            ...action.payload,
+            exchangeRates: exp.exchangeRates,
+          };
+        } return exp;
+      }),
+    };
   default:
     return state;
   }
 }
+
+// expenses: [...state.expenses.filter((exps, i) => i !== action.index), action.payload]
 
 export default wallet;

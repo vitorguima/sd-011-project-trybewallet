@@ -41,3 +41,13 @@ export const removeExpense = (index) => ({
   type: 'RMV_EXPENSE',
   index,
 });
+
+export const getExpenseForm = (payload) => ({
+  type: 'GET_FORM',
+  payload,
+});
+
+export const updateForm = (payload) => ({
+  type: 'UPDT_FORM',
+  payload,
+});
