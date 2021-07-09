@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 export const Wallet = (props) => {
   return (
-    <div>
+    <div className="Wallet">
       Nothing yet
     </div>
   )
