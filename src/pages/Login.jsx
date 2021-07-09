@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import withStore from '../utils/withStore';
 
-import { Layout } from '../components/common';
-import { login } from '../agents';
+import Layout from '../components/common/Layout';
+import { login as loginAgent } from '../agents';
 
 class Login extends React.Component {
   constructor(props) {
@@ -82,4 +83,11 @@ class Login extends React.Component {
   }
 }
 
-export default withStore(Login, null, [login]);
+Login.propTypes = {
+  login: PropTypes.func,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
+}.isRequired;
+
+export default withStore(Login, null, [loginAgent]);

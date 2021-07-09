@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Select extends React.Component {
   render() {
-    const { handleChange, value, options, name, id, label } = this.props;
+    const { handleChange, value, options, name, id, label, testid } = this.props;
 
     return (
       <label
@@ -14,6 +15,7 @@ class Select extends React.Component {
           onChange={ handleChange }
           value={ value }
           id={ id }
+          data-testid={ testid }
         >
           { options.map((option) => (
             <option
@@ -27,5 +29,16 @@ class Select extends React.Component {
     );
   }
 }
+// handleChange, value, options, name, id, label, testid
+
+Select.propTypes = {
+  handleChange: PropTypes.func,
+  value: PropTypes.string,
+  options: PropTypes.string,
+  name: PropTypes.string,
+  id: PropTypes.string,
+  label: PropTypes.string,
+  testid: PropTypes.string,
+}.isRequired;
 
 export default Select;

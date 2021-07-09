@@ -23,6 +23,15 @@ const actions = {
     nextState.expenses = nextState.expenses.filter((expense) => expense.id !== id);
     return nextState;
   },
+  editExpense: (nextState, payload) => {
+    nextState.expenses = nextState.expenses.map((expense) => {
+      if (payload.id !== expense.id) return expense;
+
+      return payload;
+    });
+
+    return nextState;
+  },
 };
 
 export default createReducer(initialState, actions);

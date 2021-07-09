@@ -1,25 +1,36 @@
 import React from 'react';
-import { Layout } from '../components/common';
+import PropTypes from 'prop-types';
+import Layout from '../components/common/Layout';
 import { Header, Select, ExpensesTable } from '../components/Wallet';
 
+import stateClone from '../utils/stateClone';
 import withStore from '../utils/withStore';
 
-import { addNewExpense, updateCurrencies } from '../agents';
+import {
+  addNewExpense as addNewExpenseAgent,
+  editExpense as editExpenseAgent,
+  updateCurrencies as updateCurrenciesAgent } from '../agents';
+
+const initialState = {
+  currentForm: {
+    value: 0,
+    description: '',
+    currency: 'USD',
+    method: 'Dinheiro',
+    tag: 'Alimentação',
+  },
+  expenseBeingEdited: null,
+};
 
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      value: 0,
-      description: '',
-      currency: 'USD',
-      method: 'Dinheiro',
-      tag: 'Alimentação',
-    };
+    this.state = initialState;
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.startEdit = this.startEdit.bind(this);
   }
 
   componentDidMount() {
@@ -31,20 +42,41 @@ class Wallet extends React.Component {
   handleInputChange({ target }) {
     const { name, value } = target;
 
-    this.setState({ [name]: value });
+    this.setState((previousState) => {
+      const nextState = stateClone(previousState);
+      nextState.currentForm[name] = value;
+      return nextState;
+    });
   }
 
   handleSubmit(e) {
     e.preventDefault();
+    const { addNewExpense, editExpense } = this.props;
+    const { currentForm, expenseBeingEdited } = this.state;
 
-    const { addNewExpense } = this.props;
+    this.setState(initialState);
 
-    addNewExpense(this.state);
+    if (expenseBeingEdited) {
+      editExpense(currentForm);
+      return;
+    }
+
+    addNewExpense(currentForm);
+  }
+
+  startEdit(expense) {
+    this.setState((previous) => {
+      const nextState = stateClone(previous);
+      nextState.currentForm = expense;
+      nextState.expenseBeingEdited = expense;
+      return nextState;
+    });
   }
 
   renderSelects() {
     const { wallet } = this.props;
-    const { currency, method, tag } = this.state;
+    const { currentForm } = this.state;
+    const { currency, method, tag } = currentForm;
 
     const currencyList = Object.keys(wallet.currencies).filter((cur) => cur !== 'USDT');
 
@@ -57,6 +89,7 @@ class Wallet extends React.Component {
           handleChange={ this.handleInputChange }
           options={ currencyList }
           label="Moeda"
+          testid="currency-input"
         />
 
         <Select
@@ -66,6 +99,7 @@ class Wallet extends React.Component {
           handleChange={ this.handleInputChange }
           options={ ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'] }
           label="Método de pagamento"
+          testid="method-input"
         />
 
         <Select
@@ -75,13 +109,15 @@ class Wallet extends React.Component {
           handleChange={ this.handleInputChange }
           options={ ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'] }
           label="Tag"
+          testid="tag-input"
         />
       </>
     );
   }
 
   render() {
-    const { value, description } = this.state;
+    const { currentForm, expenseBeingEdited } = this.state;
+    const { value, description } = currentForm;
 
     return (
       <Layout title="Minha Carteira">
@@ -98,6 +134,7 @@ class Wallet extends React.Component {
                 name="value"
                 value={ value }
                 onChange={ this.handleInputChange }
+                data-testid="value-input"
               />
             </label>
 
@@ -109,19 +146,39 @@ class Wallet extends React.Component {
                 name="description"
                 value={ description }
                 onChange={ this.handleInputChange }
+                data-testid="description-input"
               />
             </label>
 
             { this.renderSelects() }
 
-            <button type="submit">Adicionar despesa</button>
+            <button type="submit">
+              { expenseBeingEdited ? 'Editar Despesa' : 'Adicionar despesa' }
+            </button>
           </form>
 
-          <ExpensesTable />
+          <ExpensesTable
+            startEdit={ this.startEdit }
+          />
         </main>
       </Layout>
     );
   }
 }
 
-export default withStore(Wallet, ['wallet'], [addNewExpense, updateCurrencies]);
+Wallet.propTypes = {
+  updateCurrencies: PropTypes.func,
+  addNewExpenseAgent: PropTypes.func,
+  editExpenseAgent: PropTypes.func,
+  wallet: PropTypes.shape({
+    currencies: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+      }),
+    ),
+  }),
+}.isRequired;
+
+export default withStore(
+  Wallet, ['wallet'], [addNewExpenseAgent, editExpenseAgent, updateCurrenciesAgent],
+);

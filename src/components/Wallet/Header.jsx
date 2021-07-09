@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import withStore from '../../utils/withStore';
 
 class Header extends React.Component {
@@ -38,5 +39,26 @@ class Header extends React.Component {
     );
   }
 }
+
+// value, currency, exchangeRates
+
+Header.propTypes = {
+  user: PropTypes.shape({
+    email: PropTypes.string,
+  }),
+  wallet: PropTypes.shape({
+    expenses: PropTypes.arrayOf(
+      PropTypes.shape({
+        value: PropTypes.string,
+        currency: PropTypes.string,
+        exchangeRates: PropTypes.arrayOf(
+          PropTypes.shape({
+            ask: PropTypes.string,
+          }),
+        ),
+      }),
+    ),
+  }),
+}.isRequired;
 
 export default withStore(Header, ['user', 'wallet']);

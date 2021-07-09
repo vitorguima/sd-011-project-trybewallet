@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Layout extends React.Component {
   componentDidMount() {
@@ -18,12 +19,22 @@ class Layout extends React.Component {
         { children }
         <footer>
           <p>
-            Trybe Wallet por <a href="https://github.com/heyset">Matheus "Set" Inacio</a>
+            Trybe Wallet por
+            <a href="https://github.com/heyset">Matheus &quot;Set&quot; Inacio</a>
           </p>
         </footer>
       </>
     );
   }
 }
+
+Layout.defaultProps = {
+  title: '',
+};
+
+Layout.propTypes = {
+  children: PropTypes.node.isRequired,
+  title: PropTypes.string,
+};
 
 export default Layout;

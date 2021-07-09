@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import withStore from '../../utils/withStore';
-import { deleteExpense } from '../../agents';
+import { deleteExpense as deleteExpenseAgent } from '../../agents';
 
 class ExpensesTable extends React.Component {
   constructor(props) {
@@ -34,13 +35,15 @@ class ExpensesTable extends React.Component {
   }
 
   render() {
-    const { wallet } = this.props;
+    const { startEdit, wallet } = this.props;
 
     return (
       <table>
         { this.renderTableHeader() }
         <tbody>
-          { wallet.expenses.map(({ currency, description, exchangeRates, id, method, tag, value }) => {
+          { wallet.expenses.map((expense) => {
+            const { currency, description, exchangeRates,
+              id, method, tag, value } = expense;
             const usedExchange = parseFloat(exchangeRates[currency].ask);
             const convertedValue = usedExchange * parseFloat(value);
             const [convertedFrom] = exchangeRates[currency].name.split('/');
@@ -56,7 +59,11 @@ class ExpensesTable extends React.Component {
                 <td>{ convertedValue.toFixed(2) }</td>
                 <td>Real</td>
                 <td>
-                  <button type="button">
+                  <button
+                    type="button"
+                    data-testid="edit-btn"
+                    onClick={ () => startEdit(expense) }
+                  >
                     Editar
                   </button>
                   <button
@@ -76,4 +83,30 @@ class ExpensesTable extends React.Component {
   }
 }
 
-export default withStore(ExpensesTable, ['wallet'], [deleteExpense]);
+/*
+const { currency, description, exchangeRates,
+  id, method, tag, value } = expense; */
+
+ExpensesTable.propTypes = {
+  deleteExpense: PropTypes.func,
+  startEdit: PropTypes.func,
+  wallet: PropTypes.shape({
+    expenses: PropTypes.arrayOf(
+      PropTypes.shape({
+        currency: PropTypes.string,
+        description: PropTypes.string,
+        exchangeRates: PropTypes.arrayOf(
+          PropTypes.shape({
+            ask: PropTypes.string,
+          }),
+        ),
+        id: PropTypes.string,
+        method: PropTypes.string,
+        tag: PropTypes.string,
+        value: PropTypes.string,
+      }),
+    ),
+  }),
+}.isRequired;
+
+export default withStore(ExpensesTable, ['wallet'], [deleteExpenseAgent]);

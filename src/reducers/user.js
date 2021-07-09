@@ -5,7 +5,7 @@ const initialState = {
 };
 
 const actions = {
-  LOGIN: (_, { email }) => ({ email }),
+  login: (_, { email }) => ({ email }),
 };
 
 export default createReducer(initialState, actions);
