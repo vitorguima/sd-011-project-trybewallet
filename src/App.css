@@ -1,8 +1,8 @@
 .App {
-  display: flex;
   align-items: center;
-  justify-content: space-between;
+  display: flex;
   flex-direction: column;
+  justify-content: space-between;
   height: 100px;
 }
 
@@ -45,13 +45,13 @@
 }
 
 .box-login {
+  border-bottom-width: 4px;
+  border-style: solid;
+  border-top-width: 0.1px;
+  border-right-width: 0.3px;
+  border-left-width: 0.2px;
   height: 150px;
   width: 300px;
-  border-bottom-width: 3px;
-  border-style: solid;
-  border-top-width: 0.3px;
-  border-right-width: 0.3px;
-  border-left-width: 0.3px;
   background-color: #006666;
 }
 
