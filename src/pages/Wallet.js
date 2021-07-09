@@ -16,21 +16,70 @@ class Wallet extends React.Component {
     return total;
   }
 
+  renderForm() {
+    return (
+      <form>
+        <label htmlFor="value">
+          Valor:
+          <input type="number" />
+        </label>
+
+        <label htmlFor="description">
+          Descrição:
+          <input type="text" />
+        </label>
+
+        <label htmlFor="currency">
+          Moeda:
+          <select name="currency" id="currency">
+            <option value="br">BR</option>
+          </select>
+        </label>
+
+        <label htmlFor="payment-method">
+          Método de Pagamento
+          <select name="payment-method" id="payment-method">
+            <option value="cash">Dinheiro</option>
+            <option value="credit-card">Cartão de crédito</option>
+            <option value="debit-card">Cartão de débito</option>
+          </select>
+        </label>
+        <label htmlFor="expense-tag">
+          Tag
+          <select name="expense-tag" id="expense-tag">
+            <option value="food">Alimentação</option>
+            <option value="leisure">Lazer</option>
+            <option value="work">Trabalho</option>
+            <option value="transportation">Transporte</option>
+            <option value="health">Saúde</option>
+          </select>
+        </label>
+      </form>
+    );
+  }
+
   render() {
     const { userEmail } = this.props;
     const total = this.calculateTotal();
     return (
-      <header>
-        <div data-testid="email-field">
-          {userEmail}
-        </div>
-        <section data-testid="total-field">
-          {total}
-        </section>
-        <section data-testid="header-currency-field">
-          Moeda atual:BRL
-        </section>
-      </header>
+      <div>
+        {this.renderForm()}
+        <header>
+          <div data-testid="email-field">
+            Email:
+            {' '}
+            {userEmail}
+          </div>
+          <section data-testid="total-field">
+            Total:
+            {' '}
+            {total}
+          </section>
+          <section data-testid="header-currency-field">
+            Moeda atual:BRL
+          </section>
+        </header>
+      </div>
     );
   }
 }
