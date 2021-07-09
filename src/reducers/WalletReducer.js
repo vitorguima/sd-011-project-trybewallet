@@ -2,7 +2,7 @@ const INITIAL_STATE = {
   currency: '',
 };
 
-function WalletReducer(state = INITIAL_STATE, action) {
+function WalletReducer(state = INITIAL_STATE) {
   return state;
 }
 

@@ -1,6 +1,6 @@
 import {
   LOGIN_ENTER_CLICK_ACTION,
-} from '../Actions';
+} from '../Actions/index.js';
 
 const INITIAL_STATE = {
   email: '',
