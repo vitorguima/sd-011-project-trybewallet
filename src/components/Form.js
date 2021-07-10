@@ -48,7 +48,6 @@ class Form extends Component {
       exchangeRates: currencies,
     };
     setExpense(expense);
-    console.log(method);
     this.setState((prev) => ({
       id: prev.id + 1,
       currencies: [],

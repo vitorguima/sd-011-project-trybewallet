@@ -3,6 +3,7 @@ export const REQUEST_CURRENCIES = 'REQUEST_CURRENCIES';
 export const GET_CURRENCIES = 'GET_CURRENCIES';
 export const FAILED_REQUEST = 'FAILED_REQUEST';
 export const SET_EXPENSE = 'SET_EXPENSE';
+export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 
 export const emailAction = (email) => (
   {
@@ -46,5 +47,12 @@ export const expenseAction = (expense) => (
     type: SET_EXPENSE,
     expense,
     value: expense.value,
+  }
+);
+
+export const expenseRemoveAction = (expense) => (
+  {
+    type: REMOVE_EXPENSE,
+    expense,
   }
 );

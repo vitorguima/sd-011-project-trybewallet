@@ -48,7 +48,7 @@ class Selects extends Component {
 }
 
 Selects.propTypes = {
-  currency: PropTypes.number.isRequired,
+  currency: PropTypes.string.isRequired,
   FIFTEEN: PropTypes.number.isRequired,
   currencies: PropTypes.arrayOf(Object).isRequired,
   tag: PropTypes.string.isRequired,

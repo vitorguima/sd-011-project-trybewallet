@@ -1,24 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { expenseRemoveAction } from '../actions';
+import Theader from '../table-components/Theader';
 
 class Table extends Component {
   render() {
-    const { expenses } = this.props;
+    const { expenses, removeExpense } = this.props;
     return (
       <div>
         <table>
-          <tr>
-            <th>Descrição</th>
-            <th>Tag</th>
-            <th>Método de pagamento</th>
-            <th>Valor</th>
-            <th>Moeda</th>
-            <th>Câmbio utilizado</th>
-            <th>Valor convertido</th>
-            <th>Moeda de conversão</th>
-            <th>Editar/Excluir</th>
-          </tr>
+          <Theader />
           { expenses.map((exp, index) => {
             const { description, tag, method, value, exchangeRates, currency } = exp;
             const valueFloat = Number.parseFloat(value);
@@ -37,7 +29,18 @@ class Table extends Component {
                 <td>{ask.toFixed(2)}</td>
                 <td>{(ask * valueFloat).toFixed(2)}</td>
                 <td>Real</td>
-                <td>Editar/excluir</td>
+                <td>
+                  <button type="button">
+                    Editar
+                  </button>
+                  <button
+                    type="button"
+                    data-testid="delete-btn"
+                    onClick={ () => removeExpense(exp) }
+                  >
+                    Excluir
+                  </button>
+                </td>
               </tr>
             );
           }) }
@@ -51,8 +54,13 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  removeExpense: (state) => dispatch(expenseRemoveAction(state)),
+});
+
 Table.propTypes = {
   expenses: PropTypes.arrayOf(Object).isRequired,
+  removeExpense: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(Table);
+export default connect(mapStateToProps, mapDispatchToProps)(Table);

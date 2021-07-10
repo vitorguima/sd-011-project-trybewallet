@@ -1,7 +1,7 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 import {
   GET_CURRENCIES, REQUEST_CURRENCIES,
-  FAILED_REQUEST, SET_EXPENSE,
+  FAILED_REQUEST, SET_EXPENSE, REMOVE_EXPENSE,
 } from '../actions';
 
 const GLOBAL_WALLET_STATE = {
@@ -24,6 +24,22 @@ const wallet = (state = GLOBAL_WALLET_STATE, action) => {
       ...state,
       expenses: [...state.expenses, action.expense],
       totalExpense: state.totalExpense + Number.parseFloat(action.value),
+    };
+  case REMOVE_EXPENSE:
+    console.log({
+      ...state,
+      expenses: [
+        ...state.expenses.slice(0, action.expense.id),
+        ...state.expenses.slice(action.expense.id + 1),
+      ],
+    });
+    return {
+      ...state,
+      expenses: [
+        ...state.expenses.slice(0, state.expenses.indexOf(action.expense)),
+        ...state.expenses.slice(state.expenses.indexOf(action.expense) + 1),
+      ],
+      totalExpense: state.totalExpense - Number.parseFloat(action.expense.value),
     };
   default:
     return state;

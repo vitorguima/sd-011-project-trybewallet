@@ -23,7 +23,7 @@ class Inputs extends Component {
             name="description"
             id="description"
             value={ description }
-            onChange={ this.changeValues }
+            onChange={ func }
           />
         </label>
       </div>
