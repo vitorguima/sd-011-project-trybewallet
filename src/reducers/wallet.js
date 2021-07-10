@@ -8,7 +8,7 @@ import { REQUEST_API,
 } from '../actions';
 
 const INITIAL_STATE = {
-  currencies: [],
+  currencies: '',
   expenses: [],
 };
 
@@ -20,7 +20,6 @@ function walletReducer(state = INITIAL_STATE, action) {
       isLoading: true,
     };
   case REQUEST_API_SUCCESS:
-    delete action.payload.USDT;
     return {
       ...state,
       currencies: action.payload,

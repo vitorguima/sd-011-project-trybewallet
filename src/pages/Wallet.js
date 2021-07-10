@@ -143,7 +143,8 @@ class Wallet extends React.Component {
     const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     const { value, description, currency, method, tag } = this.state;
     const { currencies, loadingCurrencies, addExpenseAction, reqApiAction } = this.props;
-    const currenciesArray = Object.keys(currencies).map((item) => item);
+
+    const currenciesArray = Object.keys(currencies).filter((currency) => currency !== 'USDT');
 
     return (
       <div>
