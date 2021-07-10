@@ -46,31 +46,31 @@ class LoginForm extends Component {
           <label htmlFor="email-input">
             Login:
             <input
-              value={ email }
-              type="email"
+              type="text"
               name="email"
-              data-testid="email-input"
+              value={ email }
               placeholder="alguem@email.com"
-              onChange={ (e) => this.handleChange(e) }
+              data-testid="email-input"
+              onChange={ this.handleChange }
             />
           </label>
           <label htmlFor="password-input">
             Senha:
             <input
-              value={ password }
               type="password"
               name="password"
+              value={ password }
               data-testid="password-input"
               placeholder="digite sua senha"
-              onChange={ (e) => this.handleChange(e) }
+              onChange={ this.handleChange }
             />
           </label>
           <div>
             <Link to="/carteira">
               <button
                 type="button"
-                onClick={ (e) => this.handleSubmit(e) }
                 disabled={ !this.validateMail() } // - Req.2 a função começa desabilitada
+                onClick={ this.handleSubmit }
               >
                 Entrar
               </button>
@@ -87,7 +87,7 @@ const mapDispatchToProps = (dispatch) => ({
   emailStore: (email) => dispatch(newUser(email)),
 });
 
-// mapDispatchToProps - vai mandar o e-mail logado para o estado global (store).
+// Req. 3 - mapDispatchToProps - vai mandar o e-mail logado para o estado global (store).
 
 LoginForm.propTypes = {
   emailStore: PropTypes.string,
