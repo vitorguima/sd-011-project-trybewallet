@@ -100,17 +100,16 @@ class Wallet extends React.Component {
         <ExpenseTableHeader />
         <table className="expenses-body" border="1">
           {this.props.userExpense.map((expense) => (
-            <tr key={ expense.id }>
+            <thead key={ expense.id }>
               <td name="description">{expense.description}</td>
               <td name="tag">{expense.tag}</td>
               <td name="payment-method">{expense.method}</td>
-              <td name="value">{`${expense.currency} ${expense.value}.00`}</td>
-              <td name="currency">{expense.exchangeRates[this.state.currency].name.split('/')[0]}</td>
-              {/* Editar a linha acima adicionando o result de this.state.currency num local seguro */}
-              {/* <td name="exchange-used">{expense.exchangeRates[this.state.currency].ask * expense.value}</td> */}
-              <td name="converted-value">{expense.valueConverted}</td>
-              <td name="conversion-currency">{expense.currencyConverted}</td>
-            </tr>
+              <td name="value">{expense.value}</td>
+              <td name="currency">{expense.exchangeRates[expense.currency].name.split('/')[0]}</td>
+              <td name="exchange-used">{(expense.exchangeRates[expense.currency].ask * 1).toFixed(2)}</td>
+              <td name="converted-value">{(expense.exchangeRates[expense.currency].ask * expense.value).toFixed(2)}</td>
+              <td name="conversion-currency">Real</td>
+            </thead>
           ))}
         </table>
       </div>
