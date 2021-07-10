@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 
 class SubmitForm extends Component {
   render() {
-    const { handleSubmit } = this.props;
+    const { handleClick } = this.props;
     return (
       <div>
         <button
           type="submit"
-          onClick={ handleSubmit }
+          onClick={ handleClick }
         >
           Adicionar Despesa
         </button>
@@ -20,5 +20,5 @@ class SubmitForm extends Component {
 export default SubmitForm;
 
 SubmitForm.propTypes = {
-  handleSubmit: PropTypes.func,
+  handleClick: PropTypes.func,
 }.isRequired;

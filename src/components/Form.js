@@ -1,26 +1,31 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import SubmitForm from './SubmitForm';
 import FormCurrencies from './FormCurrencies';
 import FormValue from './FormValue';
 import FormDescription from './FormDescription';
+import * as userActions from '../actions';
 
 class ExpenseForm extends React.Component {
   constructor() {
     super();
     this.handleInputs = this.handleInputs.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClick = this.handleClick.bind(this);
 
     this.state = {
       value: 0,
       description: '',
-      paymentType: '',
-      tag: '',
-      currency: '',
+      paymentType: 'Dinheiro',
+      tag: 'Alimentação',
+      currency: 'USD',
     };
   }
 
-  handleSubmit(e) {
-    const { value, description, paymentType, tag, currency, addNewExpense } = this.state;
+  handleClick() {
+    const { value, description, paymentType, tag, currency } = this.state;
+    const { addNewExpense } = this.props;
     const newExpense = {
       value,
       description,
@@ -28,9 +33,11 @@ class ExpenseForm extends React.Component {
       tag,
       currency,
     };
-
-    e.preventDefault();
     addNewExpense(newExpense);
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
   }
 
   handleInputs({ target }) {
@@ -42,7 +49,7 @@ class ExpenseForm extends React.Component {
   render() {
     const { value, description, paymentType, tag, currency } = this.state;
     return (
-      <form>
+      <form onSubmit={ this.handleSubmit }>
         <FormValue value={ value } handleInputs={ this.handleInputs } />
         <FormDescription description={ description } handleInputs={ this.handleInputs } />
         <label htmlFor="payment-type">
@@ -78,16 +85,19 @@ class ExpenseForm extends React.Component {
           value={ currency }
         />
         <SubmitForm
-          value={ value }
-          description={ description }
-          paymentType={ paymentType }
-          tag={ tag }
-          currency={ currency }
-          onSubmit={ this.handleSubmit }
+          handleClick={ this.handleClick }
         />
       </form>
     );
   }
 }
 
-export default ExpenseForm;
+const mapDispatchToProps = (dispatch) => ({
+  addNewExpense: (newExpense) => dispatch(userActions.newExpense(newExpense)),
+});
+
+export default connect(null, mapDispatchToProps)(ExpenseForm);
+
+ExpenseForm.propTypes = {
+  addNewExpense: PropTypes.func,
+}.isRequired;

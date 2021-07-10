@@ -8,7 +8,7 @@ import Wallet from './pages/Wallet';
 function App(props) {
   const { isLogged } = props;
   return (
-    <main>
+    <>
       <Switch>
         <Route exact path="/" component={ Login } />
         <Route path="/carteira" component={ Wallet } />
@@ -16,7 +16,7 @@ function App(props) {
       { isLogged
         ? <Redirect to="/carteira" />
         : <Redirect to="/" /> }
-    </main>
+    </>
   );
 }
 

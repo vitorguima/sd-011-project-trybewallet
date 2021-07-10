@@ -8,9 +8,9 @@ class FormCurrencies extends Component {
     const currencies = currenciesState ? Object.keys(currenciesState) : null;
 
     return (
-      <label htmlFor="currencies">
+      <label htmlFor="currency">
         Moedas
-        <select name="currencies" onChange={ handleInputs } value={ value }>
+        <select name="currency" onChange={ handleInputs } value={ value } id="currency">
           { currencies
             ? currencies.map((currency) => {
               if (currency !== 'USDT') {
