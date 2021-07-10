@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import FormWallet from '../components/FormWallet';
 import NavWallet from '../components/NavWallet';
-import { setCurrencies } from '../actions';
+import { fetchCurrencies } from '../actions';
 
 function Wallet() {
   const url = 'https://economia.awesomeapi.com.br/json/all';
@@ -12,7 +12,7 @@ function Wallet() {
     const getCurrencies = async () => {
       try {
         const { data } = await axios.get(url);
-        dispatch(setCurrencies(data));
+        dispatch(fetchCurrencies(data));
       } catch (error) {
         console.log('ERR', error);
       }

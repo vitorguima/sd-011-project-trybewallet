@@ -2,8 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 const NavWallet = () => {
-  const currentState = useSelector((state) => state);
-  const { user: { email } } = currentState;
+  const email = useSelector((state) => state.user.email);
   const [total] = React.useState(0);
   return (
     <nav>

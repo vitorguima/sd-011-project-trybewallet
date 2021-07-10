@@ -4,7 +4,8 @@ import { useSelector } from 'react-redux';
 function FormWallet() {
   const currencies = useSelector((state) => state.wallet.currencies);
   const arrayOfcur = Object.entries(currencies).map((item) => item[1]);
-  const filtredArrayCur = arrayOfcur.filter((item) => item.codein !== 'USDT');
+  const filtredArrayCur = arrayOfcur.filter((item) => item.codein !== 'BRLT');
+  console.log(filtredArrayCur);
   return (
     <form>
       <label htmlFor="valor">
@@ -16,8 +17,11 @@ function FormWallet() {
         <input type="text" id="desc" name="desc" />
       </label>
       <label htmlFor="currency">
-        moeda
-        <select id="currency" name="currency">
+        Moeda
+        <select
+          id="currency"
+          name="currency"
+        >
           {filtredArrayCur.map((item, idx) => (
             <option value={ item.code } key={ idx }>{ item.code }</option>
           ))}
