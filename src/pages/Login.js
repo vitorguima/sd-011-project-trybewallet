@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setUsername, SetPassword } from '../actions';
@@ -94,5 +95,10 @@ const mapDispatchToProps = (dispatch) => ({
   setUsernameAction: (payload) => dispatch(setUsername(payload)),
   setPasswordAction: (payload) => dispatch(SetPassword(payload)),
 });
+
+Login.propTypes = {
+  setUsernameAction: PropTypes.objectOf.isRequired,
+  setPasswordAction: PropTypes.objectOf.isRequired,
+};
 
 export default connect(null, mapDispatchToProps)(Login);
