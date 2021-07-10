@@ -1,4 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { setUsername, SetPassword } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -10,6 +13,7 @@ class Login extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.validateEmail = this.validateEmail.bind(this);
+    this.sendDispatch = this.sendDispatch.bind(this);
   }
 
   validateEmail() {
@@ -32,6 +36,13 @@ class Login extends React.Component {
     this.setState({
       [name]: value,
     });
+  }
+
+  sendDispatch() {
+    const { email, password } = this.state;
+    const { setUsernameAction, setPasswordAction } = this.props;
+    setUsernameAction(email);
+    setPasswordAction(password);
   }
 
   render() {
@@ -64,16 +75,24 @@ class Login extends React.Component {
             />
             <br />
           </label>
-          <button
-            type="button"
-            disabled={ !isLoginValid }
-          >
-            Entrar
-          </button>
+          <Link to="/carteira">
+            <button
+              type="button"
+              disabled={ !isLoginValid }
+              onClick={ this.sendDispatch }
+            >
+              Entrar
+            </button>
+          </Link>
         </form>
       </div>
     );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  setUsernameAction: (payload) => dispatch(setUsername(payload)),
+  setPasswordAction: (payload) => dispatch(SetPassword(payload)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
