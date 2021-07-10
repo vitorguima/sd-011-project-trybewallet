@@ -1,24 +1,40 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import FormsBtn from './FormsBtn';
 
 class Fomrs extends Component {
+  constructor(props) {
+    super(props);
+    this.up = this.up.bind(this);
+  }
+
+  up(e) {
+    this.setState({
+      [e.target.id]: e.target.value,
+    });
+  }
+
   render() {
     const { currency = [] } = this.props;
     return (
       <form className="forms">
-        <label htmlFor="Valor">
+        <label htmlFor="value">
           Valor:
-          <input id="Valor" className="Valor" type="text" name="Valor" />
+          <input
+            onChange={ this.up }
+            id="value"
+            className="Valor"
+            type="text"
+          />
         </label>
-        <label htmlFor="Descrição">
+        <label htmlFor="description">
           Descrição:
-          <textarea id="Descrição" type="text" name="Descrição" />
+          <textarea onChange={ this.up } id="description" type="text" />
         </label>
-        <label htmlFor="Moeda">
+        <label htmlFor="currency">
           Moeda:
-          <select id="Moeda" name="Moeda">
-            {console.log(currency)}
+          <select onChange={ this.up } id="currency">
             {
               currency
                 .map((item, index) => (
@@ -26,24 +42,25 @@ class Fomrs extends Component {
             }
           </select>
         </label>
-        <label htmlFor="Pagamento">
+        <label htmlFor="method">
           Método de pagamento:
-          <select id="Pagamento" name="Pagamento">
-            <option value="dinheiro">Dinheiro</option>
-            <option value="cartaodecredito">Cartão de crédito</option>
-            <option value="cartaodedebito">Cartão de débito</option>
+          <select onChange={ this.up } id="method">
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
           </select>
         </label>
-        <label htmlFor="Tag">
+        <label htmlFor="tag">
           Tag:
-          <select id="Tag" name="Tag">
-            <option value="alimentacao">Alimentação</option>
-            <option value="lazer">Lazer</option>
-            <option value="trabalho">Trabalho</option>
-            <option value="transporte">Transporte</option>
-            <option value="saude">Saúde</option>
+          <select onChange={ this.up } id="tag" name="tag">
+            <option value="Alimentação">Alimentação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Saúde">Saúde</option>
           </select>
         </label>
+        <FormsBtn toma={ this.state } />
       </form>
     );
   }

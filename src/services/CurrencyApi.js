@@ -5,7 +5,7 @@ async function fetchApi() {
     const response = await fetch(ENDPOINT);
     const data = await response.json();
     delete data.USDT;
-    return Object.values(data);
+    return data;
   } catch (error) {
     return error;
   }

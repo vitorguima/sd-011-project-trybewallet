@@ -3,6 +3,7 @@ import fetchApi from '../services/CurrencyApi';
 const LOGIN_ENTER_CLICK_ACTION = 'LOGIN_ENTER_CLICK_ACTION';
 const GET_CURRENCY_WALLET_ACTION = 'GET_CURRENCY_WALLET_ACTION';
 const GET_CURRENCY_WALLET_ACTION_ERROR = 'GET_CURRENCY_WALLET_ACTION_ERROR';
+const SEND_INFOS_TO_EXPENSES_ACTION = 'SEND_INFOS_TO_EXPENSES_ACTION';
 
 function loginEnterClickAction(payload) {
   return {
@@ -25,11 +26,18 @@ function getCurrencyActionError(payload) {
   };
 }
 
+function sendInfoToExpensesAction(payload) {
+  return {
+    type: SEND_INFOS_TO_EXPENSES_ACTION,
+    payload,
+  };
+}
+
 function getCurrencyThunk() {
   return (dispatch) => (
     fetchApi()
       .then(
-        (data) => dispatch(getCurrencyAction(data)),
+        (data) => dispatch(getCurrencyAction(Object.values(data))),
       )
       .catch(
         (error) => dispatch(getCurrencyActionError(error.message)),
@@ -44,4 +52,6 @@ export {
   GET_CURRENCY_WALLET_ACTION_ERROR,
   getCurrencyAction,
   getCurrencyThunk,
+  sendInfoToExpensesAction,
+  SEND_INFOS_TO_EXPENSES_ACTION,
 };

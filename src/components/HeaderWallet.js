@@ -4,16 +4,8 @@ import PropTypes from 'prop-types';
 import '../App.css';
 
 class HeaderWallet extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: 0,
-    };
-  }
-
   render() {
-    const { getEmail, getCurrency } = this.props;
-    const { value } = this.state;
+    const { getEmail, getCurrency, getTotalValue = 0 } = this.props;
     return (
       <div className="header-container">
         <h4>
@@ -25,7 +17,7 @@ class HeaderWallet extends Component {
           </span>
         </h4>
         <h5>
-          Despesas Totais:
+          Despesas Totais: R$
           <span
             style={ { color: 'red' } }
           >
@@ -34,7 +26,7 @@ class HeaderWallet extends Component {
               id="total-field"
               data-testid="total-field"
             >
-              {value}
+              {getTotalValue}
             </span>
           </span>
         </h5>
@@ -57,6 +49,7 @@ class HeaderWallet extends Component {
 const mapStateToProps = (state) => ({
   getEmail: state.user.email,
   getCurrency: state.wallet.currency,
+  getTotalValue: state.wallet.totalValue,
 });
 
 export default connect(mapStateToProps)(HeaderWallet);
@@ -64,4 +57,5 @@ export default connect(mapStateToProps)(HeaderWallet);
 HeaderWallet.propTypes = {
   getEmail: PropTypes.string.isRequired,
   getCurrency: PropTypes.string.isRequired,
+  getTotalValue: PropTypes.string.isRequired,
 };
