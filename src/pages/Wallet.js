@@ -9,6 +9,7 @@ import {
   category,
 } from '../walletComponents/walletElements';
 import { fetchCurrencies, fetchToExpenses } from '../actions';
+import ExpenseTableHeader from '../walletComponents/ExpenseTableHeader';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -17,9 +18,9 @@ class Wallet extends React.Component {
     this.state = {
       value: 0,
       description: '',
-      currency: '',
-      method: '',
-      tag: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Lazer',
     };
 
     this.handlerInputChange = this.handlerInputChange.bind(this);
@@ -70,17 +71,12 @@ class Wallet extends React.Component {
 
   render() {
     const { email, currencies } = this.props;
-    // const currentExpense = userExpense;
     return (
-      <div
-        className="main-page"
-      >
+      <div className="main-page">
         <section>
           <div className="title">TrybeWallet</div>
           <p data-testid="email-field">{email}</p>
-          <p
-            data-testid="total-field"
-          >
+          <p data-testid="total-field">
             { this.sumTotalOfExpenses() }
           </p>
           <p data-testid="header-currency-field">BRL</p>
@@ -99,6 +95,24 @@ class Wallet extends React.Component {
             Adicionar despesa
           </button>
         </form>
+        {/* Para relembrar o uso de tabelas, consulsei um pequeno artigo em...
+        Source: http://www.linhadecodigo.com.br/artigo/3439/introducao-ao-html-usando-tabelas-em-html.aspx */}
+        <ExpenseTableHeader />
+        <table className="expenses-body" border="1">
+          {this.props.userExpense.map((expense) => (
+            <tr key={ expense.id }>
+              <td name="description">{expense.description}</td>
+              <td name="tag">{expense.tag}</td>
+              <td name="payment-method">{expense.method}</td>
+              <td name="value">{`${expense.currency} ${expense.value}.00`}</td>
+              <td name="currency">{expense.exchangeRates[this.state.currency].name.split('/')[0]}</td>
+              {/* Editar a linha acima adicionando o result de this.state.currency num local seguro */}
+              {/* <td name="exchange-used">{expense.exchangeRates[this.state.currency].ask * expense.value}</td> */}
+              <td name="converted-value">{expense.valueConverted}</td>
+              <td name="conversion-currency">{expense.currencyConverted}</td>
+            </tr>
+          ))}
+        </table>
       </div>
     );
   }
