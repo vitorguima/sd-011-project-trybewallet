@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import fetchCurrencyAPI from '../services/fetchAPI';
 import { submitCurrencies } from '../actions/submitCurrencies';
 import { submitActionExpenses } from '../actions/submitExpenses';
+import Header from '../components/Header';
 
 class Wallet extends React.Component {
   constructor() {
@@ -144,14 +145,9 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email } = this.props;
     return (
       <div className="wallet-page">
-        <header className="header-container">
-          <p className="email" data-testid="email-field">{email}</p>
-          <p className="expenses" data-testid="total-field">{`Despesa total: ${0}`}</p>
-          <p className="currency" data-testid="header-currency-field">BRL</p>
-        </header>
+        <Header />
         <form className="form-container">
           <fieldset className="fieldset-container">
             {this.renderValueInput()}
@@ -173,7 +169,6 @@ class Wallet extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  email: state.user.email,
   array: state.wallet.currencies,
   totalValue: state.wallet.expenses,
 });
@@ -184,7 +179,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Wallet.propTypes = {
-  email: PropTypes.string.isRequired,
+  array: PropTypes.arrayOf(PropTypes.string).isRequired,
   submitCurrency: PropTypes.func.isRequired,
   submitExpense: PropTypes.func.isRequired,
   map: PropTypes.func.isRequired,
