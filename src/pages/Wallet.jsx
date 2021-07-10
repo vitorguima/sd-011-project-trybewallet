@@ -78,7 +78,7 @@ class Wallet extends React.Component {
     const { currentForm } = this.state;
     const { currency, method, tag } = currentForm;
 
-    const currencyList = Object.keys(wallet.currencies).filter((cur) => cur !== 'USDT');
+    const currencyList = wallet.currencies.filter((cur) => cur !== 'USDT');
 
     return (
       <>
@@ -171,11 +171,7 @@ Wallet.propTypes = {
   addNewExpenseAgent: PropTypes.func,
   editExpenseAgent: PropTypes.func,
   wallet: PropTypes.shape({
-    currencies: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string,
-      }),
-    ),
+    currencies: PropTypes.arrayOf(PropTypes.string),
   }),
 }.isRequired;
 

@@ -7,9 +7,9 @@ const initialState = {
 };
 
 const actions = {
-  receiveNewExpense: (nextState, expense) => {
+  receiveNewExpense: (nextState, { expense, currencies }) => {
     expense.id = nextState.nextId;
-    expense.exchangeRates = nextState.currencies;
+    expense.exchangeRates = currencies;
     nextState.expenses.push(expense);
 
     nextState.nextId += 1;

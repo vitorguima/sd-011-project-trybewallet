@@ -12,14 +12,14 @@ const fetchCurrencies = () => new Promise((resolve) => {
 
 const receiveCurrencies = createAgent('receiveCurrencies');
 export const updateCurrencies = () => (dispatch) => fetchCurrencies()
-  .then((currencies) => dispatch(receiveCurrencies(currencies)));
+  .then((currencies) => dispatch(receiveCurrencies(Object.keys(currencies))));
 
 const receiveNewExpense = createAgent('receiveNewExpense');
 
 export const addNewExpense = (expense) => (dispatch) => fetchCurrencies()
   .then((currencies) => {
-    dispatch(receiveCurrencies(currencies));
-    dispatch(receiveNewExpense(expense));
+    dispatch(receiveCurrencies(Object.keys(currencies)));
+    dispatch(receiveNewExpense({ expense, currencies }));
   });
 
 export const deleteExpense = createAgent('deleteExpense');
