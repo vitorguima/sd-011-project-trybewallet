@@ -1,21 +1,27 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { fetchCurrency } from '../actions';
 
 class ExpensesForm extends React.Component {
   // constructor(props) {
   //   super(props);
   //   this.state = {
-  //     email: '',
-  //     password: '',
-  //     disabled: true,
+  //     ApiData: {},
   //   };
   // }
 
-  // handleInput(target) {
-  //   const { value, name } = target;
-  //   this.setState({ [name]: value }, () => this.setState({ disabled: !this.validate() }));
-  // }
+  async componentDidMount() {
+    // const { fetchCurrency } = this.props;
+    fetchCurrency();
+  }
+
+  currenciesOptions() {
+    const { currencies } = this.props;
+    const moedas = Object.keys(currencies).filter((curr) => curr !== 'USDT');
+    moedas.map((moeda) => <option key={ moeda } value={ moeda }>{moeda}</option>);
+    return moedas;
+  }
 
   render() {
     return (
@@ -38,7 +44,7 @@ class ExpensesForm extends React.Component {
         <label htmlFor="currency">
           Moeda:
           <select name="currency">
-            <option>Moeda corrente</option>
+            {this.currenciesOptions()}
           </select>
         </label>
         <label htmlFor="payment-method">
@@ -65,13 +71,17 @@ class ExpensesForm extends React.Component {
   }
 }
 
-// const mapDispatchToProps = (dispatch) => ({
-//   submitLogIn: (value) => dispatch(logInWallet(value)),
-// });
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchCurrency: () => dispatch(fetchCurrency()),
+});
 
 // login.propTypes = {
 //   submitLogIn: PropTypes.func.isRequired,
 //   history: PropTypes.func.isRequired,
 // };
 
-export default connect(null, mapDispatchToProps)(ExpensesForm);
+export default connect(mapStateToProps, mapDispatchToProps)(ExpensesForm);
