@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import withStore from '../../utils/withStore';
+import withStore from '../../functions/withStore';
 
 class Header extends React.Component {
   render() {

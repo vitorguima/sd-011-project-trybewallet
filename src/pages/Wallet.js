@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import Layout from '../components/common/Layout';
 import { Header, Select, ExpensesTable } from '../components/Wallet';
 
-import stateClone from '../utils/stateClone';
-import withStore from '../utils/withStore';
+import stateClone from '../functions/stateClone';
+import withStore from '../functions/withStore';
 
 import {
   addNewExpense as addNewExpenseAgent,

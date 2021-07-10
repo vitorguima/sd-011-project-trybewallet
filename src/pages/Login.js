@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import withStore from '../utils/withStore';
+import withStore from '../functions/withStore';
 
 import Layout from '../components/common/Layout';
 import { login as loginAgent } from '../agents';

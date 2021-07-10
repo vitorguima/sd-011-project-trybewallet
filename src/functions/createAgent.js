@@ -1,4 +1,3 @@
-
 const createAgent = (type) => {
   const action = (payload) => ({ type, payload });
   Object.defineProperty(action, 'name', {
