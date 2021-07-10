@@ -26,6 +26,7 @@
   flex-direction: column;
   height: 350px;
   justify-content: center;
+  text-align: center;
   width: 800px;
 }
 
@@ -38,6 +39,7 @@
 .email-input {
   border-radius: 5px;
   width: 210px;
+  margin-right: 8px;
 }
 
 .login-container button {
@@ -69,4 +71,24 @@ input:focus:invalid {
 
 span {
   color: crimson;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  padding: 2px;
+  background-color: rgb(214, 210, 210);
+}
+
+#email {
+  margin-left: 10px;
+}
+
+#total-field {
+  margin-left: 10px;
+}
+
+#currency {
+  margin-left: 10px;
 }
