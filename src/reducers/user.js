@@ -1,8 +1,9 @@
 // Esse reducer será responsável por tratar as informações da pessoa usuária
 const USER_STATE = {
   id: 0,
-  user: 'Marlon',
-  psw: '1234567',
+  user: '',
+  psw: '',
+  btnEnable: true,
 };
 
 function functionUser(state = USER_STATE, action) {

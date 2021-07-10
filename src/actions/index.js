@@ -1,7 +1,8 @@
 // Coloque aqui suas actions
-const userLogin = (logged) => ({
+const userLogin = (value) => ({
   type: 'USER_LOGIN',
-  task: logged,
+  logged: false,
+  value,
 });
 
 export default userLogin;

@@ -3,7 +3,7 @@ import {} from '../actions';
 
 const WALLET_STATE = {
   id: {
-    email: 'qwdqwd',
+    email: 'mail@mail.com',
   },
   value: {
     currencies: [],
