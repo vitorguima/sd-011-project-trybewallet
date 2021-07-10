@@ -1,5 +1,6 @@
 import React from 'react';
 import './Style.css';
+// import { saveEmail } from '../actions/index';
 
 const minPassword = 6;
 
@@ -22,7 +23,7 @@ class Login extends React.Component {
     }));
   }
 
-  // peguei uma dica de como altenticar email no atackoverflow
+  // peguei uma dica de como autenticar email no stackoverflow
   // https://pt.stackoverflow.com/questions/1386/express%C3%A3o-regular-para-valida%C3%A7%C3%A3o-de-e-mail
   confirmedEmail(email) {
     const emailPattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
