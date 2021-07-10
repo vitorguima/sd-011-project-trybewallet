@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 class ExpensesForm extends React.Component {
@@ -12,15 +12,12 @@ class ExpensesForm extends React.Component {
   //   };
   // }
 
-
-  handleInput(target) {
-    const { value, name } = target;
-    this.setState({ [name]: value }, () => this.setState({ disabled: !this.validate() }));
-  }
-
+  // handleInput(target) {
+  //   const { value, name } = target;
+  //   this.setState({ [name]: value }, () => this.setState({ disabled: !this.validate() }));
+  // }
 
   render() {
-
     return (
       <form className="expenses-form">
         <label htmlFor="value">
@@ -62,8 +59,6 @@ class ExpensesForm extends React.Component {
             <option value="health">Saúde</option>
           </select>
         </label>
-
-
 
       </form>
     );

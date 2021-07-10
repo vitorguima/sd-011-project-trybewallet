@@ -9,7 +9,7 @@ class Wallet extends React.Component {
     return (
       <>
         <div>Logo</div>
-        <div data-testid="email-field">Email{email}</div>
+        <div data-testid="email-field">{ email }</div>
         <div data-testid="total-field">Despesa total: R$ 0,00 </div>
         <span data-testid="header-currency-field"> BRL</span>
       </>
