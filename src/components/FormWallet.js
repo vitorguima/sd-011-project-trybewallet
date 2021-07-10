@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+// import { connect } from 'react-redux';
+import CompOptionMoed from './CompOptionMoed';
 
 class FormWallet extends Component {
   render() {
@@ -12,16 +14,18 @@ class FormWallet extends Component {
           Descrição
           <input id="desc" type="text" />
         </label>
-        <label htmlFor="moeda">
+        <label htmlFor="moed">
           Moeda
-          <select name="moeda" id="moeda">
-            <option value="R$">BRL</option>
+          <select name="moed" id="moed">
+            <CompOptionMoed />
           </select>
         </label>
         <label htmlFor="method">
           Método de pagamento
           <select name="method" id="method">
             <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
           </select>
         </label>
         <label htmlFor="methoddesp">
@@ -38,5 +42,9 @@ class FormWallet extends Component {
     );
   }
 }
+
+// const getInfosRedux = (state) => ({
+//   statRedux: state.wallet,
+// });
 
 export default FormWallet;

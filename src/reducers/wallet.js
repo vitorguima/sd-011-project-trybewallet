@@ -2,20 +2,15 @@
 import {} from '../actions';
 
 const WALLET_STATE = {
-  id: {
-    email: '',
-  },
-  value: {
-    currencies: [],
-    expenses: [],
-  },
+  currencies: [],
+  expenses: [],
 };
 
-function functionUser(state = WALLET_STATE, action) {
+function functionWallet(state = WALLET_STATE, action) {
   switch (action.type) {
   default:
     return state;
   }
 }
 
-export default functionUser;
+export default functionWallet;
