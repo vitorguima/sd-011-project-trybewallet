@@ -5,7 +5,8 @@ export default function CoinOptions({ currencies }) {
   const filteredCurrencies = allCurrencies.filter((key) => key !== 'USDT');
   return (
     <>
-      { filteredCurrencies.map((key) => <option key={ key } value={ key }>{ key }</option>) }
+      { filteredCurrencies.map((key) => <option 
+      key={ key } value={ key }>{ key }</option>) }
     </>
-  )
-};
+  );
+}

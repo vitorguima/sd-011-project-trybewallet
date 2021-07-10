@@ -14,7 +14,6 @@ const Wallet = () => {
   let savedExpenses = useSelector((state) => state.wallet.expenses);
   const expensesWithRates = savedExpenses
   .map((item) => Number(item.exchangeRates[item.currency].ask) * Number(item.value));
-  console.log(expensesWithRates)
   
   const handleExpInput = (e) => {
     const { target } = e;
