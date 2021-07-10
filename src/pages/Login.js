@@ -86,8 +86,8 @@ const submitLogin = (dispatch) => ({
 });
 
 Login.propTypes = {
-  sendEvLogin: PropTypes.isRequired,
-  history: PropTypes.isRequired,
+  sendEvLogin: PropTypes.func.isRequired,
+  history: PropTypes.objectOf.isRequired,
 };
 
 export default connect(mapStateToProps, submitLogin)(Login);
