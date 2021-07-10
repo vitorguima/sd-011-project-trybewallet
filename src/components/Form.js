@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { expenseAction, fetchCurrencies } from '../actions';
+import Inputs from '../form-components/Inputs';
+import Selects from '../form-components/Selects';
 
 class Form extends Component {
   constructor(props) {
@@ -73,44 +75,23 @@ class Form extends Component {
 
   render() {
     const { currencies, method, tag, description, currency, value } = this.state;
-    const FIFTEEN = 20;
+    const FIFTEEN = 15;
     return (
       <div>
         <form>
-          <label htmlFor="value">
-            Valor:
-            <input type="number" name="value" id="value" value={ value } onChange={ this.changeValues } />
-          </label>
-          <label htmlFor="description">
-            Descrição:
-            <input type="text" name="description" id="description" value={ description } onChange={ this.changeValues } />
-          </label>
-          <label htmlFor="currency">
-            Moeda:
-            <select name="currency" id="currency" value={ currency } onChange={ this.changeValues }>
-              { Object.values(currencies).splice(1, FIFTEEN).map((code, index) => (
-                <option key={ index }>{code.code}</option>
-              )) }
-            </select>
-          </label>
-          <label htmlFor="method">
-            Método de pagamento:
-            <select name="method" id="method" value={ method } onChange={ this.changeValues }>
-              <option>Dinheiro</option>
-              <option>Cartão de Crédito</option>
-              <option>Cartão de Débito</option>
-            </select>
-          </label>
-          <label htmlFor="tag">
-            Tag:
-            <select name="tag" id="tag" value={ tag } onChange={ this.changeValues }>
-              <option>Alimentação</option>
-              <option>Lazer</option>
-              <option>Trabalho</option>
-              <option>Transporte</option>
-              <option>Saúde</option>
-            </select>
-          </label>
+          <Inputs
+            value={ value }
+            description={ description }
+            func={ this.changeValues }
+          />
+          <Selects
+            method={ method }
+            tag={ tag }
+            currency={ currency }
+            currencies={ currencies }
+            FIFTEEN={ FIFTEEN }
+            func={ this.changeValues }
+          />
           <button type="button" onClick={ this.createExpense }>
             Adicionar despesa
           </button>
