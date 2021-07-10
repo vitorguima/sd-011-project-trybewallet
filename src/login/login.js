@@ -4,9 +4,9 @@ import thunk from 'redux-thunk';
 import reducer from '../reducers';
 
 const login = createStore(
-    reducer,
+  reducer,
     composeWithDevTools(
-        applyMiddleware(thunk),
+      applyMiddleware(thunk),
     ),
 );
 
