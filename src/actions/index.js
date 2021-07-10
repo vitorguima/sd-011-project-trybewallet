@@ -1,24 +1,22 @@
 const SAVE_EMAIL = 'SAVE_EMAIL';
 const SAVE_EXPENSES = 'SAVE_EXPENSES';
-const REQUEST_WALLET = 'REQUEST_WALLET'
-const REQUEST_WALLET_SUCCESS = 'REQUEST_WALLET_SUCCESS'
-const REQUEST_WALLET_ERROR = 'REQUEST_WALLET_ERROR'
-const REMOVE_EXPENSES = 'REMOVE_EXPENSES'
+const REQUEST_WALLET_SUCCESS = 'REQUEST_WALLET_SUCCESS';
+const REMOVE_EXPENSES = 'REMOVE_EXPENSES';
 
-/////////
+/// //////
 const saveEmailAction = (payload) => ({
   type: SAVE_EMAIL,
   payload,
 });
 
-//////
+/// ///
 
 const saveExpenses = (payload) => ({
   type: SAVE_EXPENSES,
   payload,
 });
 
-/////
+/// //
 
 const removeExpenses = (payload) => ({
   type: REMOVE_EXPENSES,
@@ -34,22 +32,17 @@ const removeExpenses = (payload) => ({
 
 const requestCurrencySuccess = (payload) => ({
   type: REQUEST_WALLET_SUCCESS,
-  payload
-})
+  payload,
+});
 
 // const requestCurrencyError = (payload) => ({
 //   type: REQUEST_WALLET_ERROR,
 //   payload
 // })
 
-const fetchCurrency = () => {
-  return (dispatch) => {
-    return fetch(`https://economia.awesomeapi.com.br/json/all`)
-    .then((result) => result.json())
-    .then((data) => dispatch(requestCurrencySuccess(data)))
-  } 
-}
-
+const fetchCurrency = () => (dispatch) => fetch('https://economia.awesomeapi.com.br/json/all')
+  .then((result) => result.json())
+  .then((data) => dispatch(requestCurrencySuccess(data)));
 
 const actionFunctions = {
   saveEmailAction,
@@ -59,5 +52,3 @@ const actionFunctions = {
 };
 
 export default actionFunctions;
-
-
