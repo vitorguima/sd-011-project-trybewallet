@@ -8,23 +8,47 @@ import FormDescription from './FormDescription';
 import * as userActions from '../actions';
 
 class ExpenseForm extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.handleInputs = this.handleInputs.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.resetState = this.resetState.bind(this);
+    this.setCurrenciesState = this.setCurrenciesState.bind(this);
+
+    const { currencies } = props;
 
     this.state = {
+      id: 0,
       value: 0,
       description: '',
       paymentType: 'Dinheiro',
       tag: 'Alimentação',
       currency: 'USD',
+      exchangeRates: currencies[0],
     };
   }
 
+  setCurrenciesState(newCurrencies) {
+    this.setState({
+      exchangeRates: newCurrencies,
+    });
+  }
+
+  resetState() {
+    const { id } = this.state;
+    this.setState({
+      id: id + 1,
+      value: 0,
+      description: '',
+      paymentType: 'Dinheiro',
+      tag: 'Alimentação',
+      currency: 'USD',
+    });
+  }
+
   handleClick() {
-    const { value, description, paymentType, tag, currency } = this.state;
+    const { value, description, paymentType, tag, currency, exchangeRates } = this.state;
     const { addNewExpense } = this.props;
     const newExpense = {
       value,
@@ -32,8 +56,10 @@ class ExpenseForm extends React.Component {
       paymentType,
       tag,
       currency,
+      exchangeRates,
     };
     addNewExpense(newExpense);
+    this.resetState();
   }
 
   handleSubmit(event) {
@@ -94,9 +120,14 @@ class ExpenseForm extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   addNewExpense: (newExpense) => dispatch(userActions.newExpense(newExpense)),
+  fetchCurrencies: () => dispatch(userActions.fetchAPI()),
 });
 
-export default connect(null, mapDispatchToProps)(ExpenseForm);
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseForm);
 
 ExpenseForm.propTypes = {
   addNewExpense: PropTypes.func,
