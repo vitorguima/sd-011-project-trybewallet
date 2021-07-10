@@ -7,6 +7,7 @@ const Login = () => {
   const [login, setLogin] = useState({ email: '', password: '' });
   const dispatch = useDispatch();
   const history = useHistory();
+  const validPw = 6;
 
   function handleInput(e) {
     const { target } = e;
@@ -19,13 +20,12 @@ const Login = () => {
     const passwordValue = login.password;
     if (loginValue.includes('@')
       && loginValue.includes('.com')
-      && passwordValue.length >= 6
-      ) {
-        return false;
-    } else {
-      return true;
+      && passwordValue.length >= validPw
+    ) {
+      return false;
     }
-  }
+    return true;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();

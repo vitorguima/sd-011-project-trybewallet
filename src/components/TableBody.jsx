@@ -1,12 +1,13 @@
-import React from 'react'
+import React from 'react';
 import { useDispatch } from 'react-redux';
-import  actionFunctions from '../actions';
+import PropTypes from 'prop-types';
+import actionFunctions from '../actions';
 
-export default function TableBody({expenses}) {
+export default function TableBody({ expenses }) {
   const dispatch = useDispatch();
   const deleteExpense = (e) => {
-    dispatch(actionFunctions.removeExpenses(e))
-  }
+    dispatch(actionFunctions.removeExpenses(e));
+  };
 
   return (
     <tbody>
@@ -46,5 +47,9 @@ export default function TableBody({expenses}) {
         </tr>
       ))}
     </tbody>
-  )
+  );
 }
+
+TableBody.propTypes = {
+  expenses: PropTypes.arrayOf().isRequired,
+};
