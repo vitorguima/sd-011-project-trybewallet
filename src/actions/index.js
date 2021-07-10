@@ -17,10 +17,9 @@ const receiveCurrency = (currencies) => ({
   currencies,
 });
 
-export const addExpenses = (expenses, id) => ({
+export const addExpenses = (expense) => ({
   type: EXPENSES_ADD,
-  expenses,
-  id,
+  expense,
 });
 
 // ira lidar com assincronicidade

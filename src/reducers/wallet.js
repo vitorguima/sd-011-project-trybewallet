@@ -8,7 +8,6 @@ const INITIAL_STATE = {
   currencies: [],
   expenses: [],
   error: null,
-  id: 0,
   isLoading: false,
 };
 
@@ -20,11 +19,9 @@ const wallet = (state = INITIAL_STATE, action) => {
       isLoading: true,
     };
   case RECEIVE_CURRENCY: {
-    const keys = Object.keys(action.currencies);
-    const keyFilter = keys.filter((key) => key !== 'USDT');
     return {
       ...state,
-      currencies: state.currencies.concat(keyFilter),
+      currencies: action.currencies,
       isLoading: false,
     };
   }
@@ -33,11 +30,10 @@ const wallet = (state = INITIAL_STATE, action) => {
       ...state,
       expenses: [
         ...state.expenses,
-        { id: action.id,
+        {
           ...action.expense,
           exchangeRates: state.currencies,
         }],
-      id: state.id + 1,
       isLoading: false,
     };
   default:

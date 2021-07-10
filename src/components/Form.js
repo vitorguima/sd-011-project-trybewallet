@@ -7,6 +7,7 @@ class Form extends React.Component {
   constructor() {
     super();
     this.state = {
+      id: 0,
       value: 0,
       description: '',
       currency: 'USD',
@@ -40,7 +41,7 @@ class Form extends React.Component {
     expenses(this.state, id);
   }
 
-  // criando novos renders por conta da quantidade de linha ecedida
+  // criando novos renders por conta da quantidade de linha excedida
   renderPaymentMethod() {
     const methodPayment = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     return (
@@ -96,7 +97,8 @@ class Form extends React.Component {
         <label htmlFor="currency">
           Moeda:
           <select id="currency" name="currency" onChange={ this.handleChange }>
-            { currencies
+            { Object.keys(currencies)
+              .filter((elem) => elem !== 'USDT')
               .map((currencie, index) => <option key={ index }>{ currencie }</option>) }
           </select>
         </label>
@@ -114,14 +116,13 @@ class Form extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  email: state.user.email,
   currencies: state.wallet.currencies,
-  id: state.wallet.id,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getCurrency: (state) => dispatch(fetchCurrencies(state)),
-  expenses: (expenses, id) => dispatch(addExpenses(expenses, id)),
+  getCurrency: () => dispatch(fetchCurrencies()),
+  expenses: (expense) => dispatch(addExpenses(expense)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);
