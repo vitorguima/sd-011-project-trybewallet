@@ -1,87 +1,93 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import * as EmailValidator from 'email-validator'; // All credits to https://github.com/manishsaraan/email-validator
-import { addEmail } from '../actions';
+import PropTypes from 'prop-types';
+
+import withStore from '../utils/withStore';
+
+import Layout from '../components/common/Layout';
+import { login as loginAgent } from '../agents';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       email: '',
       password: '',
-      emailValidated: false,
-      passwordValidated: false,
-      formValidated: true,
+      canLogin: false,
     };
-    this.handleChange = this.handleChange.bind(this);
+
+    this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.validatesForm = this.validatesForm.bind(this);
   }
 
-  handleChange(event) {
-    if (event.target.name === 'email') {
-      this.setState({ email: event.target.value });
-    }
-    if (event.target.name === 'password') {
-      this.setState({ password: event.target.value });
-    }
+  handleInputChange({ target }) {
+    const { name, value } = target;
+    this.setState({ [name]: value });
+    this.validateFields();
   }
 
-  validatesForm() {
-    console.log('funfa');
-    const { emailValidated, passwordValidated } = this.state;
-    console.log(emailValidated);
-    console.log(passwordValidated);
-    if (emailValidated && passwordValidated) {
-      this.setState({ formValidated: false });
+  handleSubmit(e) {
+    e.preventDefault();
+    const { history, login } = this.props;
+    const { email } = this.state;
+
+    login({ email });
+    history.push('/carteira');
+  }
+
+  validateFields() {
+    const { email, password } = this.state;
+    const MIN_PASSWORD_LENGTH = 5;
+
+    if (/(.*)@(.*)\.com/.test(email)
+      && password.length >= MIN_PASSWORD_LENGTH
+    ) {
+      this.setState({ canLogin: true });
     } else {
-      this.setState({ formValidated: true });
+      this.setState({ canLogin: false });
     }
-  }
-
-  handleSubmit(event) {
-    console.log(event);
   }
 
   render() {
-    const { add } = this.props;
-    const { email, password, formValidated } = this.state;
+    const { email, password, canLogin } = this.state;
+
     return (
-      <div>
-        <form onSubmit={ this.handleSubmit }>
-          <input
-            type="email"
-            placeholder="Email"
-            data-testid="email-input"
-            name="email"
-            value={ email }
-            onChange={ this.handleChange }
-            required
-          />
-          <input
-            type="password"
-            placeholder="Senha"
-            data-testid="password-input"
-            name="password"
-            minLength="6"
-            value={ password }
-            onChange={ this.handleChange }
-            required
-          />
-          <input
-            type="submit"
-            value="Entrar"
-            disabled={ formValidated }
-          />
-        </form>
-      </div>
+      <Layout title="Login">
+        <main>
+          <form onSubmit={ this.handleSubmit }>
+            <input
+              type="email"
+              name="email"
+              data-testid="email-input"
+              onChange={ this.handleInputChange }
+              value={ email }
+            />
+            <input
+              type="password"
+              name="password"
+              data-testid="password-input"
+              onChange={ this.handleInputChange }
+              value={ password }
+            />
+
+            <button
+              type="submit"
+              disabled={ !canLogin }
+            >
+              Entrar
+            </button>
+          </form>
+        </main>
+      </Layout>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  add: (value) => dispatch(addEmail(value)),
-});
+Login.propTypes = {
+  login: PropTypes.func,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
+}.isRequired;
 
-export default connect(null, mapDispatchToProps)(Login);
+export default withStore(Login, null, [loginAgent]);
