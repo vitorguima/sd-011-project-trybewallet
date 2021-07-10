@@ -38,7 +38,6 @@
 
 .email-input {
   border-radius: 5px;
-  margin-right: 8px;
   width: 210px;
 }
 
@@ -91,4 +90,26 @@ span {
 
 .currency {
   margin-left: 10px;
+}
+
+.forms-container {
+  width: 100%;
+}
+
+.forms {
+  background-color: rgb(207, 204, 204);
+  display: flex;
+  margin-top: 10px;
+  width: 90%;
+}
+
+#Valor {
+  max-width: 60px;
+}
+
+textarea {
+  border-radius: 5px;
+  height: 15px;
+  resize: none;
+  width: 360px;
 }
