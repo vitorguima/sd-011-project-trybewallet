@@ -10,6 +10,7 @@ import {
 } from '../walletComponents/walletElements';
 import { fetchCurrencies, fetchToExpenses } from '../actions';
 import ExpenseTableHeader from '../walletComponents/ExpenseTableHeader';
+import DeleteButton from '../walletComponents/DeleteButton';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -103,16 +104,14 @@ class Wallet extends React.Component {
               <td name="tag">{expense.tag}</td>
               <td name="payment-method">{expense.method}</td>
               <td name="value">{expense.value}</td>
-              <td>
-                {expense.exchangeRates[expense.currency].name.split('/')[0]}
-              </td>
-              <td>
-                {(expense.exchangeRates[expense.currency].ask * 1).toFixed(2)}
-              </td>
+              <td>{expense.exchangeRates[expense.currency].name.split('/')[0]}</td>
+              <td>{(expense.exchangeRates[expense.currency].ask * 1).toFixed(2)}</td>
               <td>
                 {(expense.exchangeRates[expense.currency].ask * expense.value).toFixed(2)}
               </td>
               <td name="conversion-currency">Real</td>
+              {/* Passado ID pro botão para ajudar na exclusão do gasto. */}
+              <DeleteButton id={ expense.id } />
             </thead>
           ))}
         </table>
