@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
-  currencies: [],
+  currencies: 'BRL',
+  total: 0,
   expenses: [],
 };
 
