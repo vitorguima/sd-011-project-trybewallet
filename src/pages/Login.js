@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import actionEvent from '../actions';
 
 class Login extends Component {
@@ -33,13 +34,15 @@ class Login extends Component {
     const min = 5;
     if (validMail && psw.length > min && enable) {
       this.setState({ enable: false });
-    } else if ((!validMail || !psw.length > min) && !enable) {
+    } if ((!validMail || !psw.length > min) && !enable) {
       this.setState({ enable: true });
     }
   }
 
   evClick(ev, v) {
     ev(v);
+    const { history } = this.props;
+    history.push('/carteira');
   }
 
   render() {
@@ -81,5 +84,10 @@ const mapStateToProps = (state) => ({
 const submitLogin = (dispatch) => ({
   sendEvLogin: (value) => dispatch(actionEvent(value)),
 });
+
+Login.propTypes = {
+  sendEvLogin: PropTypes.isRequired,
+  history: PropTypes.isRequired,
+};
 
 export default connect(mapStateToProps, submitLogin)(Login);
