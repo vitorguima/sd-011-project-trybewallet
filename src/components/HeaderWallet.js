@@ -21,7 +21,7 @@ class HeaderWallet extends Component {
           <span
             style={ { color: 'green' } }
           >
-            <span className="email" data-testid="email-field">{getEmail}</span>
+            <span className="email" id="email" data-testid="email-field">{getEmail}</span>
           </span>
         </h4>
         <h5>
@@ -29,7 +29,13 @@ class HeaderWallet extends Component {
           <span
             style={ { color: 'red' } }
           >
-            <span className="total-field" data-testid="total-field">{value}</span>
+            <span
+              className="total-field"
+              id="total-field"
+              data-testid="total-field"
+            >
+              {value}
+            </span>
           </span>
         </h5>
         <h5>

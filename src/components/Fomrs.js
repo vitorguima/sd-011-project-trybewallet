@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 class Fomrs extends Component {
   render() {
-    const { currency } = this.props;
+    const { currency = [] } = this.props;
     return (
       <form className="forms">
         <label htmlFor="Valor">
