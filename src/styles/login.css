@@ -1,12 +1,12 @@
-body {
+/* body {
   border: solid 1px grey;
   display: flex;
-  width: 450px;
   margin: 100px auto;
+  width: 450px;
   text-align: center;
-}
+} */
 
-form {
+/* form {
   display: flex;
   flex-direction: column;
 }
@@ -14,4 +14,4 @@ form {
 div {
   display: flex;
   margin: 10px;
-}
+} */

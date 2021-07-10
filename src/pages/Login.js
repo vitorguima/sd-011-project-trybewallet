@@ -65,14 +65,14 @@ class login extends React.Component {
               onChange={ ({ target }) => this.handleInput(target) }
               required
             />
-            <button
-              type="button"
-              onClick={ () => this.handleButton() }
-              disabled={ disabled }
-            >
-              Entrar
-            </button>
           </label>
+          <button
+            type="button"
+            onClick={ () => this.handleButton() }
+            disabled={ disabled }
+          >
+            Entrar
+          </button>
         </form>
       </div>
     );
