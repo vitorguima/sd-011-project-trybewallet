@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import FormWallet from '../components/FormWallet';
 
 class Wallet extends React.Component {
   render() {
@@ -12,6 +14,7 @@ class Wallet extends React.Component {
           0
         </div>
         <div data-testid="header-currency-field">BRL</div>
+        <FormWallet />
       </header>
     );
   }
@@ -22,3 +25,7 @@ const mapStateProps = (state) => ({
 });
 
 export default connect(mapStateProps)(Wallet);
+
+Wallet.propTypes = {
+  stateLogin: PropTypes.objectOf(PropTypes.object).isRequired,
+};
