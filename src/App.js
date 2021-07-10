@@ -1,3 +1,8 @@
+/*
+Na app eu coloco um switch pra escolher um caminho só.
+E chamo os componentes Login e Wallet atraves das rotas.
+*/
+
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';

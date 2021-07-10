@@ -1,7 +1,9 @@
-const keepEmail = (payload) => (
+const KEEP_EMAIL = 'KEEP_EMAIL';
+
+const keepEmail = (email) => (
   {
-    type: 'KEEP_EMAIL',
-    payload,
+    type: KEEP_EMAIL,
+    email,
   }
 );
 
