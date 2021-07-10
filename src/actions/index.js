@@ -3,6 +3,7 @@ const SAVE_EXPENSES = 'SAVE_EXPENSES';
 const REQUEST_WALLET = 'REQUEST_WALLET'
 const REQUEST_WALLET_SUCCESS = 'REQUEST_WALLET_SUCCESS'
 const REQUEST_WALLET_ERROR = 'REQUEST_WALLET_ERROR'
+const REMOVE_EXPENSES = 'REMOVE_EXPENSES'
 
 /////////
 const saveEmailAction = (payload) => ({
@@ -14,6 +15,13 @@ const saveEmailAction = (payload) => ({
 
 const saveExpenses = (payload) => ({
   type: SAVE_EXPENSES,
+  payload,
+});
+
+/////
+
+const removeExpenses = (payload) => ({
+  type: REMOVE_EXPENSES,
   payload,
 });
 
@@ -47,6 +55,7 @@ const actionFunctions = {
   saveEmailAction,
   saveExpenses,
   fetchCurrency,
+  removeExpenses,
 };
 
 export default actionFunctions;

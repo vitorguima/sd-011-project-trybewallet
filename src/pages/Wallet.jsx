@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import actionFunctions from '../actions'
 import CoinOptions from '../components/CoinOptions';
+import TableHead from '../components/TableHead';
+import TableBody from '../components/TableBody';
 
 const Wallet = () => {
   const [expenses, setExpenses] = useState({id: -1});
@@ -32,7 +34,7 @@ const Wallet = () => {
     dispatch(actionFunctions.fetchCurrency())
   },[]) // segundo parâmentro sendo array vazio apenas atualiza na montagem do componente
   return (
-    <>
+    <section>
       <nav>
         <div data-testid="email-field">
           {userEmail}
@@ -82,7 +84,13 @@ const Wallet = () => {
           <button onClick={submitExpense}>Adicionar despesa</button>
         </form>
       </nav>
-    </>
+      <hr></hr>
+      <br></br>
+      <table>
+        <TableHead />
+        <TableBody expenses={savedExpenses}/>
+      </table>
+    </section>
   )
 }
 
