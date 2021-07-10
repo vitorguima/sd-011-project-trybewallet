@@ -1,8 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { addEmail } from '../actions';
 
 class Login extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       email: '',
@@ -10,6 +13,7 @@ class Login extends React.Component {
       disabled: true,
     };
 
+    this.loginCheck = this.loginCheck.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -18,7 +22,7 @@ class Login extends React.Component {
     const length = 6;
     const { email, password } = this.state;
 
-    return emailValid.test(email) && password.length >= length;
+    return email.match(emailValid) && password.length >= length;
   }
 
   handleChange({ target }) {
@@ -32,8 +36,17 @@ class Login extends React.Component {
     }));
   }
 
+  loginCheck() {
+    const { addingEmail, history } = this.props;
+    const { email } = this.state;
+
+    addingEmail(email);
+    history.push('/carteira');
+  }
+
   render() {
     const { disabled } = this.state;
+
     return (
       <div>
         <form>
@@ -49,11 +62,33 @@ class Login extends React.Component {
             data-testid="password-input"
             onChange={ this.handleChange }
           />
-          <button type="button" disabled={ disabled }>Entrar</button>
+          <button
+            type="button"
+            onClick={ this.loginCheck }
+            disabled={ disabled }
+          >
+            Entrar
+          </button>
         </form>
       </div>
     );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  addingEmail: (email) => dispatch(addEmail(email)),
+});
+
+Login.propTypes = {
+  addingEmail: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    location: PropTypes.shape({
+      hash: PropTypes.string.isRequired,
+      pathname: PropTypes.string.isRequired,
+      search: PropTypes.string.isRequired,
+    }),
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
