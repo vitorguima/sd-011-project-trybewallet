@@ -1,8 +1,29 @@
 export const SAVE_EMAIL_USER = 'SAVE_EMAIL_USER';
+export const SAVE_EXPENSE_WALLET = 'SAVE_EXPENSE_WALLET';
+export const SAVE_EXCHANGES_RATES = 'SAVE_EXCHANGES_RATES';
 
-const saveEmailUser = (payload) => ({
+export const saveEmailUser = (payload) => ({
   type: SAVE_EMAIL_USER,
   payload,
 });
 
-export default saveEmailUser;
+const saveExpenseWallet = (payload) => ({
+  type: SAVE_EXPENSE_WALLET,
+  payload,
+});
+
+// const saveExchangesRates = (payload) => ({
+//   type: SAVE_EXCHANGES_RATES,
+//   payload,
+// });
+
+export const fetchExchangesRatesApi = (expense) => (dispatch) => {
+  fetch('https://economia.awesomeapi.com.br/json/all')
+    .then((result) => result.json())
+    .then((data) => {
+      const newExpense = expense;
+      newExpense.exchangeRates = data;
+      dispatch(saveExpenseWallet(newExpense));
+    })
+    .catch((error) => console.log(error));
+};
