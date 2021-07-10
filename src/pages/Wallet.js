@@ -1,28 +1,28 @@
 // import React from 'react';
-import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import Form from './Form';
 
-function Wallet({ email }) {
+function Wallet() {
+  const [dispesasTotais] = useState(0);
+  const user = useSelector((state) => state.user);
   return (
     <div>
       <h1> testando aqui</h1>
       <header>
         <h2 data-testid="email-field">
           Bem vindo
-          { email }
+          {user.email}
         </h2>
+        <span data-testid="total-field">
+          Despesa total :$
+          {dispesasTotais}
+        </span>
+        <span data-testid="header-currency-field">{user.currencies}</span>
       </header>
+      <Form />
     </div>
   );
 }
 
-const mapStateToProps = ({ user: { email } }) => ({
-  email,
-});
-
-Wallet.propTypes = {
-  email: PropTypes.func.isRequired,
-};
-
-export default connect(mapStateToProps)(Wallet);
+export default Wallet;

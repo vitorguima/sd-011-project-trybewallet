@@ -1,14 +1,17 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import React, { Component } from 'react';
+const INITIAL_STATE = {
+  dispesasTotais: 0,
+};
 
-class wallet extends Component {
-  render() {
-    return (
-      <div>
-        <h2>vc esta na sua áre</h2>
-      </div>
-    );
+function waLL(state = INITIAL_STATE, action) {
+  switch (action.type) {
+  case 'LOGIN':
+    return {
+      ...state,
+      dispesasTotais: action.dispesasTotais,
+    };
+  default:
+    return state;
   }
 }
-
-export default wallet;
+export default waLL;

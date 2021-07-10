@@ -17,11 +17,9 @@ class Login extends Component {
   }
 
   handleClik() {
-    // const { history } = this.props;
     const { getUser } = this.props;
     const { email } = this.state;
     getUser(email);
-    // history.push({ pathname: '/carteira' });
   }
 
   handleChange(event) {
@@ -86,7 +84,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 Login.propTypes = {
   getUser: PropTypes.func.isRequired,
-  // history: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);
