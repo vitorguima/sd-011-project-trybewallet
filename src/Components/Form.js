@@ -19,8 +19,8 @@ class form extends React.Component {
             Método de Pagamento:
             <select id="payment">
               <option value="dinheiro">Dinheiro</option>
-              <option value="credito">Cartão de crédito</option>
-              <option value="debito">Cartão de débito</option>
+              <option value="credito">Crédito</option>
+              <option value="debito">Débito</option>
             </select>
           </label>
           <label htmlFor="tag">

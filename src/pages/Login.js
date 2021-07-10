@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import './Style.css';
 import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { saveEmail } from '../actions/index';
 
 const minPassword = 6;
@@ -88,6 +89,9 @@ class Login extends React.Component {
       </div>);
   }
 }
+Login.propTypes = {
+  user: PropTypes.func.isRequired,
+};
 
 const mapDispatchToProps = (dispatch) => ({
   user: (email) => dispatch(saveEmail(email)),
