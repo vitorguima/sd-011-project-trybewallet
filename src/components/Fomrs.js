@@ -9,7 +9,7 @@ class Fomrs extends Component {
       <form className="forms">
         <label htmlFor="Valor">
           Valor:
-          <input id="Valor" type="text" name="Valor" />
+          <input id="Valor" className="Valor" type="text" name="Valor" />
         </label>
         <label htmlFor="Descrição">
           Descrição:
