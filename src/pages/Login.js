@@ -42,25 +42,24 @@ class Login extends React.Component {
   render() {
     const { email, password, isDisabled } = this.state;
     const { dispatchUserLogin } = this.props;
-
     return (
       <div>
-        <input
-          type="email"
-          name="email"
-          value={ email }
-          onChange={ this.handleChange }
-          data-testid="email-input"
-          placeholder="Email"
-        />
-        <input
-          type="password"
-          name="password"
-          value={ password }
-          onChange={ this.handleChange }
-          data-testid="password-input"
-          placeholder="Senha"
-        />
+          <input
+            type="email"
+            name="email"
+            value={ email }
+            onChange={ this.handleChange }
+            data-testid="email-input"
+            placeholder="alguem@email.com"
+          />
+          <input
+            type="password"
+            name="password"
+            value={ password }
+            onChange={ this.handleChange }
+            data-testid="password-input"
+            placeholder="Senha"
+          />
         <Link to="/carteira">
           <button
             type="button"
