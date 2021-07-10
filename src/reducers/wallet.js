@@ -3,7 +3,7 @@
 import { REQUEST_API,
   REQUEST_API_SUCCESS,
   REQUEST_API_ERROR,
-  SAVE_EXPENSE,
+  ADD_EXPENSE,
   REMOVE_EXPENSE,
 } from '../actions';
 
@@ -20,6 +20,7 @@ function walletReducer(state = INITIAL_STATE, action) {
       isLoading: true,
     };
   case REQUEST_API_SUCCESS:
+    delete action.payload.USDT;
     return {
       ...state,
       currencies: action.payload,
@@ -31,10 +32,13 @@ function walletReducer(state = INITIAL_STATE, action) {
       error: action.payload,
       isLoading: false,
     };
-  case SAVE_EXPENSE:
+  case ADD_EXPENSE:
     return {
       ...state,
-      expenses: [...state.expenses, action.payload],
+      expenses: [...state.expenses, {
+        ...action.payload,
+        exchangeRates: state.currencies,
+      }],
       isLoading: false,
     };
   case REMOVE_EXPENSE:

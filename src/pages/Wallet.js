@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchApiThunk, saveExpense, removeExpense } from '../actions';
+import { fetchApiThunk, addExpense, removeExpense } from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
@@ -22,8 +22,8 @@ class Wallet extends React.Component {
   }
 
   async fetchCurrencies() {
-    const { requestApiAction } = this.props;
-    await requestApiAction();
+    const { reqApiAction } = this.props;
+    await reqApiAction();
     const { currencies } = this.props;
     this.setState({ currency: Object.keys(currencies)[0] });
   }
@@ -73,7 +73,7 @@ class Wallet extends React.Component {
 
   totalExpenses(expenses) {
     const total = expenses.reduce((acc, expense) => (
-      acc + Number(expense.value) * expense.exchangeRates[expense.currency].ask), 0);
+      acc + expense.value * expense.exchangeRates[expense.currency].ask), 0);
     return (Math.round(total * 100) / 100);
   }
 
@@ -118,7 +118,7 @@ class Wallet extends React.Component {
               <td>{ Math.round(exp.exchangeRates[exp.currency].ask * 100) / 100 }</td>
               <td>
                 { (Math.round(
-                  (Number(exp.value) * exp.exchangeRates[exp.currency].ask) * 100,
+                  (exp.value * exp.exchangeRates[exp.currency].ask) * 100,
                 )) / 100 }
               </td>
               <td>Real</td>
@@ -141,13 +141,8 @@ class Wallet extends React.Component {
   render() {
     const payments = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
-    const { id, value, description, currency, method, tag } = this.state;
-    const { currencies,
-      loadingCurrencies,
-      addToExpensesAction,
-      requestApiAction,
-    } = this.props;
-    delete currencies.USDT;
+    const { value, description, currency, method, tag } = this.state;
+    const { currencies, loadingCurrencies, addExpenseAction, reqApiAction } = this.props;
     const currenciesArray = Object.keys(currencies).map((item) => item);
 
     return (
@@ -165,16 +160,8 @@ class Wallet extends React.Component {
               type="button"
               onClick={ () => {
                 this.handleId();
-                requestApiAction();
-                addToExpensesAction({
-                  id,
-                  value,
-                  description,
-                  currency,
-                  method,
-                  tag,
-                  exchangeRates: currencies,
-                });
+                reqApiAction();
+                addExpenseAction(this.state);
               } }
             >
               Adicionar despesa
@@ -195,8 +182,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  requestApiAction: () => dispatch(fetchApiThunk()),
-  addToExpensesAction: (payload) => dispatch(saveExpense(payload)),
+  reqApiAction: () => dispatch(fetchApiThunk()),
+  addExpenseAction: (payload) => dispatch(addExpense(payload)),
   removeExpenseAction: (payload) => dispatch(removeExpense(payload)),
 });
 

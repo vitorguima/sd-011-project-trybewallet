@@ -1,5 +1,5 @@
 export const SET_USER = 'SET_USER';
-export const SAVE_EXPENSE = 'SAVE_EXPENSE';
+export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 export const REQUEST_API = 'REQUEST_API';
 export const REQUEST_API_SUCCESS = 'REQUEST_API_SUCCESS';
@@ -7,7 +7,7 @@ export const REQUEST_API_ERROR = 'REQUEST_API_ERROR';
 
 export const setUser = (payload) => ({ type: SET_USER, payload });
 
-export const saveExpense = (payload) => ({ type: SAVE_EXPENSE, payload });
+export const addExpense = (payload) => ({ type: ADD_EXPENSE, payload });
 
 export const removeExpense = (payload) => ({ type: REMOVE_EXPENSE, payload });
 
