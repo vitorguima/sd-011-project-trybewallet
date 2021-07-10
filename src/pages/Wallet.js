@@ -25,7 +25,7 @@ class Wallet extends React.Component {
     const { requestApiAction } = this.props;
     await requestApiAction();
     const { currencies } = this.props;
-    this.setState({ currency: Object.keys(currencies)[0] })
+    this.setState({ currency: Object.keys(currencies)[0] });
   }
 
   handleChange(event) {
@@ -34,10 +34,10 @@ class Wallet extends React.Component {
   }
 
   handleId() {
-    const { id } = this.state
+    const { id } = this.state;
     this.setState({ id: id + 1 });
   }
-  
+
   createInput(name, label, stateKey) {
     return (
       <label htmlFor={ name }>
@@ -63,8 +63,8 @@ class Wallet extends React.Component {
           onChange={ this.handleChange }
           value={ stateKey }
         >
-          { arraySelect.map((item) => (
-            <option key={ name } value={ item }>{ item }</option>
+          { arraySelect.map((item, index) => (
+            <option key={ `${name}-${index}` } value={ item }>{ item }</option>
           ))}
         </select>
       </label>
@@ -72,8 +72,9 @@ class Wallet extends React.Component {
   }
 
   totalExpenses(expenses) {
-    const total = expenses.reduce((acc, expense ) => acc + Number(expense.value) * expense.exchangeRates[expense.currency].ask, 0)
-    return (Math.round(total * 100)/100)
+    const total = expenses.reduce((acc, expense) => (
+      acc + Number(expense.value) * expense.exchangeRates[expense.currency].ask), 0);
+    return (Math.round(total * 100) / 100);
   }
 
   renderHeader() {
@@ -81,9 +82,53 @@ class Wallet extends React.Component {
     return (
       <header>
         <p data-testid="email-field">{ userEmail }</p>
-        <p data-testid="total-field">{ expenses.length > 0 ? this.totalExpenses(expenses) : 0}</p>
+        <p data-testid="total-field">
+          { expenses.length > 0 ? this.totalExpenses(expenses) : 0}
+        </p>
         <p data-testid="header-currency-field">BRL</p>
       </header>
+    );
+  }
+
+  renderExpensesTable() {
+    const { expenses } = this.props;
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th>Descrição</th>
+            <th>Tag</th>
+            <th>Método de pagamento</th>
+            <th>Valor</th>
+            <th>Moeda</th>
+            <th>Câmbio utilizado</th>
+            <th>Valor convertido</th>
+            <th>Moeda de conversão</th>
+            <th>Editar/Excluir</th>
+          </tr>
+        </thead>
+        <tbody>
+          { expenses.map(({
+            expense: id, description, tag, method, currency, value, exchangeRates,
+          }) => (
+            <tr key={ id }>
+              <td>{ description }</td>
+              <td>{ tag }</td>
+              <td>{ method }</td>
+              <td>{ Math.round(value * 100) / 100 }</td>
+              <td>{ exchangeRates[currency].name.split('/')[0] }</td>
+              <td>{ Math.round(exchangeRates[currency].ask * 100) / 100 }</td>
+              <td>
+                { (Math.round(
+                  (Number(value) * exchangeRates[currency].ask) * 100,
+                )) / 100 }
+              </td>
+              <td>Real</td>
+              <td>9999</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     );
   }
 
@@ -91,9 +136,13 @@ class Wallet extends React.Component {
     const payments = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     const { id, value, description, currency, method, tag } = this.state;
-    const { currencies, loadingCurrencies, addToExpensesAction } = this.props;
+    const { currencies,
+      loadingCurrencies,
+      addToExpensesAction,
+      requestApiAction,
+    } = this.props;
     delete currencies.USDT;
-    const currenciesArray = Object.keys(currencies).map((item) => item);  
+    const currenciesArray = Object.keys(currencies).map((item) => item);
 
     return (
       <div>
@@ -108,9 +157,9 @@ class Wallet extends React.Component {
             { this.createSelect('tag', 'Tag', tags, tag) }
             <button
               type="button"
-              onClick={ () => { {
+              onClick={ () => {
                 this.handleId();
-                this.fetchCurrencies();
+                requestApiAction();
                 addToExpensesAction({
                   id,
                   value,
@@ -119,14 +168,14 @@ class Wallet extends React.Component {
                   method,
                   tag,
                   exchangeRates: currencies,
-                })
-                };
+                });
               } }
             >
               Adicionar despesa
             </button>
           </form>
         )}
+        { this.renderExpensesTable() }
       </div>
     );
   }
