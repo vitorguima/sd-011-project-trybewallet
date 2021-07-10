@@ -2,6 +2,7 @@ body {
   margin: 0;
 }
 
+/* Estilização da tela de login */
 .login-container {
   align-items: center;
   background: white;
@@ -14,22 +15,49 @@ body {
 
 .login-card {
   align-items: center;
-  background: rgb(142, 236, 255);
+  background: white;
+  background-image: url('./images/wallet1.png');
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: 60%;
+  border-radius: 5px;
   box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.2);
   display: flex;
   flex-flow: column;
-  height: 300px;
+  height: 400px;
   justify-content: space-evenly;
   transition: 0.2s;
-  width: 300px;
+  width: 400px;
 }
 
 .login-card:hover {
-  box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.5);
+}
+
+.login-card h2 {
+  color: white;
+  font-family: fantasy;
+  font-size: xx-large;
 }
 
 .input-container {
   align-items: center;
   display: flex;
   flex-flow: column;
+}
+
+/* Estilização do header do componente wallet */
+
+/* Fonte: https://tableless.com.br/como-usar-gradient-no-css-de-forma-consciente/ */
+.header {
+  align-items: center;
+  background-color: rgb(99, 99, 99);
+  background-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.9));
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.header , h1 p {
+  color: whitesmoke;
 }
