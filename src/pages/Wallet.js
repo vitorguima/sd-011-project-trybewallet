@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Form from '../components/Form';
 
 class Wallet extends React.Component {
   render() {
-    const { email, password } = this.props;
+    const { email } = this.props;
     return (
       <div>
         <header data-testid="email-field">
@@ -22,5 +23,9 @@ const mapStateToProps = (state) => ({
   email: state.user.email,
   password: state.user.password,
 });
+
+Wallet.propTypes = {
+  email: PropTypes.string.isRequired,
+};
 
 export default connect(mapStateToProps)(Wallet);
