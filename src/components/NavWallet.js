@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 const NavWallet = () => {
   const currentState = useSelector((state) => state);
-  const { user: { email }, wallet: { currencies } } = currentState;
+  const { user: { email } } = currentState;
   const [total] = React.useState(0);
   return (
     <nav>
@@ -17,7 +17,7 @@ const NavWallet = () => {
         <div className="despesas">
           <p data-testid="total-field">
             {total}
-            <span data-testid="header-currency-field">{currencies}</span>
+            <span data-testid="header-currency-field">BRL</span>
           </p>
         </div>
       </div>

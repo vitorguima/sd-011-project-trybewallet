@@ -1,15 +1,16 @@
+export const SET_CURRENCIES = 'SET_CURRENCIES';
+
 const INITIAL_STATE = {
-  currencies: 'BRL',
-  total: 0,
+  currencies: [],
   expenses: [],
 };
 
 const wallet = (state = INITIAL_STATE, { type, payload }) => {
   switch (type) {
-  case 'WALLET':
+  case SET_CURRENCIES:
     return {
       ...state,
-      ...payload,
+      currencies: payload,
     };
   default:
     return state;
