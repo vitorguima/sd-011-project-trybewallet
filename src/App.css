@@ -38,8 +38,8 @@
 
 .email-input {
   border-radius: 5px;
-  width: 210px;
   margin-right: 8px;
+  width: 210px;
 }
 
 .login-container button {
@@ -74,11 +74,11 @@ span {
 }
 
 .header-container {
+  background-color: rgb(214, 210, 210);
   display: flex;
   justify-content: space-evenly;
-  width: 100%;
   padding: 2px;
-  background-color: rgb(214, 210, 210);
+  width: 100%;
 }
 
 #email {
