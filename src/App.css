@@ -81,14 +81,14 @@ span {
   width: 100%;
 }
 
-#email {
+.email {
   margin-left: 10px;
 }
 
-#total-field {
+.total-field {
   margin-left: 10px;
 }
 
-#currency {
+.currency {
   margin-left: 10px;
 }
