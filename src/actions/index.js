@@ -17,7 +17,7 @@ const requestApiError = (payload) => ({
   payload,
 });
 
-const API = 'https://economia.awesomeapi.com.br/json/all';
+export const API = 'https://economia.awesomeapi.com.br/json/all';
 export const fetchApi = () => (dispatch) => {
   dispatch(requestApi());
   return fetch(API)
