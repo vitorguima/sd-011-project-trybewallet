@@ -3,7 +3,7 @@ const INITIAL_STATE = {
   expenses: [],
 };
 
-function user(state = INITIAL_STATE, action) {
+function wallet(state = INITIAL_STATE, action) {
   const { type, payload } = action;
   switch (type) {
   case 'REQUEST_WALLET_SUCCESS':
@@ -11,9 +11,14 @@ function user(state = INITIAL_STATE, action) {
       ...state,
       currencies: payload,
     };
+  case 'SAVE_EXPENSES':
+  return {
+    ...state,
+    expenses: [...state.expenses, payload],
+  };
   default:
     return state;
   }
 }
 
-export default user;
+export default wallet;

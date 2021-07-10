@@ -38,7 +38,6 @@ const Login = () => {
       <input data-testid="email-input" type="email" onChange={handleInput}/>
       <input data-testid="password-input" type="password" onChange={handleInput}/>
       <button disabled={validateEmailInput()} onClick={handleSubmit}>Entrar</button>
-      {/* <button>{emailUser}</button> */}
     </form>
   )
 }

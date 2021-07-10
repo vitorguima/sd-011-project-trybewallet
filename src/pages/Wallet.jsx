@@ -1,13 +1,32 @@
-import React from 'react';
-import { useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import  actionFunctions from '../actions'
+import actionFunctions from '../actions'
 import CoinOptions from '../components/CoinOptions';
 
 const Wallet = () => {
+  const [expenses, setExpenses] = useState({id: -1});
   const dispatch = useDispatch();
   const userEmail = useSelector((state) => state.user.email);
-  const allCurrencies = useSelector((state) => state.wallet.currencies);
+  
+  let allCurrencies = useSelector((state) => state.wallet.currencies);
+  let savedExpenses = useSelector((state) => state.wallet.expenses);
+  const expensesWithRates = savedExpenses
+  .map((item) => Number(item.exchangeRates[item.currency].ask) * Number(item.value));
+  console.log(expensesWithRates)
+  
+  const handleExpInput = (e) => {
+    const { target } = e;
+    const { value, name } = target;
+    setExpenses({...expenses, [name]: value});
+  }
+
+  const submitExpense = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const nextId = savedExpenses.length === 0 ? 0 : savedExpenses.length;
+    dispatch(actionFunctions.fetchCurrency())
+    dispatch(actionFunctions.saveExpenses({...expenses, exchangeRates: allCurrencies, id: nextId}));
+  }
 
   useEffect(() => {
     dispatch(actionFunctions.fetchCurrency())
@@ -19,7 +38,10 @@ const Wallet = () => {
           {userEmail}
         </div>
         <div data-testid="total-field">
-          0
+          {expensesWithRates.reduce((acc, curr) => {
+              acc += curr;
+              return acc;
+            }, 0)}
         </div>
         <div data-testid="header-currency-field">
           BRL
@@ -27,21 +49,21 @@ const Wallet = () => {
         <form>
           <label>
             Valor
-            <input type="number" name="name" />
+            <input type="number" name="value" onChange={handleExpInput}/>
           </label>
           <label>
             Descrição
-            <input type="text" name="name" />
+            <input type="text" name="description" onChange={handleExpInput}/>
           </label>
           <label>
             Moeda
-            <select name="moeda" id="">
+            <select id="" name='currency' onChange={handleExpInput}>
               <CoinOptions currencies={allCurrencies} />
             </select>
           </label>
           <label>
             Método de pagamento
-            <select name="" id="">
+            <select name="method" id="" onChange={handleExpInput}>
               <option value="Dinheiro">Dinheiro</option>
               <option value="Cartão de crédito">Cartão de crédito</option>
               <option value="Cartão de débito">Cartão de débito</option>
@@ -49,7 +71,7 @@ const Wallet = () => {
           </label>
           <label>
             Tag
-            <select name="" id="">
+            <select name="tag" id="" onChange={handleExpInput}>
               <option value="Alimentação">Alimentação</option>
               <option value="Lazer">Lazer</option>
               <option value="Trabalho">Trabalho</option>
@@ -57,7 +79,7 @@ const Wallet = () => {
               <option value="Saúde">Saúde</option>
             </select>
           </label>
-          <button>Adicionar despesa</button>
+          <button onClick={submitExpense}>Adicionar despesa</button>
         </form>
       </nav>
     </>
