@@ -8,6 +8,11 @@ const WALLET_STATE = {
 
 function functionWallet(state = WALLET_STATE, action) {
   switch (action.type) {
+  case 'SUCESS_FETCH':
+    return {
+      ...state,
+      currencies: action.payload,
+    };
   default:
     return state;
   }

@@ -1,5 +1,4 @@
 // Esse reducer será responsável por tratar as informações da pessoa usuária
-// import { browserHistory } from 'react-router';
 
 const USER_STATE = {
   email: '',
