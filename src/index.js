@@ -9,7 +9,7 @@ import login from './login/login';
 
 ReactDOM.render(
   <BrowserRouter>
-    <Provider login = { login }>
+    <Provider login={ login }>
       <App />
     </Provider>
   </BrowserRouter>,

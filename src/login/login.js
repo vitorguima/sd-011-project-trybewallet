@@ -5,9 +5,9 @@ import reducer from '../reducers';
 
 const login = createStore(
   reducer,
-    composeWithDevTools(
-      applyMiddleware(thunk),
-    ),
+  composeWithDevTools(
+    applyMiddleware(thunk),
+  ),
 );
 
 export default login;
