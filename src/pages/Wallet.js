@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchApiThunk, saveExpense } from '../actions';
+import { fetchApiThunk, saveExpense, removeExpense } from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
@@ -91,7 +91,7 @@ class Wallet extends React.Component {
   }
 
   renderExpensesTable() {
-    const { expenses } = this.props;
+    const { expenses, removeExpenseAction } = this.props;
     return (
       <table>
         <thead>
@@ -108,23 +108,29 @@ class Wallet extends React.Component {
           </tr>
         </thead>
         <tbody>
-          { expenses.map(({
-            expense: id, description, tag, method, currency, value, exchangeRates,
-          }) => (
-            <tr key={ id }>
-              <td>{ description }</td>
-              <td>{ tag }</td>
-              <td>{ method }</td>
-              <td>{ Math.round(value * 100) / 100 }</td>
-              <td>{ exchangeRates[currency].name.split('/')[0] }</td>
-              <td>{ Math.round(exchangeRates[currency].ask * 100) / 100 }</td>
+          { expenses.map((exp) => (
+            <tr key={ exp.id }>
+              <td>{ exp.description }</td>
+              <td>{ exp.tag }</td>
+              <td>{ exp.method }</td>
+              <td>{ Math.round(exp.value * 100) / 100 }</td>
+              <td>{ exp.exchangeRates[exp.currency].name.split('/')[0] }</td>
+              <td>{ Math.round(exp.exchangeRates[exp.currency].ask * 100) / 100 }</td>
               <td>
                 { (Math.round(
-                  (Number(value) * exchangeRates[currency].ask) * 100,
+                  (Number(exp.value) * exp.exchangeRates[exp.currency].ask) * 100,
                 )) / 100 }
               </td>
               <td>Real</td>
-              <td>9999</td>
+              <td>
+                <button
+                  type="button"
+                  data-testid="delete-btn"
+                  onClick={ () => removeExpenseAction(exp) }
+                >
+                  X
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -191,6 +197,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   requestApiAction: () => dispatch(fetchApiThunk()),
   addToExpensesAction: (payload) => dispatch(saveExpense(payload)),
+  removeExpenseAction: (payload) => dispatch(removeExpense(payload)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

@@ -4,6 +4,7 @@ import { REQUEST_API,
   REQUEST_API_SUCCESS,
   REQUEST_API_ERROR,
   SAVE_EXPENSE,
+  REMOVE_EXPENSE,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -35,6 +36,11 @@ function walletReducer(state = INITIAL_STATE, action) {
       ...state,
       expenses: [...state.expenses, action.payload],
       isLoading: false,
+    };
+  case REMOVE_EXPENSE:
+    return {
+      ...state,
+      expenses: [...state.expenses.filter((expense) => expense !== action.payload)],
     };
   default:
     return state;
