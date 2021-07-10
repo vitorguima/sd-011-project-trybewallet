@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import withStore from '../../utils/withStore';
+import withStore from '../../functions/withStore';
 import { deleteExpense as deleteExpenseAgent } from '../../agents';
 
 class ExpensesTable extends React.Component {
