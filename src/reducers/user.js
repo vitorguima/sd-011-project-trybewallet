@@ -12,4 +12,5 @@ function userLogin(state = INITIAL_STATE, action) {
     return state;
   }
 }
+
 export default userLogin;
