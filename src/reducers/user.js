@@ -1,13 +1,12 @@
 // Esse reducer será responsável por tratar as informações da pessoa usuária
 const USER_STATE = {
-  id: 0,
-  user: '',
-  psw: '',
-  btnEnable: true,
+  email: '',
 };
 
 function functionUser(state = USER_STATE, action) {
   switch (action.type) {
+  case 'USER_LOGIN':
+    return { email: action.state };
   default:
     return state;
   }

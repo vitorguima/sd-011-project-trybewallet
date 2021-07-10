@@ -12,6 +12,7 @@ class Login extends Component {
     };
     this.onChangeInput = this.onChangeInput.bind(this);
     this.validState = this.validState.bind(this);
+    this.evClick = this.evClick.bind(this);
   }
 
   componentDidUpdate() {
@@ -37,8 +38,14 @@ class Login extends Component {
     }
   }
 
+  evClick(ev, v) {
+    ev(v);
+  }
+
   render() {
     const { email, psw, enable } = this.state;
+    const { sendEvLogin } = this.props;
+
     return (
       <form>
         <input
@@ -55,7 +62,13 @@ class Login extends Component {
           value={ psw }
           data-testid="password-input"
         />
-        <button type="button" disabled={ enable }>Entrar</button>
+        <button
+          type="button"
+          disabled={ enable }
+          onClick={ () => this.evClick(sendEvLogin, email) }
+        >
+          Entrar
+        </button>
       </form>
     );
   }

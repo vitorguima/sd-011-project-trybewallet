@@ -1,8 +1,7 @@
 // Coloque aqui suas actions
-const userLogin = (value) => ({
+const userLogin = (state) => ({
   type: 'USER_LOGIN',
-  logged: false,
-  value,
+  state,
 });
 
 export default userLogin;
