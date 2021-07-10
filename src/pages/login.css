@@ -12,7 +12,7 @@
   width: 500px;
 }
 
-form {
+.form-login {
   align-items: center;
   color: white;
   display: flex;

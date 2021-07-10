@@ -39,7 +39,7 @@ class Login extends React.Component {
       <div>
         <header className="header-login">Trybe Wallet</header>
         <div className="div">
-          <form>
+          <form className="form-login">
             <label htmlFor="email-imput">
               Email
               <input
