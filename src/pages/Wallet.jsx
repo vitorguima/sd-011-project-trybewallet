@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import actionFunctions from '../actions'
+import actionFunctions from '../actions';
 import CoinOptions from '../components/CoinOptions';
 import TableHead from '../components/TableHead';
+import TagOptions from '../components/TagOptions';
 import TableBody from '../components/TableBody';
+import MethodOptions from '../components/MethodOptions';
 
 const Wallet = () => {
   const [expenses, setExpenses] = useState({id: -1});
@@ -65,19 +67,13 @@ const Wallet = () => {
           <label>
             Método de pagamento
             <select name="method" id="" onChange={handleExpInput}>
-              <option value="Dinheiro">Dinheiro</option>
-              <option value="Cartão de crédito">Cartão de crédito</option>
-              <option value="Cartão de débito">Cartão de débito</option>
+              <MethodOptions />
             </select>
           </label>
           <label>
             Tag
             <select name="tag" id="" onChange={handleExpInput}>
-              <option value="Alimentação">Alimentação</option>
-              <option value="Lazer">Lazer</option>
-              <option value="Trabalho">Trabalho</option>
-              <option value="Transporte">Transporte</option>
-              <option value="Saúde">Saúde</option>
+              <TagOptions />
             </select>
           </label>
           <button onClick={submitExpense}>Adicionar despesa</button>
