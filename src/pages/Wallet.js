@@ -10,6 +10,11 @@ import {
 } from '../walletComponents/walletElements';
 import { fetchCurrencies, fetchToExpenses } from '../actions';
 import ExpenseTableHeader from '../walletComponents/ExpenseTableHeader';
+import MainExpenseTable from '../walletComponents/MainExpenseTable';
+
+const auxObj = {
+  curr: '',
+}
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -70,15 +75,13 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, currencies } = this.props;
+    const { email, currencies, userExpense } = this.props;
     return (
       <div className="main-page">
         <section>
           <div className="title">TrybeWallet</div>
           <p data-testid="email-field">{email}</p>
-          <p data-testid="total-field">
-            { this.sumTotalOfExpenses() }
-          </p>
+          <p data-testid="total-field">{ this.sumTotalOfExpenses() }</p>
           <p data-testid="header-currency-field">BRL</p>
         </section>
         <form>
@@ -99,18 +102,7 @@ class Wallet extends React.Component {
         Source: http://www.linhadecodigo.com.br/artigo/3439/introducao-ao-html-usando-tabelas-em-html.aspx */}
         <ExpenseTableHeader />
         <table className="expenses-body" border="1">
-          {this.props.userExpense.map((expense) => (
-            <thead key={ expense.id }>
-              <td name="description">{expense.description}</td>
-              <td name="tag">{expense.tag}</td>
-              <td name="payment-method">{expense.method}</td>
-              <td name="value">{expense.value}</td>
-              <td name="currency">{expense.exchangeRates[expense.currency].name.split('/')[0]}</td>
-              <td name="exchange-used">{(expense.exchangeRates[expense.currency].ask * 1).toFixed(2)}</td>
-              <td name="converted-value">{(expense.exchangeRates[expense.currency].ask * expense.value).toFixed(2)}</td>
-              <td name="conversion-currency">Real</td>
-            </thead>
-          ))}
+          <MainExpenseTable expenses={ userExpense } />
         </table>
       </div>
     );
