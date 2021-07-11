@@ -1,0 +1,18 @@
+.table-section {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.table-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* .table-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+} */

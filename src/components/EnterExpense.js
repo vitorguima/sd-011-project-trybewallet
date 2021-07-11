@@ -5,6 +5,7 @@ import getCurrency from '../services/serviceAPI';
 import Method from './Method';
 import Tag from './Tag';
 import { fetchExchangesRatesApi } from '../actions';
+import '../styles/EnterExpense.css';
 
 class EnterExpense extends Component {
   constructor() {
@@ -79,7 +80,7 @@ class EnterExpense extends Component {
   render() {
     const { value, description, currency, method, tag } = this.state;
     return (
-      <form>
+      <form className="form-input-expense">
         <label htmlFor="valor">
           Valor:
           <input

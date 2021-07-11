@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import '../styles/Header.css';
 
 class Header extends Component {
   constructor() {
@@ -29,7 +30,6 @@ class Header extends Component {
     const rates = expense.exchangeRates;
     const coin = Object.entries(rates).filter((i) => i[1].code === expense.currency);
     const value = parseFloat(expense.value) * parseFloat(coin[0][1].ask);
-    console.log(value);
     return value;
   }
 
@@ -57,17 +57,26 @@ class Header extends Component {
     const { userEmail } = this.props;
     const { totalValue } = this.state;
     return (
-      <div>
-        <label htmlFor="email-field">
-          Email:
-          <span data-testid="email-field">{ userEmail }</span>
-        </label>
-        <label htmlFor="total-field">
-          Total de gastos: $
-          <span data-testid="total-field">{ totalValue }</span>
-        </label>
-        <span data-testid="header-currency-field">BRL</span>
-      </div>
+      <section className="section-header">
+        <div className="logo">
+          <h2>Trybewallet</h2>
+        </div>
+        <div className="data-user">
+          <label htmlFor="email-field">
+            Email:
+            <span data-testid="email-field">{ userEmail }</span>
+          </label>
+          <div className="expenses-user">
+            <label htmlFor="total-field">
+              Total de gastos: $
+              <span data-testid="total-field">
+                { parseFloat((totalValue * 100) / 100).toFixed(2) }
+              </span>
+            </label>
+            <span data-testid="header-currency-field">BRL</span>
+          </div>
+        </div>
+      </section>
     );
   }
 }

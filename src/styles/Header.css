@@ -1,0 +1,39 @@
+* {
+  margin: 0;
+}
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  height: 100px ;
+  width: 100%;
+  align-items: center;
+  /* margin-bottom: 30px; */
+  background-color: #0C1446;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: white;
+}
+
+.logo {
+  display: flex;
+  flex-direction: row;
+  width: 65%;
+  margin-left: 15px;
+}
+
+.data-user {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+}
+
+.data-user span {
+  padding: 0 10px;
+}
+
+.expenses-user {
+  display: flex ;
+}
+
+.expenses-user span {
+  padding: 0 10px;
+}

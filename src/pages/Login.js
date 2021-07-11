@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import * as user from '../actions';
+import '../styles/Login.css';
 
 class Login extends React.Component {
   constructor() {
@@ -47,32 +48,37 @@ class Login extends React.Component {
     const { email, password, disableButton } = this.state;
     const { saveEmail } = this.props;
     return (
-      <div>
-        <input
-          name="email"
-          type="text"
-          data-testid="email-input"
-          onChange={ (e) => this.handlerChange(e) }
-          value={ email }
-          placeholder="Digite um e-mail valido"
-        />
-        <input
-          name="password"
-          type="text"
-          data-testid="password-input"
-          onChange={ (e) => this.handlerChange(e) }
-          value={ password }
-          placeholder="Digite a senha com no mínimo 6 caracteres"
-        />
-        <Link to={ { pathname: 'carteira' } }>
-          <button
-            disabled={ disableButton }
-            type="button"
-            onClick={ () => saveEmail(email) }
-          >
-            Entrar
-          </button>
-        </Link>
+      <div className="login-page">
+        <div className="login-logo">
+          <h1>Trybewallet</h1>
+        </div>
+        <div className="login-fields">
+          <input
+            name="email"
+            type="text"
+            data-testid="email-input"
+            onChange={ (e) => this.handlerChange(e) }
+            value={ email }
+            placeholder="Digite um e-mail valido"
+          />
+          <input
+            name="password"
+            type="text"
+            data-testid="password-input"
+            onChange={ (e) => this.handlerChange(e) }
+            value={ password }
+            placeholder="Digite a senha com no mínimo 6 caracteres"
+          />
+          <Link to={ { pathname: 'carteira' } }>
+            <button
+              disabled={ disableButton }
+              type="button"
+              onClick={ () => saveEmail(email) }
+            >
+              Entrar
+            </button>
+          </Link>
+        </div>
       </div>
     );
   }
