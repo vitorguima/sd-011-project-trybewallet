@@ -4,6 +4,7 @@ const INITIAL_STATE = {
 };
 
 const FETCH_API = 'FETCH-API';
+const DISPATCH_EXPENSE = 'DISPATACH_EXPENSE';
 
 function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
@@ -11,6 +12,11 @@ function wallet(state = INITIAL_STATE, action) {
     return {
       ...state,
       currencies: action.fetchApi,
+    };
+  case DISPATCH_EXPENSE:
+    return {
+      ...state,
+      expenses: state.expenses.concat(action.expense),
     };
   default:
     return state;

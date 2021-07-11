@@ -1,22 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchApiRequest } from '../actions';
+import { fetchApiRequest, dispatchExpense } from '../actions';
 import HeaderWallet from './HeaderWallet';
 import ButtonAddExpense from './ButtonAddExpense';
 
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      id: 0,
-      value: 0,
-      description: '',
-      currency: '',
-      method: '',
-      tag: '',
-      exchangeRates: 'newCurrency',
-    };
+    this.AddExpense = this.AddExpense.bind(this);
   }
 
   componentDidMount() {
@@ -24,9 +16,18 @@ class Wallet extends React.Component {
     FetchApi();
   }
 
-  AddExpense() {
-    // const { currencyApi } = this.props;
-    console.log(this.state);
+  async AddExpense() {
+    const { DispatchExp, expenses, currencyApi } = this.props;
+    const { form } = document.forms;
+    await DispatchExp([{
+      id: expenses.length,
+      value: form.Valor.value,
+      description: form.Description.value,
+      currency: form.Coin.value,
+      method: form.Method.value,
+      tag: form.Category.value,
+      exchangeRates: currencyApi,
+    }]);
   }
 
   render() {
@@ -34,18 +35,18 @@ class Wallet extends React.Component {
     return (
       <>
         <HeaderWallet />
-        <form>
-          <label htmlFor="input-valor">
+        <form id="form">
+          <label htmlFor="Valor">
             Valor
-            <input name="input-valor" id="input-valor" />
+            <input type="number" name="input-valor" id="Valor" />
           </label>
-          <label htmlFor="input-descricao">
+          <label htmlFor="Description">
             Descrição
-            <input name="input-descricao" id="input-descricao" />
+            <input name="input-descricao" id="Description" />
           </label>
-          <label htmlFor="input-select-coin">
+          <label htmlFor="Coin">
             Moeda
-            <select id="input-select-coin">
+            <select id="Coin">
               {
                 Object.keys(currencyApi).map((coin, index) => (
                   coin !== 'USDT' ? <option key={ index } value={ coin }>{coin}</option>
@@ -54,25 +55,25 @@ class Wallet extends React.Component {
               }
             </select>
           </label>
-          <label htmlFor="input-select-method">
+          <label htmlFor="Method">
             Método de pagamento
-            <select id="input-select-method">
+            <select id="Method">
               <option valor="monney">Dinheiro</option>
               <option valor="credit">Cartão de crédito</option>
               <option valor="debit">Cartão de débito</option>
             </select>
           </label>
-          <label htmlFor="input-select-category">
+          <label htmlFor="Category">
             Tag
-            <select id="input-select-category">
+            <select id="Category">
               <option valor="alimentation">Alimentação</option>
               <option valor="fun">Lazer</option>
               <option valor="work">Trabalho</option>
               <option valor="transport">Transporte</option>
               <option valor="health">Saúde</option>
             </select>
-            <ButtonAddExpense onClick={ this.AddExpense } />
           </label>
+          <ButtonAddExpense onClick={ this.AddExpense } />
         </form>
       </>
     );
@@ -81,14 +82,19 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   currencyApi: state.wallet.currencies,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  FetchApi: (state) => dispatch(fetchApiRequest(state)) });
+  FetchApi: (state) => dispatch(fetchApiRequest(state)),
+  DispatchExp: (state) => dispatch(dispatchExpense(state)),
+});
 
 Wallet.propTypes = {
   FetchApi: PropTypes.func.isRequired,
+  DispatchExp: PropTypes.func.isRequired,
   currencyApi: PropTypes.objectOf(PropTypes.any).isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

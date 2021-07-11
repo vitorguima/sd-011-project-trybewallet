@@ -5,7 +5,7 @@ class ButtonAddExpense extends React.Component {
   render() {
     const { onClick } = this.props;
     return (
-      <button type="button" onClick={ onClick }>Adicionar despesa</button>
+      <button type="reset" onClick={ onClick }>Adicionar despesa</button>
     );
   }
 }

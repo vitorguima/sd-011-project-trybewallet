@@ -1,6 +1,6 @@
 const SUBMITLOGIN = 'SUBMIT-LOGIN';
 const FETCH_API = 'FETCH-API';
-
+const DISPATCH_EXPENSE = 'DISPATACH_EXPENSE';
 export const actionEmail = (email) => ({ type: SUBMITLOGIN, email });
 
 export const outraction = (email) => ({ type: 'xablau', email });
@@ -19,3 +19,8 @@ export function fetchApiRequest() {
     .then((response) => response.json())
     .then((fetchApi) => dispatch(receiveApi(fetchApi)));
 }
+
+export const dispatchExpense = (expense) => ({
+  type: DISPATCH_EXPENSE,
+  expense,
+});
