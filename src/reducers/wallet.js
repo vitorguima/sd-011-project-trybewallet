@@ -1,6 +1,7 @@
 import {
   SAVE_EXCHANGES_RATES,
   SAVE_EXPENSE_WALLET,
+  DELETE_EXPENSE_WALLET,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -19,6 +20,11 @@ function walletReducer(state = INITIAL_STATE, action) {
     return {
       ...state,
       expenses: [...state.expenses, action.payload],
+    };
+  case DELETE_EXPENSE_WALLET:
+    return {
+      ...state,
+      expenses: [...action.payload],
     };
   default:
     return state;

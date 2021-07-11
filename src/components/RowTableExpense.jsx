@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { deleteExpenseWallet } from '../actions';
 import PropTypes from 'prop-types';
 
-export default class RowTableExpense extends Component {
+class RowTableExpense extends Component {
   constructor() {
     super();
     this.state = {
@@ -12,6 +14,7 @@ export default class RowTableExpense extends Component {
     this.exctractExchangeName = this.exctractExchangeName.bind(this);
     this.extractExchangeValue = this.extractExchangeValue.bind(this);
     this.updateState = this.updateState.bind(this);
+    this.deleteExpense = this.deleteExpense.bind(this);
   }
 
   componentDidMount() {
@@ -50,8 +53,15 @@ export default class RowTableExpense extends Component {
     return parseFloat(exchangeValue);
   }
 
+  deleteExpense(id) {
+    const { expenses, deleteExpense } = this.props;
+    const deletedExpenseNewArray = expenses.filter((expense) => expense.id !== id);
+    deleteExpense(deletedExpenseNewArray);
+    // console.log(deletedExpenseNewArray);
+  }
+
   render() {
-    const { expense: { description, tag, method, value } } = this.props;
+    const { expense: { description, tag, method, value, id } } = this.props;
     const { exchangeUsed, exchangeValue } = this.state;
     return (
       <tr className="table-row">
@@ -75,7 +85,15 @@ export default class RowTableExpense extends Component {
           { parseFloat((value * exchangeValue * 100) / 100).toFixed(2) }
         </td>
         <td id="Real">Real</td>
-        <td id="">excluir</td>
+        <td>
+          <button
+            type="button"
+            data-testid="delete-btn"
+            onClick={ () => this.deleteExpense(id) }
+          >
+            Excluir
+          </button>
+        </td>
       </tr>
     );
   }
@@ -90,6 +108,15 @@ RowTableExpense.propTypes = {
     currency: PropTypes.string,
     exchangeRates: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string])),
   }),
+  expenses: PropTypes.shape({
+    description: PropTypes.string,
+    tag: PropTypes.string,
+    method: PropTypes.string,
+    value: PropTypes.number,
+    currency: PropTypes.string,
+    exchangeRates: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string])),
+    filter: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+  }),
 };
 
 RowTableExpense.defaultProps = {
@@ -101,4 +128,20 @@ RowTableExpense.defaultProps = {
     currency: '',
     exchangeRates: {},
   }),
+  expenses: PropTypes.shape({
+    description: '',
+    tag: '',
+    method: '',
+    value: '',
+    currency: '',
+    exchangeRates: {},
+  }),
 };
+
+const mapStateToProps = (state) => ({ expenses: state.wallet.expenses });
+
+const mapDispatchToProps = (dispatch) => ({
+  deleteExpense: (updatedExpenses) => dispatch(deleteExpenseWallet(updatedExpenses)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(RowTableExpense);
