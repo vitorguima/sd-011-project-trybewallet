@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addExpense } from '../actions/index';
+import { addExpense, editExpense } from '../actions/index';
 
 class ExpensesForm extends Component {
   constructor() {
@@ -15,6 +15,7 @@ class ExpensesForm extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.saveExpense = this.saveExpense.bind(this);
+    this.editExpense = this.editExpense.bind(this);
   }
 
   handleChange({ target }) {
@@ -30,6 +31,12 @@ class ExpensesForm extends Component {
     return false;
   }
 
+  editExpense() {
+    const { saveEditExpense } = this.props;
+    saveEditExpense(this.state);
+    return false;
+  }
+
   renderValueIput() {
     const { value } = this.state;
     return (
@@ -37,6 +44,7 @@ class ExpensesForm extends Component {
         Valor:
         <input
           type="number"
+          data-testid="value-input"
           name="value"
           id="value"
           value={ value }
@@ -53,6 +61,7 @@ class ExpensesForm extends Component {
         Descrição:
         <input
           type="text"
+          data-testid="description-input"
           name="description"
           id="description"
           value={ description }
@@ -70,6 +79,7 @@ class ExpensesForm extends Component {
         Moeda:
         <select
           type="text"
+          data-testid="currency-input"
           name="currency"
           id="currency"
           value={ currency }
@@ -88,6 +98,7 @@ class ExpensesForm extends Component {
         Método de pagamento:
         <select
           type="text"
+          data-testid="method-input"
           name="method"
           id="method"
           value={ method }
@@ -108,6 +119,7 @@ class ExpensesForm extends Component {
         Tag:
         <select
           type="text"
+          data-testid="tag-input"
           name="tag"
           id="tag"
           value={ tag }
@@ -123,6 +135,26 @@ class ExpensesForm extends Component {
     );
   }
 
+  renderButton() {
+    const { editMode } = this.props;
+    if (editMode < 0) {
+      return (
+        <button
+          type="button"
+          onClick={ this.saveExpense }
+        >
+          Adicionar despesa
+        </button>);
+    }
+    return (
+      <button
+        type="button"
+        onClick={ this.editExpense }
+      >
+        Editar despesa
+      </button>);
+  }
+
   render() {
     return (
       <form type="submit">
@@ -132,7 +164,7 @@ class ExpensesForm extends Component {
         {this.renderCurencyInput()}
         {this.rendermethodInput()}
         {this.renderTagInput()}
-        <button type="button" onClick={ this.saveExpense }>Adicionar despesa</button>
+        { this.renderButton()}
       </form>
     );
   }
@@ -140,15 +172,18 @@ class ExpensesForm extends Component {
 
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
+  editMode: state.wallet.editMode,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   saveExpense: (data) => dispatch(addExpense(data)),
+  saveEditExpense: (id) => dispatch(editExpense(id)),
 });
 
 ExpensesForm.propTypes = {
   currencies: PropTypes.array,
   saveExpense: PropTypes.func,
+  saveEditMode: PropTypes.number,
 }.isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpensesForm);

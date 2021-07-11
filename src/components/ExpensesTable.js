@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { removeExpense } from '../actions';
+import { removeExpense, editModeId } from '../actions';
 
 class ExpensesTable extends Component {
   constructor() {
     super();
     this.getIdToRemove = this.getIdToRemove.bind(this);
+    this.getIdToEdit = this.getIdToEdit.bind(this);
+  }
+
+  getIdToEdit({ target }) {
+    const { enterEditMode } = this.props;
+    enterEditMode(target.dataset.id);
   }
 
   getIdToRemove({ target }) {
     const { deleteExpense } = this.props;
-    // console.log(expenses[0]);
-    // console.log(target.dataset.id);
-    // console.log(index);
     deleteExpense(target.dataset.id);
   }
 
@@ -32,7 +35,14 @@ class ExpensesTable extends Component {
         </td>
         <td>Real</td>
         <td>
-          <button type="button">Editar</button>
+          <button
+            type="button"
+            data-testid="edit-btn"
+            data-id={ item.id }
+            onClick={ this.getIdToEdit }
+          >
+            Editar
+          </button>
           <button
             type="button"
             data-testid="delete-btn"
@@ -76,11 +86,13 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   deleteExpense: (id) => dispatch(removeExpense(id)),
+  enterEditMode: (id) => dispatch(editModeId(id)),
 });
 
 ExpensesTable.propTypes = {
   expenses: PropTypes.array,
   deleteExpense: PropTypes.func,
+  enterEditMode: PropTypes.func,
 }.isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpensesTable);
