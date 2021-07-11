@@ -2,7 +2,8 @@ import { REQUEST_CURRENCIES, RECEIVED_CURRENCIES } from '../actions';
 
 const INITIAL_STATE = {
   isLoading: false,
-  currencies: [],
+  currencies: {},
+  expenses: [],
 };
 
 const wallet = (state = INITIAL_STATE, action) => {

@@ -4,12 +4,16 @@ import { connect } from 'react-redux';
 import { fetchCurrency } from '../actions';
 
 class ExpensesForm extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     ApiData: {},
-  //   };
-  // }
+  constructor(props) {
+    super(props);
+    this.state = {
+      description: '',
+      value: 0,
+      currency: '',
+      ["payment-method"]: '',
+      tag: '',
+    };
+  }
 
   componentDidMount() {
     const { APICurrency } = this.props;
@@ -18,54 +22,106 @@ class ExpensesForm extends React.Component {
 
   currenciesOptions() {
     const { currencies } = this.props;
-    return currencies.filter((curr) => curr !== 'USDT');
+    return Object.keys(currencies).filter((curr) => curr !== 'USDT');
+  }
+
+  description() {
+    return (
+      <label htmlFor="description">
+        Descrição:
+        <input
+          id="description"
+          name="description"
+          type="text"
+          onChange={ ({ target }) => this.handleChange(target) }
+
+        />
+      </label>
+    );
+  }
+
+  expenseValue() {
+    return (
+      <label htmlFor="value">
+        Valor:
+        <input
+          id="value"
+          name="value"
+          type="number"
+          placeholder="0"
+          onChange={ ({ target }) => this.handleChange(target) }
+        />
+      </label>
+    );
+  }
+
+  currency() {
+    return (
+      <label htmlFor="currency">
+        Moeda:
+        <select
+          id="currency"
+          name="currency"
+          onChange={ ({ target }) => this.handleChange(target) }
+        >
+          {this.currenciesOptions().map((moeda) => (
+            <option key={ moeda } value={ moeda }>{moeda}</option>
+          ))}
+        </select>
+      </label>
+    );
+  }
+
+  paymentMethod() {
+    return (
+      <label htmlFor="payment-method">
+        Método de pagamento:
+        <select
+          id="payment-method"
+          name="payment-method"
+          onChange={ ({ target }) => this.handleChange(target) }
+        >
+          <option value="cash">Dinheiro</option>
+          <option value="credit">Cartão de crédito</option>
+          <option value="debt">Cartão de débito</option>
+        </select>
+      </label>
+    );
+  }
+
+  expenseTag() {
+    return (
+      <label htmlFor="tag">
+        tag:
+        <select
+          id="tag"
+          name="tag"
+          onChange={ ({ target }) => this.handleChange(target) }
+        >
+          <option value="cash">Alimentação</option>
+          <option value="leisure">Lazer</option>
+          <option value="work">Trabalho</option>
+          <option value="transport">Transporte</option>
+          <option value="health">Saúde</option>
+        </select>
+      </label>
+    );
+  }
+
+  handleChange({ name, value }) {
+    this.setState({ [name]: value });
   }
 
   render() {
     return (
       <form className="expenses-form">
-        <label htmlFor="value">
-          Valor:
-          <input
-            id="value"
-            type="number"
-            placeholder="0"
-          />
-        </label>
-        <label htmlFor="description">
-          Descrição:
-          <input
-            id="description"
-            type="text"
-          />
-        </label>
-        <label htmlFor="currency">
-          Moeda:
-          <select id="currency">
-            {this.currenciesOptions().map((moeda) => (
-              <option key={ moeda } value={ moeda }>{moeda}</option>
-            ))}
-          </select>
-        </label>
-        <label htmlFor="payment-method">
-          Método de pagamento:
-          <select id="payment-method">
-            <option value="cash">Dinheiro</option>
-            <option value="credit">Cartão de crédito</option>
-            <option value="debt">Cartão de débito</option>
-          </select>
-        </label>
-        <label htmlFor="tag">
-          tag:
-          <select id="tag">
-            <option value="cash">Alimentação</option>
-            <option value="leisure">Lazer</option>
-            <option value="work">Trabalho</option>
-            <option value="transport">Transporte</option>
-            <option value="health">Saúde</option>
-          </select>
-        </label>
+        {this.expenseTag()}
+        {this.description()}
+        {this.expenseValue()}
+        {this.currency()}
+        {this.paymentMethod()}
 
+        <input type="button" value="Adicionar despesa" />
       </form>
     );
   }

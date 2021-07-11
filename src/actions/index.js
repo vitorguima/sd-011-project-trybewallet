@@ -22,6 +22,6 @@ export function fetchCurrency() {
     dispatch(requestCurrencies());
     return fetch('https://economia.awesomeapi.com.br/json/all')
       .then((data) => data.json())
-      .then((result) => dispatch(receivedCurrencies(Object.keys(result))));
+      .then((result) => dispatch(receivedCurrencies(result)));
   };
 }
