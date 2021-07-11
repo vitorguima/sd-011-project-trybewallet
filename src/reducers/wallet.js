@@ -52,7 +52,7 @@ function wallet(state = INITIAL_STATE, action) {
       ...state,
       expenses: state.expenses.map((value) => {
         if (value.id === action.payload.id) {
-          return {
+          return { // Hugo Sommers me ajudou nessa questão;
             id: value.id,
             ...action.payload,
             exchangeRates: value.exchangeRates,

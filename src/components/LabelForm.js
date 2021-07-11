@@ -133,7 +133,7 @@ class LabelForm extends Component {
     );
   }
 
-  handleExpense() {
+  handleExpense() { // Talles me ajudou nessa questão de editar itens.
     const { update, expenses } = this.props;
     update(this.state);
     this.setState({
