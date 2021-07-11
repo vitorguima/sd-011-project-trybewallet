@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const MIN_PASSWORD_VALID = 6;
 function isButtonDisabled(email, password) {
@@ -16,7 +17,7 @@ function Login(props) {
     email,
     password,
     dunha,
-    disparaDunha,
+    // disparaDunha,
     dispatchNewEmail,
     dispatchNewPassword,
   } = props;
@@ -69,5 +70,14 @@ const mapDispatchToProps = (dispatch) => ({
   dispatchNewEmail: (email) => dispatch({ type: 'LOGIN_EMAIL', email }),
   dispatchNewPassword: (password) => dispatch({ type: 'LOGIN_PASSWORD', password }),
 });
+
+Login.propTypes = {
+  email: PropTypes.string.isRequired,
+  password: PropTypes.string.isRequired,
+  dunha: PropTypes.string.isRequired,
+  // disparaDunha: PropTypes.func.isRequired,
+  dispatchNewEmail: PropTypes.func.isRequired,
+  dispatchNewPassword: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
