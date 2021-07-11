@@ -34,7 +34,7 @@ class Wallet extends React.Component {
         curren[0] === currency
       ));
       const price = Number(actualCurrency[1].ask);
-      
+
       // Chama a função que converte o valor naquela cotação para real.
       const valueInBRL = this.converterCurrency(price, value);
       acc += valueInBRL;
