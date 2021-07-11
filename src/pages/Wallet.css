@@ -1,6 +1,6 @@
 * {
-  margin: 0;
   box-sizing: border-box;
+  margin: 0;
   padding: 0;
   text-align: center;
 }
@@ -21,20 +21,21 @@ form {
   background-color: #282c34;
   color: white;
   display: flex;
+  flex-basis: auto;
   flex-direction: line;
   font-size: calc(10px + 2vmin);
   justify-content: space-around;
-  flex-basis: auto;
   height: 100vh;
+
 }
 
 form button {
   background-color: white;
+  border-radius: 5px;
   color: #282c34;
   font-size: calc(7px + 1vmin);
   height: 50px;
   width: 400px;
-  border-radius: 5px;
   text-align: center;
 }
 
