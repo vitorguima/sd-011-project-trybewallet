@@ -1,15 +1,15 @@
-import { REQUEST_CURRENCIES, RECIVED_CURRENCIES } from '../actions';
+import { REQUEST_CURRENCIES, RECEIVED_CURRENCIES } from '../actions';
 
 const INITIAL_STATE = {
   isLoading: false,
-  currencies: {},
+  currencies: [],
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case REQUEST_CURRENCIES:
     return { ...state, isLoading: true };
-  case RECIVED_CURRENCIES:
+  case RECEIVED_CURRENCIES:
     return { ...state, isLoading: false, currencies: action.payload };
 
   default:

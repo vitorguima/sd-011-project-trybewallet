@@ -1,7 +1,7 @@
 export const LOGIN = 'LOGIN';
 
 export const REQUEST_CURRENCIES = 'REQUEST_CURRENCIES';
-export const RECIVED_CURRENCIES = 'RECIVED_CURRENCIES';
+export const RECEIVED_CURRENCIES = 'RECEIVED_CURRENCIES';
 
 export const logInWallet = (value) => ({
   type: LOGIN,
@@ -12,8 +12,8 @@ export const requestCurrencies = () => ({
   type: REQUEST_CURRENCIES,
 });
 
-export const recivedCurrencies = (payload) => ({
-  type: RECIVED_CURRENCIES,
+export const receivedCurrencies = (payload) => ({
+  type: RECEIVED_CURRENCIES,
   payload,
 });
 
@@ -21,9 +21,7 @@ export function fetchCurrency() {
   return (dispatch) => {
     dispatch(requestCurrencies());
     return fetch('https://economia.awesomeapi.com.br/json/all')
-      .then((data) => data.json()
-        .then(
-          (result) => dispatch(recivedCurrencies(result)),
-        ));
+      .then((data) => data.json())
+      .then((result) => dispatch(receivedCurrencies(Object.keys(result))));
   };
 }

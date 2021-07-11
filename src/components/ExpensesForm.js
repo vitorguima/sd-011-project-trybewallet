@@ -11,15 +11,14 @@ class ExpensesForm extends React.Component {
   //   };
   // }
 
-  async componentDidMount() {
+  componentDidMount() {
     const { APICurrency } = this.props;
     APICurrency();
   }
 
   currenciesOptions() {
     const { currencies } = this.props;
-    const moedas = Object.keys(currencies).filter((curr) => curr !== 'USDT');
-    return moedas;
+    return currencies.filter((curr) => curr !== 'USDT');
   }
 
   render() {
@@ -42,7 +41,7 @@ class ExpensesForm extends React.Component {
         </label>
         <label htmlFor="currency">
           Moeda:
-          <select name="moeda">
+          <select name="currency">
             {this.currenciesOptions().map((moeda) => (
               <option key={ moeda } value={ moeda }>{moeda}</option>
             ))}

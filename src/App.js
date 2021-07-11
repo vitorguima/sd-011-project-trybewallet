@@ -10,7 +10,7 @@ class App extends React.Component {
       <Switch>
         <Route path="/carteira" component={ Wallet } />
         <Route exact path="/" component={ Login } />
-        <Route exact path="*" component={ NotFound } />
+        <Route path="*" component={ NotFound } />
       </Switch>
     );
   }
