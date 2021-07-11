@@ -12,7 +12,7 @@
   display: flex;
   height: 8vh;
   justify-content: space-between;
-  padding: 0px 20px;
+  padding: 0 20px;
 }
 
 .user-info-container .logo {
@@ -21,7 +21,7 @@
   color: aliceblue;
   font-size: 36px;
   font-weight: 800;
-  text-align: center ;
+  text-align: center;
   width: 180px;
 }
 
@@ -30,7 +30,7 @@
   font-weight: 550;
 }
 
-.header-container  button {
+.header-container button {
   background-color: teal;
   border: none;
   border-radius: 10px;
@@ -44,7 +44,7 @@
   width: 300px;
 }
 
-.header-container  button:hover {
+.header-container button:hover {
   border: 1px solid yellow;
   outline: none;
   transition: 1s;

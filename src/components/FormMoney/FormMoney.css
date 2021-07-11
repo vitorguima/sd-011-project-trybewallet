@@ -1,8 +1,8 @@
-div.form-container {
+.form-container {
   height: 14vh;
 }
 
-label.value-label {
+.value-label {
   align-items: center;
   color: white;
   display: flex;
@@ -13,7 +13,7 @@ label.value-label {
   width: 100vw;
 }
 
-label.value-label input {
+.value-label input {
   border: none;
   border-radius: 20px;
   height: 30px;
@@ -21,24 +21,11 @@ label.value-label input {
   width: 300px;
 }
 
-div.other-options {
-  display: flex;
+.other-options {
   color: white;
+  display: flex;
   font-size: 18px;
   font-weight: 600;
   justify-content: space-around;
   text-align: center;
-}
-
-div.other-options input, select {
-  border: none;
-  border-radius: 10px;
-  display: block;
-  cursor: pointer;
-  height: 30px;
-  outline: none;
-}
-
-div.other-options input, select {
-  width: 300px;
 }
