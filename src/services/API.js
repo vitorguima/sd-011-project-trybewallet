@@ -2,18 +2,16 @@ import { addExpense, dataFailure, getCurrencies } from '../actions';
 
 const URL = 'https://economia.awesomeapi.com.br/json/all';
 
-export const fetchAPI = () => {
-  return async (dispatch) => {
-    try {
-      const r = await fetch(URL);
-      const coin = await r.json();
-      const currencies = Object.values(coin);
-      const filteredList = currencies.filter((el) => el.codein !== 'BRLT');
-      return dispatch(getCurrencies(filteredList));
-    } catch (error) {
-      return dispatch(dataFailure(`${error}`));
-    }
-  };
+export const fetchAPI = () => async (dispatch) => {
+  try {
+    const r = await fetch(URL);
+    const coin = await r.json();
+    const currencies = Object.values(coin);
+    const filteredList = currencies.filter((el) => el.codein !== 'BRLT');
+    return dispatch(getCurrencies(filteredList));
+  } catch (error) {
+    return dispatch(dataFailure(`${error}`));
+  }
 };
 
 export const sendExpense = (expense) => async (dispatch) => {

@@ -1,14 +1,13 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { sendInfo } from '../actions';
+import LoginForm from '../components/LoginForm';
 
 export default function Login() {
   const [login, setLogin] = useState({ email: '', password: '' });
   const dispatch = useDispatch();
   const history = useHistory();
-
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(sendInfo(login));
@@ -22,48 +21,21 @@ export default function Login() {
   };
 
   const handleDisabled = () => {
+    const limit = 6;
     const validRegex = new RegExp(
-      /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$/
+      /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$/,
     );
-    if (validRegex.test(login.email) && login.password.length >= 6) {
+    if (validRegex.test(login.email) && login.password.length >= limit) {
       return false;
-    } else {
-      return true;
     }
+    return true;
   };
 
   return (
-    <form className="w-25 login-form " onSubmit={(e) => handleSubmit(e)}>
-      <div className="mb-3">
-        <label htmlFor="inputEmail" className="form-label">
-          Email address
-          <input
-            onChange={(e) => handleChange(e)}
-            name="email"
-            data-testid="email-input"
-            type="email"
-            className="form-control"
-            id="inputEmail"
-            aria-describedby="emailHelp"
-          />
-        </label>
-      </div>
-      <div className="mb-3">
-        <label htmlFor="inputPassword" className="form-label">
-          Password
-          <input
-            onChange={(e) => handleChange(e)}
-            name="password"
-            data-testid="password-input"
-            type="password"
-            className="form-control"
-            id="inputPassword"
-          />
-        </label>
-      </div>
-      <button disabled={handleDisabled()} type="submit" className="btn btn-primary">
-        Entrar
-      </button>
-    </form>
+    <LoginForm
+      handleSubmit={ handleSubmit }
+      handleChange={ handleChange }
+      handleDisabled={ handleDisabled }
+    />
   );
 }

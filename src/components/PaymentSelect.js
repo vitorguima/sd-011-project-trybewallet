@@ -1,0 +1,22 @@
+import React from 'react';
+
+export default function PaymentSelect() {
+  return (
+    <div className="form-group">
+      <label htmlFor="paymentMethod">
+        Método de pagamento
+        <select
+          id="paymentMethod"
+          required
+          name="method"
+          defaultValue="Selecione a moeda:"
+          className="form-select"
+        >
+          <option value="Dinheiro">Dinheiro</option>
+          <option value="Cartão de crédito">Cartão de Crédito</option>
+          <option value="Cartão de débito">Cartão de Débito</option>
+        </select>
+      </label>
+    </div>
+  );
+}

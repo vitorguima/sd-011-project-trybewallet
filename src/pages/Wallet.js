@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Expenses from '../components/ExpenseForm';
-import Table from '../components/ExpenseTable';
-import { fetchAPI } from '../services/API';
 import { Link } from 'react-router-dom';
+import Expenses from '../components/ExpenseForm';
+import Table from '../components/TableHeader';
+import { fetchAPI } from '../services/API';
 
 export default function Wallet() {
   const dispatch = useDispatch();
@@ -26,12 +26,12 @@ export default function Wallet() {
   return (
     <div className="wallet">
       <nav>
-        <Link to={'/'}>
-          <img src={thumbnail} />
+        <Link to="/">
+          <img src={ thumbnail } alt="" />
         </Link>
         <div className="navInfo">
           <span className="m-2" data-testid="email-field">
-            <i className="fas fa-user m-2"></i>
+            <i className="fas fa-user m-2" />
             {userStore.email}
           </span>
           <div className="m-2">

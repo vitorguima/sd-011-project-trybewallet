@@ -1,11 +1,11 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeExpense } from '../actions';
+import FormInput from './TableRow';
 
 export default function () {
   const dispatch = useDispatch();
   const userExpenses = useSelector((state) => state.wallet.expenses);
-
   const handleDelete = (id) => {
     const updatedExpenses = userExpenses.filter((el) => el.id !== id);
     dispatch(removeExpense(updatedExpenses));
@@ -13,32 +13,11 @@ export default function () {
 
   const getExpenses = () => {
     if (userExpenses.length > 0) {
-      return userExpenses.map((el, index) => {
-        const { description, method, tag, value, exchangeRates, currency, id } = el;
-        const { name, ask } = exchangeRates[currency];
-        const convertedPrice = ask * value;
-
-        return (
-          <tr key={index}>
-            <th role="cell">{description}</th>
-            <td role="cell">{tag}</td>
-            <td role="cell">{method} </td>
-            <td role="cell">{value}</td>
-            <td role="cell">{name}</td>
-            <td role="cell">{parseFloat(ask).toFixed(2)}</td>
-            <td role="cell">{convertedPrice}</td>
-            <td role="cell">Real</td>
-            <td>
-              <button data-testid="edit-btn" className="btn fas fa-edit btn-info m-1" />
-              <button
-                onClick={() => handleDelete(id)}
-                data-testid="delete-btn"
-                className="btn fas fa-trash-alt btn-danger m-1"
-              />
-            </td>
-          </tr>
-        );
-      });
+      return userExpenses.map((el, index) => (<FormInput
+        key={ index }
+        user={ el }
+        handleDelete={ handleDelete }
+      />));
     }
   };
 
