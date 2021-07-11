@@ -1,20 +1,28 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchApiThunk, addExpense, removeExpense } from '../actions';
+import { fetchApiThunk, addExpense, removeExpense, editExpense } from '../actions';
+import ExpensesTable from '../components/ExpensesTable';
+// import ExpenseAdd from '../components/ExpenseAdd'
+
+const initialState = {
+  id: 0,
+  value: '',
+  description: '',
+  currency: '',
+  method: 'Dinheiro',
+  tag: 'Alimentação',
+  exchangeRates: '',
+  isEditing: false,
+};
 
 class Wallet extends React.Component {
   constructor() {
     super();
-    this.state = {
-      id: 0,
-      value: '',
-      description: '',
-      currency: '',
-      method: 'Dinheiro',
-      tag: 'Alimentação',
-    };
+    this.state = initialState;
     this.handleChange = this.handleChange.bind(this);
+    this.btnAddExpense = this.btnAddExpense.bind(this);
+    this.openExpense = this.openExpense.bind(this);
   }
 
   componentDidMount() {
@@ -25,7 +33,7 @@ class Wallet extends React.Component {
     const { reqApiAction } = this.props;
     await reqApiAction();
     const { currencies } = this.props;
-    this.setState({ currency: Object.keys(currencies)[0] });
+    this.setState({ currency: Object.keys(currencies)[0], isEditing: false });
   }
 
   handleChange(event) {
@@ -33,48 +41,45 @@ class Wallet extends React.Component {
     this.setState({ [target.name]: target.value });
   }
 
-  handleId() {
-    const { id } = this.state;
-    this.setState({ id: id + 1 });
-  }
-
-  createInput(name, label, stateKey) {
-    return (
-      <label htmlFor={ name }>
-        { label }
-        <input
-          id={ name }
-          type="text"
-          name={ name }
-          onChange={ this.handleChange }
-          value={ stateKey }
-        />
-      </label>
-    );
-  }
-
-  createSelect(name, label, arraySelect, stateKey) {
-    return (
-      <label htmlFor={ name }>
-        { label }
-        <select
-          id={ name }
-          name={ name }
-          onChange={ this.handleChange }
-          value={ stateKey }
-        >
-          { arraySelect.map((item, index) => (
-            <option key={ `${name}-${index}` } value={ item }>{ item }</option>
-          ))}
-        </select>
-      </label>
-    );
-  }
-
   totalExpenses(expenses) {
-    const total = expenses.reduce((acc, expense) => (
-      acc + expense.value * expense.exchangeRates[expense.currency].ask), 0);
+    const total = expenses.reduce((acc, exp) => (
+      acc + exp.value * exp.exchangeRates[exp.currency].ask), 0);
     return (Math.round(total * 100) / 100);
+  }
+
+  btnAddExpense(expense) {
+    const { reqApiAction, addExpenseAction, currencies } = this.props;
+    reqApiAction();
+    addExpenseAction(expense);
+    this.setState(initialState);
+    this.setState({ currency: Object.keys(currencies)[0] });
+  }
+
+  btnEditExpense(expense) {
+    const { editExpenseAction, currencies, expenses } = this.props;
+    console.log(expenses);
+    const teste = expenses;
+    const oldExpense = teste.findIndex((exp) => exp.id === expense.id);
+    teste.splice(oldExpense, 1, expense);
+    console.log(oldExpense);
+    console.log(expenses);
+    editExpenseAction(expenses);
+    this.setState(initialState);
+    this.setState({ currency: Object.keys(currencies)[0], isEditing: false });
+  }
+
+  openExpense(expense) {
+    const { id, value, description, currency, method, tag, exchangeRates } = expense;
+    this.setState({
+      id,
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      exchangeRates,
+      isEditing: true,
+    });
   }
 
   renderHeader() {
@@ -90,86 +95,101 @@ class Wallet extends React.Component {
     );
   }
 
-  renderExpensesTable() {
-    const { expenses, removeExpenseAction } = this.props;
+  createInput(name, label, stateKey, dataTestId) {
     return (
-      <table>
-        <thead>
-          <tr>
-            <th>Descrição</th>
-            <th>Tag</th>
-            <th>Método de pagamento</th>
-            <th>Valor</th>
-            <th>Moeda</th>
-            <th>Câmbio utilizado</th>
-            <th>Valor convertido</th>
-            <th>Moeda de conversão</th>
-            <th>Editar/Excluir</th>
-          </tr>
-        </thead>
-        <tbody>
-          { expenses.map((exp) => (
-            <tr key={ exp.id }>
-              <td>{ exp.description }</td>
-              <td>{ exp.tag }</td>
-              <td>{ exp.method }</td>
-              <td>{ Math.round(exp.value * 100) / 100 }</td>
-              <td>{ exp.exchangeRates[exp.currency].name.split('/')[0] }</td>
-              <td>{ Math.round(exp.exchangeRates[exp.currency].ask * 100) / 100 }</td>
-              <td>
-                { (Math.round(
-                  (exp.value * exp.exchangeRates[exp.currency].ask) * 100,
-                )) / 100 }
-              </td>
-              <td>Real</td>
-              <td>
-                <button
-                  type="button"
-                  data-testid="delete-btn"
-                  onClick={ () => removeExpenseAction(exp) }
-                >
-                  X
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <label htmlFor={ name }>
+        { label }
+        <input
+          data-testid={ dataTestId }
+          id={ name }
+          type="text"
+          name={ name }
+          onChange={ this.handleChange }
+          value={ stateKey }
+        />
+      </label>
     );
   }
 
-  render() {
+  createSelect(name, label, arraySelect, stateKey, dataTestId) {
+    return (
+      <label htmlFor={ name }>
+        { label }
+        <select
+          data-testid={ dataTestId }
+          id={ name }
+          name={ name }
+          onChange={ this.handleChange }
+          value={ stateKey }
+        >
+          { arraySelect.map((item, index) => (
+            <option key={ `${name}-${index}` } value={ item }>{ item }</option>
+          ))}
+        </select>
+      </label>
+    );
+  }
+
+  renderExpenseForm() {
     const payments = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     const { value, description, currency, method, tag } = this.state;
-    const { currencies, loadingCurrencies, addExpenseAction, reqApiAction } = this.props;
+    const { currencies } = this.props;
+    const currArray = Object.keys(currencies).filter((curr) => curr !== 'USDT');
+    const expenseForm = { value, description, currency, method, tag };
 
-    const currenciesArray = Object.keys(currencies).filter((currency) => currency !== 'USDT');
+    return (
+      <form>
+        { this.createInput('value', 'Valor', value, 'value-input') }
+        { this.createInput('description', 'Descrição', description, 'description-input') }
+        { this.createSelect('currency', 'Moeda', currArray, currency, 'currency-input') }
+        { this.createSelect('method', 'Método de pagamento', payments, method, 'method-input') }
+        { this.createSelect('tag', 'Tag', tags, tag, 'tag-input') }
+        <button
+          type="button"
+          onClick={ () => this.btnAddExpense(expenseForm) }
+        >
+          Adicionar despesa
+        </button>
+      </form>
+    );
+  }
 
+  renderExpenseEdit() {
+    const payments = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
+    const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
+    const { id, value, description, currency, method, tag, exchangeRates } = this.state;
+    const { currencies } = this.props;
+    const currArray = Object.keys(currencies).filter((curr) => curr !== 'USDT');
+    const expenseForm = { id, value, description, currency, method, tag, exchangeRates };
+
+    return (
+      <form>
+        { this.createInput('value', 'Valor', value, 'value-input') }
+        { this.createInput('description', 'Descrição', description, 'description-input') }
+        { this.createSelect('currency', 'Moeda', currArray, currency, 'currency-input') }
+        { this.createSelect('method', 'Método de pagamento', payments, method, 'method-input') }
+        { this.createSelect('tag', 'Tag', tags, tag, 'tag-input') }
+        <button
+          type="button"
+          onClick={ () => this.btnEditExpense(expenseForm) }
+        >
+          Editar despesa
+        </button>
+      </form>
+    );
+  }
+
+
+  render() {
+    const { loadingCurrencies } = this.props;
+    const { isEditing } = this.state;
     return (
       <div>
         { this.renderHeader() }
         <h3>TrybeWallet</h3>
-        { loadingCurrencies ? <p>Carregando...</p> : (
-          <form>
-            { this.createInput('value', 'Valor', value) }
-            { this.createInput('description', 'Descrição', description) }
-            { this.createSelect('currency', 'Moeda', currenciesArray, currency) }
-            { this.createSelect('method', 'Método de pagamento', payments, method) }
-            { this.createSelect('tag', 'Tag', tags, tag) }
-            <button
-              type="button"
-              onClick={ () => {
-                this.handleId();
-                reqApiAction();
-                addExpenseAction(this.state);
-              } }
-            >
-              Adicionar despesa
-            </button>
-          </form>
-        )}
-        { this.renderExpensesTable() }
+        { loadingCurrencies ? <p>Carregando...</p> : isEditing ? this.renderExpenseEdit() : this.renderExpenseForm() }
+        <ExpensesTable openExpense={ this.openExpense } />
       </div>
     );
   }
@@ -186,6 +206,7 @@ const mapDispatchToProps = (dispatch) => ({
   reqApiAction: () => dispatch(fetchApiThunk()),
   addExpenseAction: (payload) => dispatch(addExpense(payload)),
   removeExpenseAction: (payload) => dispatch(removeExpense(payload)),
+  editExpenseAction: (payload) => dispatch(editExpense(payload)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
