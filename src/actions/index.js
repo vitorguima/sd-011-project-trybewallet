@@ -2,6 +2,7 @@
 export const USER_LOGIN = 'USER_LOGIN';
 export const REQUEST_API_SUCCESS = 'REQUEST_API_SUCCESS';
 export const NEW_EXPENSE = 'NEW_EXPENSE';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 const saveEmail = (email) => ({
   type: USER_LOGIN,
@@ -31,8 +32,14 @@ const addNewExpense = (data) => ({
   payload: data,
 });
 
+const deleteExpense = (expenseId) => ({
+  type: DELETE_EXPENSE,
+  payload: expenseId,
+});
+
 export {
   saveEmail,
   fetchApi,
   addNewExpense,
+  deleteExpense,
 };

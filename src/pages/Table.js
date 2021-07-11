@@ -1,46 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { deleteExpense } from '../actions';
+
+const headerItens = ['Descrição',
+  'Tag',
+  'Método de pagamento',
+  'Valor',
+  'Moeda',
+  'Câmbio utilizado',
+  'Valor convertido',
+  'Moeda de conversão',
+  'Editar/Excluir'];
 
 class Table extends React.Component {
-  constructor() {
-    super();
-    this.renderTable = this.renderTable.bind(this);
-  }
-
-  renderTable() {
-    const { expenses } = this.props;
-    return expenses.map((expense) => (
-      <tr key={ expense.id }>
-        <th>{ expense.description }</th>
-        <th>{ expense.tag }</th>
-        <th>{ expense.method }</th>
-        <th>{ expense.value }</th>
-        <th>{ expense.currency }</th>
-        <th>{ expense.exchangeRates[expense.currency].ask }</th>
-        <th>
-          { parseFloat(expense.value)
-          * parseFloat(expense.exchangeRates[expense.currency].ask) }
-        </th>
-        <th>Real Brasileiro</th>
-        <th>Aqui tem 2 Botoes</th>
-      </tr>));
-  }
-
   render() {
-    const { expenses } = this.props;
+    const { expenses, removeExpense } = this.props;
     return (
       <table>
         <thead>
           <tr>
-            <th>Descrição</th>
-            <th>Tag</th>
-            <th>Método de pagamento</th>
-            <th>Valor</th>
-            <th>Moeda</th>
-            <th>Câmbio utilizado</th>
-            <th>Valor convertido</th>
-            <th>Moeda de conversão</th>
-            <th>Editar/Excluir</th>
+            { headerItens.map((item, index) => <th key={ index }>{ item }</th>) }
           </tr>
         </thead>
         <tbody>
@@ -63,7 +43,15 @@ class Table extends React.Component {
               * parseFloat(expense.exchangeRates[expense.currency].ask) }
               </td>
               <td>Real</td>
-              <td>Aqui tem 2 Botoes</td>
+              <td>
+                <button
+                  data-testid="delete-btn"
+                  onClick={ () => removeExpense(expense.id) }
+                  type="button"
+                >
+                  Deletar
+                </button>
+              </td>
             </tr>)) }
         </tbody>
       </table>
@@ -71,8 +59,13 @@ class Table extends React.Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  removeExpense: (expenseId) => dispatch(deleteExpense(expenseId)),
+});
+
 Table.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  removeExpense: PropTypes.func.isRequired,
 };
 
-export default Table;
+export default connect(null, mapDispatchToProps)(Table);
