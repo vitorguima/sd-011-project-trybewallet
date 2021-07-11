@@ -8,9 +8,10 @@ import {
   paymentMethod,
   category,
 } from '../walletComponents/walletElements';
-import { fetchCurrencies, fetchToExpenses } from '../actions';
+import { fetchCurrencies, fetchToExpenses, openEditor, closeEditor } from '../actions';
 import ExpenseTableHeader from '../walletComponents/ExpenseTableHeader';
 import DeleteButton from '../walletComponents/DeleteButton';
+import ExpenseEditorArea from '../walletComponents/ExpenseEditorArea';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -27,6 +28,7 @@ class Wallet extends React.Component {
     this.handlerInputChange = this.handlerInputChange.bind(this);
     this.addExpenseToGlobal = this.addExpenseToGlobal.bind(this);
     this.sumTotalOfExpenses = this.sumTotalOfExpenses.bind(this);
+    this.editor = this.editor.bind(this);
   }
 
   componentDidMount() {
@@ -70,8 +72,39 @@ class Wallet extends React.Component {
     return total;
   }
 
+  editor(id) {
+    const { editOn, editOff, editing } = this.props;
+    const { value, description, currency, method, tag } = this.state;
+    console.log(`${value} ${description} ${currency} ${method} ${tag}`);
+
+    if (editing) {
+      editOff();
+    } else {
+      editOn(id);
+    }
+  }
+
+  renderInitialForm(currencies) {
+    return (
+      <form>
+        {expenses(this.handlerInputChange)}
+        {description(this.handlerInputChange)}
+        {currency(currencies, this.handlerInputChange)}
+        {paymentMethod(this.handlerInputChange)}
+        {category(this.handlerInputChange)}
+        <button
+          type="button"
+          className="add-expense"
+          onClick={ () => this.addExpenseToGlobal() }
+        >
+          Adicionar despesa
+        </button>
+      </form>
+    );
+  }
+
   render() {
-    const { email, currencies, userExpense } = this.props;
+    const { email, currencies, userExpense, editing } = this.props;
     return (
       <div className="main-page">
         <section>
@@ -80,20 +113,7 @@ class Wallet extends React.Component {
           <p data-testid="total-field">{ this.sumTotalOfExpenses() }</p>
           <p data-testid="header-currency-field">BRL</p>
         </section>
-        <form>
-          {expenses(this.handlerInputChange)}
-          {description(this.handlerInputChange)}
-          {currency(currencies, this.handlerInputChange)}
-          {paymentMethod(this.handlerInputChange)}
-          {category(this.handlerInputChange)}
-          <button
-            type="button"
-            className="add-expense"
-            onClick={ () => this.addExpenseToGlobal() }
-          >
-            Adicionar despesa
-          </button>
-        </form>
+        { !editing ? this.renderInitialForm(currencies) : <ExpenseEditorArea />}
         {/* Para relembrar o uso de tabelas, consulsei um pequeno artigo em...
         Source: http://www.linhadecodigo.com.br/artigo/3439/introducao-ao-html-usando-tabelas-em-html.aspx */}
         <ExpenseTableHeader />
@@ -111,6 +131,12 @@ class Wallet extends React.Component {
               </td>
               <td name="conversion-currency">Real</td>
               {/* Passado ID pro botão para ajudar na exclusão do gasto. */}
+              <button
+                type="button"
+                onClick={ () => this.editor(expense.id) }
+              >
+                Editar
+              </button>
               <DeleteButton id={ expense.id } />
             </thead>
           ))}
@@ -124,11 +150,15 @@ const mapStateToProps = (state) => ({
   email: state.user.email,
   currencies: state.wallet.currencies,
   userExpense: state.wallet.expenses,
+  editing: state.wallet.editing,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   request: () => dispatch(fetchCurrencies()),
   requestExpenses: (forms) => dispatch(fetchToExpenses(forms)),
+  editOn: (id) => dispatch(openEditor(id)),
+  editOff: () => dispatch(closeEditor()),
+  // setId: (id) => dispatch(sendId(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
@@ -139,4 +169,7 @@ Wallet.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   userExpense: PropTypes.arrayOf(PropTypes.object).isRequired,
   requestExpenses: PropTypes.func.isRequired,
+  editing: PropTypes.bool.isRequired,
+  editOn: PropTypes.func.isRequired,
+  editOff: PropTypes.func.isRequired,
 };

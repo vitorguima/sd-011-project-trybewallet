@@ -4,6 +4,8 @@ export const REQUEST_CURRENCIES = 'REQUEST_CURRENCIES';
 export const RECEIVE_CURRENCIES = 'RECEIVE_CURRENCIES';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const REM_EXPENSE = 'REM_EXPENSE';
+export const EDITOR_ON = 'EDITOR_ON';
+export const EDITOR_OFF = 'EDITOR_OFF';
 
 const saveEmail = (email) => ({
   type: SAVE_EMAIL,
@@ -29,12 +31,23 @@ const removeExpense = (id) => ({
   id,
 });
 
+const openEditor = (id) => ({
+  type: EDITOR_ON,
+  editID: id,
+});
+
+const closeEditor = () => ({
+  type: EDITOR_OFF,
+});
+
 export {
   saveEmail,
   fetchCurrenciesStart,
   fetchCurrenciesSuccess,
   fetchCurrenciesToExpenses,
   removeExpense,
+  openEditor,
+  closeEditor,
 };
 
 export function fetchCurrencies() {
