@@ -13,8 +13,8 @@ export default function PaymentSelect() {
           className="form-select"
         >
           <option value="Dinheiro">Dinheiro</option>
-          <option value="Cartão de crédito">Cartão de Crédito</option>
-          <option value="Cartão de débito">Cartão de Débito</option>
+          <option value="Cartão de crédito">Cartão de crédito</option>
+          <option value="Cartão de débito">Cartão de débito</option>
         </select>
       </label>
     </div>

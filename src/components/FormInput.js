@@ -8,7 +8,7 @@ import ValueInput from './ValueInput';
 import CurrencyInput from './CurrencyInput';
 
 export default function FormInput(props) {
-  const { handleFormSubmit, getOptions } = props;
+  const { handleFormSubmit } = props;
   return (
     <form
       id="expensesForm"
@@ -16,7 +16,7 @@ export default function FormInput(props) {
       onSubmit={ handleFormSubmit }
     >
       <ValueInput />
-      <CurrencyInput getOptions={ getOptions } />
+      <CurrencyInput />
       <PaymentSelect />
       <TagSelect />
       <Description />
@@ -29,5 +29,4 @@ export default function FormInput(props) {
 
 FormInput.propTypes = {
   handleFormSubmit: PropTypes.func.isRequired,
-  getOptions: PropTypes.func.isRequired,
 };

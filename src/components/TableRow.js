@@ -9,7 +9,7 @@ export default function FormInput(props) {
 
   return (
     <tr>
-      <th>{description}</th>
+      <td role="cell">{description}</td>
       <td role="cell">{tag}</td>
       <td role="cell">{method}</td>
       <td role="cell">{value}</td>
@@ -43,8 +43,10 @@ FormInput.propTypes = {
     description: PropTypes.string,
     method: PropTypes.string,
     tag: PropTypes.string,
-    value: PropTypes.number,
-    exchangeRates: PropTypes.number,
+    value: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number]),
+    exchangeRates: PropTypes.objectOf(PropTypes.object),
     currency: PropTypes.string,
     id: PropTypes.number,
   }).isRequired,
