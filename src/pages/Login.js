@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class Login extends Component {
   render() {
+    const buttonIsDisabled = true;
+    const { email, password, dunha } = this.props;
+
     return (
       <div>
         <label htmlFor="email-input">
@@ -12,10 +16,19 @@ class Login extends Component {
           Senha
           <input type="text" data-testid="password-input" placeholder="Senha" />
         </label>
-        <button type="submit">Entrar</button>
+        <button type="submit" disabled={ buttonIsDisabled }>
+          Entrar
+        </button>
+        <h1>{dunha}</h1>
       </div>
     );
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => ({
+  email: state.user.user.email,
+  password: state.user.user.password,
+  dunha: state.user.dunha,
+});
+
+export default connect(mapStateToProps)(Login);
