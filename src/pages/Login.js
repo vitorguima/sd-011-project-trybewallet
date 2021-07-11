@@ -1,5 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import saveEmailAction from '../actions/saveEmailAction';
 
 class Login extends React.Component {
   constructor() {
@@ -48,6 +51,9 @@ class Login extends React.Component {
   }
 
   render() {
+    const { email } = this.state;
+    const { sendEmail } = this.props;
+
     return (
       <form>
         <label htmlFor="email">
@@ -69,11 +75,25 @@ class Login extends React.Component {
           />
         </label>
         <Link to="/carteira">
-          <button type="button" id="sendButton">Entrar</button>
+          <button
+            type="button"
+            id="sendButton"
+            onClick={ () => sendEmail(email) }
+          >
+            Entrar
+          </button>
         </Link>
       </form>
     );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  sendEmail: (email) => dispatch(saveEmailAction(email)),
+});
+
+Login.propTypes = {
+  sendEmail: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
