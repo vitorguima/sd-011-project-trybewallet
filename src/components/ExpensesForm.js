@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchCurrency } from '../actions';
 
@@ -12,14 +12,13 @@ class ExpensesForm extends React.Component {
   // }
 
   async componentDidMount() {
-    // const { fetchCurrency } = this.props;
-    fetchCurrency();
+    const { APICurrency } = this.props;
+    APICurrency();
   }
 
   currenciesOptions() {
     const { currencies } = this.props;
     const moedas = Object.keys(currencies).filter((curr) => curr !== 'USDT');
-    moedas.map((moeda) => <option key={ moeda } value={ moeda }>{moeda}</option>);
     return moedas;
   }
 
@@ -43,8 +42,10 @@ class ExpensesForm extends React.Component {
         </label>
         <label htmlFor="currency">
           Moeda:
-          <select name="currency">
-            {this.currenciesOptions()}
+          <select name="moeda">
+            {this.currenciesOptions().map((moeda) => (
+              <option key={ moeda } value={ moeda }>{moeda}</option>
+            ))}
           </select>
         </label>
         <label htmlFor="payment-method">
@@ -76,12 +77,12 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchCurrency: () => dispatch(fetchCurrency()),
+  APICurrency: () => dispatch(fetchCurrency()),
 });
 
-// login.propTypes = {
-//   submitLogIn: PropTypes.func.isRequired,
-//   history: PropTypes.func.isRequired,
-// };
+ExpensesForm.propTypes = {
+  APICurrency: PropTypes.func.isRequired,
+  currencies: PropTypes.objectOf(PropTypes.object).isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpensesForm);
