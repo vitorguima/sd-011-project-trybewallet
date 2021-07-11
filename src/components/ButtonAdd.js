@@ -11,7 +11,6 @@ class ButtonAdd extends Component {
 
   sendExpenses() {
     const { newCurrencie, propsForm, stateExpense } = this.props;
-
     const newvalue = {
       ...propsForm,
       exchangeRates: { ...stateExpense },
@@ -36,9 +35,13 @@ const mapDispatchProps = (dispach) => ({
 
 export default connect(mapStatetoProps, mapDispatchProps)(ButtonAdd);
 
+ButtonAdd.defaultProps = {
+  stateExpense: {},
+};
+
 ButtonAdd.propTypes = {
   newCurrencie: PropTypes.func.isRequired,
-  stateExpense: PropTypes.arrayOf().isRequired,
+  stateExpense: PropTypes.objectOf(PropTypes.object),
   propsForm: PropTypes.shape({
     value: PropTypes.string,
     dc: PropTypes.string,
