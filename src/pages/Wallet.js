@@ -3,11 +3,33 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchApiRequest } from '../actions';
 import HeaderWallet from './HeaderWallet';
+import ButtonAddExpense from './ButtonAddExpense';
 
 class Wallet extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: 0,
+      value: 0,
+      description: '',
+      currency: '',
+      method: '',
+      tag: '',
+      exchangeRates: 'newCurrency',
+    };
+  }
+
   componentDidMount() {
-    const { FetchApi } = this.props;
-    FetchApi();
+    // const { currencyApi } = this.props;
+    // const nameD = 'Dólar Americano/Real Brasileiro Turismo';
+    // this.setState({
+    //   exchangeRates: Object.entries(currencyApi)
+    // })
+  }
+
+  AddExpense() {
+    // const { currencyApi } = this.props;
+    console.log(this.state);
   }
 
   render() {
@@ -52,6 +74,7 @@ class Wallet extends React.Component {
               <option valor="transport">Transporte</option>
               <option valor="health">Saúde</option>
             </select>
+            <ButtonAddExpense onClick={ this.AddExpense } />
           </label>
         </form>
       </>
@@ -67,7 +90,7 @@ const mapDispatchToProps = (dispatch) => ({
   FetchApi: (state) => dispatch(fetchApiRequest(state)) });
 
 Wallet.propTypes = {
-  FetchApi: PropTypes.func.isRequired,
+  // FetchApi: PropTypes.func.isRequired,
   currencyApi: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
