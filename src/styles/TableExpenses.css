@@ -1,18 +1,12 @@
 .table-section {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
   display: flex;
   flex-direction: column;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   width: 100%;
 }
 
 .table-header {
-  width: 100%;
   display: flex;
   justify-content: space-between;
+  width: 100%;
 }
-
-/* .table-row {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-} */

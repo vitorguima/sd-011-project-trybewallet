@@ -12,11 +12,6 @@ const saveExpenseWallet = (payload) => ({
   payload,
 });
 
-// const saveExchangesRates = (payload) => ({
-//   type: SAVE_EXCHANGES_RATES,
-//   payload,
-// });
-
 export const fetchExchangesRatesApi = (expense) => (dispatch) => {
   fetch('https://economia.awesomeapi.com.br/json/all')
     .then((result) => result.json())
