@@ -28,5 +28,5 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps)(CurrencyTypes);
 
 CurrencyTypes.propTypes = {
-  currencyTypes: PropTypes.arrayOf().isRequired,
+  currencyTypes: PropTypes.objectOf(PropTypes.object).isRequired,
 };

@@ -17,9 +17,22 @@ export function fetchCurrencyTypes() {
     .then((currencies) => dispatch(requestCurrencyTypes(currencies)));
 }
 
-export const saveExpenses = (expenses) => ({
+export const saveExpenses = (expenses, dataExchangeRates) => ({
   type: 'SAVE_EXPENSES',
   payload: {
     expenses,
+    dataExchangeRates,
   },
 });
+
+export const ExchangeRates = () => (
+  fetch('https://economia.awesomeapi.com.br/json/all')
+    .then((response) => response.json())
+);
+
+export const newExpense = (expenses) => (dispatch) => (
+  ExchangeRates()
+    .then((dataExchangeRates) => {
+      dispatch(saveExpenses(expenses, dataExchangeRates));
+    })
+);

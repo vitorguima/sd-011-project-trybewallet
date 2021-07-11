@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchCurrencyTypes, saveExpenses } from '../actions';
+import { fetchCurrencyTypes, newExpense } from '../actions';
 import CurrencyTypes from './CurrencyTypes';
 
 class FormExpenses extends Component {
@@ -35,9 +35,9 @@ class FormExpenses extends Component {
 
   clickSubmit() {
     const { id } = this.state;
-    const { newExpense } = this.props;
+    const { newExpenses } = this.props;
     this.setState({ id: id + 1 });
-    newExpense(this.state);
+    newExpenses(this.state);
   }
 
   render() {
@@ -79,7 +79,7 @@ class FormExpenses extends Component {
           type="button"
           onClick={ this.clickSubmit }
         >
-          Salvar despesa
+          adicionar despesa
         </button>
       </form>
     );
@@ -88,12 +88,12 @@ class FormExpenses extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   fetchCurrency: () => dispatch(fetchCurrencyTypes()),
-  newExpense: (expense) => dispatch(saveExpenses(expense)),
+  newExpenses: (expense) => dispatch(newExpense(expense)),
 });
 
 export default connect(null, mapDispatchToProps)(FormExpenses);
 
 FormExpenses.propTypes = {
   fetchCurrency: PropTypes.func.isRequired,
-  newExpense: PropTypes.func.isRequired,
+  newExpenses: PropTypes.func.isRequired,
 };
