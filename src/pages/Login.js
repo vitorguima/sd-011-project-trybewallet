@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+const MIN_PASSWORD_VALID = 6;
+function isButtonDisabled(email, password) {
+  // expressão regular /[^@](tudo menos o @)+@(segudo de)[^.](tudo menos o .)+\.(o ponto, seguido de)[^.](tudo menos o .)/
+  const emailRegex = /[^@]+@[^.]+\.[^.]+/;
+  const isEmailValid = emailRegex.test(email);
+  const isPasswordValid = password.length >= MIN_PASSWORD_VALID;
+  return !isEmailValid || !isPasswordValid;
+}
+
 class Login extends Component {
   render() {
-    const buttonIsDisabled = true;
     const {
       email,
       password,
@@ -33,7 +41,11 @@ class Login extends Component {
             onChange={ (event) => dispatchNewPassword(event.target.value) }
           />
         </label>
-        <button type="submit" onClick={ () => disparaDunha() }>
+        <button
+          type="submit"
+          onClick={ () => disparaDunha() }
+          disabled={ isButtonDisabled(email, password) }
+        >
           Entrar
         </button>
         <h1>{dunha}</h1>
