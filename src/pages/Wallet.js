@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Forms from './Forms';
 import { fetchCurrencies, newExpenseAction } from '../actions';
 
 class Wallet extends React.Component {
@@ -44,6 +45,7 @@ class Wallet extends React.Component {
             {total}
           </p>
         </header>
+        <Forms />
         <button type="button" onClick={ this.handleClick }>
           Adicionar despesa
         </button>
