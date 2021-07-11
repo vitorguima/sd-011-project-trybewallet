@@ -45,7 +45,7 @@ class Login extends React.Component {
     return (
       <div className="login-container">
         <h1>Login</h1>
-        <label htmlFor="email-input">
+        <label htmlFor="input">
           <input
             placeholder="Email"
             id="email-input"
@@ -56,7 +56,7 @@ class Login extends React.Component {
             onChange={ this.handleChanges }
           />
         </label>
-        <label htmlFor="password-input">
+        <label htmlFor="input">
           <input
             placeholder="Password"
             id="password-input"
