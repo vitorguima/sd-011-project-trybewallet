@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { userEmail } from '../actions';
 
@@ -39,7 +39,7 @@ class Login extends React.Component {
               data-testid="email-input"
               className="login-email"
               required
-              onChange={ (event) => this.setState({ email: event.target.value }) }
+              onChange={ (e) => this.setState({ email: e.target.value }) }
             />
           </label>
           <label htmlFor="login-pass">
