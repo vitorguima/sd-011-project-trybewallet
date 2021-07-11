@@ -3,11 +3,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import reducer from '../reducers';
 
-const login = createStore(
+export default store = createStore(
   reducer,
-  composeWithDevTools(
-    applyMiddleware(thunk),
-  ),
+  composeWithDevTools(applyMiddleware(thunk)),
 );
-
-export default login;
