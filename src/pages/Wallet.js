@@ -4,23 +4,21 @@ import PropTypes from 'prop-types';
 import FormWallet from '../components/FormWallet';
 
 class Wallet extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      value: 0,
-    };
-  }
-
   render() {
     const { stateLogin } = this.props;
     const { email } = stateLogin.user;
-    const { value } = this.state;
+    const { expenses } = stateLogin.wallet;
+    let value = 0;
+
+    expenses.forEach((e) => {
+      value += Number(e.value);
+    });
 
     return (
       <header>
         <span data-testid="email-field">{ email }</span>
         <span data-testid="total-field">{ value }</span>
-        <div data-testid="header-currency-field">BRL</div>
+        <span data-testid="header-currency-field">BRL</span>
         <FormWallet />
       </header>
     );
