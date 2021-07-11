@@ -62,7 +62,7 @@ class Form extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  otherFetch: state.walletReducer.payload,
+  otherFetch: state.walletReducer.currencies,
 });
 
 Form.propTypes = ({
