@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchCurrency } from '../actions';
+import { fetchCurrency, addExpense } from '../actions';
 
 class ExpensesForm extends React.Component {
   constructor(props) {
@@ -10,7 +10,7 @@ class ExpensesForm extends React.Component {
       description: '',
       value: 0,
       currency: '',
-      ["payment-method"]: '',
+      paymentMethod: '',
       tag: '',
     };
   }
@@ -112,6 +112,23 @@ class ExpensesForm extends React.Component {
     this.setState({ [name]: value });
   }
 
+  handleButton() {
+    const { description, value, currency, paymentMethod, tag } = this.state;
+    const expenses = {
+      description,
+      value,
+      currency,
+      paymentMethod,
+      tag,
+    };
+
+    const { APICurrency } = this.props;
+    APICurrency();
+    const { currencies, add } = this.props;
+    add(expenses, currencies);
+
+  }
+
   render() {
     return (
       <form className="expenses-form">
@@ -120,8 +137,7 @@ class ExpensesForm extends React.Component {
         {this.expenseValue()}
         {this.currency()}
         {this.paymentMethod()}
-
-        <input type="button" value="Adicionar despesa" />
+        <input type="button" value="Adicionar despesa" onClick={ this.handleButton() } />
       </form>
     );
   }
@@ -133,6 +149,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   APICurrency: () => dispatch(fetchCurrency()),
+  add: (expenses, currencies) => dispatch(addExpense(expenses, currencies)),
 });
 
 ExpensesForm.propTypes = {

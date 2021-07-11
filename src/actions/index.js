@@ -2,6 +2,7 @@ export const LOGIN = 'LOGIN';
 
 export const REQUEST_CURRENCIES = 'REQUEST_CURRENCIES';
 export const RECEIVED_CURRENCIES = 'RECEIVED_CURRENCIES';
+export const ADD_EXPENSE = 'ADD_EXPENSE';
 
 export const logInWallet = (value) => ({
   type: LOGIN,
@@ -15,6 +16,11 @@ export const requestCurrencies = () => ({
 export const receivedCurrencies = (payload) => ({
   type: RECEIVED_CURRENCIES,
   payload,
+});
+
+export const addExpense = (expenses, currencies) => ({
+  type: ADD_EXPENSE,
+  payload: [expenses, currencies],
 });
 
 export function fetchCurrency() {
