@@ -3,11 +3,17 @@ export const FETCH_CURENCIES_SUCCEEDED = 'FETCH_CURENCIES_SUCCEEDED';
 export const FETCH_CURENCIES_FAILED = 'FETCH_CURENCIES_FAILED';
 export const ADD_EXPENSE_SUCCEDED = 'ADD_EXPENSE_SUCCEDED';
 export const ADD_EXPENSE_FAILED = 'ADD_EXPENSE_FAILED';
+export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 
 const url = 'https://economia.awesomeapi.com.br/json/all';
 
 export const saveUser = (payload) => ({
   type: SAVE_USER,
+  payload,
+});
+
+export const removeExpense = (payload) => ({
+  type: REMOVE_EXPENSE,
   payload,
 });
 

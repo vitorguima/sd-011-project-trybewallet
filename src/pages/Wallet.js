@@ -23,7 +23,7 @@ class Wallet extends React.Component {
     const { email } = this.props;
 
     return (
-      <div>
+      <>
         <header>
           <h2 data-testid="email-field">{ email }</h2>
           <p data-testid="total-field">{this.totalExpended()}</p>
@@ -31,7 +31,7 @@ class Wallet extends React.Component {
         </header>
         <ExpensesForm />
         <ExpensesTable />
-      </div>
+      </>
     );
   }
 }
