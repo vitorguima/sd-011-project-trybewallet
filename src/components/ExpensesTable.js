@@ -48,20 +48,24 @@ class ExpensesTable extends Component {
 
   render() {
     return (
-      <>
-        <tr>
-          <th>Descrição</th>
-          <th>Tag</th>
-          <th>Método de pagamento</th>
-          <th>Valor</th>
-          <th>Moeda</th>
-          <th>Câmbio utilizado</th>
-          <th>Valor convertido</th>
-          <th>Moeda de conversão</th>
-          <th>Editar/Excluir</th>
-        </tr>
-        {this.renderTableRows()}
-      </>
+      <table>
+        <thead>
+          <tr>
+            <th>Descrição</th>
+            <th>Tag</th>
+            <th>Método de pagamento</th>
+            <th>Valor</th>
+            <th>Moeda</th>
+            <th>Câmbio utilizado</th>
+            <th>Valor convertido</th>
+            <th>Moeda de conversão</th>
+            <th>Editar/Excluir</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.renderTableRows()}
+        </tbody>
+      </table>
     );
   }
 }
