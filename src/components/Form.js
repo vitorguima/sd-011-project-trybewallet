@@ -13,29 +13,29 @@ export default class Form extends Component {
         <form>
           <label htmlFor="valor">
             Valor:
-            <input type="text" name="valor" />
+            <input type="text" name="valor" id="valor" />
           </label>
           <label htmlFor="description">
             Descrição
-            <input type="text" name="description" />
+            <input type="text" name="description" id="description" />
           </label>
           <label htmlFor="currency">
             Moeda:
-            <select>
+            <select id="currency" name="currency">
               {/* Receberá da api */}
             </select>
           </label>
           <label htmlFor="payment">
             Método de pagamento:
-            <select>
+            <select id="payment" name="payment">
               <option value="dinheiro">Dinheiro</option>
               <option value="credito">Cartão de Crédito</option>
               <option value="debito">Cartão de Débito</option>
             </select>
           </label>
-          <label htmlFor="payment">
+          <label htmlFor="tag">
             Tag:
-            <select>
+            <select id="tag" name="tag">
               <option value="alimentaçao">Alimentação</option>
               <option value="lazer">Lazer</option>
               <option value="trabalho">Trabalho</option>
