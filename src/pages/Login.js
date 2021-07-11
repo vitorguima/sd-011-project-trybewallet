@@ -1,39 +1,18 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.desabledButton = this.desabledButton.bind(this);
-    this.enebleButton = this.enebleButton.bind(this);
-  }
-
-  componentDidMount() {
-    const login = false;
-    if (!login) {
-      return this.desabledButton();
-    }
-  }
-
-  desabledButton() {
-    document.getElementById('button').disabled = true;
-  }
-
-  enebleButton() {
-    document.getElementById('botao').disabled = false;
-  }
-
+class Login extends Component {
   render() {
     return (
       <div>
-        <label data-testid="email-input" htmlFor="email-input">
-          <input type="email" placeholder="E-mail" />
+        <label htmlFor="email-input">
+          Email
+          <input type="email" data-testid="email-input" placeholder="Email" />
         </label>
-        <label data-testid="password-input" htmlFor="password-input">
-          <input type="password" placeholder="Senha" />
+        <label htmlFor="password-input">
+          Senha
+          <input type="text" data-testid="password-input" placeholder="Senha" />
         </label>
-        <button id="button" type="button">
-          Entrar
-        </button>
+        <button type="submit">Entrar</button>
       </div>
     );
   }
