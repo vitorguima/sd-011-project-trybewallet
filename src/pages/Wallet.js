@@ -6,6 +6,7 @@ import FormsInput from '../components/FormsInput';
 import FormsSelect from '../components/FormsSelect';
 import fetchCoins from '../actions/addCurrencies';
 import fetchPrices from '../actions/addExpenses';
+import Table from '../components/Table';
 
 class Wallet extends React.Component {
   constructor() {
@@ -51,6 +52,7 @@ class Wallet extends React.Component {
           currencies={ currencies }
           onClick={ this.handleClick }
         />
+        <Table />
       </>
     );
   }
