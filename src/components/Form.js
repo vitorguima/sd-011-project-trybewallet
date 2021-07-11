@@ -39,11 +39,13 @@ class Form extends React.Component {
           />
         </label>
         <label htmlFor="currency">
+          Moeda
           <select id="currency" value={ currency } onChange={ this.handleForm }>
             <option>BRL</option>
           </select>
         </label>
         <label htmlFor="method">
+          Método de pagamento
           <select id="method" value={ method } onChange={ this.handleForm }>
             <option>Dinheiro</option>
             <option>Cartão de crédito</option>
@@ -51,6 +53,7 @@ class Form extends React.Component {
           </select>
         </label>
         <label htmlFor="tag">
+          Tag
           <select id="tag" value={ tag } onChange={ this.handleForm }>
             <option>Alimentação</option>
             <option>Lazer</option>
