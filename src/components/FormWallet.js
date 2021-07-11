@@ -1,11 +1,7 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 
-function FormWallet() {
-  const currencies = useSelector((state) => state.wallet.currencies);
-  const arrayOfcur = Object.entries(currencies).map((item) => item[1]);
-  const filtredArrayCur = arrayOfcur.filter((item) => item.codein !== 'BRLT');
-  console.log(filtredArrayCur);
+function FormWallet({ currencies }) {
   return (
     <form>
       <label htmlFor="valor">
@@ -16,14 +12,14 @@ function FormWallet() {
         Descrição
         <input type="text" id="desc" name="desc" />
       </label>
-      <label htmlFor="currency">
+      <label htmlFor="input-select-coin">
         Moeda
         <select
-          id="currency"
+          id="input-select-coin"
           name="currency"
         >
-          {filtredArrayCur.map((item, idx) => (
-            <option value={ item.code } key={ idx }>{ item.code }</option>
+          {Object.keys(currencies).map((item, idx) => (
+            <option value={ item } key={ idx }>{ item }</option>
           ))}
         </select>
       </label>
@@ -49,5 +45,9 @@ function FormWallet() {
     </form>
   );
 }
+
+FormWallet.propTypes = {
+  currencies: PropTypes.objectOf(PropTypes.any).isRequired,
+};
 
 export default FormWallet;
