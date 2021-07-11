@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 const MIN_PASSWORD_VALID = 6;
 function isButtonDisabled(email, password) {
@@ -10,55 +11,56 @@ function isButtonDisabled(email, password) {
   return !isEmailValid || !isPasswordValid;
 }
 
-class Login extends Component {
-  render() {
-    const {
-      email,
-      password,
-      dunha,
-      disparaDunha,
-      dispatchNewEmail,
-      dispatchNewPassword,
-    } = this.props;
+function Login(props) {
+  const {
+    email,
+    password,
+    dunha,
+    disparaDunha,
+    dispatchNewEmail,
+    dispatchNewPassword,
+  } = props;
 
-    return (
-      <div>
-        <label htmlFor="email-input">
-          Email
-          <input
-            type="email"
-            data-testid="email-input"
-            placeholder="Email"
-            onChange={ (event) => dispatchNewEmail(event.target.value) }
-          />
-        </label>
-        <label htmlFor="password-input">
-          Senha
-          <input
-            type="text"
-            data-testid="password-input"
-            placeholder="Senha"
-            onChange={ (event) => dispatchNewPassword(event.target.value) }
-          />
-        </label>
-        <button
-          type="submit"
-          onClick={ () => disparaDunha() }
-          disabled={ isButtonDisabled(email, password) }
-        >
-          Entrar
-        </button>
-        <h1>{dunha}</h1>
-        <h1>{email}</h1>
-        <h2>{password}</h2>
-      </div>
-    );
-  }
+  const history = useHistory();
+  const changeRoute = () => history.push('/carteira');
+
+  return (
+    <div>
+      <label htmlFor="email-input">
+        Email
+        <input
+          type="email"
+          data-testid="email-input"
+          placeholder="Email"
+          onChange={ (event) => dispatchNewEmail(event.target.value) }
+        />
+      </label>
+      <label htmlFor="password-input">
+        Senha
+        <input
+          type="text"
+          data-testid="password-input"
+          placeholder="Senha"
+          onChange={ (event) => dispatchNewPassword(event.target.value) }
+        />
+      </label>
+      <button
+        type="submit"
+        onClick={ changeRoute }
+        disabled={ isButtonDisabled(email, password) }
+      >
+        Entrar
+      </button>
+      <h1>{dunha}</h1>
+      <h1>{email}</h1>
+      <h2>{password}</h2>
+    </div>
+  );
 }
 
 const mapStateToProps = (state) => ({
-  email: state.user.user.email,
-  password: state.user.user.password,
+  email: state.user.email,
+  password: state.user.password,
   dunha: state.user.dunha,
 });
 

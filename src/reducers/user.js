@@ -1,9 +1,7 @@
 // Esse reducer será responsável por tratar as informações da pessoa usuária
 const INITIAL_STATE = {
-  user: {
-    email: '',
-    password: '',
-  },
+  email: '',
+  password: '',
   dunha: 'Quem é o dunha?',
 };
 function handleDunhaEvent(state) {
@@ -11,15 +9,18 @@ function handleDunhaEvent(state) {
 }
 
 function handleLoginEmail(state, action) {
-  const { user } = state;
-  user.email = action.email;
-  return { ...state, user };
+  state.email = action.email;
+  return { ...state };
 }
 
 function handlePasswordEmail(state, action) {
-  const { user } = state;
-  user.password = action.password;
-  return { ...state, user };
+  state.password = action.password;
+  // é necessario reconstruir o estado para que o objeto retornado tenha um
+  // endereço diferente.(state != {...state}), caso contrario o redux não detecta a mudança no estado.
+  return { ...state };
+  // return state; O React não detecta a mudança no estado se o estado não for refeito, o return state
+  // retorna o mesmo objeto e portanto o react não consegue atualizar o estado.
+  // Com o return { ...state }; isso não ocorre pois o estado é refeito e o react identifica a alteração.
 }
 
 export default function user(state = INITIAL_STATE, action) {
