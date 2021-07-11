@@ -1,7 +1,17 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Form extends Component {
+  constructor() {
+    super();
+    this.state = {
+      valor: 0,
+      xablau: [],
+    };
+  }
+
   render() {
+    const { moedas } = this.props;
     return (
       <div>
         <form>
@@ -16,7 +26,7 @@ class Form extends Component {
           <label htmlFor="despesa">
             Moeda:
             <select id="despesa" name="name">
-              <option>Moeda</option>
+              {moedas.map((item, index) => <option key={ index }>{item}</option>)}
             </select>
           </label>
           <label htmlFor="pagamento">
@@ -38,9 +48,18 @@ class Form extends Component {
             </select>
           </label>
         </form>
+        <button
+          type="button"
+          onChange={ this.addexpense }
+        >
+          Adicionar despesa
+        </button>
       </div>
     );
   }
 }
+Form.propTypes = {
+  moedas: PropTypes.func.isRequired,
+};
 
 export default Form;

@@ -1,14 +1,28 @@
 // import React from 'react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Form from './Form';
 
 function Wallet() {
+  const [moedas, setMoedas] = useState([]);
   const [dispesasTotais] = useState(0);
   const user = useSelector((state) => state.user);
+
+  useEffect(() => {
+    const fethApi = async () => {
+      const response = await fetch(
+        'https://economia.awesomeapi.com.br/json/all',
+      );
+      const data = await response.json();
+      delete data.USDT;
+      setMoedas(Object.keys(data));
+      console.log(data);
+    };
+    fethApi();
+  }, []);
+
   return (
     <div>
-      <h1> testando aqui</h1>
       <header>
         <h2 data-testid="email-field">
           Bem vindo
@@ -20,7 +34,7 @@ function Wallet() {
         </span>
         <span data-testid="header-currency-field">{user.currencies}</span>
       </header>
-      <Form />
+      <Form moedas={ moedas } />
     </div>
   );
 }
