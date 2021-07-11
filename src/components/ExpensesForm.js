@@ -70,7 +70,7 @@ class ExpensesForm extends React.Component {
     const { currency } = this.state;
     const { currencies } = this.props;
     return (
-      <label htmlFor="curency">
+      <label htmlFor="currency">
         Moeda:
         <select
           name="currency"
