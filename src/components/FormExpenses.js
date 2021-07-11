@@ -10,10 +10,10 @@ class FormExpenses extends Component {
 
     this.state = {
       id: 0,
-      valor: 0,
-      descricao: '',
-      moeda: 'USD',
-      pagamento: 'Dinheiro',
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
       tag: 'Alimentação',
     };
 
@@ -43,23 +43,23 @@ class FormExpenses extends Component {
   render() {
     return (
       <form>
-        <label htmlFor="valor">
+        <label htmlFor="value">
           Valor
-          <input type="text" name="valor" id="valor" onChange={ this.handleChange } />
+          <input type="text" name="value" id="value" onChange={ this.handleChange } />
         </label>
-        <label htmlFor="descricao">
+        <label htmlFor="description">
           Descrição
-          <textarea name="descricao" id="descricao" onChange={ this.handleChange } />
+          <textarea name="description" id="description" onChange={ this.handleChange } />
         </label>
-        <label htmlFor="moeda">
+        <label htmlFor="currency">
           Moeda
-          <select id="moeda" name="moeda" onChange={ this.handleChange }>
+          <select id="currency" name="currency" onChange={ this.handleChange }>
             <CurrencyTypes />
           </select>
         </label>
-        <label htmlFor="pagamento">
+        <label htmlFor="method">
           Método de pagamento
-          <select id="pagamento" name="pagamento" onChange={ this.handleChange }>
+          <select id="method" name="method" onChange={ this.handleChange }>
             <option>Dinheiro</option>
             <option>Cartão de crédito</option>
             <option>Cartão de débito</option>
@@ -79,7 +79,7 @@ class FormExpenses extends Component {
           type="button"
           onClick={ this.clickSubmit }
         >
-          adicionar despesa
+          Adicionar despesa
         </button>
       </form>
     );
