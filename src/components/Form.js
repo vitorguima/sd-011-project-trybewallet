@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getCotationThunk } from '../actions';
 
-export default class Form extends Component {
+class Form extends Component {
+  componentDidMount() {
+    const { getCotation } = this.props;
+    getCotation();
+  }
+
   render() {
+    const { currencies } = this.props;
+    const currenciesArray = Object.values(currencies);
+    const currenciesFiltered = currenciesArray.filter((item) => item.codein !== 'BRLT');
     return (
       <div>
-        <div data-testid="total-field">
-          Total: 0
-        </div>
-        <div data-testid="header-currency-field">
-          Câmbio: BRL
-        </div>
         <form>
           <label htmlFor="valor">
             Valor:
@@ -22,7 +27,10 @@ export default class Form extends Component {
           <label htmlFor="currency">
             Moeda:
             <select id="currency" name="currency">
-              {/* Receberá da api */}
+              { currenciesFiltered.map((curr, index) => (
+                <option key={ index }>
+                  { curr.code }
+                </option>)) }
             </select>
           </label>
           <label htmlFor="payment">
@@ -48,3 +56,19 @@ export default class Form extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+  expenses: state.wallet.expenses,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getCotation: () => dispatch(getCotationThunk()),
+});
+
+Form.propTypes = {
+  currencies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  getCotation: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
