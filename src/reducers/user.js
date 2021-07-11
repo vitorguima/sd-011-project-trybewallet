@@ -4,13 +4,18 @@ const INITIAL_STATE = {
     email: '',
     password: '',
   },
-  dunha: 'rasga seu cu com a unha',
+  dunha: 'Quem é o dunha?',
 };
 
 export default function user(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case 'LOGIN':
-    return { ...state };
+  case 'DUNHA':
+    return { ...state, dunha: 'Aquele que rasgou seu cu com a unha' };
+  case 'LOGIN_EMAIL':
+    return {
+      ...state,
+      user: { email: action.email },
+    };
   default:
     return state;
   }

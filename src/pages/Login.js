@@ -4,22 +4,28 @@ import { connect } from 'react-redux';
 class Login extends Component {
   render() {
     const buttonIsDisabled = true;
-    const { email, password, dunha } = this.props;
+    const { email, password, dunha, disparaDunha, handleChangeEmail } = this.props;
 
     return (
       <div>
         <label htmlFor="email-input">
           Email
-          <input type="email" data-testid="email-input" placeholder="Email" />
+          <input
+            type="email"
+            data-testid="email-input"
+            placeholder="Email"
+            onChange={ (event) => handleChangeEmail(event.target.value) }
+          />
         </label>
         <label htmlFor="password-input">
           Senha
           <input type="text" data-testid="password-input" placeholder="Senha" />
         </label>
-        <button type="submit" disabled={ buttonIsDisabled }>
+        <button type="submit" onClick={ () => disparaDunha() }>
           Entrar
         </button>
         <h1>{dunha}</h1>
+        <h1>{email}</h1>
       </div>
     );
   }
@@ -31,4 +37,9 @@ const mapStateToProps = (state) => ({
   dunha: state.user.dunha,
 });
 
-export default connect(mapStateToProps)(Login);
+const mapDispatchToProps = (dispatch) => ({
+  disparaDunha: () => dispatch({ type: 'DUNHA' }),
+  handleChangeEmail: (email) => dispatch({ type: 'LOGIN_EMAIL', email }),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
