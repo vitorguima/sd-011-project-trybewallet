@@ -14,24 +14,25 @@ class ExpenseForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.resetState = this.resetState.bind(this);
-    this.setCurrenciesState = this.setCurrenciesState.bind(this);
-
-    const { currencies } = props;
+    this.setExchangeRatesState = this.setExchangeRatesState.bind(this);
 
     this.state = {
       id: 0,
       value: 0,
       description: '',
-      paymentType: 'Dinheiro',
+      method: 'Dinheiro',
       tag: 'Alimentação',
       currency: 'USD',
-      exchangeRates: currencies[0],
+      exchangeRates: { },
     };
   }
 
-  setCurrenciesState(newCurrencies) {
+  async setExchangeRatesState() {
+    const { fetchCurrencies } = this.props;
+    const currenciesObj = await fetchCurrencies();
+    const currencies = currenciesObj.payload;
     this.setState({
-      exchangeRates: newCurrencies,
+      exchangeRates: currencies,
     });
   }
 
@@ -41,19 +42,30 @@ class ExpenseForm extends React.Component {
       id: id + 1,
       value: 0,
       description: '',
-      paymentType: 'Dinheiro',
+      method: 'Dinheiro',
       tag: 'Alimentação',
       currency: 'USD',
+      exchangeRates: { },
     });
   }
 
-  handleClick() {
-    const { value, description, paymentType, tag, currency, exchangeRates } = this.state;
-    const { addNewExpense } = this.props;
-    const newExpense = {
+  async handleClick() {
+    await this.setExchangeRatesState();
+    const {
       value,
       description,
-      paymentType,
+      method,
+      tag,
+      currency,
+      exchangeRates,
+      id,
+    } = this.state;
+    const { addNewExpense } = this.props;
+    const newExpense = {
+      id,
+      value,
+      description,
+      method,
       tag,
       currency,
       exchangeRates,
@@ -73,17 +85,17 @@ class ExpenseForm extends React.Component {
   }
 
   render() {
-    const { value, description, paymentType, tag, currency } = this.state;
+    const { value, description, method, tag, currency } = this.state;
     return (
       <form onSubmit={ this.handleSubmit }>
         <FormValue value={ value } handleInputs={ this.handleInputs } />
         <FormDescription description={ description } handleInputs={ this.handleInputs } />
-        <label htmlFor="payment-type">
+        <label htmlFor="method">
           Método de Pagamento
           <select
-            id="payment-type"
-            name="paymentType"
-            value={ paymentType }
+            id="method"
+            name="method"
+            value={ method }
             onChange={ this.handleInputs }
           >
             <option>Dinheiro</option>
