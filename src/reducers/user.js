@@ -9,7 +9,7 @@ export default function user(state = INITIAL_STATE, action) {
   switch (action.type) {
   case CHANGE_EMAIL:
     return {
-      ...state, email: action.email,
+      ...state, email: action.payload,
     };
   default:
     return state;
