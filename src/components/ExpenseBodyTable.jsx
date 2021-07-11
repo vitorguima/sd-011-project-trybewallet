@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { deleteExpense, calculateExpenses } from '../actions';
 
 class ExpenseBodyTable extends Component {
   getCurrencyQuotation(selectedCurrency) {
@@ -25,7 +27,10 @@ class ExpenseBodyTable extends Component {
       tag,
       method,
       exchangeRates,
-    } } = this.props;
+      id,
+    },
+    deleteById,
+    calculateTotal } = this.props;
     const askPrice = (this.getCurrencyQuotation(currency));
     const convertedTotal = this.calculateConversion(askPrice, value);
     const usedCurrency = this.getCurrencyName(exchangeRates, currency);
@@ -39,11 +44,27 @@ class ExpenseBodyTable extends Component {
         <td>{Math.round(askPrice * 100) / 100}</td>
         <td>{convertedTotal}</td>
         <td>Real</td>
-        <td />
+        <td>
+          <button
+            type="button"
+            data-testid="delete-btn"
+            onClick={ () => {
+              deleteById(id);
+              calculateTotal(-convertedTotal);
+            } }
+          >
+            Delete
+          </button>
+        </td>
       </>
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  deleteById: (payload) => dispatch(deleteExpense(payload)),
+  calculateTotal: (payload) => dispatch(calculateExpenses(payload)),
+});
 
 ExpenseBodyTable.propTypes = ({
   info: PropTypes.shape({
@@ -53,11 +74,16 @@ ExpenseBodyTable.propTypes = ({
     tag: PropTypes.string,
     method: PropTypes.string,
     exchangeRates: PropTypes.shape(),
+    id: PropTypes.number,
   }),
+  deleteById: PropTypes.func,
+  calculateTotal: PropTypes.func,
 });
 
 ExpenseBodyTable.defaultProps = ({
   info: {},
+  deleteById: () => {},
+  calculateTotal: () => {},
 });
 
-export default ExpenseBodyTable;
+export default connect(null, mapDispatchToProps)(ExpenseBodyTable);

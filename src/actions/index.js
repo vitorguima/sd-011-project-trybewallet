@@ -3,6 +3,7 @@ export const AUTH_TO_LOGIN = 'AUTH_TO_LOGIN';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const CALCULATE_EXPENSES = 'CALCULATE_EXPENSES';
 export const SAVE_CURRENCY = 'SAVE_CURRENCY';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 export const saveEmail = (payload) => ({
   type: SAVE_EMAIL,
@@ -16,6 +17,11 @@ export const authToLogin = (payload) => ({
 
 export const addExpense = (payload) => ({
   type: ADD_EXPENSE,
+  payload,
+});
+
+export const deleteExpense = (payload) => ({
+  type: DELETE_EXPENSE,
   payload,
 });
 
