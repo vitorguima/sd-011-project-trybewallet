@@ -1,17 +1,39 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import Description from './Description';
 
 class Form extends Component {
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange({ target }) {
+    const { name, value } = target;
+    this.setState({ [name]: value });
+  }
+
   render() {
+    const { otherFetch } = this.props;
+    console.log(otherFetch);
+
     return (
       <form>
         <label htmlFor="value">
           Valor:
-          <input type="number" name="value" id="value" placeholder="Digite o valor" />
+          <input
+            type="number"
+            id="value"
+            name="value"
+            placeholder="Digite o valor"
+            onChange={ this.handleChange }
+          />
         </label>
         <label htmlFor="currency">
           Moeda:
           <select id="currency">
-            <option value="CUR">CUR</option>
+            {otherFetch.map((value, index) => (<option key={ index }>{ value }</option>))}
           </select>
         </label>
         <label htmlFor="method">
@@ -32,19 +54,19 @@ class Form extends Component {
             <option value="saúde">Saúde</option>
           </select>
         </label>
-        <label htmlFor="description">
-          Descrição
-          <input
-            name="description"
-            type="text"
-            placeholder="Descrição da despesa"
-            id="description"
-          />
-        </label>
+        <Description handleChange={ this.handleChange } />
         <button type="submit">Adicionar despesa</button>
       </form>
     );
   }
 }
 
-export default Form;
+const mapStateToProps = (state) => ({
+  otherFetch: state.walletReducer.payload,
+});
+
+Form.propTypes = ({
+  otherFetch: PropTypes.arrayOf(PropTypes.string),
+}).isRequired;
+
+export default connect(mapStateToProps, null)(Form);

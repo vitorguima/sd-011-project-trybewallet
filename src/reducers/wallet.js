@@ -1,17 +1,20 @@
+import { GET_CURRENCY } from '../actions/index';
+
 const INITIAL_STATE = {
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
+  currencies: [],
+  expenses: [],
 };
 
-const walletReducer = (state = INITIAL_STATE, action) => {
+function walletReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case '':
-    return;
+  case GET_CURRENCY:
+    return {
+      ...state,
+      currencies: action.payload,
+    };
   default:
     return state;
   }
-};
+}
 
 export default walletReducer;
