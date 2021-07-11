@@ -2,14 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class Form extends Component {
-  constructor() {
-    super();
-    this.state = {
-      valor: 0,
-      xablau: [],
-    };
-  }
-
   render() {
     const { moedas } = this.props;
     return (
