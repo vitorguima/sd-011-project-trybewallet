@@ -28,12 +28,13 @@
   outline: none;
   width: 300px;
 }
+
 .login-container form input:focus {
   background-color: white;
   transition: 0.6s;
 }
 
-.login-container button.login-button {
+.login-container .login-button {
   background-color: white;
   border: none;
   border-radius: 10px;
@@ -46,18 +47,18 @@
   width: 200px;
 }
 
-.login-container button.login-button:disabled {
+.login-container .login-button:disabled {
   cursor: not-allowed;
 }
 
-.login-container  button.login-button:hover {
+.login-container .login-button:hover {
   background-color: #036b52;
   box-shadow: 1px 1px 10px white;
   color: white;
   transition: 0.8s;
 }
 
-.login-container  button.login-button:hover a {
+.login-container .login-button:hover a {
   color: white;
   transition: 0.8s;
 }
