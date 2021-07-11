@@ -4,14 +4,15 @@ import PropTypes from 'prop-types';
 import { fetchCurrencies } from '../actions';
 
 class Forms extends React.Component {
+  // mounts
   componentDidMount() {
     const { getCurrencies } = this.props;
     getCurrencies();
   }
 
+  // render forms
   render() {
     const { currencies } = this.props;
-
     return (
       <div>
         <div>
@@ -19,7 +20,7 @@ class Forms extends React.Component {
           <span data-testid="header-currency-field"> BRL </span>
         </div>
         <form id="newExpense-form">
-          <label htmtFor="totalValue">
+          <label htmlFor="totalValue">
             Valor
             <input type="number" id="totalValue" />
           </label>
@@ -30,8 +31,9 @@ class Forms extends React.Component {
           <label htmlFor="currency">
             Moeda
             <select id="currency">
-              {Object.keys(currencies).map((curr, index) => (curr !== 'USDT' ? (
-                <option key={ index } id={ curr }>{curr}</option>) : null))}
+              {Object.keys(currencies)
+                .map((curr, index) => (curr !== 'USDT'
+                  ? (<option key={ index } id={ curr }>{curr}</option>) : null))}
             </select>
           </label>
           <label htmlFor="method">
@@ -58,18 +60,19 @@ class Forms extends React.Component {
   }
 }
 
+// states
 function mapStateToProps(state) {
-  return {
-    currencies: state.wallet.currencies,
-  };
+  return { currencies: state.wallet.currencies };
 }
 
+// dispatch
 const mapDispatchToProps = (dispatch) => ({
   getCurrencies: () => dispatch(fetchCurrencies()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Forms);
 
+// props validation
 Forms.propTypes = {
   getCurrencies: PropTypes.func.isRequired,
   currencies: PropTypes.oneOfType([
