@@ -83,7 +83,7 @@ class Table extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  editFunc: state.wallet.editFunc,
+  editFunc: state.wallet.editFunc, // Rodolfo me ajudou nessa.
 });
 
 export default connect(mapStateToProps)(Table);
