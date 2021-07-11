@@ -59,7 +59,7 @@ class Form extends React.Component {
             <option>Lazer</option>
             <option>Trabalho</option>
             <option>Transporte</option>
-            <option>Saúe</option>
+            <option>Saúde</option>
           </select>
         </label>
       </form>
