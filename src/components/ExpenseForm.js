@@ -6,15 +6,15 @@ export default class ExpenseForm extends Component {
     this.state = {
       value: '',
       description: '',
-      currency: 'BRL',
+      coin: 'BRL',
       payment: '',
       tag: '',
     };
 
-    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleInputChange({ target }) {
+  handleChange({ target }) {
     const { name, value } = target;
 
     this.setState({
@@ -22,53 +22,57 @@ export default class ExpenseForm extends Component {
     });
   }
 
+  createOptions(array) {
+    return (
+      array.map((string) => <option key={ string } value={ string }>{string}</option>)
+    );
+  }
+
   render() {
-    const { value, description, currency, payment, tag } = this.state;
+    const { value, description, coin, payment, tag } = this.state;
+    const paymentTypes = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
+    const tagTypes = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
+
     return (
       <form className="expense-form">
-        <label htmlFor="value">
+        <label htmlFor="v">
           Valor
           <input
+            id="v"
             name="value"
             type="number"
             value={ value }
-            onChange={ this.handleInputChange }
+            onChange={ this.handleChange }
           />
         </label>
-        <label htmlFor="currency">
+        <label htmlFor="c">
           Moeda
-          <select name="currency" value={ currency } onChange={ this.handleInputChange }>
+          <select id="c" name="coin" value={ coin } onChange={ this.handleChange }>
             <option value="BRL">BRL</option>
           </select>
         </label>
-        <label htmlFor="payment">
+        <label htmlFor="p">
           Método de pagamento
-          <select name="payment" value={ payment } onChange={ this.handleInputChange }>
-            <option value="Dinheiro">Dinheiro</option>
-            <option value="Cartão de crédito">Cartão de crédito</option>
-            <option value="Cartão de débito">Cartão de débito</option>
+          <select id="p" name="payment" value={ payment } onChange={ this.handleChange }>
+            {this.createOptions(paymentTypes)}
           </select>
         </label>
-        <label htmlFor="tag">
+        <label htmlFor="t">
           Tag
-          <select name="tag" value={ tag } onChange={ this.handleInputChange }>
-            <option value="Alimentação">Alimentação</option>
-            <option value="Lazer">Lazer</option>
-            <option value="Trabalho">Trabalho</option>
-            <option value="Transporte">Transporte</option>
-            <option value="Saúde">Saúde</option>
+          <select id="t" name="tag" value={ tag } onChange={ this.handleChange }>
+            {this.createOptions(tagTypes)}
           </select>
         </label>
-        <label htmlFor="description">
+        <label htmlFor="d">
           Descrição
           <input
+            id="d"
             name="description"
             type="text"
             value={ description }
-            onChange={ this.handleInputChange }
+            onChange={ this.handleChange }
           />
         </label>
-        <button type="button">Adicionar despesa</button>
       </form>
     );
   }
