@@ -13,6 +13,11 @@ function functionWallet(state = WALLET_STATE, action) {
       ...state,
       currencies: action.payload,
     };
+  case 'SUCESS_EXPENSES':
+    return {
+      ...state,
+      expenses: action.payload,
+    };
   default:
     return state;
   }

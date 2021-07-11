@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ButtonAdd from './ButtonAdd';
 // import { connect } from 'react-redux';
 import CompOptionMoed from './CompOptionMoed';
 
@@ -38,6 +39,7 @@ class FormWallet extends Component {
             <option value="Saúde">Saúde</option>
           </select>
         </label>
+        <ButtonAdd />
       </form>
     );
   }

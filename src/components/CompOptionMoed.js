@@ -23,7 +23,8 @@ class CompOptionMoed extends Component {
   render() {
     const { moedas } = this.state;
     return (
-      moedas.map((v, index) => <option value={ v } key={ index }>{ v }</option>)
+      moedas.map(({ code }, index) => (
+        <option value={ code } key={ index }>{ code }</option>))
     );
   }
 }
