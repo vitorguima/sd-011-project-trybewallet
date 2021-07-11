@@ -22,8 +22,10 @@ class CompOptionMoed extends Component {
 
   render() {
     const { moedas } = this.state;
+    const newArray = Object.values(moedas);
+    const moedValid = newArray.filter(({ codein }) => codein !== 'BRLT');
     return (
-      moedas.map(({ code }, index) => (
+      moedValid.map(({ code }, index) => (
         <option value={ code } key={ index }>{ code }</option>))
     );
   }

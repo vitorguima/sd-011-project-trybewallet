@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { setArrayExpenses } from '../actions';
 
 class ButtonAdd extends Component {
   constructor() {
@@ -7,7 +10,13 @@ class ButtonAdd extends Component {
   }
 
   sendExpenses() {
-    console.log('ok');
+    const { newCurrencie, propsForm, stateExpense } = this.props;
+
+    const newvalue = {
+      ...propsForm,
+      exchangeRates: { ...stateExpense },
+    };
+    newCurrencie(newvalue);
   }
 
   render() {
@@ -17,4 +26,24 @@ class ButtonAdd extends Component {
   }
 }
 
-export default ButtonAdd;
+const mapStatetoProps = (state) => ({
+  stateExpense: state.wallet.currencies,
+});
+
+const mapDispatchProps = (dispach) => ({
+  newCurrencie: (value) => dispach(setArrayExpenses(value)),
+});
+
+export default connect(mapStatetoProps, mapDispatchProps)(ButtonAdd);
+
+ButtonAdd.propTypes = {
+  newCurrencie: PropTypes.func.isRequired,
+  stateExpense: PropTypes.arrayOf().isRequired,
+  propsForm: PropTypes.shape({
+    value: PropTypes.string,
+    dc: PropTypes.string,
+    currency: PropTypes.string,
+    method: PropTypes.string,
+    tag: PropTypes.string,
+  }).isRequired,
+};

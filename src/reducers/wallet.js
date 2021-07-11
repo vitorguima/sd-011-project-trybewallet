@@ -16,7 +16,10 @@ function functionWallet(state = WALLET_STATE, action) {
   case 'SUCESS_EXPENSES':
     return {
       ...state,
-      expenses: action.payload,
+      expenses: [...state.expenses, {
+        id: state.expenses.length,
+        ...action.payload,
+      }],
     };
   default:
     return state;

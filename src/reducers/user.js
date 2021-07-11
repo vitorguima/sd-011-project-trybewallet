@@ -8,7 +8,7 @@ function functionUser(state = USER_STATE, action) {
   switch (action.type) {
   case 'USER_LOGIN':
     return {
-      email: action.state,
+      email: action.payload,
     };
   default:
     return state;
