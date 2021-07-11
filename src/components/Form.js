@@ -11,7 +11,7 @@ class Form extends React.Component {
       method: '',
       tag: '',
     };
-    this.handleFormChange = this.handleFormChange.bind(this);
+    this.handleForm = this.handleForm.bind(this);
   }
 
   handleForm({ target: { id, value } }) {
@@ -35,7 +35,7 @@ class Form extends React.Component {
             id="description"
             type="text"
             value={ description }
-            onChange={ this.handleFormChange }
+            onChange={ this.handleForm }
           />
         </label>
         <label htmlFor="currency">
