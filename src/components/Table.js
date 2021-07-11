@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { expenseRemoveAction } from '../actions';
+import { expenseEditAction, expenseRemoveAction } from '../actions';
 import Theader from '../table-components/Theader';
 
 class Table extends Component {
   render() {
-    const { expenses, removeExpense } = this.props;
+    const { expenses, removeExpense, expenseEdit } = this.props;
     return (
       <div>
         <table>
@@ -30,7 +30,11 @@ class Table extends Component {
                 <td>{(ask * valueFloat).toFixed(2)}</td>
                 <td>Real</td>
                 <td>
-                  <button type="button">
+                  <button
+                    type="button"
+                    data-testid="edit-btn"
+                    onClick={ () => expenseEdit(exp) }
+                  >
                     Editar
                   </button>
                   <button
@@ -56,11 +60,13 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   removeExpense: (state) => dispatch(expenseRemoveAction(state)),
+  expenseEdit: (state) => dispatch(expenseEditAction(state)),
 });
 
 Table.propTypes = {
   expenses: PropTypes.arrayOf(Object).isRequired,
   removeExpense: PropTypes.func.isRequired,
+  expenseEdit: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);
