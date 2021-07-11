@@ -130,6 +130,6 @@ const mapStateToProps = (state) => ({
 
 HomeLogin.propTypes = {
   makeLogin: PropTypes.func.isRequired,
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeLogin);

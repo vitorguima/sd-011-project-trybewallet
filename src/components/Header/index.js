@@ -1,48 +1,47 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import FormMoney from '../FormMoney';
 import './Header.css';
 
-export default class Header extends React.Component {
+class Header extends React.Component {
   render() {
+    const { userInfo, totalInfo } = this.props;
+
     return (
       <header className="header-container">
-        <label htmlFor="value">
-          <input type="number" name="value" id="" />
-        </label>
-
-        <label htmlFor="currency">
-          Moeda:
-          <select name="currrency" id="">
-            <optgroup>
-              <option value="USD">USD</option>
-              <option value="USD">USD</option>
-              <option value="USD">USD</option>
-            </optgroup>
-          </select>
-        </label>
-
-        <label htmlFor="paymentMethod">
-          Método de Pagamento:
-          <select name="paymentMethod" id="">
-            <optgroup>
-              <option value="money">Dinheiro</option>
-              <option value="debt">Débito</option>
-              <option value="credit">Crédito</option>
-            </optgroup>
-          </select>
-        </label>
-
-        <label htmlFor="paymentMethod">
-          Categoria:
-          <select name="paymentMethod" id="">
-            <optgroup>
-              <option value="alimentation">Alimentação</option>
-              <option value="acomodation">Acomodação</option>
-              <option value="leasure">Lazer</option>
-            </optgroup>
-          </select>
-        </label>
-
+        <div className="user-info-container">
+          <span className="logo">
+            TRYVEL.
+          </span>
+          <span data-testid="email-field">
+            { userInfo }
+          </span>
+          <span data-testid="total-field">
+            Despesa total: R$&nbsp;
+            { totalInfo }
+            <span data-testid="header-currency-field">
+              &nbsp;BRL
+            </span>
+          </span>
+        </div>
+        <FormMoney />
+        <button type="button">
+          Adicionar Despesa
+        </button>
       </header>
-    )
+    );
   }
 }
+
+const mapStateToProps = (state) => ({
+  userInfo: state.user.email,
+  totalInfo: state.wallet.expenses,
+});
+
+Header.propTypes = {
+  userInfo: PropTypes.string.isRequired,
+  totalInfo: PropTypes.arrayOf(PropTypes.number).isRequired,
+};
+
+export default connect(mapStateToProps)(Header);

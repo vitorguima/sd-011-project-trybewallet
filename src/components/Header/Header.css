@@ -1,5 +1,51 @@
 .header-container {
+  background-color: #036b52;
+  display: flex;
+  flex-direction: column;
+  height: 30vh;
   width: 100vw;
-  height: 20vh;
-  background-color: green;
+}
+
+.user-info-container {
+  align-items: center;
+  background-color: aliceblue;
+  display: flex;
+  height: 8vh;
+  justify-content: space-between;
+  padding: 0px 20px;
+}
+
+.user-info-container .logo {
+  background-color: #036b52;
+  border-radius: 2px 30px;
+  color: aliceblue;
+  font-size: 36px;
+  font-weight: 800;
+  text-align: center ;
+  width: 180px;
+}
+
+.user-info-container span {
+  color: #036b52;
+  font-weight: 550;
+}
+
+.header-container  button {
+  background-color: teal;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
+  height: 50px;
+  margin: auto;
+  outline: none;
+  width: 300px;
+}
+
+.header-container  button:hover {
+  border: 1px solid yellow;
+  outline: none;
+  transition: 1s;
 }
