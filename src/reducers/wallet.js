@@ -2,6 +2,7 @@
 import {
   // EXPENSES,
   ADD_EXPENSES,
+  REMOVE_EXPENSE,
   REQUEST_API,
   REQUEST_API_SUCCESS,
   REQUEST_API_ERROR } from '../actions/actionTypes';
@@ -41,6 +42,11 @@ function wallet(state = INITIAL_STATE, action) {
           ...action.expenses,
           exchangeRates: state.currencies,
         }],
+    };
+  case REMOVE_EXPENSE:
+    return {
+      ...state,
+      expenses: [...state.expenses.filter((e) => e !== action.expense)],
     };
   default:
     return state;

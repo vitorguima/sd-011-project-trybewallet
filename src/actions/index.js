@@ -4,6 +4,7 @@ import {
   REQUEST_API_SUCCESS,
   REQUEST_API_ERROR,
   ADD_EXPENSES,
+  REMOVE_EXPENSE,
 } from './actionTypes';
 
 export const UserLogin = (email) => ({
@@ -15,6 +16,11 @@ export const AddExpenses = (expenses, id) => ({
   type: ADD_EXPENSES,
   expenses,
   id,
+});
+
+export const deleteExpense = (expense) => ({
+  type: REMOVE_EXPENSE,
+  expense,
 });
 
 const requestAPI = () => ({ type: REQUEST_API });
@@ -35,11 +41,4 @@ export function fetchCurrency() {
       .then((currencies) => dispatch(requestApiSuccess(currencies)))
       .catch((error) => dispatch(requestApiError(error)));
   };
-}
-
-export function fetchExpenses() {
-  return (dispatch) => fetch('https://economia.awesomeapi.com.br/json/all')
-    .then((response) => response.json())
-    .then((expenses) => dispatch(AddExpenses(expenses)))
-    .catch((error) => dispatch(requestApiError(error)));
 }
