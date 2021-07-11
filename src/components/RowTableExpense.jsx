@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { deleteExpenseWallet } from '../actions';
 import PropTypes from 'prop-types';
+import { deleteExpenseWallet } from '../actions';
 
 class RowTableExpense extends Component {
   constructor() {
@@ -101,6 +101,7 @@ class RowTableExpense extends Component {
 
 RowTableExpense.propTypes = {
   expense: PropTypes.shape({
+    id: PropTypes.number,
     description: PropTypes.string,
     tag: PropTypes.string,
     method: PropTypes.string,
@@ -117,10 +118,12 @@ RowTableExpense.propTypes = {
     exchangeRates: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string])),
     filter: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
   }),
+  deleteExpense: PropTypes.func.isRequired,
 };
 
 RowTableExpense.defaultProps = {
   expense: PropTypes.shape({
+    id: '',
     description: '',
     tag: '',
     method: '',
