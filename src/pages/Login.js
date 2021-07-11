@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import { Route } from 'react-router-dom';
 import Proptypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import * as actions from '../actions';
 import '../App.css';
 
@@ -13,6 +13,7 @@ class Login extends React.Component {
       email: '',
       password: '',
       disabled: true,
+      changeRoute: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -55,11 +56,12 @@ class Login extends React.Component {
       email: '',
       disabled: false,
       password: '',
+      changeRoute: true,
     });
   }
 
   render() {
-    const { disabled, email, password } = this.state;
+    const { disabled, email, password, changeRoute } = this.state;
     return (
       <div className="login-div">
         <input
@@ -82,12 +84,14 @@ class Login extends React.Component {
         />
         <button
           className="login-button"
-          onClick={ () => this.handleClick }
+          onClick={ this.handleClick }
           disabled={ disabled }
-          type="button"
+          type="submit"
         >
           Entrar
         </button>
+        {/* https://reactrouter.com/web/api/Redirect */}
+        {changeRoute && <Redirect to="/carteira" />}
       </div>
     );
   }
@@ -96,10 +100,6 @@ class Login extends React.Component {
 Login.propTypes = {
   verificaEmail: Proptypes.func.isRequired,
 };
-
-// const mapStateToProps = (state) => ({
-//   button: state.userReducer.disabled
-// })
 
 const mapDispatchToProps = (dispatch) => ({
   verificaEmail: (payload) => dispatch(actions.userAction(payload)),

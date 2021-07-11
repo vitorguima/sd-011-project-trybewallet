@@ -1,8 +1,8 @@
 .login-div {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
-  align-items: center;
   justify-items: center;
+  margin: 0 auto;
   width: 20%;
 }
