@@ -68,7 +68,7 @@ class Login extends React.Component {
           />
         </label>
         <button
-          id="button-container"
+          className="button-container"
           type="button"
           disabled={ buttonDisabled }
           onClick={ () => this.submitEmail(email) }
