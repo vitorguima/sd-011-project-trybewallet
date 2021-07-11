@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import Valor from './Valor';
 
 class Form extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -12,21 +15,15 @@ class Form extends Component {
   }
 
   render() {
+    const { getCoin } = this.props;
     return (
       <form>
-        <label htmlFor="valor">
-          Valor:
-          <input
-            id="valor"
-            type="number"
-            name="valor"
-            placeholder="Digite o valor"
-            onChange={ this.handleChange }
-          />
-        </label>
+        <Valor handleChange={ this.handleChange } />
         <label htmlFor="moeda">
           Moeda:
-          <select id="moeda"><option value="CAD">CAD</option></select>
+          <select id="moeda">
+            {getCoin.map((money, index) => <option key={ index }>{ money }</option>)}
+          </select>
         </label>
         <label htmlFor="payment">
           Método de pagamento:
@@ -61,4 +58,12 @@ class Form extends Component {
   }
 }
 
-export default Form;
+const mapStateToProps = (state) => ({
+  getCoin: state.wallet.currencies,
+});
+
+Form.propTypes = ({
+  getCoin: PropTypes.arrayOf(PropTypes.string),
+}).isRequired;
+
+export default connect(mapStateToProps, null)(Form);
