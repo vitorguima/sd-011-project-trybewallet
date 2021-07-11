@@ -20,11 +20,8 @@ class Wallet extends React.Component {
   }
 
   componentDidMount() {
-    // const { currencyApi } = this.props;
-    // const nameD = 'Dólar Americano/Real Brasileiro Turismo';
-    // this.setState({
-    //   exchangeRates: Object.entries(currencyApi)
-    // })
+    const { FetchApi } = this.props;
+    FetchApi();
   }
 
   AddExpense() {
@@ -90,7 +87,7 @@ const mapDispatchToProps = (dispatch) => ({
   FetchApi: (state) => dispatch(fetchApiRequest(state)) });
 
 Wallet.propTypes = {
-  // FetchApi: PropTypes.func.isRequired,
+  FetchApi: PropTypes.func.isRequired,
   currencyApi: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
