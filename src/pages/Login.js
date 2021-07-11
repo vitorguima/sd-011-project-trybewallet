@@ -4,7 +4,14 @@ import { connect } from 'react-redux';
 class Login extends Component {
   render() {
     const buttonIsDisabled = true;
-    const { email, password, dunha, disparaDunha, handleChangeEmail } = this.props;
+    const {
+      email,
+      password,
+      dunha,
+      disparaDunha,
+      dispatchNewEmail,
+      dispatchNewPassword,
+    } = this.props;
 
     return (
       <div>
@@ -14,18 +21,24 @@ class Login extends Component {
             type="email"
             data-testid="email-input"
             placeholder="Email"
-            onChange={ (event) => handleChangeEmail(event.target.value) }
+            onChange={ (event) => dispatchNewEmail(event.target.value) }
           />
         </label>
         <label htmlFor="password-input">
           Senha
-          <input type="text" data-testid="password-input" placeholder="Senha" />
+          <input
+            type="text"
+            data-testid="password-input"
+            placeholder="Senha"
+            onChange={ (event) => dispatchNewPassword(event.target.value) }
+          />
         </label>
         <button type="submit" onClick={ () => disparaDunha() }>
           Entrar
         </button>
         <h1>{dunha}</h1>
         <h1>{email}</h1>
+        <h2>{password}</h2>
       </div>
     );
   }
@@ -39,7 +52,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   disparaDunha: () => dispatch({ type: 'DUNHA' }),
-  handleChangeEmail: (email) => dispatch({ type: 'LOGIN_EMAIL', email }),
+  dispatchNewEmail: (email) => dispatch({ type: 'LOGIN_EMAIL', email }),
+  dispatchNewPassword: (password) => dispatch({ type: 'LOGIN_PASSWORD', password }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
