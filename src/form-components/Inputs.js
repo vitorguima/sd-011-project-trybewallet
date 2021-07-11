@@ -12,8 +12,10 @@ class Inputs extends Component {
             type="number"
             name="value"
             id="value"
+            min="0"
             value={ value }
             onChange={ func }
+            data-testid="value-input"
           />
         </label>
         <label htmlFor="description">
@@ -24,6 +26,7 @@ class Inputs extends Component {
             id="description"
             value={ description }
             onChange={ func }
+            data-testid="description-input"
           />
         </label>
       </div>

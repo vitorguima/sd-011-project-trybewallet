@@ -18,35 +18,36 @@ class Table extends Component {
               .replace('/Real Brasileiro', '');
             const ask = (Number.parseFloat(exchangeRates[currency].ask));
             return (
-              <tr key={ index }>
-                <td>{description}</td>
-                <td>{tag}</td>
-                <td>{method}</td>
-                <td>
-                  {valueFloat}
-                </td>
-                <td>{currencyName}</td>
-                <td>{ask.toFixed(2)}</td>
-                <td>{(ask * valueFloat).toFixed(2)}</td>
-                <td>Real</td>
-                <td>
-                  <button
-                    type="button"
-                    data-testid="edit-btn"
-                    onClick={ () => expenseEdit(exp) }
-                  >
-                    Editar
-                  </button>
-                  <button
-                    type="button"
-                    data-testid="delete-btn"
-                    onClick={ () => removeExpense(exp) }
-                  >
-                    Excluir
-                  </button>
-                </td>
-              </tr>
-            );
+              <tbody key={ index }>
+                <tr>
+                  <td>{description}</td>
+                  <td>{tag}</td>
+                  <td>{method}</td>
+                  <td>
+                    {valueFloat}
+                  </td>
+                  <td>{currencyName}</td>
+                  <td>{ask.toFixed(2)}</td>
+                  <td>{(ask * valueFloat).toFixed(2)}</td>
+                  <td>Real</td>
+                  <td>
+                    <button
+                      type="button"
+                      data-testid="edit-btn"
+                      onClick={ () => expenseEdit(exp) }
+                    >
+                      Editar
+                    </button>
+                    <button
+                      type="button"
+                      data-testid="delete-btn"
+                      onClick={ () => removeExpense(exp) }
+                    >
+                      Excluir
+                    </button>
+                  </td>
+                </tr>
+              </tbody>);
           }) }
         </table>
       </div>

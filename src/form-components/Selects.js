@@ -13,6 +13,7 @@ class Selects extends Component {
             id="currency"
             value={ currency }
             onChange={ func }
+            data-testid="currency-input"
           >
             { Object.values(currencies).splice(1, FIFTEEN).map((code, index) => (
               <option key={ index }>{code.code}</option>
@@ -26,6 +27,7 @@ class Selects extends Component {
             id="method"
             value={ method }
             onChange={ func }
+            data-testid="method-input"
           >
             <option>Dinheiro</option>
             <option>Cartão de Crédito</option>
@@ -34,7 +36,13 @@ class Selects extends Component {
         </label>
         <label htmlFor="tag">
           Tag:
-          <select name="tag" id="tag" value={ tag } onChange={ func }>
+          <select
+            name="tag"
+            id="tag"
+            value={ tag }
+            onChange={ func }
+            data-testid="tag-input"
+          >
             <option>Alimentação</option>
             <option>Lazer</option>
             <option>Trabalho</option>
@@ -42,15 +50,14 @@ class Selects extends Component {
             <option>Saúde</option>
           </select>
         </label>
-      </div>
-    );
+      </div>);
   }
 }
 
 Selects.propTypes = {
   currency: PropTypes.string.isRequired,
   FIFTEEN: PropTypes.number.isRequired,
-  currencies: PropTypes.arrayOf(Object).isRequired,
+  currencies: PropTypes.objectOf(String).isRequired,
   tag: PropTypes.string.isRequired,
   method: PropTypes.string.isRequired,
   func: PropTypes.func.isRequired,

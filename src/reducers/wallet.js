@@ -37,7 +37,6 @@ const wallet = (state = GLOBAL_WALLET_STATE, action) => {
       totalExpense: state.totalExpense - Number.parseFloat(action.expense.value),
     };
   case EDIT_EXPENSE:
-    console.log(action);
     return {
       ...state,
       editing: action.editing,
@@ -45,8 +44,7 @@ const wallet = (state = GLOBAL_WALLET_STATE, action) => {
     };
   case SET_EDITED_EXPENSE: {
     const editedValue = Number.parseFloat(action.editedExpense.value);
-    const previousValue = Number.parseFloat(action.expense.value);
-    const sumOfValues = editedValue - previousValue;
+    const sumOfValues = editedValue - Number.parseFloat(action.expense.value);
     return {
       ...state,
       expenses: [
@@ -59,7 +57,9 @@ const wallet = (state = GLOBAL_WALLET_STATE, action) => {
     };
   }
   default:
-    return state;
+    return {
+      ...state,
+    };
   }
 };
 

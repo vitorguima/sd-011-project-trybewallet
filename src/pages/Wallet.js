@@ -12,7 +12,6 @@ class Wallet extends React.Component {
     return (
       <div>
         <Header />
-        {console.log(editing)}
         { editing ? <EditForm /> : <Form />}
         <Table />
       </div>

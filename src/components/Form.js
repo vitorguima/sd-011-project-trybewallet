@@ -111,7 +111,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 Form.propTypes = {
   fetchCurrenciesApi: PropTypes.func.isRequired,
-  currencies: PropTypes.objectOf(Object).isRequired,
+  currencies: PropTypes.objectOf(String).isRequired,
   setExpense: PropTypes.func.isRequired,
 };
 

@@ -9,7 +9,6 @@ class EditForm extends Component {
   constructor(props) {
     super(props);
     const { expenseToEdit } = this.props;
-    console.log(expenseToEdit);
     const {
       method, tag, description,
       currency, value, id, exchangeRates,

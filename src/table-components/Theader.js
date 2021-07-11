@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class Theader extends Component {
   render() {
     return (
-      <div>
+      <thead>
         <tr>
           <th>Descrição</th>
           <th>Tag</th>
@@ -15,7 +15,7 @@ class Theader extends Component {
           <th>Moeda de conversão</th>
           <th>Editar/Excluir</th>
         </tr>
-      </div>
+      </thead>
     );
   }
 }
