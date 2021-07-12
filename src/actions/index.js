@@ -1,5 +1,6 @@
 export const ENTER_EMAIL = 'ENTER_EMAIL';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 export const GET_CURRENCIES = 'GET_CURRENCIES';
 export const GET_CURRENCIES_SUCCESS = 'GET_CURRENCIES_SUCCESS';
 export const GET_CURRENCIES_FAILED = 'GET_CURRENCIES_FAILED';
@@ -12,6 +13,11 @@ export const enterEmail = (email) => ({
 export const addExpense = (expense) => ({
   type: 'ADD_EXPENSE',
   payload: expense,
+});
+
+export const removeExpense = (id) => ({
+  type: 'REMOVE_EXPENSE',
+  payload: id,
 });
 
 export const getCurrencies = () => ({

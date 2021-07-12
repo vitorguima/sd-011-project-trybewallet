@@ -29,8 +29,7 @@ class Header extends React.Component {
   }
 
   async handleSubmit(expense) {
-    const { addExpense, expenses } = this.props;
-    expense.id = expenses.length;
+    const { addExpense } = this.props;
     const response = await fetch('https://economia.awesomeapi.com.br/json/all');
     const data = await response.json();
     expense.exchangeRates = data;
@@ -116,12 +115,15 @@ class Header extends React.Component {
 
   render() {
     const { value, description, currency, method, tag } = this.state;
+    const { expenses } = this.props;
+    const lastExpense = expenses[expenses.length - 1];
     const expense = {
       value,
       description,
       currency,
       method,
       tag,
+      id: lastExpense ? lastExpense.id + 1 : 0,
     };
     return (
       <div>
