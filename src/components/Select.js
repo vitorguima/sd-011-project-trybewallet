@@ -9,9 +9,7 @@ class Select extends Component {
       <label htmlFor={ value }>
         {`${label}: `}
         <select onChange={ onChange } name={ value } id={ value }>
-          {options.map((optionContent, index) => (
-            <option key={ index }>{optionContent}</option>
-          ))}
+          {options.map((content, index) => <option key={ index }>{content}</option>)}
         </select>
       </label>
     );

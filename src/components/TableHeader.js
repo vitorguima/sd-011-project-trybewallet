@@ -8,28 +8,28 @@ class TableHeader extends Component {
     const { expenses, tag, removeExpense } = this.props;
 
     return expenses.map((expense, index) => {
-      let toRender = '';
-
       switch (tag) {
       case 'currency':
-        toRender = expense.exchangeRates[expense.currency].name;
-        break;
+        return (
+          <td key={ index }>{expense.exchangeRates[expense.currency].name}</td>
+        );
 
       case 'exchange':
-        toRender = Number(
-          expense.exchangeRates[expense.currency].ask,
-        ).toFixed(2);
-        break;
+        return (
+          <td key={ index }>
+            {Number(expense.exchangeRates[expense.currency].ask).toFixed(2)}
+          </td>
+        );
 
       case 'convertedValue':
-        toRender = (
-          expense.exchangeRates[expense.currency].ask * expense.value
-        ).toFixed(2);
-        break;
+        return (
+          <td key={ index }>
+            {(expense.exchangeRates[expense.currency].ask * expense.value).toFixed(2)}
+          </td>
+        );
 
       case 'conversionCurrency':
-        toRender = 'Real';
-        break;
+        return <td key={ index }>Real</td>;
 
       case 'button':
         return (
@@ -46,10 +46,8 @@ class TableHeader extends Component {
         );
 
       default:
-        toRender = expense[tag];
+        return <td key={ index }>{expense[tag]}</td>;
       }
-
-      return <td key={ index }>{toRender}</td>;
     });
   }
 }

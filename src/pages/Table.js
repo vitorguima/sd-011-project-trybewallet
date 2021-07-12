@@ -14,21 +14,25 @@ const Theader = [
   'Editar/Excluir',
 ];
 
+const tags = [
+  'description',
+  'tag',
+  'method',
+  'value',
+  'currency',
+  'exchange',
+  'convertedValue',
+  'conversionCurrency',
+  'button',
+];
+
 class Table extends Component {
   render() {
     const { expenses } = this.props;
     return (
       <tbody>
         {Theader.map((header) => <th key={ header }>{header}</th>)}
-        <TableHeader expenses={ expenses } tag="description" />
-        <TableHeader expenses={ expenses } tag="tag" />
-        <TableHeader expenses={ expenses } tag="method" />
-        <TableHeader expenses={ expenses } tag="value" />
-        <TableHeader expenses={ expenses } tag="currency" />
-        <TableHeader expenses={ expenses } tag="exchange" />
-        <TableHeader expenses={ expenses } tag="convertedValue" />
-        <TableHeader expenses={ expenses } tag="conversionCurrency" />
-        <TableHeader expenses={ expenses } tag="button" />
+        {tags.map((tag) => <TableHeader key={ tag } expenses={ expenses } tag={ tag } />)}
       </tbody>
     );
   }
