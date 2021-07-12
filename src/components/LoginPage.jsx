@@ -1,6 +1,32 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as userAction from '../actions';
 
-export default class LoginPage extends Component {
+class LoginPage extends Component {
+  constructor() {
+    super();
+
+    this.handleChange = this.handleChange.bind(this);
+    this.addTaskOnStore = this.addTaskOnStore.bind(this);
+
+    this.state = {
+      email: '',
+    };
+  }
+
+  handleChange({ target: { name, value } }) {
+    this.setState({
+      [name]: value,
+    });
+  }
+
+  addTaskOnStore() {
+    const { email } = this.state;
+    const { addEmail } = this.props;
+
+    addEmail(email);
+  }
+
   render() {
     return (
       <div>
@@ -11,8 +37,9 @@ export default class LoginPage extends Component {
               data-testid="email-input"
               type="email"
               placeholder="Digite seu email..."
-              name=""
+              name="email"
               id="input-email"
+              onChange={ this.handleChange }
             />
           </label>
           <label htmlFor="input-password">
@@ -21,13 +48,23 @@ export default class LoginPage extends Component {
               data-testid="password-input"
               type="password"
               placeholder="Digite sua senha..."
-              name=""
-              id=""
+              id="input-password"
             />
           </label>
-          <button type="button">Entrar</button>
         </form>
+        <button
+          type="button"
+          onClick={ this.addTaskOnStore }
+        >
+          Entrar
+        </button>
       </div>
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  addEmail: (email) => dispatch(userAction.addEmail(email)),
+});
+
+export default connect(null, mapDispatchToProps)(LoginPage);
