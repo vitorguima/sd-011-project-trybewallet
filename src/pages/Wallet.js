@@ -9,26 +9,31 @@ import EditExpense from './EditExpense';
 class Wallet extends React.Component {
   render() {
     const { email, expenses, editMenu } = this.props;
-    const total = expenses.length > 0 ? expenses.reduce((acc, curr) => (acc + curr.value * curr.exchangeRates[curr.currency].ask), 0,)
+    const total = expenses.length > 0
+      ? expenses
+        .reduce(
+          (acc, curr) => acc + curr.value * curr.exchangeRates[curr.currency].ask,
+          0,
+        )
         .toFixed(2)
       : 0;
-      const myStyleHeader = {
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        color: '#FF9E00',
-        backgroundColor: '#240046'
-      }
+    const myStyleHeader = {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      color: '#FF9E00',
+      backgroundColor: '#240046',
+    };
 
-      const myStyleMain = {
-        color: '#FF9E00',
-        width: '100%',
-        backgroundColor: '#3C096C',
-        alignText: 'center'
-      }
+    const myStyleMain = {
+      color: '#FF9E00',
+      width: '100%',
+      backgroundColor: '#3C096C',
+      alignText: 'center',
+    };
     return (
       <div>
-        <header style={myStyleHeader}>
+        <header style={ myStyleHeader }>
           <p data-testid="total-field">
             Despesa Total: R$
             {total}
@@ -36,12 +41,14 @@ class Wallet extends React.Component {
           </p>
           <p data-testid="email-field">{email}</p>
         </header>
-        <main style={myStyleMain}>
-        {expenses.length > 0 ? <Table /> : <h3>Nenhuma Despesa Cadastrada</h3>}
+        <main style={ myStyleMain }>
+          {expenses.length > 0 ? (
+            <Table />
+          ) : (
+            <h3>Nenhuma Despesa Cadastrada</h3>
+          )}
         </main>
-        <footer>
-        {editMenu ? <EditExpense /> : <Form />}
-        </footer>
+        <footer>{editMenu ? <EditExpense /> : <Form />}</footer>
       </div>
     );
   }

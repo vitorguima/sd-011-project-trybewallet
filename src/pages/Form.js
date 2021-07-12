@@ -43,7 +43,7 @@ class Form extends React.Component {
           </label>
           <label htmlFor="description">
             Descrição
-            <input type="text" id="description" autocomplete='off'/>
+            <input type="text" id="description" autoComplete="off" />
           </label>
           <label htmlFor="currency">
             Moeda

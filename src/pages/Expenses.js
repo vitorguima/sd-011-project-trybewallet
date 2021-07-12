@@ -19,29 +19,37 @@ class Expenses extends React.Component {
     const { expenses, changeMenu } = this.props;
     const myTRStyle = {
       border: '1px solid #ddd',
-    }
+    };
 
     const myTDStyle = {
       border: '1px solid #ddd',
-    }
+    };
     return expenses.map((expense, index) => (
-      <tr key={ index } style={myTRStyle}>
-        <td style={myTDStyle}>{expense.description}</td>
-        <td style={myTDStyle}>{expense.tag}</td>
-        <td style={myTDStyle}>{expense.method}</td>
-        <td style={myTDStyle}>{expense.value}</td>
-        <td style={myTDStyle}>{expense.exchangeRates[expense.currency].name.split('/')[0]}</td>
-        <td style={myTDStyle}>
+      <tr key={ index } style={ myTRStyle }>
+        <td style={ myTDStyle }>{expense.description}</td>
+        <td style={ myTDStyle }>{expense.tag}</td>
+        <td style={ myTDStyle }>{expense.method}</td>
+        <td style={ myTDStyle }>{expense.value}</td>
+        <td style={ myTDStyle }>
+          {expense.exchangeRates[expense.currency].name.split('/')[0]}
+        </td>
+        <td style={ myTDStyle }>
           {parseFloat(expense.exchangeRates[expense.currency].ask).toFixed(2)}
         </td>
-        <td style={myTDStyle}>
+        <td style={ myTDStyle }>
           {(
             expense.value * expense.exchangeRates[expense.currency].ask
           ).toFixed(2)}
         </td>
-        <td style={myTDStyle}>Real</td>
-        <td style={myTDStyle}>
-          <button type="button" data-testid="edit-btn" onClick={ () => changeMenu(true, expense.id) }>Editar</button>
+        <td style={ myTDStyle }>Real</td>
+        <td style={ myTDStyle }>
+          <button
+            type="button"
+            data-testid="edit-btn"
+            onClick={ () => changeMenu(true, expense.id) }
+          >
+            Editar
+          </button>
           /
           <button
             type="button"

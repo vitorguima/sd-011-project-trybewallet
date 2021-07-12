@@ -24,53 +24,27 @@ class Login extends React.Component {
   render() {
     const { dispatchEmail } = this.props;
     const { email } = this.state;
-    const myStyle = {
-      display: 'flex',
-      justifyContent: 'center',
-      margin: 'auto',
-      width: '30%',
-      border: '3px solid #3C096C',
-      marginTop: '200px',
-      padding: '30px',
-      borderRadius: '10px',
-      color: '#FF9E00',
-      backgroundColor: '#240046'
-    }
-
-    const btnStyle = {
-      backgroundColor: '#5A189A',
-      color: '#FF9E00 ',
-      margin: '10px',
-      marginLeft: '90px',
-      with: '100px'
-    }
 
     return (
-      <div style={myStyle}>
+      <div>
         <form id="login-form" onChange={ this.btnState }>
           <div>
-            <div>
-              <label htmlFor="login-email" class="form-label">
-                Login
-              </label>
-            </div>
+            <label htmlFor="login-email" className="form-label">
+              Login
               <input
-                autocomplete='off'
-                class="form-control"
+                autoComplete="off"
+                className="form-control login-email"
                 name="email"
                 type="email"
                 data-testid="email-input"
-                className="login-email"
                 required
                 onChange={ (e) => this.setState({ email: e.target.value }) }
               />
+            </label>
           </div>
           <div>
-            <div>
-              <label htmlFor="login-pass">
-                Senha
-              </label>
-            </div>
+            <label htmlFor="login-pass">
+              Senha
               <input
                 type="password"
                 data-testid="password-input"
@@ -78,11 +52,11 @@ class Login extends React.Component {
                 pattern=".{6,}"
                 required
               />
+            </label>
           </div>
           <div>
             <Link to="/carteira">
               <button
-                style={btnStyle}
                 type="button"
                 id="submit-btn"
                 onClick={ dispatchEmail(email) } // se mudar para arrow para o erro mas quebra o teste
