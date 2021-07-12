@@ -5,15 +5,33 @@ import PropTypes from 'prop-types';
 class Expense extends React.Component {
   render() {
     const { expenses } = this.props;
+    const tableHeader = ['Descrição', 'Tag', 'Método de pagamento', 'Valor', 'Moeda',
+      'Câmbio utilizado', 'Valor convertido', 'Moeda de conversão', 'Editar/Excluir'];
     return (
       <div>
-        <h1> Despesas </h1>
-        { expenses.map((expense, index) => (
-          <div className="div" key={ index } value={ expense.valor }>
-            <h1>{ expense.value }</h1>
-            <h2>{ expense.description }</h2>
-            <h1>{ expense.tag }</h1>
-          </div>))}
+        <table>
+          <thead>
+            <tr>
+              { tableHeader.map((string, index) => (<th key={ index }>{ string }</th>)) }
+            </tr>
+          </thead>
+          <tbody>
+            { expenses.map((
+              { description, tag, method, value, exchangeRates, currency }, index,
+            ) => (
+              <tr key={ index }>
+                <td>{ description }</td>
+                <td>{ tag }</td>
+                <td>{ method }</td>
+                <td>{ value }</td>
+                <td>{ exchangeRates[currency].name.split('/')[0] }</td>
+                <td>{ Number(exchangeRates[currency].ask).toFixed(2) }</td>
+                <td>{ Number(value * exchangeRates[currency].ask).toFixed(2) }</td>
+                <td>Real</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     );
   }
