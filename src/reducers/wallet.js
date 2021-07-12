@@ -1,3 +1,5 @@
+import { REQUEST_SUCCESS } from '../actions';
+
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
@@ -5,8 +7,8 @@ const INITIAL_STATE = {
 
 function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case 'value':
-    return { ...state };
+  case REQUEST_SUCCESS:
+    return { ...state, currencies: [...Object.keys(action.currencies)] };
   default:
     return state;
   }

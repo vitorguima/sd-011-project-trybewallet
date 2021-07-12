@@ -1,10 +1,19 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { getCurrenciesThunk } from '../actions';
 
 class Forms extends Component {
   constructor() {
     super();
 
     this.inputRender = this.inputRender.bind(this);
+    this.optionsCurrencies = this.optionsCurrencies.bind(this);
+  }
+
+  componentDidMount() {
+    const { setCurrencies } = this.props;
+    setCurrencies();
   }
 
   inputRender(label, name, type) {
@@ -20,6 +29,25 @@ class Forms extends Component {
     );
   }
 
+  optionsCurrencies() {
+    const { getOptionsCurrencies } = this.props;
+    return (
+      <select
+        id="currency-input"
+        name="currency"
+      >
+        {getOptionsCurrencies.map((currency) => {
+          if (currency === 'USDT') return '';
+          return (
+            <option key={ currency }>
+              {currency}
+            </option>
+          );
+        })}
+      </select>
+    );
+  }
+
   render() {
     return (
       <form>
@@ -27,11 +55,7 @@ class Forms extends Component {
         {this.inputRender('Descrição:', 'description', 'text')}
         <label htmlFor="currency-input">
           Moeda:
-          <select
-            id="currency-input"
-          >
-            <option>A</option>
-          </select>
+          {this.optionsCurrencies()}
         </label>
         <label htmlFor="method-input">
           Método de pagamento:
@@ -60,4 +84,17 @@ class Forms extends Component {
   }
 }
 
-export default Forms;
+const mapStateToProps = (state) => ({
+  getOptionsCurrencies: state.wallet.currencies,
+});
+
+const mapDispatchToPros = (dispatch) => ({
+  setCurrencies: () => dispatch(getCurrenciesThunk()),
+});
+
+export default connect(mapStateToProps, mapDispatchToPros)(Forms);
+
+Forms.propTypes = {
+  getOptionsCurrencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  setCurrencies: PropTypes.func.isRequired,
+};
