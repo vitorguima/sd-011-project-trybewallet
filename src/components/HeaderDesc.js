@@ -5,14 +5,6 @@ import { connect } from 'react-redux';
 const HeaderDesc = (props) => {
   const { expenses } = props;
 
-  const convertText = (value, bool) => {
-    if (bool) {
-      return value.substring(0, value.indexOf('/'));
-    }
-    return value.substring(value.indexOf('/') + 1);
-    // convertText(exchangeRates[currency].name, false)
-  };
-
   return (
     <table>
       <thead>
@@ -36,7 +28,7 @@ const HeaderDesc = (props) => {
               <td>{ tag }</td>
               <td>{ method }</td>
               <td>{ value }</td>
-              <td>{ convertText(exchangeRates[currency].name, true) }</td>
+              <td>{ exchangeRates[currency].name.split('/')[0] }</td>
               <td>{ Number(exchangeRates[currency].ask).toFixed(2) }</td>
               <td>
                 { Number(exchangeRates[currency].ask).toFixed(2)
