@@ -12,7 +12,9 @@ class Wallet extends React.Component {
         <div>Logo</div>
         <div data-testid="email-field">{ email }</div>
         <p data-testid="total-field">
-          { `Despesa total: R$ ${String(walletExpenses.reduce((acc, cur) => acc + Number(cur.value), 0).toFixed(2))} ` }
+          { `Despesa total: R$ ${String(
+            walletExpenses.reduce((acc, cur) => acc + Number(cur.value), 0).toFixed(2),
+          )} `}
         </p>
         <span data-testid="header-currency-field"> BRL</span>
         <ExpensesForm />
