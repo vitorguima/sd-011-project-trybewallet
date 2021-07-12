@@ -164,7 +164,7 @@ describe('8 - Desenvolva a opção de "Adicionar despesa" na sua tabela de gasto
       name: /descrição/i,
     });
 
-    userEvent.type(valueInput, '10');
+    userEvent.type(valueInput, 10);
     userEvent.selectOptions(currencyInput, 'USD');
     userEvent.selectOptions(methodInput, 'Cartão de crédito');
     userEvent.selectOptions(tagInput, 'Lazer');
@@ -178,7 +178,7 @@ describe('8 - Desenvolva a opção de "Adicionar despesa" na sua tabela de gasto
     const expectedStateExpense = [
       {
         id: 0,
-        value: '10',
+        value: 10,
         currency: 'USD',
         method: 'Cartão de crédito',
         tag: 'Lazer',
@@ -222,6 +222,9 @@ describe('8 - Desenvolva a opção de "Adicionar despesa" na sua tabela de gasto
     ];
 
     expect(store.getState().wallet.expenses).toStrictEqual(expectedStateExpense2);
+
+    const totalField = screen.getByTestId('total-field');
+    
   });
 });
 
