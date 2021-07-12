@@ -50,6 +50,10 @@
   color: #ff0084;
 }
 
+.button-login:hover {
+  color: white;
+}
+
 .button-login:disabled {
   cursor: auto;
   background-color: #ddd;
