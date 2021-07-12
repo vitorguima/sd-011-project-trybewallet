@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { setArrayExpenses } from '../actions';
+import { setArrayExpenses, fetchCurrencie } from '../actions';
 
 class ButtonAdd extends Component {
   constructor() {
@@ -9,11 +9,13 @@ class ButtonAdd extends Component {
     this.sendExpenses = this.sendExpenses.bind(this);
   }
 
-  sendExpenses() {
-    const { newCurrencie, propsForm, stateExpense } = this.props;
+  async sendExpenses() {
+    const { newCurrencie, propsForm, getCurrency } = this.props;
+    const { payload } = await getCurrency();
+
     const newvalue = {
       ...propsForm,
-      exchangeRates: { ...stateExpense },
+      exchangeRates: payload,
     };
     newCurrencie(newvalue);
   }
@@ -25,23 +27,16 @@ class ButtonAdd extends Component {
   }
 }
 
-const mapStatetoProps = (state) => ({
-  stateExpense: state.wallet.currencies,
-});
-
 const mapDispatchProps = (dispach) => ({
   newCurrencie: (value) => dispach(setArrayExpenses(value)),
+  getCurrency: () => dispach(fetchCurrencie()),
 });
 
-export default connect(mapStatetoProps, mapDispatchProps)(ButtonAdd);
-
-ButtonAdd.defaultProps = {
-  stateExpense: [],
-};
+export default connect(null, mapDispatchProps)(ButtonAdd);
 
 ButtonAdd.propTypes = {
   newCurrencie: PropTypes.func.isRequired,
-  stateExpense: PropTypes.arrayOf(PropTypes.object),
+  getCurrency: PropTypes.func.isRequired,
   propsForm: PropTypes.shape({
     value: PropTypes.string,
     dc: PropTypes.string,

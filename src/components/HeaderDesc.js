@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 const HeaderDesc = (props) => {
   const { expenses } = props;
-
   return (
     <table>
       <thead>
