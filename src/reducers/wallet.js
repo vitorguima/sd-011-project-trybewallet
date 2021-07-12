@@ -11,11 +11,13 @@ const INITIAL_STATE = {
 function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
   case ACTION_CURRENCIES:
+    console.log('action_curre', state.currencies);
     return {
       ...state,
-      currencies: [...state.currencies, action.payload],
+      currencies: parseFloat(action.payload),
     };
   case ACTION_EXPENSES:
+    console.log('action_expe', state.expenses);
     return {
       ...state,
       expenses: [...state.expenses, action.payload],

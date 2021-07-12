@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { loginEmail } from '../actions';
+import { loginEmail, walletCurrencies } from '../actions';
 
 class LoginInput extends React.Component {
   constructor() {
@@ -37,9 +37,10 @@ class LoginInput extends React.Component {
   buttonCondition(e) {
     e.preventDefault();
     const { email } = this.state;
-    const { emailInput } = this.props;
+    const { emailInput, toCurrencies } = this.props;
     this.setState({ redirect: true });
     emailInput(email);
+    toCurrencies(0);
   }
 
   render() {
@@ -77,10 +78,12 @@ class LoginInput extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   emailInput: (payload) => dispatch(loginEmail(payload)),
+  toCurrencies: (payload) => dispatch(walletCurrencies(payload)),
 });
 
 LoginInput.propTypes = {
   emailInput: PropTypes.func.isRequired,
+  toCurrencies: PropTypes.number.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(LoginInput);

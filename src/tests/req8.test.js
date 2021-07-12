@@ -16,7 +16,7 @@ const mockedExchange = jest.spyOn(global, 'fetch').mockImplementation(() => apiR
 
 afterEach(() => jest.clearAllMocks());
 
-describe('8 - Desenvolva a opção de "Adicionar despesa" na sua tabela de gastos', () => {
+describe('8.1 - Desenvolva a opção de "Adicionar despesa" na sua tabela de gastos', () => {
   test('Crie um botão com o texto \'Adicionar despesa\' que salva as informações da despesa no estado global e atualiza a soma de despesas no header', async () => {
     const { store } = renderWithRouterAndStore(<Wallet />, '/carteira');
 
@@ -45,7 +45,7 @@ describe('8 - Desenvolva a opção de "Adicionar despesa" na sua tabela de gasto
     userEvent.click(addButton);
 
     await waitFor(() => {
-      expect(mockedExchange).toBeCalledTimes(2);
+      expect(mockedExchange).toBeCalledTimes(1);
     });
 
     const expectedStateExpense = [
@@ -61,6 +61,29 @@ describe('8 - Desenvolva a opção de "Adicionar despesa" na sua tabela de gasto
     ];
 
     expect(store.getState().wallet.expenses).toStrictEqual(expectedStateExpense);
+  });
+});
+
+describe('8.2 - Desenvolva a opção de "Adicionar despesa" na sua tabela de gastos', () => {
+  test('Crie um botão com o texto \'Adicionar despesa\' que salva as informações da despesa no estado global e atualiza a soma de despesas no header', async () => {
+    const { store } = renderWithRouterAndStore(<Wallet />, '/carteira');
+
+    const addButton = await screen.findByRole('button', {
+      name: /adicionar despesa/i,
+    });
+    const valueInput = await screen.findByLabelText(/valor/i);
+    const currencyInput = await screen.findByRole('combobox', {
+      name: /moeda/i,
+    });
+    const methodInput = await screen.findByRole('combobox', {
+      name: /método de pagamento/i,
+    });
+    const tagInput = await screen.findByRole('combobox', {
+      name: /tag/i,
+    });
+    const descriptionInput = await screen.findByRole('textbox', {
+      name: /descrição/i,
+    });
 
     userEvent.type(valueInput, '20');
     userEvent.selectOptions(currencyInput, 'EUR');
