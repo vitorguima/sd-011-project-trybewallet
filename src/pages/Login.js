@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setUsername } from '../actions';
-import '../assets/login.css';
 
 class Login extends React.Component {
   constructor(props) {
