@@ -3,25 +3,28 @@ import React from 'react';
 class Login extends React.Component {
   constructor() {
     super();
+
     this.state = {
       email: '',
-      senha: '',
+      password: '',
       disabled: true,
     };
 
-    this.handleValidate = this.validate.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleValidate = this.handleValidate.bind(this);
   }
 
   componentDidUpdate() {
-    this.validate();
+    this.handleValidate();
   }
 
   handleValidate() {
-    const { email, senha, disabled } = this.state;
-    const characters = 6;
+    const { email, password, disabled } = this.state;
+    const number = 6;
     if (email.split('').includes('@')
-    && email.split('.').includes('com') && senha.length >= characters && disabled) {
+      && email.split('.').includes('com')
+      && password.length >= number
+      && disabled) {
       this.setState({ disabled: false });
     }
   }
@@ -32,31 +35,35 @@ class Login extends React.Component {
   }
 
   render() {
-    const { email, senha, disabled } = this.state;
+    const { email, password, disabled } = this.state;
     return (
       <div>
         <label htmlFor="email">
           <input
             type="email"
             name="email"
-            data-testid="email-input"
             value={ email }
             onChange={ this.handleChange }
-            placeholder="alguem@alguem.com"
+            data-testid="email-input"
+            placeholder="email@email.com"
           />
         </label>
-
         <label htmlFor="password">
           <input
-            type="senha"
-            name="senha"
-            data-testid="password-input"
-            value={ senha }
+            type="password"
+            name="password"
+            value={ password }
             onChange={ this.handleChange }
+            data-testid="password-input"
             placeholder="Senha"
           />
         </label>
-        <button type="button" disabled={ disabled }>Entrar</button>
+        <button
+          type="button"
+          disabled={ disabled }
+        >
+          Entrar
+        </button>
       </div>);
   }
 }
