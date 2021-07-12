@@ -1,18 +1,33 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-// import { SET_USERNAME } from '../actions';
+import { GET_CURRENCIES,
+  GET_CURRENCIES_SUCCESS,
+  GET_CURRENCIES_ERROR,
+} from '../actions';
 
-// const INITIAL_STATE = {
-//   currencies: [],
-//   expenses: [],
-// };
+const INITIAL_STATE = {
+  currencies: [],
+  expenses: [],
+};
 
-// function wallet(state = INITIAL_STATE, action) {
-//   switch (action.type) {
-//   case SET_USERNAME:
-//     return { ...state, username: action.payload };
-//   default:
-//     return state;
-//   }
-// }
+function wallet(state = INITIAL_STATE, action) {
+  switch (action.type) {
+  case GET_CURRENCIES:
+    return {
+      ...state,
+    };
+  case GET_CURRENCIES_SUCCESS:
+    return {
+      ...state,
+      currencies: action.payload,
+    };
+  case GET_CURRENCIES_ERROR:
+    return {
+      ...state,
+      error: action.payload,
+    };
+  default:
+    return state;
+  }
+}
 
-// export default wallet;
+export default wallet;

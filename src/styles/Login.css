@@ -1,0 +1,12 @@
+body {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 390px;
+}
+
+.title {
+  display: flex;
+  font-family: Impact, sans-serif;
+  justify-content: center;
+}

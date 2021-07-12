@@ -1,9 +1,9 @@
 import React from 'react';
-import '../Login.css';
+import '../styles/Login.css';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import getEmail from '../actions';
+import * as userActions from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -43,6 +43,10 @@ class Login extends React.Component {
     const { email, password, disabledButton } = this.state;
     return (
       <form>
+        <h1 className="title">
+          TrybeWallet
+          <span role="img" aria-label="Money">💸</span>
+        </h1>
         <label
           htmlFor="input-email"
         >
@@ -88,7 +92,7 @@ class Login extends React.Component {
 
 // Esta função é responsável por capturar o state do email digitado e colocar na prop emailInput, que será levada para a store.
 const mapDispatchToProps = (dispatch) => ({
-  emailInput: (state) => dispatch(getEmail(state)),
+  emailInput: (state) => dispatch(userActions.getEmail(state)),
 });
 
 Login.propTypes = {
