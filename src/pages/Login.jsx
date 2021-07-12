@@ -28,7 +28,7 @@ class Login extends React.Component {
   }
 
   passwordValidation({ target: { value } }) {
-    const passwordCharacters = 1;
+    const passwordCharacters = 6;
     if (value.length >= passwordCharacters) {
       this.setState({ validPassword: true });
     }
