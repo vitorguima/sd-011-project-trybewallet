@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import HeaderWallet from '../components/HeaderWallet';
 import Fomrs from '../components/Fomrs';
 import { getCurrencyThunk } from '../actions';
+import Table from '../components/Table';
 
 class Wallet extends React.Component {
   componentDidMount() {
@@ -19,6 +20,7 @@ class Wallet extends React.Component {
           <h1>Trybe-Wallet</h1>
           <div className="forms-container">
             <Fomrs />
+            <Table />
           </div>
         </div>
       </>
@@ -30,7 +32,11 @@ const mapDispatchToProps = (dispatch) => ({
   activeApi: () => dispatch(getCurrencyThunk()),
 });
 
-export default connect(null, mapDispatchToProps)(Wallet);
+const mapStateToProps = (state) => ({
+  infos: state.wallet.expenses,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 
 Wallet.propTypes = {
   activeApi: PropTypes.func.isRequired,

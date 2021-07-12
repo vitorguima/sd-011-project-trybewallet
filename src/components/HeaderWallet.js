@@ -4,8 +4,22 @@ import PropTypes from 'prop-types';
 import '../App.css';
 
 class HeaderWallet extends Component {
+  constructor(props) {
+    super(props);
+    this.handleTotalValue = this.handleTotalValue.bind(this);
+  }
+
+  handleTotalValue() {
+    const { getTotalValue } = this.props;
+    return getTotalValue.reduce((acc, cv) => {
+      const { currency, exchangeRates, value } = cv;
+      const convertedValue = value * exchangeRates[currency].ask;
+      return acc + convertedValue;
+    }, 0);
+  }
+
   render() {
-    const { getEmail, getCurrency, getTotalValue = 0 } = this.props;
+    const { getEmail, getCurrency } = this.props;
     return (
       <div className="header-container">
         <h4>
@@ -26,7 +40,7 @@ class HeaderWallet extends Component {
               id="total-field"
               data-testid="total-field"
             >
-              {getTotalValue}
+              {this.handleTotalValue().toFixed(2)}
             </span>
           </span>
         </h5>
@@ -49,7 +63,7 @@ class HeaderWallet extends Component {
 const mapStateToProps = (state) => ({
   getEmail: state.user.email,
   getCurrency: state.wallet.currency,
-  getTotalValue: state.wallet.totalValue,
+  getTotalValue: state.wallet.expenses,
 });
 
 export default connect(mapStateToProps)(HeaderWallet);
@@ -57,5 +71,5 @@ export default connect(mapStateToProps)(HeaderWallet);
 HeaderWallet.propTypes = {
   getEmail: PropTypes.string.isRequired,
   getCurrency: PropTypes.string.isRequired,
-  getTotalValue: PropTypes.string.isRequired,
+  getTotalValue: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

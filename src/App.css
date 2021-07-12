@@ -118,3 +118,13 @@ textarea {
   height: 20px;
   margin-top: 3px;
 }
+
+table {
+  width: 100%;
+  margin-top: 10px;
+  align-self: center;
+}
+
+table thead {
+ background-color: rgb(170, 168, 168);
+}

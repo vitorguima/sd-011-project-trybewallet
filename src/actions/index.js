@@ -4,6 +4,7 @@ const LOGIN_ENTER_CLICK_ACTION = 'LOGIN_ENTER_CLICK_ACTION';
 const GET_CURRENCY_WALLET_ACTION = 'GET_CURRENCY_WALLET_ACTION';
 const GET_CURRENCY_WALLET_ACTION_ERROR = 'GET_CURRENCY_WALLET_ACTION_ERROR';
 const SEND_INFOS_TO_EXPENSES_ACTION = 'SEND_INFOS_TO_EXPENSES_ACTION';
+const ERASE_DISPENSE_ACTION = 'ERASE_DISPENSE_ACTION';
 
 function loginEnterClickAction(payload) {
   return {
@@ -33,6 +34,13 @@ function sendInfoToExpensesAction(payload) {
   };
 }
 
+function eraseDispense(index) {
+  return {
+    type: ERASE_DISPENSE_ACTION,
+    index,
+  };
+}
+
 function getCurrencyThunk() {
   return (dispatch) => (
     fetchApi()
@@ -54,4 +62,6 @@ export {
   getCurrencyThunk,
   sendInfoToExpensesAction,
   SEND_INFOS_TO_EXPENSES_ACTION,
+  ERASE_DISPENSE_ACTION,
+  eraseDispense,
 };
