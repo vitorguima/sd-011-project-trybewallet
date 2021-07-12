@@ -1,6 +1,7 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 import {
   ADD_EXPENSE,
+  EDIT_EXPENSE,
   DELETE_EXPENSE,
   SUCESS_REQUEST,
   FAILED_REQUEST,
@@ -12,6 +13,7 @@ const INITIAL_STATE = {
   error: '',
   spends: 0.00,
   exchange: 'BRL',
+  editExp: {},
 };
 
 function getSpends(expenses) {
@@ -21,14 +23,21 @@ function getSpends(expenses) {
     )), 0);
 }
 
+function getExpense(id, expenses) {
+  return expenses.find((expense) => expense.id === id);
+}
+
 function wallet(state = INITIAL_STATE, { type, expense, currencies, error, id }) {
   switch (type) {
   case ADD_EXPENSE: {
     const expenses = [...state.expenses, expense];
-    return { ...state, expenses, spends: getSpends(expenses) }; }
+    return { ...state, expenses, spends: getSpends(expenses), editExp: {} }; }
+  case EDIT_EXPENSE: {
+    const editExp = getExpense(id, state.expenses);
+    return { ...state, editExp }; }
   case DELETE_EXPENSE: {
     const expenses = state.expenses.filter((exp) => exp.id !== id);
-    return { ...state, expenses, spends: getSpends(expenses) }; }
+    return { ...state, expenses, spends: getSpends(expenses), editExp: {} }; }
   case SUCESS_REQUEST:
     return { ...state, currencies: [...state.currencies, currencies] };
   case FAILED_REQUEST:
