@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import 'bulma/css/bulma.min.css';
+// import 'bulma/css/bulma.min.css';
 import Valor from './components/Valor';
 import Descrição from './components/Descricao';
 import Moeda from './components/Moeda';
