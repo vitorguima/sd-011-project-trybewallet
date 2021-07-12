@@ -12,7 +12,7 @@ class Header extends React.Component {
       value: '0',
       description: 'Sem descrição',
       currency: 'USD',
-      method: 'Dinheiro',
+      method: 'Cartão de crédito',
       tag: 'Sem Tag',
     };
     this.handleChange = this.handleChange.bind(this);
@@ -64,8 +64,8 @@ class Header extends React.Component {
           onChange={ (e) => this.handleChange(e) }
         >
           <option value="Dinheiro">Dinheiro</option>
-          <option value="Cartão de Crédito">Cartão de crédito</option>
-          <option value="Cartão de Débito">Cartão de débito</option>
+          <option value="Cartão de crédito">Cartão de crédito</option>
+          <option value="Cartão de débito">Cartão de débito</option>
         </select>
       </label>
     );
