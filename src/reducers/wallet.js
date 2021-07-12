@@ -1,4 +1,10 @@
-import { DATA_FAILURE, ADD_EXPENSE, REMOVE_EXPENSE, GET_CURRENCIES } from '../actions';
+/* eslint-disable max-len */
+/* eslint-disable max-statements */
+import { DATA_FAILURE,
+  ADD_EXPENSE,
+  REMOVE_EXPENSE,
+  GET_CURRENCIES,
+  UPDATE_EXPENSE } from '../actions';
 
 const initialState = { currencies: [], expenses: [], total: 0 };
 
@@ -19,9 +25,16 @@ const walletReducer = (state = initialState, action) => {
     const len = expenses.length;
     const newExpense = { ...payload, id: len };
     const updatedExpenses = [...state.expenses, newExpense];
-
     const total = updatedExpenses.reduce(redx, 0);
     return { ...state, expenses: updatedExpenses, total };
+  }
+  case UPDATE_EXPENSE: {
+    console.log(payload);
+    const replacedExpense = state.expenses.map((el) => (el.id !== payload.id ? el : payload));
+    const newExpense = [...replacedExpense];
+    const total = newExpense.reduce(redx, 0);
+    return { ...state, expenses: newExpense, total };
+    // return { ...state };
   }
 
   case GET_CURRENCIES: {
@@ -31,7 +44,6 @@ const walletReducer = (state = initialState, action) => {
   case REMOVE_EXPENSE: {
     const updatedExpenses = [...payload.filter((el) => state.expenses.includes(el))];
     const total = updatedExpenses.reduce(redx, 0);
-    // const newIndex = updatedExpenses.map((el, i) => ({ ...el, id: i }));
     return { ...state, expenses: updatedExpenses, total };
   }
 

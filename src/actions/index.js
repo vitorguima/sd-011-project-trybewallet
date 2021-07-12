@@ -5,6 +5,7 @@ export const DATA_FAILURE = 'DATA_FAILURE';
 export const GET_DATA = 'GET_DATA';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const GET_CURRENCIES = 'GET_CURRENCIES';
+export const UPDATE_EXPENSE = 'UPDATE_EXPENSE';
 
 export const sendInfo = (payload) => ({ type: USER_INFO, payload });
 
@@ -15,3 +16,5 @@ export const getCurrencies = (payload) => ({ type: GET_CURRENCIES, payload });
 export const dataFailure = (payload) => ({ type: DATA_FAILURE, payload });
 
 export const addExpense = (payload) => ({ type: ADD_EXPENSE, payload });
+
+export const updateExpense = (payload) => ({ type: UPDATE_EXPENSE, payload });

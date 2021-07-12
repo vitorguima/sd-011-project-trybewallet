@@ -5,7 +5,13 @@ export default function Select() {
     <div className="form-group">
       <label htmlFor="tagInput">
         Tag
-        <select required name="tag" id="tagInput" className="form-select">
+        <select
+          data-testid="tag-input"
+          required
+          name="tag"
+          id="tagInput"
+          className="form-select"
+        >
           <option value="Alimentação">Alimentação</option>
           <option value="Lazer">Lazer</option>
           <option value="Trabalho">Trabalho</option>

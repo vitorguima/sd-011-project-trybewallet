@@ -6,7 +6,7 @@ export default function Description() {
       <label htmlFor="descriptionInput">
         Descrição
         <input
-          required
+          data-testid="description-input"
           name="description"
           type="text"
           className="form-control"

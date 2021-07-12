@@ -20,7 +20,7 @@ export default function FormInput(props) {
       <PaymentSelect />
       <TagSelect />
       <Description />
-      <button type="submit" className="btn btn-primary">
+      <button id="submitButton" type="submit" className="btn btn-primary">
         Adicionar despesa
       </button>
     </form>

@@ -19,6 +19,7 @@ export default function CurrencyInput() {
       <label htmlFor="currency">
         Moeda
         <select
+          data-testid="currency-input"
           defaultValue="USD"
           id="currency"
           name="currency"

@@ -6,6 +6,7 @@ export default function ValueInput() {
       <label htmlFor="valueInput">
         Valor
         <input
+          data-testid="value-input"
           required
           id="valueInput"
           name="value"

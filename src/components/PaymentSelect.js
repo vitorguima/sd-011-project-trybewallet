@@ -6,6 +6,7 @@ export default function PaymentSelect() {
       <label htmlFor="paymentMethod">
         Método de pagamento
         <select
+          data-testid="method-input"
           id="paymentMethod"
           required
           name="method"

@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 /* eslint-disable max-lines-per-function */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -20,7 +21,7 @@ export default function FormInput(props) {
         queryObj[obName] = obValue;
       }
     });
-
+    document.getElementById('submitButton').innerText = 'Editar despesa';
     const expensesForm = document.getElementById('expensesForm');
     document.getElementById('valueInput').value = queryObj.value;
     document.getElementById('currency').value = queryObj.currency;
@@ -30,28 +31,27 @@ export default function FormInput(props) {
 
     expensesForm.style.backgroundColor = 'green';
     expensesForm.style.color = 'white';
-
-    console.log(queryObj);
+    expensesForm.setAttribute('key', id);
   };
 
   return (
-    <tr>
-      <td name="description" value={description} role="cell">
+    <tr id={ `Row-${id}` }>
+      <td name="description" value={ description } role="cell">
         {description}
       </td>
-      <td name="tag" value={tag} role="cell">
+      <td name="tag" value={ tag } role="cell">
         {tag}
       </td>
-      <td name="method" value={method} role="cell">
+      <td name="method" value={ method } role="cell">
         {method}
       </td>
-      <td name="value" value={value} role="cell">
+      <td name="value" value={ value } role="cell">
         {value}
       </td>
-      <td name="currency" value={currency} role="cell">
+      <td name="currency" value={ currency } role="cell">
         {name}
       </td>
-      <td name="ask" value={ask} role="cell">
+      <td name="ask" value={ ask } role="cell">
         {parseFloat(ask).toFixed(2)}
       </td>
       <td role="cell">{convertedPrice}</td>
@@ -61,13 +61,14 @@ export default function FormInput(props) {
           type="button"
           data-testid="edit-btn"
           className="btn fas fa-edit btn-info m-1"
-          onClick={(e) => handleEdit(e)}
+          onClick={ (e) => handleEdit(e) }
         >
           Edit
         </button>
         <button
+          id="editButton"
           type="button"
-          onClick={() => handleDelete(id)}
+          onClick={ () => handleDelete(id) }
           data-testid="delete-btn"
           className="btn fas fa-trash-alt btn-danger m-1"
         >
