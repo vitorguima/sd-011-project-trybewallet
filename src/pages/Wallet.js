@@ -1,10 +1,13 @@
 import React from 'react';
-import Header from '../components/Header';
+import { Header, Form } from '../components';
 
 class Wallet extends React.Component {
   render() {
     return (
-      <Header />
+      <div>
+        <Header />
+        <Form />
+      </div>
     );
   }
 }
