@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { fetchValues, addExpansesAction } from '../actions/index';
+import Table from './table';
 
 class Form extends React.Component {
   constructor(props) {
@@ -91,10 +92,12 @@ class Form extends React.Component {
         >
           Adicionar despesa
         </button>
+        <Table />
       </form>
     );
   }
 }
+
 const mapStateToProps = (state) => ({
   email: state.user.email,
   currencies: state.wallet.currencies,
