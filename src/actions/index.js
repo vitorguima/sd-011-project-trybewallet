@@ -3,6 +3,8 @@ export const USER_LOGIN = 'USER_LOGIN';
 export const REQUEST_API = 'REQUEST_API';
 export const RECEIVE_CURRENCIES = 'RECEIVE_CURRENCIES';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
+// export const EDIT_EXPENSE = 'EDIT_EXPENSE';
 
 // action creators
 export const loginAction = (email, password) => ({
@@ -40,3 +42,13 @@ export function addExpense(data) {
       }));
   };
 }
+
+export const deleteExpense = (payload) => ({
+  type: DELETE_EXPENSE,
+  payload,
+});
+
+// export const editExpense = (payload) => ({
+//   type: EDIT_EXPENSE,
+//   payload,
+// });
