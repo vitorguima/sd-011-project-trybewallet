@@ -10,7 +10,7 @@ class ExpenseTable extends React.Component {
   }
 
   render() {
-    const { expenses } = this.props;
+    // const { expenses } = this.props;
     return (
       <table>
         <tr>
