@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setUsername } from '../actions';
+import '../assets/login.css';
 
 class Login extends React.Component {
   constructor(props) {
@@ -40,24 +41,32 @@ class Login extends React.Component {
     const { email, password, disabled } = this.state;
     const { singIn } = this.props;
     return (
-      <div>
-        <form>
+      <div className="form-container">
+        <form className="form">
+          <h2>Login</h2>
+          <hr />
           <input
             id="email"
+            className="input-field"
             data-testid="email-input"
             type="email"
             name="email"
+            placeholder="Digite seu email aqui"
             onChange={ this.handleChange }
           />
           <input
             id="password"
+            className="input-field"
             data-testid="password-input"
             type="password"
             name="password"
+            placeholder="Digite sua senha aqui"
             onChange={ this.handleChange }
           />
+          <hr />
           <Link to="/carteira">
             <button
+              className="button-login"
               disabled={ disabled }
               type="button"
               onClick={ () => singIn({ email, password }) }
