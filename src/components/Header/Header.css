@@ -1,6 +1,6 @@
 .header-container {
   background-color: #036b52;
-  box-shadow: 0 0px 10px black;
+  box-shadow: 0 0 10px black;
   display: flex;
   flex-direction: column;
   height: 22vh;

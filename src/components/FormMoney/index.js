@@ -2,10 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import PropTypes from 'prop-types';
-
 import { newExpense } from '../../actions/ExpenseActions';
 import FormCurrencys from '../FormCurrencys';
-
 import { fetchCurrencys } from '../../services';
 import SelectInputs from './SelectInputs';
 import './FormMoney.css';
