@@ -8,7 +8,7 @@ class InputText extends React.Component {
   }
 
   render() {
-    const { handleChange, name } = this.props;
+    const { handleChange, name, value } = this.props;
     return (
       <div>
         <label className="form-wallet-label" htmlFor={ name }>
@@ -19,6 +19,7 @@ class InputText extends React.Component {
             type="text"
             name={ name }
             id={ name }
+            value={ value }
             onChange={ handleChange }
           />
         </label>
@@ -29,6 +30,7 @@ class InputText extends React.Component {
 
 InputText.propTypes = {
   name: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
 };
 

@@ -1,12 +1,26 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import InputText from './InputText';
+import SelectField from './SelectField';
+
+const optionPayment = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
+const optionTag = ['Alimentação', 'Lazer', 'Saúde', 'Trabalho', 'Transporte'];
 
 class Form extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
-
+    this.state = {
+      Valor: '',
+      Descrição: '',
+      Currency: '',
+      Payment: optionPayment[0],
+      Tag: optionTag[0],
+    };
     this.handleChange = this.handleChange.bind(this);
+    this.renderInput = this.renderInput.bind(this);
+    this.renderSelect = this.renderSelect.bind(this);
+    this.renderForm = this.renderForm.bind(this);
   }
 
   handleChange({ target: { value, name } }) {
@@ -15,43 +29,54 @@ class Form extends React.Component {
     });
   }
 
-  render() {
+  renderInput(value, name) {
+    return (
+      <InputText value={ value } name={ name } handleChange={ this.handleChange } />
+    );
+  }
+
+  renderSelect(value, name, nameState, options) {
+    return (
+      <SelectField
+        value={ value }
+        name={ name }
+        nameState={ nameState }
+        handleChange={ this.handleChange }
+        options={ options }
+      />
+    );
+  }
+
+  renderForm() {
+    const { Valor, Descrição, Payment, Tag, Currency } = this.state;
+    const { currencies } = this.props;
+    const currenciesKeys = Object.keys(currencies).filter((currency)=> currency !== 'USDT');
     return (
       <form className="form-wallet">
-        <InputText name="Valor" handleChange={ this.handleChange } />
-        <InputText name="Descrição" handleChange={ this.handleChange } />
-        <div>
-          <label htmlFor="moeda">
-            Moeda:
-            <select className="form-wallet-input-field" name="moeda" id="moeda">
-              <option value="">BRL</option>
-            </select>
-          </label>
-        </div>
-        <div>
-          <label htmlFor="payment">
-            Método de pagamento:
-            <select className="form-wallet-input-field" name="payment" id="payment">
-              <option value="Dinheiro">Dinheiro</option>
-              <option value="Cartão de crédito">Cartão de crédito</option>
-              <option value="Cartão de débito">Cartão de débito</option>
-            </select>
-          </label>
-        </div>
-        <div>
-          <label htmlFor="payment">
-            Tag:
-            <select className="form-wallet-input-field" name="tag" id="tag">
-              <option value="Alimentação">Alimentação</option>
-              <option value="Trabalho">Trabalho</option>
-              <option value="Transporte">Transporte</option>
-              <option value="Saúde">Saúde</option>
-            </select>
-          </label>
-        </div>
+        {this.renderInput(Valor, 'Valor')}
+        {this.renderInput(Descrição, 'Descrição')}
+        {this.renderSelect(Currency, 'Moeda', 'Currency', currenciesKeys)}
+        {this.renderSelect(Payment, 'Método de Pagamento', 'Payment', optionPayment)}
+        {this.renderSelect(Tag, 'Tag', 'Tag', optionTag)}
       </form>
+    );
+  }
+
+  render() {
+    return (
+      this.renderForm()
     );
   }
 }
 
-export default Form;
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+Form.propTypes = {
+  currencies: PropTypes.shape({
+    code: PropTypes.string,
+  }).isRequired,
+};
+
+export default connect(mapStateToProps)(Form);

@@ -1,4 +1,4 @@
-import { SET_USERNAME } from '../actions';
+import { SET_USER } from '../actions';
 
 const INITIAL_STATE = {
   email: '',
@@ -7,7 +7,7 @@ const INITIAL_STATE = {
 
 function userReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case SET_USERNAME:
+  case SET_USER:
     return {
       email: action.payload.email,
       password: action.payload.password,
