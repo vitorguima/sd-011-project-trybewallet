@@ -11,6 +11,11 @@ function userWallet(state = INITIAL_STATE, action) {
       currencies: action.currencies,
       expenses: action.expenses,
     });
+  case 'DEL_SPENT':
+    return {
+      ...state,
+      expenses: [...state.expenses.filter(({ id }) => id !== action.id)],
+    };
   default:
     return state;
   }

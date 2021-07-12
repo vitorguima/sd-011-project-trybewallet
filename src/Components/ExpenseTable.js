@@ -1,12 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { deleteExpense } from '../actions';
 
 class ExpenseTable extends React.Component {
-  convertValue(value, currency, exchangeRates) {
-    const result = exchangeRates ? value * exchangeRates[currency].ask
-      : parseFloat(value);
-    return result.toFixed(2);
+  // convertValue(value, currency, exchangeRates) {
+  //   const result = exchangeRates ? value * exchangeRates[currency].ask
+  //     : parseFloat(value);
+  //   return result.toFixed(2);
+  // }
+
+  deleteButton(id) {
+    const { dispatchDeleteButton } = this.props;
+    return (
+      <button
+        className="deleteButton"
+        type="button"
+        data-testid="delete-btn"
+        onClick={ () => dispatchDeleteButton(id) }
+      >
+        Excluir
+      </button>
+    );
   }
 
   render() {
@@ -24,7 +39,15 @@ class ExpenseTable extends React.Component {
           <th>Moeda de conversão</th>
           <th>Editar/Excluir</th>
         </tr>
-        {/* { expenses.map(({ id, value, description, currency, method, tag, exchangeRates }) => (
+        {/* { expenses.map(({
+          id,
+          value,
+          description,
+          currency,
+          method,
+          tag,
+          exchangeRates,
+        }) => (
           <tr key={ id }>
             <td>{ description }</td>
             <td>{ tag }</td>
@@ -35,7 +58,8 @@ class ExpenseTable extends React.Component {
             <td>{ Number(exchangeRates[currency].ask) * Number(value).toFixed(2) }</td>
             <td>Real</td>
             <td>{ exchangeRates[currency].name }</td>
-            <button type="button">Editar/Excluir</button>
+            <button type="button">Editar</button>
+            { this.deleteButton(id) }
           </tr>
         ))} */}
       </table>
@@ -47,8 +71,13 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-export default connect(mapStateToProps)(ExpenseTable);
+const mapDispatchToProps = (dispatch) => ({
+  dispatchDeleteButton: (id) => dispatch(deleteExpense(id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseTable);
 
 ExpenseTable.propTypes = {
   expenses: PropTypes.array,
+  dispatchDeleteButton: PropTypes.func,
 }.isRequired;

@@ -12,3 +12,8 @@ export function spending(currencies, expenses) {
     expenses,
   });
 }
+
+export const deleteExpense = (id) => ({
+  type: 'DEL_SPENT',
+  id,
+});
