@@ -1,5 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { login } from '../../actions';
 
 class Form extends React.Component {
   constructor(props) {
@@ -36,7 +39,8 @@ class Form extends React.Component {
   }
 
   render() {
-    const { emailIsValid } = this.state;
+    const { emailIsValid, email } = this.state;
+    const { logar } = this.props;
     return (
       <form>
         <label htmlFor="email">
@@ -55,18 +59,28 @@ class Form extends React.Component {
             data-testid="password-input"
           />
         </label>
-        <button
-          id="button-validation"
-          type="button"
-          disabled={ !emailIsValid }
-          onClick={ <Link to="/carteira/" /> }
-        >
-          Entrar
-        </button>
+        <Link to="/carteira">
+          <button
+            id="button-validation"
+            type="button"
+            disabled={ !emailIsValid }
+            onClick={ () => logar(email) }
+          >
+            Entrar
+          </button>
+        </Link>
       </form>
 
     );
   }
 }
 
-export default Form;
+Form.propTypes = {
+  logar: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  logar: (usuario) => dispatch(login(usuario)),
+});
+
+export default connect(null, mapDispatchToProps)(Form);
