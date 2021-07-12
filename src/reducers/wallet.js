@@ -10,7 +10,7 @@ const INITIAL_STATE = {
   currencies: [],
   expenses: [],
   error: '',
-  spends: 0,
+  spends: 0.00,
   exchange: 'BRL',
 };
 

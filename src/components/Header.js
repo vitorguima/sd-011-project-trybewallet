@@ -8,7 +8,7 @@ class Header extends React.Component {
     return (
       <header>
         <h3 data-testid="email-field">{ email }</h3>
-        <h4 data-testid="total-field">{ spends }</h4>
+        <h4 data-testid="total-field">{ spends || 0 }</h4>
         <h4 data-testid="header-currency-field">{ exchange }</h4>
       </header>
     );
