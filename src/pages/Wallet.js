@@ -4,17 +4,25 @@ import { connect } from 'react-redux';
 import Form from '../components/Form';
 
 class Wallet extends React.Component {
+  totalExpense() {
+    const { expenses } = this.props;
+    return expenses.reduce((acc, expense) => {
+      const expenseValue = expense
+        .exchangeRates[expense.currency]
+        .ask * parseFloat(expense.value);
+
+      acc += expenseValue;
+      return acc;
+    }, 0);
+  }
+
   render() {
-    const { emailLogin, expenses } = this.props;
+    const { emailLogin } = this.props;
     return (
       <>
         <header>
           <p data-testid="email-field">{ emailLogin }</p>
-          <p data-testid="total-field">
-            {Object
-              .values(expenses)
-              .reduce((acc, expense) => acc + parseFloat(expense.value), 0)}
-          </p>
+          <p data-testid="total-field">{ this.totalExpense().toFixed(2) }</p>
           <p data-testid="header-currency-field">BRL</p>
         </header>
         <Form />
@@ -32,7 +40,7 @@ Wallet.propTypes = {
   emailLogin: PropTypes.string.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
+    value: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     currency: PropTypes.string.isRequired,
     method: PropTypes.string.isRequired,

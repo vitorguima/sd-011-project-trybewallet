@@ -38,7 +38,7 @@ class Form extends React.Component {
       <form>
         <label htmlFor="value">
           Valor
-          <input id="value" type="number" value={ value } onChange={ this.handleForm } />
+          <input id="value" value={ value } onChange={ this.handleForm } />
         </label>
         <label htmlFor="description">
           Descrição

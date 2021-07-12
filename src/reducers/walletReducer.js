@@ -19,11 +19,10 @@ function walletReducer(state = INITIAL_STATE, { type, payload }) {
       expenses: state.expenses.concat({
         id: state.expenses.length,
         ...payload.form,
-        excahngeRates: payload.currency,
+        exchangeRates: payload.currency,
       }),
     };
   default:
-    console.log(payload);
     return state;
   }
 }
