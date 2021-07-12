@@ -3,6 +3,7 @@ import {
   REQUEST_COINS,
   REQUEST_COINS_ERROR,
   REQUEST_COINS_SUCCESS,
+  SAVE_EXPENSES,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -21,12 +22,17 @@ function coinsReducer(state = INITIAL_STATE, action) {
   case REQUEST_COINS_SUCCESS:
     return {
       ...state,
-      currencies: [...state.currencies, action.data], // poderia ser apenas action.data
+      currencies: [...state.currencies, action.data], // poderia ser apenas [action.data]
       isLoading: false,
     };
   case REQUEST_COINS_ERROR:
     return {
       ...state,
+      isLoading: false,
+    };
+  case SAVE_EXPENSES:
+    return {
+      expenses: [...state.expenses, action.expenses],
       isLoading: false,
     };
   default:

@@ -4,6 +4,7 @@ export const REQUEST_COINS = 'REQUEST_COINS';
 export const REQUEST_COINS_SUCCESS = 'REQUEST_COINS_SUCCESS';
 export const REQUEST_COINS_ERROR = 'REQUEST_COINS_ERROR';
 export const SAVE_LOGIN = 'SAVE_LOGIN';
+export const SAVE_EXPENSES = 'SAVE_EXPENSES';
 
 export const saveLogin = (email) => ({
   type: SAVE_LOGIN,
@@ -20,7 +21,7 @@ export const requestCoinsuccess = (data) => ({
 });
 
 export const requestCoinsError = (data) => ({
-  type: requestCoinsError,
+  type: REQUEST_COINS_ERROR,
   data,
 });
 
@@ -31,3 +32,8 @@ export const fetchCoins = () => (dispatch) => {
     .then((data) => dispatch(requestCoinsuccess(data)))
     .catch((error) => dispatch(requestCoinsError(error)));
 };
+
+export const saveExpenses = (expenses) => ({
+  type: SAVE_EXPENSES,
+  expenses,
+});

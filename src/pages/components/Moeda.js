@@ -10,13 +10,18 @@ class Moeda extends React.Component {
   }
 
   render() {
-    const { data } = this.props;
+    const { data, inputValue } = this.props;
+    console.log('Eu sou o data', data);
     // console.log((data.map((coins) => Object.values(coins))));
     return (
       <label htmlFor="Moeda">
         Moeda
-        <select id="Moeda" name="currencies">
-          { (data.map((coins) => Object.values(coins)
+        <select
+          id="Moeda"
+          name="currency"
+          onChange={ inputValue }
+        >
+          { (data && data.map((coins) => Object.values(coins)
             .map((siglasCoins) => siglasCoins)
             .filter((item) => item.codein !== 'BRLT')
             .map((option, index) => <option key={ index }>{option.code}</option>))) }
@@ -37,6 +42,7 @@ const mapDispatchToProps = (dispatch) => ({
 Moeda.propTypes = {
   fetchCoins: PropTypes.func,
   data: PropTypes.shape,
+  inputValue: PropTypes.string,
 }.isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Moeda);

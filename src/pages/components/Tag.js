@@ -1,16 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Tag extends React.Component {
   render() {
+    const { inputValue } = this.props;
     const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     return (
       <label htmlFor="Tag">
         Tag
         <select
-          name="Tag"
+          name="tag"
           id="Tag"
+          onChange={ inputValue }
         >
-          <option>Selecionea tag</option>
           { tags.map((tag, index) => (
             <option key={ index }>{ tag }</option>)) }
         </select>
@@ -18,5 +20,9 @@ class Tag extends React.Component {
     );
   }
 }
+
+Tag.propTypes = {
+  inputValue: PropTypes.string,
+}.isRequired;
 
 export default Tag;
