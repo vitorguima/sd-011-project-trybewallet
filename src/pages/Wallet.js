@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Form from './Form';
-import API from '../services/baseAPI';
 import { getCurrency } from '../actions';
+import API from '../services/baseAPI';
 
 class Wallet extends React.Component {
   constructor() {
