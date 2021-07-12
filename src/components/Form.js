@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import requestCurrencyAction from '../actions/requestCurrencysAction';
+import sendExpenseAction from '../actions/sendExpenseAction';
 
 class Form extends React.Component {
   constructor() {
@@ -30,7 +31,8 @@ class Form extends React.Component {
 
   render() {
     const { value, description, currency, method, tag } = this.state;
-    const { currenciesOptions } = this.props;
+    const { currenciesOptions, sendForm } = this.props;
+    const form = this.state;
 
     return (
       <form>
@@ -73,6 +75,7 @@ class Form extends React.Component {
             <option>Saúde</option>
           </select>
         </label>
+        <button type="button" onClick={ () => sendForm(form) }>Adicionar despesa</button>
       </form>
     );
   }
@@ -84,11 +87,13 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   requestCurrencys: () => dispatch(requestCurrencyAction()),
+  sendForm: (form) => dispatch(sendExpenseAction(form)),
 });
 
 Form.propTypes = {
-  requestCurrencys: PropTypes.func.isRequired,
   currenciesOptions: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  requestCurrencys: PropTypes.func.isRequired,
+  sendForm: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);
