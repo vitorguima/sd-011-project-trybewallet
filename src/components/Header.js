@@ -93,7 +93,7 @@ class Header extends React.Component {
         <input
           name="value"
           id="value"
-          type="number"
+          type="text"
           onChange={ (e) => this.handleChange(e) }
         />
       </label>
