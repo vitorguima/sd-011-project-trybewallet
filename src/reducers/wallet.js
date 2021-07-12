@@ -1,20 +1,36 @@
-// Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import { SET_USER_EMAIL } from '../actions/Login';
+import {
+  REQUEST_API,
+  REQUEST_API_SUCESS,
+  REQUEST_API_ERROR,
+} from '../actions/index';
 
 const INITIAL_STATE = {
-  currencies: [],
+  currencies: {},
   expenses: [],
+  isLoading: false,
 };
 
 function wallet(state = INITIAL_STATE, action = {}) {
-  if (action.type === SET_USER_EMAIL) {
-    return ({
+  switch (action.type) {
+  case REQUEST_API:
+    return {
       ...state,
-      currencies: [], // action.payload,
-      expenses: [], // action.payload,
-    });
+      isLoading: true,
+    };
+  case REQUEST_API_SUCESS:
+    return {
+      ...state,
+      currencies: action.payload,
+      isLoading: false,
+    };
+  case REQUEST_API_ERROR:
+    return {
+      ...state,
+      isLoading: false,
+    };
+  default:
+    return state;
   }
-  return state;
 }
 
 export default wallet;
