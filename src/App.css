@@ -1,3 +1,4 @@
+/* LOGIN PAGE */
 .login-div {
   align-items: center;
   display: flex;
@@ -5,4 +6,15 @@
   justify-items: center;
   margin: 0 auto;
   width: 20%;
+}
+
+/* WALLET PAGE */
+.wallet-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.trybe-img {
+  height: auto;
+  width: 100%;
 }
