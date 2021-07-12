@@ -90,6 +90,6 @@ export default connect(null, mapDispatchToProps)(Login);
 Login.propTypes = ({
   setUserAction: PropTypes.func.isRequired,
   history: PropTypes.shape({
-    push: PropTypes.string,
+    push: PropTypes.func,
   }).isRequired,
 });

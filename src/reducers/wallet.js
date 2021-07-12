@@ -1,44 +1,33 @@
-// Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-
 import { REQUEST_API,
   REQUEST_API_SUCCESS,
   REQUEST_API_ERROR,
   ADD_EXPENSE,
   REMOVE_EXPENSE,
   EDIT_EXPENSE,
+  OPEN_EXPENSE,
 } from '../actions';
 
 const INITIAL_STATE = {
   currencies: '',
-  // currentExpense: '',
+  isEditingExpense: false,
   expenses: [],
   idCounter: 0,
 };
 
 function walletReducer(state = INITIAL_STATE, action) {
-  switch (action.type) {
+  const { payload, type } = action;
+  switch (type) {
   case REQUEST_API:
-    return {
-      ...state,
-      isLoading: true,
-    };
+    return { ...state, isLoading: true };
   case REQUEST_API_SUCCESS:
-    return {
-      ...state,
-      currencies: action.payload,
-      isLoading: false,
-    };
+    return { ...state, currencies: payload, isLoading: false };
   case REQUEST_API_ERROR:
-    return {
-      ...state,
-      error: action.payload,
-      isLoading: false,
-    };
+    return { ...state, error: payload, isLoading: false };
   case ADD_EXPENSE:
     return {
       ...state,
       expenses: [...state.expenses, {
-        ...action.payload,
+        ...payload,
         id: state.idCounter,
         exchangeRates: state.currencies,
       }],
@@ -48,11 +37,18 @@ function walletReducer(state = INITIAL_STATE, action) {
   case REMOVE_EXPENSE:
     return {
       ...state,
-      expenses: [...state.expenses.filter((exp) => exp !== action.payload)],
+      expenses: [...state.expenses.filter((exp) => exp !== payload)],
     };
+  case OPEN_EXPENSE:
+    return { ...state, isEditingExpense: true };
   case EDIT_EXPENSE:
-    console.log(action.payload);
-    return state;
+    return {
+      ...state,
+      expenses: state.expenses
+        .reduce((arr, exp) => (
+          exp.id !== payload.id ? arr.concat(exp) : arr.concat(payload)), []),
+      isEditingExpense: false,
+    };
   default:
     return state;
   }

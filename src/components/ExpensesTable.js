@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { removeExpense } from '../actions';
+import PropTypes from 'prop-types';
+import { removeExpense, openExpense } from '../actions';
 
 class ExpensesTable extends Component {
   renderThead() {
@@ -22,7 +23,7 @@ class ExpensesTable extends Component {
   }
 
   renderTbody() {
-    const { expenses, removeExpenseAction, openExpense } = this.props;
+    const { expenses, removeExpenseAction, openExpenseAction, handleForm } = this.props;
     return (
       <tbody>
         { expenses.map((exp) => (
@@ -43,7 +44,7 @@ class ExpensesTable extends Component {
               <button
                 type="button"
                 data-testid="edit-btn"
-                onClick={ () => openExpense(exp) }
+                onClick={ () => { openExpenseAction(exp); handleForm(exp); } }
               >
                 O
               </button>
@@ -77,6 +78,13 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   removeExpenseAction: (payload) => dispatch(removeExpense(payload)),
+  openExpenseAction: (payload) => dispatch(openExpense(payload)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpensesTable);
+
+ExpensesTable.propTypes = ({
+  expenses: PropTypes.arrayOf({ Object }),
+  removeExpenseAction: PropTypes.func,
+  openExpense: PropTypes.func,
+}).isRequired;

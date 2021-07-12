@@ -5,19 +5,16 @@ export const REQUEST_API = 'REQUEST_API';
 export const REQUEST_API_SUCCESS = 'REQUEST_API_SUCCESS';
 export const REQUEST_API_ERROR = 'REQUEST_API_ERROR';
 export const EDIT_EXPENSE = 'EDIT_EXPENSE';
+export const OPEN_EXPENSE = 'OPEN_EXPENSE';
 
 export const setUser = (payload) => ({ type: SET_USER, payload });
-
 export const addExpense = (payload) => ({ type: ADD_EXPENSE, payload });
-
 export const removeExpense = (payload) => ({ type: REMOVE_EXPENSE, payload });
-
 export const editExpense = (payload) => ({ type: EDIT_EXPENSE, payload });
+export const openExpense = (payload) => ({ type: OPEN_EXPENSE, payload });
 
 const requestApi = (payload) => ({ type: REQUEST_API, payload });
-
 const requestApiSuccess = (payload) => ({ type: REQUEST_API_SUCCESS, payload });
-
 const requestApiError = (payload) => ({ type: REQUEST_API_ERROR, payload });
 
 export const fetchApiThunk = () => async (dispatch) => {
