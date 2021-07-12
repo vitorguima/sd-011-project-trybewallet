@@ -120,11 +120,11 @@ textarea {
 }
 
 table {
-  width: 100%;
-  margin-top: 10px;
   align-self: center;
+  margin-top: 10px;
+  width: 100%;
 }
 
 table thead {
- background-color: rgb(170, 168, 168);
+  background-color: rgb(170, 168, 168);
 }
