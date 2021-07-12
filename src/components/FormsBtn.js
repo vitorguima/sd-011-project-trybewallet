@@ -13,7 +13,7 @@ class FormsBtn extends Component {
   }
 
   async getApiResponse() {
-    const { toma, sendInfos, getExpenses } = this.props;
+    const { toma, sendInfos, getExpenses, initialState } = this.props;
     const value = document.querySelector('#value');
     const forms = document.querySelector('#forms');
     const data = await fetchApi();
@@ -30,6 +30,7 @@ class FormsBtn extends Component {
       exchangeRates: data,
     });
     forms.reset();
+    initialState();
   }
 
   render() {
@@ -61,6 +62,7 @@ FormsBtn.propTypes = {
   toma: PropTypes.objectOf(PropTypes.string),
   sendInfos: PropTypes.func.isRequired,
   getExpenses: PropTypes.arrayOf(PropTypes.object),
+  initialState: PropTypes.func.isRequired,
 };
 
 FormsBtn.defaultProps = {

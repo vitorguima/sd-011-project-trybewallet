@@ -7,6 +7,16 @@ class Fomrs extends Component {
   constructor(props) {
     super(props);
     this.up = this.up.bind(this);
+    this.initialState = this.initialState.bind(this);
+  }
+
+  initialState() {
+    const state = {
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+    };
+    return this.setState(state);
   }
 
   up(e) {
@@ -60,7 +70,7 @@ class Fomrs extends Component {
             <option value="Saúde">Saúde</option>
           </select>
         </label>
-        <FormsBtn toma={ this.state } />
+        <FormsBtn toma={ this.state } initialState={ this.initialState } />
       </form>
     );
   }
