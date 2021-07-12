@@ -1,24 +1,24 @@
 import React from 'react';
-// import store from '../store';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { addExpenses } from '../actions';
 
 class Form extends React.Component {
   constructor() {
     super();
     this.state = {
-      // expensesValue: 0,
-      // descrition: '',
-      // payment: '',
-      // tag: '',
-      // exchangeRates: {},
-      // currency: 'USD',
+      expensesValue: 0,
+      descrition: '',
+      payment: '',
+      tag: '',
+      id: 0,
+      exchangeRates: {},
+      currency: 'USD',
       currencies: [],
     };
-    // this.inputExpenses = this.inputExpenses.bind(this);
-    // this.inputCurrency = this.inputCurrency.bind(this);
-    // this.inputMethodyPayment = this.inputMethodyPayment.bind(this);
-    // this.inputCategory = this.inputCategory.bind(this);
     this.fetchCurrency = this.fetchCurrency.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -36,7 +36,7 @@ class Form extends React.Component {
     const objKeys = Object.keys(data);
     const currencies = objKeys.filter((currency) => currency !== 'USDT');
     this.setState({
-      // exchangeRates: data,
+      exchangeRates: data,
       currencies,
     });
   }
@@ -45,6 +45,34 @@ class Form extends React.Component {
     const { name, value } = target;
     this.setState({
       [name]: value,
+    });
+  }
+
+  handleClick() {
+    // const objForm = this.state;
+    const {
+      expensesValue,
+      descrition,
+      payment,
+      tag,
+      exchangeRates,
+      currency,
+      currencies,
+    } = this.state;
+    let { id } = this.state;
+    const { dispatchExpenses } = this.props;
+    dispatchExpenses({
+      expensesValue,
+      descrition,
+      payment,
+      tag,
+      exchangeRates,
+      currency,
+      currencies,
+      id,
+    });
+    this.setState({
+      id: id += 1,
     });
   }
 
@@ -149,10 +177,19 @@ class Form extends React.Component {
         {this.inputCurrency()}
         {this.inputMethodyPayment()}
         {this.inputCategory()}
+        <button type="button" onClick={ this.handleClick }>Adicionar despesas</button>
       </form>
 
     );
   }
 }
 
-export default Form;
+const mapDispatchToProps = (dispatch) => ({
+  dispatchExpenses: (payload) => dispatch(addExpenses(payload)),
+});
+
+export default connect(null, mapDispatchToProps)(Form);
+
+Form.propTypes = {
+  dispatchExpenses: PropTypes.func,
+}.isRequired;

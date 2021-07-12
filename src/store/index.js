@@ -1,8 +1,8 @@
 import { createStore } from 'redux';
-import reduxDevTools from 'redux-devtools-extension';
+// import reduxDevTools from 'redux-devtools-extension';
 import reducer from '../reducers';
 
 const store = createStore(reducer,
-  reduxDevTools);
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 export default store;
