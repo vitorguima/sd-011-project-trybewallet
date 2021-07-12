@@ -22,8 +22,8 @@ class Form extends React.Component {
           Total:
           {' '}
           { noExpenses() ? 0 : walletExpenses.reduce((acc, expense) => {
-            const conversion = expense.exchangeRates[expense.fieldMoeda].ask;
-            acc += parseFloat(conversion) * parseFloat(expense.fieldValor);
+            const conversion = expense.exchangeRates[expense.moeda].ask;
+            acc += parseFloat(conversion) * parseFloat(expense.valor);
             return acc;
           }, 0).toFixed(2) }
         </section>

@@ -9,10 +9,10 @@ class Expense extends React.Component {
       <div>
         <h1> Despesas </h1>
         { expenses.map((expense, index) => (
-          <div className="div" key={ index } value={ expense.fieldValor }>
-            <h1>{ expense.fieldValor }</h1>
-            <h2>{ expense.fieldDescricao }</h2>
-            <h1>{ expense.fieldTag }</h1>
+          <div className="div" key={ index } value={ expense.valor }>
+            <h1>{ expense.valor }</h1>
+            <h2>{ expense.descricao }</h2>
+            <h1>{ expense.tag }</h1>
           </div>))}
       </div>
     );
