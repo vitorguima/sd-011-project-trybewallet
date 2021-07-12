@@ -9,11 +9,11 @@ class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      valor: '',
-      descricao: '',
-      moeda: 'USD',
-      metodo: '',
-      tag: '',
+      value: '0',
+      description: 'Sem descrição',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Sem Tag',
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -42,9 +42,9 @@ class Header extends React.Component {
     const arrayCurrencies = Object.keys(currencies)
       .filter((currency) => currency !== 'USDT');
     return (
-      <label htmlFor="moeda">
+      <label htmlFor="currency">
         Moeda
-        <select name="moeda" id="moeda" onChange={ (e) => this.handleChange(e) }>
+        <select name="currency" id="currency" onChange={ (e) => this.handleChange(e) }>
           { arrayCurrencies.map((currency) => (
             <option key={ currency } value={ currency }>
               { currency }
@@ -56,16 +56,16 @@ class Header extends React.Component {
 
   renderFieldMetodo() {
     return (
-      <label htmlFor="metodo">
+      <label htmlFor="method">
         Método de Pagamento
         <select
-          name="metodo"
-          id="metodo"
+          name="method"
+          id="method"
           onChange={ (e) => this.handleChange(e) }
         >
-          <option value="cash">Dinheiro</option>
-          <option value="credit-card">Cartão de crédito</option>
-          <option value="debit-card">Cartão de débito</option>
+          <option value="Dinheiro">Dinheiro</option>
+          <option value="Cartão de Crédito">Cartão de crédito</option>
+          <option value="Cartão de Débito">Cartão de débito</option>
         </select>
       </label>
     );
@@ -76,11 +76,11 @@ class Header extends React.Component {
       <label htmlFor="tag">
         Tag
         <select name="tag" id="tag" onChange={ (e) => this.handleChange(e) }>
-          <option value="food">Alimentação</option>
-          <option value="leisure">Lazer</option>
-          <option value="work">Trabalho</option>
-          <option value="transportation">Transporte</option>
-          <option value="health">Saúde</option>
+          <option value="Alimentação">Alimentação</option>
+          <option value="Lazer">Lazer</option>
+          <option value="Trabalho">Trabalho</option>
+          <option value="Transporte">Transporte</option>
+          <option value="Saúde">Saúde</option>
         </select>
       </label>
     );
@@ -88,11 +88,11 @@ class Header extends React.Component {
 
   renderFieldValor() {
     return (
-      <label htmlFor="valor">
+      <label htmlFor="value">
         Valor
         <input
-          name="valor"
-          id="valor"
+          name="value"
+          id="value"
           type="number"
           onChange={ (e) => this.handleChange(e) }
         />
@@ -102,12 +102,12 @@ class Header extends React.Component {
 
   renderFieldDescricao() {
     return (
-      <label htmlFor="descricao">
+      <label htmlFor="description">
         Descrição
         <input
           type="text"
-          name="descricao"
-          id="descricao"
+          name="description"
+          id="description"
           onChange={ (e) => this.handleChange(e) }
         />
       </label>
@@ -115,12 +115,12 @@ class Header extends React.Component {
   }
 
   render() {
-    const { valor, descricao, moeda, metodo, tag } = this.state;
+    const { value, description, currency, method, tag } = this.state;
     const expense = {
-      valor,
-      descricao,
-      moeda,
-      metodo,
+      value,
+      description,
+      currency,
+      method,
       tag,
     };
     return (

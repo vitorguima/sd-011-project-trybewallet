@@ -203,7 +203,7 @@ describe('8 - Desenvolva a opção de "Adicionar despesa" na sua tabela de gasto
     const expectedStateExpense2 = [
       {
         id: 0,
-        value: '10',
+        value: 10,
         currency: 'USD',
         method: 'Cartão de crédito',
         tag: 'Lazer',
@@ -212,7 +212,7 @@ describe('8 - Desenvolva a opção de "Adicionar despesa" na sua tabela de gasto
       },
       {
         id: 1,
-        value: '20',
+        value: 20,
         currency: 'EUR',
         method: 'Cartão de débito',
         tag: 'Trabalho',
@@ -222,9 +222,6 @@ describe('8 - Desenvolva a opção de "Adicionar despesa" na sua tabela de gasto
     ];
 
     expect(store.getState().wallet.expenses).toStrictEqual(expectedStateExpense2);
-
-    const totalField = screen.getByTestId('total-field');
-    expect(totalField).toContainHTML('187.12');
   });
 });
 
