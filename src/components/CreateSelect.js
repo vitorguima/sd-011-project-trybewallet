@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default class CreateSelect extends Component {
   render() {
-    const { name, label, arraySelect, value, handleChange, dataTestid } = this.props;
+    const { name, label, options, value, handleChange, dataTestid } = this.props;
     return (
       <label htmlFor={ name }>
         { label }
@@ -14,9 +14,7 @@ export default class CreateSelect extends Component {
           onChange={ handleChange }
           value={ value }
         >
-          { arraySelect.map((item, index) => (
-            <option key={ `${name}-${index}` } value={ item }>{ item }</option>
-          ))}
+          { options.map((item) => <option key={ item } value={ item }>{ item }</option>)}
         </select>
       </label>
     );
@@ -26,7 +24,7 @@ export default class CreateSelect extends Component {
 CreateSelect.propTypes = {
   name: PropTypes.string,
   label: PropTypes.string,
-  arraySelect: PropTypes.arrayOf(PropTypes.string),
+  options: PropTypes.arrayOf(PropTypes.string),
   value: PropTypes.string,
   handleChange: PropTypes.func,
 }.isRequired;

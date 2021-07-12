@@ -10,7 +10,7 @@ const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
 const initialState = {
   value: '',
   description: '',
-  currency: 'USDT',
+  currency: '',
   method: payments[0],
   tag: tags[0],
 };
@@ -32,6 +32,8 @@ class Wallet extends React.Component {
   async fetchCurrencies() {
     const { reqApiAction } = this.props;
     await reqApiAction();
+    const { currencies } = this.props;
+    this.setState({ currency: Object.keys(currencies)[0] });
   }
 
   handleChange({ target }) {
@@ -42,7 +44,7 @@ class Wallet extends React.Component {
   totalExpenses(expenses) {
     const total = expenses.reduce((acc, exp) => (
       acc + exp.value * exp.exchangeRates[exp.currency].ask), 0);
-    return (Math.round(total * 100) / 100);
+    return (parseFloat(total).toFixed(2));
   }
 
   handleForm(expense) {
@@ -50,16 +52,16 @@ class Wallet extends React.Component {
   }
 
   addExpenseWallet(expense) {
-    const { reqApiAction, addExpenseAction } = this.props;
+    const { reqApiAction, addExpenseAction, currencies } = this.props;
     reqApiAction();
     addExpenseAction(expense);
-    this.setState(initialState);
+    this.setState({ ...initialState, currency: Object.keys(currencies)[0] });
   }
 
   editExpenseWallet(expense) {
-    const { editExpenseAction } = this.props;
+    const { editExpenseAction, currencies } = this.props;
     editExpenseAction(expense);
-    this.setState(initialState);
+    this.setState({ ...initialState, currency: Object.keys(currencies)[0] });
   }
 
   createInput(name, label, value, dataTestId) {
@@ -102,7 +104,7 @@ class Wallet extends React.Component {
           name="currency"
           dataTestid="currency-input"
           label="Moeda"
-          arraySelect={ currArray }
+          options={ currArray }
           value={ currency }
           handleChange={ this.handleChange }
         />
@@ -110,7 +112,7 @@ class Wallet extends React.Component {
           name="method"
           dataTestid="method-input"
           label="Método de pagamento"
-          arraySelect={ payments }
+          options={ payments }
           value={ method }
           handleChange={ this.handleChange }
         />
@@ -118,7 +120,7 @@ class Wallet extends React.Component {
           name="tag"
           dataTestid="tag-input"
           label="Tag"
-          arraySelect={ tags }
+          options={ tags }
           value={ tag }
           handleChange={ this.handleChange }
         />
@@ -150,11 +152,12 @@ class Wallet extends React.Component {
   }
 
   render() {
+    const { loadingCurrencies } = this.props;
     return (
       <div>
         { this.renderHeader() }
         <main>
-          { this.renderExpenseForm() }
+          { loadingCurrencies ? <p>Carregando...</p> : this.renderExpenseForm() }
           <ExpensesTable handleForm={ this.handleForm } />
         </main>
       </div>

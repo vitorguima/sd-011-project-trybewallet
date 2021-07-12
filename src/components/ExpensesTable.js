@@ -33,11 +33,9 @@ class ExpensesTable extends Component {
             <td>{ exp.method }</td>
             <td>{ Math.round(exp.value * 100) / 100 }</td>
             <td>{ exp.exchangeRates[exp.currency].name.split('/')[0] }</td>
-            <td>{ Math.round(exp.exchangeRates[exp.currency].ask * 100) / 100 }</td>
+            <td>{ parseFloat(exp.exchangeRates[exp.currency].ask).toFixed(2) }</td>
             <td>
-              { (Math.round(
-                (exp.value * exp.exchangeRates[exp.currency].ask) * 100,
-              )) / 100 }
+              { parseFloat(exp.value * exp.exchangeRates[exp.currency].ask).toFixed(2) }
             </td>
             <td>Real</td>
             <td>
