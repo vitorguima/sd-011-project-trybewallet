@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import UserAct from '../actions';
-import ButtonOff from '../components/ButtonOf';
 
 class LoginForm extends Component {
   constructor() {
@@ -32,29 +30,22 @@ class LoginForm extends Component {
     });
   }
 
-  validaform(email, password) {
+  validaform() {
+    const { email, password } = this.state;
     const x = email;
     const y = password;
     const minPass = 6;
-    if (x === undefined || y === undefined) { return <ButtonOff />; }
+    if (x === undefined || y === undefined) { return true; }
     const atpos = x.indexOf('@');
     const dotpos = x.lastIndexOf('.');
     if (atpos < 1 || dotpos < atpos + 2 || dotpos + 2 >= x.length || y.length < minPass) {
-      return <button type="button" disabled>Entrar</button>;
+      return true;
     }
-    return (
-      <Link to="/carteira">
-        <button
-          type="submit"
-          onClick={ this.handleButton }
-        >
-          Entrar
-        </button>
-      </Link>);
+    return false;
   }
 
   render() {
-    const { email, password } = this.state;
+    const isEnabled = this.validaform();
     return (
       <form>
         <label htmlFor="email-input">
@@ -64,7 +55,6 @@ class LoginForm extends Component {
             name="email"
             data-testid="email-input"
             onChange={ this.handleChanges }
-            value={ email }
           />
         </label>
         <label htmlFor="password-input">
@@ -74,10 +64,15 @@ class LoginForm extends Component {
             name="password"
             data-testid="password-input"
             onChange={ this.handleChanges }
-            value={ password }
           />
         </label>
-        {this.validaform(email, password)}
+        <button
+          type="submit"
+          disabled={ isEnabled }
+          onClick={ this.handleButton }
+        >
+          Entrar
+        </button>
       </form>
     );
   }

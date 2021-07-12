@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Login from './pages/LoginForms';
+import Login from './pages/login';
 import Wallet from './pages/Wallet';
 
 class App extends Component {
@@ -8,7 +8,7 @@ class App extends Component {
     return (
       <Switch>
         <Route exact path="/" render={ (props) => <Login { ...props } /> } />
-        <Route path="/carteira" component={ Wallet } />
+        <Route exact path="/carteira" component={ Wallet } />
       </Switch>
     );
   }
