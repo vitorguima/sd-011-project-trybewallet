@@ -5,13 +5,13 @@ import ExpensesForm from '../component/ExpensesForm';
 import { getCurrencies } from '../actions';
 
 class Wallet extends React.Component {
-  // componentDidMount() {
-  //   const { fetchCurrencies } = this.props;
-  //   return fetchCurrencies();
-  // }
+  componentDidMount() {
+    const { fetchCurrencies } = this.props;
+    return fetchCurrencies();
+  }
+
   render() {
-    const { email, totalField, fetchCurrencies } = this.props;
-    fetchCurrencies();
+    const { email, totalField } = this.props;
     return (
       <div>
         <header>
