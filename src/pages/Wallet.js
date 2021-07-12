@@ -5,6 +5,7 @@ import Form from './Form';
 import Headers from './Headers';
 import fetchAPI from '../services/fetchAPI';
 import { walletAction } from '../actions';
+import Table from './Table';
 
 class Wallet extends React.Component {
   componentDidMount() {
@@ -23,6 +24,7 @@ class Wallet extends React.Component {
       <div>
         <Headers />
         <Form />
+        <Table />
       </div>
     );
   }

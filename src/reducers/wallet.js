@@ -1,4 +1,4 @@
-import { SEND_COIN } from '../actions/index';
+import { SEND_COIN, SEND_EXPENSE } from '../actions/index';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -11,6 +11,11 @@ function wallet(state = INITIAL_STATE, action) {
     return {
       ...state,
       currencies: action.payload,
+    };
+  case SEND_EXPENSE:
+    return {
+      ...state,
+      expenses: action.payload,
     };
   default:
     return state;

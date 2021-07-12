@@ -6,19 +6,29 @@ class Headers extends React.Component {
   constructor() {
     super();
     this.state = {
-      pay: 0,
+      totalExpenses: 0,
     };
   }
 
   render() {
-    const { pay } = this.state;
-    const { login } = this.props;
+    const { totalExpenses } = this.state;
+    const { login, sendExp } = this.props;
+    totalExpenses = () => {
+      if (espenses.length > 0) {
+        totalExpenses = expenses.reduce(
+          (acc, { currency, value, exchangeRates }) => {
+            Object.entries(exchangeRates).find(([key]) => key === currency);
+            return (acc + (Number(value) + totalExpenses[1].ask));
+          },
+        );
+      }
+    };
     return (
       <header>
-        <h4 data-testid="email-field">{ login }</h4>
+        <h4 data-testid="email-field">{login}</h4>
         <h4 data-testid="header-currency-field">
           Despesa Total R$
-          <span data-testid="total-field">{ pay }</span>
+          <span data-testid="total-field">{totalExpenses}</span>
           BRL
         </h4>
       </header>
@@ -28,10 +38,11 @@ class Headers extends React.Component {
 
 const mapStateToProps = (state) => ({
   login: state.user.email,
+  sendExp: state.wallet.expenses,
 });
 
-Headers.propTypes = ({
+Headers.propTypes = {
   login: PropTypes.string,
-}).isRequired;
+}.isRequired;
 
 export default connect(mapStateToProps, null)(Headers);
