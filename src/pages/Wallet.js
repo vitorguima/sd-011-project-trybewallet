@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Form from '../components/Form';
+import TableExpense from '../components/TableExpense';
 
 class Wallet extends React.Component {
   totalExpense() {
@@ -21,11 +22,14 @@ class Wallet extends React.Component {
     return (
       <>
         <header>
-          <p data-testid="email-field">{ emailLogin }</p>
-          <p data-testid="total-field">{ this.totalExpense().toFixed(2) }</p>
+          <p data-testid="email-field">{ `Email: ${emailLogin}` }</p>
+          <p data-testid="total-field">
+            { `Despesa Total: R$${this.totalExpense().toFixed(2)} `}
+          </p>
           <p data-testid="header-currency-field">BRL</p>
         </header>
         <Form />
+        <TableExpense />
       </>
     );
   }
@@ -40,7 +44,10 @@ Wallet.propTypes = {
   emailLogin: PropTypes.string.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
-    value: PropTypes.string.isRequired,
+    value: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]).isRequired,
     description: PropTypes.string.isRequired,
     currency: PropTypes.string.isRequired,
     method: PropTypes.string.isRequired,

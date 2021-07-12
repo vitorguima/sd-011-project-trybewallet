@@ -10,9 +10,9 @@ class Form extends React.Component {
     this.state = {
       value: 0,
       description: '',
-      currency: '',
-      method: '',
-      tag: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
     };
     this.handleForm = this.handleForm.bind(this);
   }
