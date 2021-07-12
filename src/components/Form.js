@@ -3,27 +3,14 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class Form extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { totalExpenses: 0 };
-    this.totalExpenses = this.totalExpenses.bind(this);
-  }
-
-  componentDidMount() {
-    this.totalExpenses();
-  }
-
-  totalExpenses() {
-    const { walletExpenses } = this.props;
-    const total = walletExpenses.reduce((acc, curr) => acc + curr, 0);
-    this.setState({
-      totalExpenses: total,
-    });
-  }
-
   render() {
-    const { userEmail } = this.props;
-    const { totalExpenses } = this.state;
+    const { userEmail, walletExpenses } = this.props;
+    const noExpenses = () => {
+      if (walletExpenses.length === 0) {
+        return true;
+      }
+      return false;
+    };
     return (
       <div>
         <div data-testid="email-field">
@@ -34,7 +21,11 @@ class Form extends React.Component {
         <section data-testid="total-field">
           Total:
           {' '}
-          { totalExpenses }
+          { noExpenses() ? 0 : walletExpenses.reduce((acc, expense) => {
+            const conversion = expense.exchangeRates[expense.fieldMoeda].ask;
+            acc += parseFloat(conversion) * parseFloat(expense.fieldValor);
+            return acc;
+          }, 0).toFixed(2) }
         </section>
         <section data-testid="header-currency-field">
           Moeda atual:BRL

@@ -1,5 +1,5 @@
 import { GET_CURRENCIES, GET_CURRENCIES_SUCCESS,
-  GET_CURRENCIES_FAILED } from '../actions';
+  GET_CURRENCIES_FAILED, ADD_EXPENSE } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -8,6 +8,11 @@ const INITIAL_STATE = {
 
 function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
+  case ADD_EXPENSE:
+    return {
+      ...state,
+      expenses: [...state.expenses, action.payload],
+    };
   case GET_CURRENCIES:
     return { ...state };
   case GET_CURRENCIES_SUCCESS:

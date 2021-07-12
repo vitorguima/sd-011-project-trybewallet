@@ -1,4 +1,5 @@
 export const ENTER_EMAIL = 'ENTER_EMAIL';
+export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const GET_CURRENCIES = 'GET_CURRENCIES';
 export const GET_CURRENCIES_SUCCESS = 'GET_CURRENCIES_SUCCESS';
 export const GET_CURRENCIES_FAILED = 'GET_CURRENCIES_FAILED';
@@ -6,6 +7,11 @@ export const GET_CURRENCIES_FAILED = 'GET_CURRENCIES_FAILED';
 export const enterEmail = (email) => ({
   type: 'ENTER_EMAIL',
   payload: email,
+});
+
+export const addExpense = (expense) => ({
+  type: 'ADD_EXPENSE',
+  payload: expense,
 });
 
 export const getCurrencies = () => ({
@@ -27,9 +33,7 @@ export const getCurrenciesThunk = () => async (dispatch) => {
   try {
     const response = await fetch('https://economia.awesomeapi.com.br/json/all');
     const results = await response.json();
-    const arrayCurrencies = Object.keys(results)
-      .filter((currency) => currency !== 'USDT');
-    dispatch(getCurrenciesSuccess(arrayCurrencies));
+    dispatch(getCurrenciesSuccess(results));
   } catch (error) {
     dispatch(getCurrenciesFailed(error));
   }
