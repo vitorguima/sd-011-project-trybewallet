@@ -30,8 +30,8 @@ const HeaderDesc = (props) => {
               <td>{ exchangeRates[currency].name.split('/')[0] }</td>
               <td>{ Number(exchangeRates[currency].ask).toFixed(2) }</td>
               <td>
-                { Number(exchangeRates[currency].ask).toFixed(2)
-                  * Number(value).toFixed(2) }
+                { Number(exchangeRates[currency].ask)
+                  * Number(value) }
               </td>
               <td>Real</td>
             </tr>
