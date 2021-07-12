@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { login } from '../../actions';
 
-class Form extends React.Component {
+class FormLogin extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -70,12 +70,11 @@ class Form extends React.Component {
           </button>
         </Link>
       </form>
-
     );
   }
 }
 
-Form.propTypes = {
+FormLogin.propTypes = {
   logar: PropTypes.func.isRequired,
 };
 
@@ -83,4 +82,4 @@ const mapDispatchToProps = (dispatch) => ({
   logar: (usuario) => dispatch(login(usuario)),
 });
 
-export default connect(null, mapDispatchToProps)(Form);
+export default connect(null, mapDispatchToProps)(FormLogin);

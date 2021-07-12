@@ -1,10 +1,10 @@
 import React from 'react';
-import Form from './form/Form';
+import FormLogin from './form/FormLogin';
 
 class Login extends React.Component {
   render() {
     return (
-      <Form />
+      <FormLogin />
     );
   }
 }
