@@ -5,12 +5,12 @@ class Form extends React.Component {
   constructor() {
     super();
     this.state = {
-      expenses: 0,
-      descrition: '',
-      payment: '',
-      category: '',
-      exchangeRates: {},
-      currency: 'USD',
+      // expensesValue: 0,
+      // descrition: '',
+      // payment: '',
+      // tag: '',
+      // exchangeRates: {},
+      // currency: 'USD',
       currencies: [],
     };
     // this.inputExpenses = this.inputExpenses.bind(this);
@@ -18,6 +18,7 @@ class Form extends React.Component {
     // this.inputMethodyPayment = this.inputMethodyPayment.bind(this);
     // this.inputCategory = this.inputCategory.bind(this);
     this.fetchCurrency = this.fetchCurrency.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -35,8 +36,15 @@ class Form extends React.Component {
     const objKeys = Object.keys(data);
     const currencies = objKeys.filter((currency) => currency !== 'USDT');
     this.setState({
-      exchangeRates: data,
+      // exchangeRates: data,
       currencies,
+    });
+  }
+
+  handleChange({ target }) {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
     });
   }
 
@@ -45,11 +53,19 @@ class Form extends React.Component {
       <section>
         <label htmlFor="value">
           Valor:
-          <input type="text" name="valor" />
+          <input
+            type="text"
+            name="expensesValue"
+            onChange={ this.handleChange }
+          />
         </label>
         <label htmlFor="descrition">
           Descrição:
-          <input type="text" name="descrição" />
+          <input
+            type="text"
+            name="descrition"
+            onChange={ this.handleChange }
+          />
         </label>
       </section>
     );
@@ -60,13 +76,14 @@ class Form extends React.Component {
     return (
       <section>
         <label htmlFor="currencies">
-          Moedes:
-          <select name="currency">
+          Moedas:
+          <select name="currency" onChange={ this.handleChange }>
             {currencies.map((currency, index) => (
               <option
                 key={ index }
                 value={ currency }
                 data-testid={ currency }
+
               >
                 {currency}
               </option>
@@ -82,7 +99,7 @@ class Form extends React.Component {
       <section>
         <label htmlFor="payment">
           Método de pagamento:
-          <select name="methody-payment">
+          <select name="payment" onChange={ this.handleChange }>
             <option value="dinheiro">
               Dinheiro
             </option>
@@ -103,7 +120,7 @@ class Form extends React.Component {
       <section>
         <label htmlFor="category">
           Selecione uma categoria:
-          <select name="tag">
+          <select name="tag" onChange={ this.handleChange }>
             <option value="alimentacao">
               Alimentação
             </option>
