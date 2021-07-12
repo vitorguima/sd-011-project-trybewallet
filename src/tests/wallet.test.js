@@ -336,4 +336,3 @@ describe('10 - Crie um botão para deletar uma despesa da tabela contendo as seg
     expect(totalField).toContainHTML('131.37');
   });
 });
-
