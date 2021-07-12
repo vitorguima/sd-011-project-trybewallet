@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 
 class SelectedCurrency extends Component {
   render() {
-    const { coinType } = this.props;
+    // const { coinType } = this.props;
     return (
       <label htmlFor="options">
         Moeda:
         <select id="options">
-          {
+          {/* {
             coinType.map((type) => <option key={ type.code }>{ type.code }</option>)
-          }
+          } */}
         </select>
       </label>
     );
