@@ -10,7 +10,7 @@ class ExpensesForm extends React.Component {
       description: '',
       value: 0,
       currency: '',
-      paymentMethod: '',
+      method: '',
       tag: '',
     };
   }
@@ -74,16 +74,16 @@ class ExpensesForm extends React.Component {
 
   paymentMethod() {
     return (
-      <label htmlFor="payment-method">
+      <label htmlFor="method">
         Método de pagamento:
         <select
-          id="payment-method"
-          name="payment-method"
+          id="method"
+          name="method"
           onChange={ ({ target }) => this.handleChange(target) }
         >
-          <option value="cash">Dinheiro</option>
-          <option value="credit">Cartão de crédito</option>
-          <option value="debt">Cartão de débito</option>
+          <option value="Dinheiro">Dinheiro</option>
+          <option value="Cartão de crédito">Cartão de crédito</option>
+          <option value="Cartão de débito">Cartão de débito</option>
         </select>
       </label>
     );
@@ -98,11 +98,11 @@ class ExpensesForm extends React.Component {
           name="tag"
           onChange={ ({ target }) => this.handleChange(target) }
         >
-          <option value="cash">Alimentação</option>
-          <option value="leisure">Lazer</option>
-          <option value="work">Trabalho</option>
-          <option value="transport">Transporte</option>
-          <option value="health">Saúde</option>
+          <option value="Alimentação">Alimentação</option>
+          <option value="Lazer">Lazer</option>
+          <option value="Trabalho">Trabalho</option>
+          <option value="Transporte">Transporte</option>
+          <option value="Saúde">Saúde</option>
         </select>
       </label>
     );
@@ -113,20 +113,18 @@ class ExpensesForm extends React.Component {
   }
 
   handleButton() {
-    const { description, value, currency, paymentMethod, tag } = this.state;
+    const { description, value, currency, method, tag } = this.state;
+    const { currencies, add, walletExpenses } = this.props;
     const expenses = {
+      id: walletExpenses.length,
       description,
       value,
       currency,
-      paymentMethod,
+      method,
       tag,
+      exchangeRates: currencies,
     };
-
-    const { APICurrency } = this.props;
-    APICurrency();
-    const { currencies, add } = this.props;
-    add(expenses, currencies);
-
+    add(expenses);
   }
 
   render() {
@@ -137,7 +135,11 @@ class ExpensesForm extends React.Component {
         {this.expenseValue()}
         {this.currency()}
         {this.paymentMethod()}
-        <input type="button" value="Adicionar despesa" onClick={ this.handleButton() } />
+        <input
+          type="button"
+          value="Adicionar despesa"
+          onClick={ () => this.handleButton() }
+        />
       </form>
     );
   }
@@ -145,6 +147,7 @@ class ExpensesForm extends React.Component {
 
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
+  walletExpenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -154,6 +157,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 ExpensesForm.propTypes = {
   APICurrency: PropTypes.func.isRequired,
+  add: PropTypes.func.isRequired,
+  walletExpenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   currencies: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 

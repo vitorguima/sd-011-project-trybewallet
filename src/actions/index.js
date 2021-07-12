@@ -18,10 +18,10 @@ export const receivedCurrencies = (payload) => ({
   payload,
 });
 
-export const addExpense = (expenses, currencies) => ({
-  type: ADD_EXPENSE,
-  payload: [expenses, currencies],
-});
+// export const addExpense = (expenses, currencies) => ({
+//   type: ADD_EXPENSE,
+//   payload: [expenses, currencies],
+// });
 
 export function fetchCurrency() {
   return (dispatch) => {
@@ -30,4 +30,22 @@ export function fetchCurrency() {
       .then((data) => data.json())
       .then((result) => dispatch(receivedCurrencies(result)));
   };
+}
+
+export function addExpense(expenses) {
+  const expense = {
+    type: ADD_EXPENSE,
+    payload: expenses,
+  };
+  return (dispatch) => {
+    dispatch(requestCurrencies());
+    return fetch('https://economia.awesomeapi.com.br/json/all')
+      .then((data) => data.json())
+      .then((result) => dispatch(receivedCurrencies(result)))
+      .then(() => dispatch(expense));
+  };
+  // pq assim não funciona?
+  // return (dispatch) => {
+  //   dispatch(fetchCurrency()).then(dispatch(expense));
+  // };
 }

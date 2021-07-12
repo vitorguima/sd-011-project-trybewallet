@@ -11,10 +11,10 @@ const wallet = (state = INITIAL_STATE, action) => {
   case REQUEST_CURRENCIES:
     return { ...state, isLoading: true };
   case RECEIVED_CURRENCIES:
-    console.log('teste')
+    // console.log('teste')
     return { ...state, isLoading: false, currencies: action.payload };
-  // case ADD_EXPENSE:
-  //   return { ...state, expenses: [action.payload] };
+  case ADD_EXPENSE:
+    return { ...state, expenses: [...state.expenses, action.payload] };
 
   default:
     return state;

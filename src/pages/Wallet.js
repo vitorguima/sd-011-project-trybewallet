@@ -5,13 +5,15 @@ import ExpensesForm from '../components/ExpensesForm';
 
 class Wallet extends React.Component {
   render() {
-    const { email } = this.props;
+    const { email, walletExpenses } = this.props;
 
     return (
       <>
         <div>Logo</div>
         <div data-testid="email-field">{ email }</div>
-        <div data-testid="total-field">Despesa total: R$ 0,00 </div>
+        <p data-testid="total-field">
+          { `Despesa total: R$ ${String(walletExpenses.reduce((acc, cur) => acc + Number(cur.value), 0).toFixed(2))} ` }
+        </p>
         <span data-testid="header-currency-field"> BRL</span>
         <ExpensesForm />
       </>
@@ -21,10 +23,14 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  walletExpenses: state.wallet.expenses,
+
 });
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
+  walletExpenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+
 };
 
 export default connect(mapStateToProps)(Wallet);
