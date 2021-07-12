@@ -7,7 +7,7 @@ const NotAPage = () => {
     <div className="NotAPage">
       <h1>404</h1>
       <h2>Página não encontrada</h2>
-      <img src={unplugIMG} />
+      <img src={ unplugIMG } alt="not a page" />
       <p>
         Sentimos muito por sua página não ter sido encontrada.
       </p>

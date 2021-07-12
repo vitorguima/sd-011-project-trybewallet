@@ -1,5 +1,5 @@
 import * as Types from './actionTypes';
-import { currentAPI } from '../api/currentAPI';
+import { currencyAPI } from '../api/currencyAPI';
 
 export const requestAPI = () => ({ type: Types.REQUEST_API });
 
@@ -16,7 +16,7 @@ export const requestError = (error) => ({
 export const fetchAPI = () => async (dispatch) => {
     dispatch(requestAPI());
     try {
-        const data = await currentAPI();
+        const data = await currencyAPI();
         return dispatch(getData(data));
     } catch (error) {
         return dispatch(requestError(error));

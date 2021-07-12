@@ -9,3 +9,17 @@ const store = createStore(
 );
 
 export default store;
+
+/* How The Store Looks Like
+{
+  user: {
+    email: action.payload,
+  }
+  wallet: {
+    currencies: [],
+    expenses: [],
+    error: '',
+    isLoading: false
+  }
+};
+*/
