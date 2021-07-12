@@ -1,7 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { GlobalContext } from '../GlobalContext';
 
 function Textarea({ label, name }) {
+  const { providerValues } = React.useContext(GlobalContext);
+
+  function handleChange({ target }) {
+    providerValues.setDescription(target.value);
+  }
+
   return (
     <div>
       <label htmlFor={ name }>
@@ -10,7 +17,7 @@ function Textarea({ label, name }) {
       <textarea
         id={ name }
         name={ name }
-        // onChange={ onChange }
+        onChange={ handleChange }
       />
     </div>
   );

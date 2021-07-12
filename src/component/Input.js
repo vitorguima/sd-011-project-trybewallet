@@ -1,7 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { GlobalContext } from '../GlobalContext';
 
 function Input({ label, type, name }) {
+  const { providerValues } = React.useContext(GlobalContext);
+
+  function handleChange({ target }) {
+    providerValues.setValue(target.value);
+  }
+
   return (
     <div>
       <label htmlFor={ name }>
@@ -11,7 +18,7 @@ function Input({ label, type, name }) {
         id={ name }
         name={ name }
         type={ type }
-        // onChange={ onChange }
+        onChange={ handleChange }
       />
     </div>
   );
