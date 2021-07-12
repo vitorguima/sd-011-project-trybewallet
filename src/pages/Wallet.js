@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import FormWallet from '../components/FormWallet';
+import HeaderDesc from '../components/HeaderDesc';
 
 class Wallet extends React.Component {
   constructor() {
@@ -32,6 +33,7 @@ class Wallet extends React.Component {
         <span data-testid="total-field">{ this.getValue() }</span>
         <span data-testid="header-currency-field">BRL</span>
         <FormWallet />
+        <HeaderDesc />
       </header>
     );
   }

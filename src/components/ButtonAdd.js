@@ -36,12 +36,12 @@ const mapDispatchProps = (dispach) => ({
 export default connect(mapStatetoProps, mapDispatchProps)(ButtonAdd);
 
 ButtonAdd.defaultProps = {
-  stateExpense: {},
+  stateExpense: [],
 };
 
 ButtonAdd.propTypes = {
   newCurrencie: PropTypes.func.isRequired,
-  stateExpense: PropTypes.objectOf(PropTypes.object),
+  stateExpense: PropTypes.arrayOf(PropTypes.object),
   propsForm: PropTypes.shape({
     value: PropTypes.string,
     dc: PropTypes.string,
