@@ -3,7 +3,14 @@ import Header from '../components/Header';
 
 class Wallet extends React.Component {
   render() {
-    return <Header />;
+    return (
+      <>
+        <Header />
+        <div>
+          ola
+        </div>
+      </>
+    );
   }
 }
 

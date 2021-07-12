@@ -1,13 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
+
 import PropTypes from 'prop-types';
 import FormMoney from '../FormMoney';
+
 import './Header.css';
 
 class Header extends React.Component {
   render() {
     const { userInfo, totalInfo } = this.props;
-
+    const totalExpenses = totalInfo.length === 0
+      ? 0
+      : totalInfo.reduce((acc, curr) => acc + (
+        Number(curr.value) * Number(curr.exchangeRates[curr.currency].ask)), 0);
     return (
       <header className="header-container">
         <div className="user-info-container">
@@ -18,17 +23,13 @@ class Header extends React.Component {
             { userInfo }
           </span>
           <span data-testid="total-field">
-            Despesa total: R$&nbsp;
-            { totalInfo }
-            <span data-testid="header-currency-field">
-              &nbsp;BRL
-            </span>
+            { parseFloat(totalExpenses).toFixed(2) }
+          </span>
+          <span data-testid="header-currency-field">
+            BRL
           </span>
         </div>
         <FormMoney />
-        <button type="button">
-          Adicionar Despesa
-        </button>
       </header>
     );
   }
@@ -41,7 +42,7 @@ const mapStateToProps = (state) => ({
 
 Header.propTypes = {
   userInfo: PropTypes.string.isRequired,
-  totalInfo: PropTypes.arrayOf(PropTypes.number).isRequired,
+  totalInfo: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default connect(mapStateToProps)(Header);

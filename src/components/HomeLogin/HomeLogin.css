@@ -58,7 +58,7 @@
   transition: 0.8s;
 }
 
-.login-container .login-button:hover a {
+.login-container  .login-button:hover a {
   color: white;
   transition: 0.8s;
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 
-import fetchCurrencys from '../../services';
+import PropTypes from 'prop-types';
+import { filteredCurrencys } from '../../services';
 
 class FormCurrencys extends React.Component {
   constructor() {
@@ -14,8 +15,7 @@ class FormCurrencys extends React.Component {
   }
 
   async componentDidMount() {
-    console.log('componentDidMontou');
-    const currencysTypes = await fetchCurrencys();
+    const currencysTypes = await filteredCurrencys();
     this.setCurrecysInState(currencysTypes);
   }
 
@@ -27,14 +27,21 @@ class FormCurrencys extends React.Component {
 
   render() {
     const { currencys } = this.state;
+    const { currency, onChange } = this.props;
 
     return (
       <label htmlFor="currencysType">
-        <select name="currencysType">
+        Moeda:
+        <select
+          name="currency"
+          id="currencysType"
+          value={ currency }
+          onChange={ onChange }
+        >
           {
-            currencys.map((currency) => (
-              <option key={ currency }>
-                { currency }
+            currencys.map((anycurrency) => (
+              <option key={ anycurrency }>
+                { anycurrency }
               </option>))
           }
         </select>
@@ -42,5 +49,10 @@ class FormCurrencys extends React.Component {
     );
   }
 }
+
+FormCurrencys.propTypes = {
+  currency: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
 
 export default FormCurrencys;
