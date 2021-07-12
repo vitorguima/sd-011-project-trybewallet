@@ -40,7 +40,7 @@ class LoginForm extends Component {
     const atpos = x.indexOf('@');
     const dotpos = x.lastIndexOf('.');
     if (atpos < 1 || dotpos < atpos + 2 || dotpos + 2 >= x.length || y.length < minPass) {
-      return <ButtonOff />;
+      return <button type="button" disabled>Entrar</button>;
     }
     return (
       <Link to="/carteira">
