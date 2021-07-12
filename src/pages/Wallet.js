@@ -22,20 +22,23 @@ class Wallet extends React.Component {
             Descrição
             <input id="description" type="text" />
           </label>
-          {/* <label htmlFor="currency">
+          <label htmlFor="currency">
             Moeda
-            <select id="currency" />
-          </label> */}
+            <select role="combobox" id="currency">
+              <option value="dindin">Dindin</option>
+            </select>
+          </label>
           <label htmlFor="payment-method">
-            Metodo de Pagamento
-            <select id="payment-method">
+            Método de Pagamento
+            <select role="combobox" id="payment-method">
               <option value="money"> Dinheiro</option>
               <option value="credit-card">Cartão de crédito</option>
               <option value="debit-card">Cartão de débito</option>
             </select>
           </label>
           <label htmlFor="tag">
-            <select id="tag">
+            Tag
+            <select role="combobox" id="tag">
               <option value="food">Alimentação</option>
               <option value="laze">Lazer</option>
               <option value="work">Trabalho</option>
