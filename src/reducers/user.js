@@ -2,7 +2,7 @@
 import { CHANGE_EMAIL } from '../actions';
 
 const INITIAL_STATE = {
-  email: '',
+  email: 'alguem@alguem.com',
 };
 
 export default function user(state = INITIAL_STATE, action) {

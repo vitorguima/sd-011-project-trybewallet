@@ -1,10 +1,18 @@
 import React from 'react';
+import Cambio from '../components/Cambio';
+import Expenses from '../components/Expenses';
+import Form from '../components/Form';
 import Header from '../components/Header';
 
 class Wallet extends React.Component {
   render() {
     return (
-      <Header />
+      <main>
+        <Header />
+        <Expenses />
+        <Cambio />
+        <Form />
+      </main>
     );
   }
 }
