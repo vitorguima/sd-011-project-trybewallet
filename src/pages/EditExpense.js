@@ -46,12 +46,16 @@ class EditExpense extends React.Component {
           </label>
           <label htmlFor="description">
             Descrição
-            <input type="text" id="description" data-testid="description-input" />
+            <input
+              type="text"
+              id="description"
+              data-testid="description-input"
+            />
           </label>
           <label htmlFor="currency">
             Moeda
             <select id="currency" data-testid="currency-input">
-              {currencies.map((curr, index) => (curr !== 'USDT' ? (
+              {Object.keys(currencies).map((curr, index) => (curr !== 'USDT' ? (
                 <option key={ index } id={ curr }>
                   {curr}
                 </option>

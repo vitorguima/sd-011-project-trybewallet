@@ -24,39 +24,62 @@ class Login extends React.Component {
   render() {
     const { dispatchEmail } = this.props;
     const { email } = this.state;
+    const myStyle = {
+      display: 'flex',
+      justifyContent: 'center',
+      margin: 'auto',
+      width: '30%',
+      border: '3px solid #3C096C',
+      marginTop: '200px',
+      padding: '30px',
+      borderRadius: '10px',
+      color: '#FF9E00',
+      backgroundColor: '#240046',
+    };
+
+    const btnStyle = {
+      backgroundColor: '#5A189A',
+      color: '#FF9E00 ',
+      margin: '10px',
+      marginLeft: '90px',
+      with: '100px',
+    };
 
     return (
-      <div>
+      <div style={ myStyle }>
         <form id="login-form" onChange={ this.btnState }>
           <div>
-            <label htmlFor="login-email" className="form-label">
-              Login
-              <input
-                autoComplete="off"
-                className="form-control login-email"
-                name="email"
-                type="email"
-                data-testid="email-input"
-                required
-                onChange={ (e) => this.setState({ email: e.target.value }) }
-              />
-            </label>
+            <div>
+              <label htmlFor="login-email" className="form-label">
+                Login
+              </label>
+            </div>
+            <input
+              autoComplete="off"
+              className="form-control login-email"
+              name="email"
+              type="email"
+              data-testid="email-input"
+              required
+              onChange={ (e) => this.setState({ email: e.target.value }) }
+            />
           </div>
           <div>
-            <label htmlFor="login-pass">
-              Senha
-              <input
-                type="password"
-                data-testid="password-input"
-                className="login-pass"
-                pattern=".{6,}"
-                required
-              />
-            </label>
+            <div>
+              <label htmlFor="login-pass">Senha</label>
+            </div>
+            <input
+              type="password"
+              data-testid="password-input"
+              className="login-pass"
+              pattern=".{6,}"
+              required
+            />
           </div>
           <div>
             <Link to="/carteira">
               <button
+                style={ btnStyle }
                 type="button"
                 id="submit-btn"
                 onClick={ dispatchEmail(email) } // se mudar para arrow para o erro mas quebra o teste
