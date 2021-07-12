@@ -3,6 +3,7 @@ export const REQUEST_CURRENCY = 'REQUEST_CURRENCY';
 export const REQUEST_CURRENCY_SUCCESS = 'REQUEST_CURRENCY_SUCCESS';
 export const REQUEST_CURRENCY_ERROR = 'REQUEST_CURRENCY_ERROR';
 export const NEW_EXPENSE = 'NEW_EXPENSE';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 export const setUser = (userEmail) => ({
   type: LOGIN_USER,
@@ -37,3 +38,8 @@ export const fetchAPI = () => (dispatch) => {
         (error) => dispatch(requestCurrencyError(error)),
       ));
 };
+
+export const deleteExpense = (expenses) => ({
+  type: DELETE_EXPENSE,
+  payload: expenses,
+});

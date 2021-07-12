@@ -4,6 +4,7 @@ import {
   REQUEST_CURRENCY_SUCCESS,
   REQUEST_CURRENCY_ERROR,
   NEW_EXPENSE,
+  DELETE_EXPENSE,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -22,6 +23,8 @@ function wallet(state = INITIAL_STATE, action) {
     return { ...state, error: action.payload };
   case NEW_EXPENSE:
     return { ...state, expenses: [...state.expenses, action.payload] };
+  case DELETE_EXPENSE:
+    return { ...state, expenses: [...action.payload] };
   default:
     return state;
   }
