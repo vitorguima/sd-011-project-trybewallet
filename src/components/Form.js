@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import requestCurrencyAction from '../actions/requestCurrencysAction';
 
 class Form extends React.Component {
   constructor() {
@@ -14,6 +16,11 @@ class Form extends React.Component {
     this.handleForm = this.handleForm.bind(this);
   }
 
+  componentDidMount() {
+    const { requestCurrencys } = this.props;
+    requestCurrencys();
+  }
+
   handleForm({ target: { id, value } }) {
     this.setState((oldState) => ({
       ...oldState,
@@ -23,6 +30,8 @@ class Form extends React.Component {
 
   render() {
     const { value, description, currency, method, tag } = this.state;
+    const { currenciesOptions } = this.props;
+
     return (
       <form>
         <label htmlFor="value">
@@ -41,7 +50,9 @@ class Form extends React.Component {
         <label htmlFor="currency">
           Moeda
           <select id="currency" value={ currency } onChange={ this.handleForm }>
-            <option>BRL</option>
+            { currenciesOptions.map((currencyAPI, key) => (
+              <option key={ key }>{ currencyAPI }</option>
+            ))}
           </select>
         </label>
         <label htmlFor="method">
@@ -67,4 +78,17 @@ class Form extends React.Component {
   }
 }
 
-export default connect()(Form);
+const mapStateToProps = (state) => ({
+  currenciesOptions: state.wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  requestCurrencys: () => dispatch(requestCurrencyAction()),
+});
+
+Form.propTypes = {
+  requestCurrencys: PropTypes.func.isRequired,
+  currenciesOptions: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
