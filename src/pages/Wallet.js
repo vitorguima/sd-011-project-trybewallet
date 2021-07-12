@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Form from '../Components/Form';
+import ExpenseTable from '../Components/ExpenseTable';
 
 class Wallet extends React.Component {
   render() {
@@ -21,6 +22,7 @@ class Wallet extends React.Component {
         </header>
         <section>
           <Form />
+          <ExpenseTable />
         </section>
       </div>
     );
@@ -34,5 +36,6 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps)(Wallet);
 
 Wallet.propTypes = {
-  email: PropTypes.string.isRequired,
-};
+  email: PropTypes.string,
+  expenses: PropTypes.array,
+}.isRequired;
