@@ -1,4 +1,4 @@
-#Trybe Wallet Project
+# Trybe Wallet Project
 
 This project was done so I could practice the concepts that I have studied about React and Redux. The Ideia of Trybe Wallet was to create a simple financial manager where a user could:
 
