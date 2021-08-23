@@ -4,7 +4,7 @@ This project was done so I could practice the concepts that I have studied about
 
  * Add, remove and edit an expense;
  * Visualize the registered expenses in a table format;
- * Visualize an expense in different type of currencies;
+ * Visualize an expense in different currencies;
 
 ## Practicing skills:
 
